@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Install scripts are blocked unless listed here (supply-chain policy).
+allowBuilds:
+  esbuild: true # bundler used by wrangler
+  workerd: true # Cloudflare Workers runtime used by wrangler dev

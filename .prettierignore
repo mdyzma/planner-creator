@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+**/*.md
+docs/reference/
+templates/**/*.json
+**/out/
+**/.next/
+**/.turbo/
+**/.wrangler/

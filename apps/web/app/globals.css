@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+/* Calm, paper-derived palette (seeded from the demo, §2.2). */
+:root {
+  --ui-bg: #f6f2ea;
+  --ui-surface: #fdfbf7;
+  --ui-ink: #1e2424;
+  --ui-ink-muted: #525c5a;
+  --ui-line: #d8d2c4;
+  --ui-accent: #0f6f66;
+  --ui-accent-ink: #ffffff;
+  --ui-danger: #9b1c1c;
+  --ui-focus: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ui-bg: #15191b;
+    --ui-surface: #1d2326;
+    --ui-ink: #e6e2da;
+    --ui-ink-muted: #a3aba9;
+    --ui-line: #343c3f;
+    --ui-accent: #5fb8ae;
+    --ui-accent-ink: #0b1414;
+    --ui-danger: #f19999;
+    --ui-focus: #93b4ff;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--ui-bg);
+  --color-surface: var(--ui-surface);
+  --color-ink: var(--ui-ink);
+  --color-ink-muted: var(--ui-ink-muted);
+  --color-line: var(--ui-line);
+  --color-accent: var(--ui-accent);
+  --color-accent-ink: var(--ui-accent-ink);
+  --color-danger: var(--ui-danger);
+}
+
+body {
+  background: var(--ui-bg);
+  color: var(--ui-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ui-focus);
+  outline-offset: 2px;
+}

@@ -958,7 +958,8 @@ planner-creator/
 │   ├── planner-content/         library loading, filtering, selection strategies
 │   ├── planner-blocks/          built-in BlockDefinitions (added: keeps renderer free of widgets)
 │   ├── planner-renderer/        PageView, layout nodes, print CSS
-│   └── planner-pdf/             Exporter interface + adapters
+│   ├── planner-pdf/             Exporter interface + adapters
+│   └── planner-storage/         Repository interfaces, IndexedDB (Dexie) + in-memory adapters (§10.1)
 ├── templates/therapeutic-recovery/
 │   ├── template.json
 │   ├── content/{quotes,affirmations,prompts,sos,warning-signs}.json   (LocalizedText per record)
@@ -1029,7 +1030,7 @@ copied, every month gets its own opening pages (§12).
 
 | Milestone | Brief items | Deliverable | Exit criterion |
 |---|---|---|---|
-| M0 Foundations | 1, 4 | monorepo, `planner-schema`, migrations, Dexie repos; **dev server, `ci.yml`, preview deploys to Cloudflare from day one** | round-trip JSON property tests pass; every PR gets a preview URL |
+| M0 Foundations | 1, 4 | monorepo, `planner-schema`, migrations, `planner-storage` (Dexie repos); **dev server, `ci.yml` + `deploy.yml` to Cloudflare from day one** | round-trip JSON property tests pass; every push to `main` is verified and deployed to `*.workers.dev` (solo workflow; PR previews once collaborators join) |
 | M1 Print model | 2, 3 | `paginate`, `resolveFrame`, `PageView`, print route | A4/A5 pages render at true size; mirrored margins visible in spread |
 | M2 i18n | 5 | `planner-i18n`, next-intl UI, scanner | whole UI + template switch en↔pl; missing-translation report |
 | M3 Therapeutic pages | 6, 7, 8, 10, 11 | built-in blocks + presets, template.json | demo project contains every required page type |

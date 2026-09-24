@@ -1,0 +1,12 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // Static site only for now; the PDF export Worker (Browser Run) arrives in M8 (docs/adr/0008).
+  "name": "planner-creator",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page",
+  },
+  "workers_dev": true,
+  "preview_urls": true,
+}
