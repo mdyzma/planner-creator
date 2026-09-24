@@ -1,14 +1,16 @@
 'use client';
 
 import { toSpreads, withFormat } from '@planner/core';
+import { regenerate } from '@planner/generator';
 import { formatDate, localize } from '@planner/i18n';
 import { PageView, SpreadView } from '@planner/renderer';
 import type { FormatId, Locale, PlannerProject } from '@planner/schema';
 import { FORMAT_IDS, LOCALES } from '@planner/schema';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import { useMemo, useState, type ReactNode } from 'react';
+import { useId, useMemo, useState, type ReactNode } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { LazyVisible } from '@/components/LazyVisible';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
 import { FILLER_PATTERN, blockRegistry, layoutProject, type RenderedPage } from '@/lib/pages';
@@ -151,6 +153,8 @@ function Preview({
         </nav>
       </header>
 
+      {project.template.sections.length > 0 && <DatesBar project={project} onChange={onChange} />}
+
       <p className="px-4 py-2 text-sm text-ink-muted" aria-live="polite">
         {t('summary', {
           pages: pages.length,
@@ -170,10 +174,19 @@ function Preview({
       <main className="flex-1 overflow-auto bg-bg" lang={plannerLocale}>
         <div className="flex flex-col items-center-safe gap-10 p-8" style={{ zoom }}>
           {view === 'single'
-            ? pages.map(renderPage)
+            ? pages.map((p) => (
+                <LazyVisible
+                  key={p.page.index}
+                  widthMm={p.frame.trim.w}
+                  heightMm={p.frame.trim.h + 8}
+                >
+                  {renderPage(p)}
+                </LazyVisible>
+              ))
             : toSpreads(pages.map((p) => p.page)).map((s, i) => {
                 const left = s.left && pages[s.left.index];
                 const right = s.right && pages[s.right.index];
+                const trim = (left ?? right)!.frame.trim;
                 return (
                   <section
                     key={i}
@@ -182,10 +195,12 @@ function Preview({
                     })}
                     className="shadow-lg"
                   >
-                    <SpreadView
-                      left={left ? renderPage(left) : blank(right)}
-                      right={right ? renderPage(right) : blank(left)}
-                    />
+                    <LazyVisible widthMm={trim.w * 2} heightMm={trim.h + 8}>
+                      <SpreadView
+                        left={left ? renderPage(left) : blank(right)}
+                        right={right ? renderPage(right) : blank(left)}
+                      />
+                    </LazyVisible>
                   </section>
                 );
               })}
@@ -224,5 +239,93 @@ function Segmented<T extends string>({
         ))}
       </div>
     </fieldset>
+  );
+}
+
+const MONTH_OPTIONS = Array.from({ length: 12 }, (_, i) => i + 1);
+
+/**
+ * Start date and length for a generated planner. Applying them regenerates the pages and keeps
+ * edits on every page whose date still exists (ADR-0003); the rest are reported.
+ */
+function DatesBar({
+  project,
+  onChange,
+}: {
+  project: PlannerProject;
+  onChange: (p: PlannerProject) => void;
+}) {
+  const t = useTranslations('Preview');
+  const d = useTranslations('Dashboard');
+  const ids = useId();
+  const [startDate, setStartDate] = useState(project.generation.startDate ?? '');
+  const [months, setMonths] = useState(project.generation.durationMonths);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const changed =
+    (startDate || undefined) !== project.generation.startDate ||
+    months !== project.generation.durationMonths;
+
+  const apply = () => {
+    const result = regenerate({
+      ...project,
+      generation: {
+        ...project.generation,
+        startDate: startDate || undefined,
+        durationMonths: months,
+      },
+    });
+    onChange(result.project);
+    setMessage(
+      [
+        t('regenerated', { pages: result.budget.total }),
+        result.orphans.length > 0 ? t('orphans', { count: result.orphans.length }) : '',
+      ]
+        .filter(Boolean)
+        .join(' '),
+    );
+  };
+
+  const field = 'rounded border border-line bg-surface px-2 py-1';
+  return (
+    <div className="flex flex-wrap items-center gap-4 border-b border-line bg-surface px-4 py-2 text-sm">
+      <label className="flex items-center gap-2" htmlFor={`${ids}-start`}>
+        {t('startDate')}
+      </label>
+      <input
+        id={`${ids}-start`}
+        type="date"
+        className={field}
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+      />
+      <label className="flex items-center gap-2">
+        {t('length')}
+        <select
+          className={field}
+          value={months}
+          onChange={(e) => setMonths(Number(e.target.value))}
+        >
+          {MONTH_OPTIONS.map((m) => (
+            <option key={m} value={m}>
+              {d('months', { count: m })}
+            </option>
+          ))}
+        </select>
+      </label>
+      <button
+        type="button"
+        disabled={!changed}
+        onClick={apply}
+        className="rounded bg-accent px-3 py-1 font-medium text-accent-ink disabled:opacity-40"
+      >
+        {t('regenerate')}
+      </button>
+      {message && (
+        <span role="status" className="text-ink-muted">
+          {message}
+        </span>
+      )}
+    </div>
   );
 }

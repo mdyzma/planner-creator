@@ -23,9 +23,6 @@
     "untitled": "Untitled planner",
     "yourPlanners": "Your planners",
     "empty": "No planners yet. Create one above.",
-    "devPrefix": "Development:",
-    "devDemoButton": "add the 6-month recovery planner demo",
-    "devDemoSuffix": "with one month, one week, the month-end pages and the crisis section.",
     "pages": "{count, plural, one {# page} other {# pages}}",
     "summary": "{format} · {language} · {pages} · edited {date} · {status}",
     "status": {
@@ -41,7 +38,16 @@
     "translationsLabel": "Translations for {name}",
     "duplicateLabel": "Duplicate {name}",
     "deleteLabel": "Delete {name}",
-    "confirmDelete": "Delete “{name}”? This cannot be undone."
+    "confirmDelete": "Delete “{name}”? This cannot be undone.",
+    "template": "Template",
+    "startDate": "Start date",
+    "undated": "Undated (dates written by hand)",
+    "length": "Length",
+    "months": "{count, plural, one {# month} other {# months}}",
+    "budget": "About {pages, plural, one {# page} other {# pages}} · {sheets} sheets · spine about {spine} mm",
+    "quotes": "Quotes: {available} for {slots} days, each used up to {maxUses} times",
+    "quotesLow": "Add more quotes to avoid repeats within 30 days.",
+    "create": "Create planner"
   },
   "Preview": {
     "view": "View",
@@ -73,7 +79,12 @@
       "outer": "Outer",
       "top": "Top",
       "bottom": "Bottom"
-    }
+    },
+    "startDate": "Start date",
+    "length": "Length",
+    "regenerate": "Regenerate",
+    "regenerated": "Regenerated: {pages} pages.",
+    "orphans": "Edited pages that no longer fit the new dates: {count}."
   },
   "Print": {
     "back": "← Preview",

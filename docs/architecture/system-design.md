@@ -1000,6 +1000,12 @@ planner-creator/
   fields. One PDF can then be reused for any start day.
 - **Determinism:** `generate()` is pure; seeded shuffles use `hash(projectId + selectorId)` so the same
   config always yields the same planner.
+- **Stable keys (implemented in M4):** months, weeks and days get global keys from their own dates
+  (`month:2026-10`, `week:2026-10-26`, `day:2026-11-01/day-left`), never from their parent. When a
+  new start date moves a week into another month, its pages keep their keys and their edits.
+- **Content by date (implemented in M4):** a day's quote is the shuffled deck's item at
+  `dayNumber mod deckSize` (week number for weekly cadence). A date always gets the same quote
+  whatever the start date, consecutive days never share one, and regeneration cannot create repeats.
 - **Output:** `PlannerDocument` + `PageBudget` (`{ total, byTemplate, fillers, paddingToSignature }`)
   shown live in the wizard.
 

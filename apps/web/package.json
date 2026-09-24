@@ -14,6 +14,7 @@
   "dependencies": {
     "@planner/blocks": "workspace:*",
     "@planner/core": "workspace:*",
+    "@planner/generator": "workspace:*",
     "@planner/i18n": "workspace:*",
     "@planner/renderer": "workspace:*",
     "@planner/schema": "workspace:*",

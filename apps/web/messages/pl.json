@@ -23,9 +23,6 @@
     "untitled": "Planer bez nazwy",
     "yourPlanners": "Twoje planery",
     "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",
-    "devPrefix": "Wersja deweloperska:",
-    "devDemoButton": "dodaj demonstracyjny 6-miesięczny planer zdrowienia",
-    "devDemoSuffix": "z jednym miesiącem, jednym tygodniem, podsumowaniem miesiąca i sekcją kryzysową.",
     "pages": "{count, plural, one {# strona} few {# strony} many {# stron} other {# strony}}",
     "summary": "{format} · {language} · {pages} · zmieniono {date} · {status}",
     "status": {
@@ -41,7 +38,16 @@
     "translationsLabel": "Tłumaczenia: {name}",
     "duplicateLabel": "Duplikuj: {name}",
     "deleteLabel": "Usuń: {name}",
-    "confirmDelete": "Usunąć „{name}”? Tej operacji nie można cofnąć."
+    "confirmDelete": "Usunąć „{name}”? Tej operacji nie można cofnąć.",
+    "template": "Szablon",
+    "startDate": "Data rozpoczęcia",
+    "undated": "Bez dat (daty wpisywane ręcznie)",
+    "length": "Długość",
+    "months": "{count, plural, one {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}",
+    "budget": "Około {pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} · arkusze: {sheets} · grzbiet około {spine} mm",
+    "quotes": "Sentencje: {available} na {slots} dni, każda użyta najwyżej {maxUses} razy",
+    "quotesLow": "Dodaj więcej sentencji, aby uniknąć powtórzeń w ciągu 30 dni.",
+    "create": "Utwórz planer"
   },
   "Preview": {
     "view": "Widok",
@@ -73,7 +79,12 @@
       "outer": "zewnętrzny",
       "top": "górny",
       "bottom": "dolny"
-    }
+    },
+    "startDate": "Data rozpoczęcia",
+    "length": "Długość",
+    "regenerate": "Wygeneruj ponownie",
+    "regenerated": "Wygenerowano ponownie: stron {pages}.",
+    "orphans": "Edytowane strony, które nie pasują do nowych dat: {count}."
   },
   "Print": {
     "back": "← Podgląd",

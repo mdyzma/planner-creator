@@ -193,6 +193,9 @@ importers:
       '@planner/core':
         specifier: workspace:*
         version: link:../../packages/planner-core
+      '@planner/generator':
+        specifier: workspace:*
+        version: link:../../packages/planner-generator
       '@planner/i18n':
         specifier: workspace:*
         version: link:../../packages/planner-i18n
@@ -292,6 +295,34 @@ importers:
         specifier: workspace:*
         version: link:../planner-schema
     devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.13.6
+      fast-check:
+        specifier: ^4.10.2
+        version: 4.10.2
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@24.13.6)(vite@8.3.0(@types/node@24.13.6)(jiti@2.7.0))
+
+  packages/planner-generator:
+    dependencies:
+      '@planner/core':
+        specifier: workspace:*
+        version: link:../planner-core
+      '@planner/i18n':
+        specifier: workspace:*
+        version: link:../planner-i18n
+      '@planner/schema':
+        specifier: workspace:*
+        version: link:../planner-schema
+    devDependencies:
+      '@planner/template-therapeutic-recovery':
+        specifier: workspace:*
+        version: link:../../templates/therapeutic-recovery
       '@types/node':
         specifier: ^24.0.0
         version: 24.13.6

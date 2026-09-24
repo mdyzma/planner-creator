@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     '@planner/blocks',
     '@planner/core',
+    '@planner/generator',
     '@planner/i18n',
     '@planner/renderer',
     '@planner/schema',
