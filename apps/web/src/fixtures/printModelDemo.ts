@@ -10,13 +10,16 @@ import type {
   PlannerTemplate,
   SectionNode,
 } from '@planner/schema';
-import { blankTemplate, createProject } from '@planner/schema';
+import { blankTemplate, createProject, parseContentLibrary } from '@planner/schema';
+import seedQuotes from '../../../../templates/therapeutic-recovery/content/quotes.json';
 
 /**
- * Hand-written demo for M1 (print model): placeholder blocks in the real page structure, so
- * A4/A5, mirrored margins, spreads, rails and fillers can be checked before blocks (M3) and the
- * generator (M4) exist. Remove once the therapeutic template can be generated.
+ * Hand-written demo for M1 (print model) and M2 (translations): placeholder blocks in the real
+ * page structure, so A4/A5, mirrored margins, spreads, rails and fillers can be checked before
+ * blocks (M3) and the generator (M4) exist. Remove once the therapeutic template can be generated.
  */
+
+const quotes = parseContentLibrary(seedQuotes);
 
 const block = (id: string, type: string, height?: Length, width?: Length): LayoutNode => ({
   kind: 'block',
@@ -139,6 +142,8 @@ const pageTemplates: Record<string, PageTemplate> = {
     id: 'daily-evening',
     name: { en: 'Day: evening (right)', pl: 'Dzień: wieczór (prawa)' },
     spread: { group: 'daily', position: 'right' },
+    // English only on purpose, so the Translations screen has something to report.
+    rationale: { en: 'Evening reflection sits on the right, across from the day plan.' },
     background: dots,
     body: stack(
       [
@@ -233,5 +238,5 @@ export function createPrintModelDemo(input: {
     pageTemplates,
   };
   const project = createProject({ ...input, name: 'Print model demo', template });
-  return { ...project, document: { root } };
+  return { ...project, content: quotes.ok ? [quotes.value] : [], document: { root } };
 }

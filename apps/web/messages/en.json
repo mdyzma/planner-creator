@@ -1,0 +1,107 @@
+{
+  "Common": {
+    "appName": "Planner Designer",
+    "appDescription": "Design and print bilingual therapeutic planners.",
+    "loading": "Loading…",
+    "notFound": "Planner not found.",
+    "backToPlanners": "Back to your planners",
+    "planners": "← Planners",
+    "interfaceLanguage": "Interface language",
+    "build": "Build {sha}",
+    "languages": {
+      "en": "English",
+      "pl": "Polski"
+    }
+  },
+  "Dashboard": {
+    "intro": "Your planners are stored only in this browser. Export them as JSON to keep a backup.",
+    "newPlanner": "New planner",
+    "name": "Name",
+    "format": "Format",
+    "plannerLanguage": "Planner language",
+    "defaultName": "6-Month Recovery Planner",
+    "untitled": "Untitled planner",
+    "yourPlanners": "Your planners",
+    "empty": "No planners yet. Create one above.",
+    "devPrefix": "Development:",
+    "devDemoButton": "add a print-model demo planner",
+    "devDemoSuffix": "with placeholder pages to check sizes, margins and spreads.",
+    "pages": "{count, plural, one {# page} other {# pages}}",
+    "summary": "{format} · {language} · {pages} · edited {date} · {status}",
+    "status": {
+      "never": "Not exported",
+      "exported": "Exported",
+      "stale": "Changed since export"
+    },
+    "preview": "Preview",
+    "translations": "Translations",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "previewLabel": "Preview {name}",
+    "translationsLabel": "Translations for {name}",
+    "duplicateLabel": "Duplicate {name}",
+    "deleteLabel": "Delete {name}",
+    "confirmDelete": "Delete “{name}”? This cannot be undone."
+  },
+  "Preview": {
+    "view": "View",
+    "spreads": "Spreads",
+    "singlePages": "Single pages",
+    "format": "Format",
+    "plannerLanguage": "Planner language",
+    "zoom": "Zoom",
+    "guides": "Binding & margin guides",
+    "printView": "Print view",
+    "translations": "Translations",
+    "summary": "{pages, plural, one {# page} other {# pages}} ({fillers} filler) · {format} · margins inner {inner} / outer {outer} mm · print option {profile}",
+    "pageLabel": "Page {number}, {side}",
+    "spreadLabel": "Pages {pages}",
+    "side": {
+      "left": "left",
+      "right": "right"
+    },
+    "filler": "blank ({reason})",
+    "fillerReason": {
+      "align": "alignment",
+      "sheet-end": "end of sheet",
+      "pad": "padding"
+    },
+    "unknownTemplate": "Unknown page template {id}",
+    "marginRaised": "{margin} margin raised to {mm} mm",
+    "margin": {
+      "inner": "Inner",
+      "outer": "Outer",
+      "top": "Top",
+      "bottom": "Bottom"
+    }
+  },
+  "Print": {
+    "back": "← Preview",
+    "instructions": "{pages, plural, one {# page} other {# pages}} · {format}. In the print dialog choose <b>Actual size / 100 %</b>, no margins, and turn headers and footers off.",
+    "print": "Print / Save as PDF"
+  },
+  "Translations": {
+    "title": "Translations",
+    "back": "← Preview",
+    "summary": "{total, plural, one {# text} other {# texts}} · missing English: {missingEn} · missing Polish: {missingPl}",
+    "onlyMissing": "Show only missing translations",
+    "allDone": "Every text is translated.",
+    "noneShown": "Nothing to show with this filter.",
+    "missing": "Missing: {language}",
+    "copyEnToPl": "Copy EN → PL",
+    "copyPlToEn": "Copy PL → EN",
+    "copyLabel": "Copy {from} into {to} for {owner} {field}",
+    "fieldLabel": "{owner}, {field} ({language})",
+    "saved": "Saved",
+    "kind": {
+      "template": "Planner",
+      "page-template": "Page templates",
+      "layout-label": "Section labels on pages",
+      "block": "Texts in blocks",
+      "section": "Template sections",
+      "variable": "Variables",
+      "content": "Content library",
+      "document-section": "Planner structure"
+    }
+  }
+}

@@ -1,12 +1,16 @@
 'use client';
 
-import { localize, toSpreads, withFormat } from '@planner/core';
+import { toSpreads, withFormat } from '@planner/core';
+import { formatDate, localize } from '@planner/i18n';
 import { PageView, SpreadView } from '@planner/renderer';
 import type { FormatId, Locale, PlannerProject } from '@planner/schema';
 import { FORMAT_IDS, LOCALES } from '@planner/schema';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo, useState, type ReactNode } from 'react';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { ProjectStatus } from '@/components/ProjectStatus';
+import { Link } from '@/i18n/navigation';
 import { FILLER_PATTERN, layoutProject, type RenderedPage } from '@/lib/pages';
 import { useProject } from '@/lib/useProject';
 
@@ -16,23 +20,12 @@ const ZOOMS = [0.5, 0.75, 1] as const;
 export function PreviewScreen() {
   const id = useSearchParams().get('id');
   const { state, save } = useProject(id);
-
-  if (state.status === 'loading') return <p className="p-6 text-ink-muted">Loading…</p>;
-  if (state.status === 'missing') {
+  if (state.status !== 'ready') {
     return (
-      <p className="p-6">
-        Planner not found.{' '}
-        <Link className="underline" href="/">
-          Back to your planners
-        </Link>
-      </p>
-    );
-  }
-  if (state.status === 'error') {
-    return (
-      <p role="alert" className="p-6 text-danger">
-        {state.message}
-      </p>
+      <ProjectStatus
+        status={state.status}
+        message={state.status === 'error' ? state.message : undefined}
+      />
     );
   }
   return <Preview project={state.project} onChange={save} />;
@@ -45,6 +38,8 @@ function Preview({
   project: PlannerProject;
   onChange: (p: PlannerProject) => void;
 }) {
+  const t = useTranslations('Preview');
+  const common = useTranslations('Common');
   const [view, setView] = useState<ViewMode>('spread');
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>(0.5);
   const [guides, setGuides] = useState(true);
@@ -54,6 +49,14 @@ function Preview({
     [project],
   );
   const fillers = pages.filter((p) => p.page.filler).length;
+  const plannerLocale = project.locale;
+
+  const caption = (p: RenderedPage) => {
+    if (!p.template) return t('filler', { reason: t(`fillerReason.${p.page.filler ?? 'pad'}`) });
+    const name = localize(p.template.name, plannerLocale);
+    const date = p.page.instance?.context.date;
+    return date ? `${name} · ${formatDate(date, plannerLocale, 'weekday-day-month')}` : name;
+  };
 
   const renderPage = (p: RenderedPage) => (
     <figure key={p.page.index} className="m-0 flex flex-col items-center gap-1">
@@ -61,16 +64,16 @@ function Preview({
         frame={p.frame}
         template={p.template}
         fillerPattern={FILLER_PATTERN}
-        locale={project.locale}
+        locale={plannerLocale}
+        grammaticalGender={project.i18nOptions.grammaticalGender}
         mode="preview"
         showGuides={guides}
         printerSafeMargin={project.print.printerSafeMargin}
         pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
-        label={`Page ${p.page.number}, ${p.page.side}`}
+        label={t('pageLabel', { number: p.page.number, side: t(`side.${p.page.side}`) })}
       />
       <figcaption className="text-center text-ink-muted" style={{ fontSize: `${12 / zoom}px` }}>
-        {p.page.number} · {p.page.side} ·{' '}
-        {p.template ? localize(p.template.name, project.locale) : `filler (${p.page.filler})`}
+        {p.page.number} · {t(`side.${p.page.side}`)} · {caption(p)}
       </figcaption>
     </figure>
   );
@@ -79,36 +82,43 @@ function Preview({
     <div aria-hidden="true" style={{ width: `${p ? p.frame.trim.w : 0}mm` }} />
   );
 
+  const warnings = [
+    ...paginationWarnings.map((w) => t('unknownTemplate', { id: w.templateId })),
+    ...frameWarnings.map((w) =>
+      t('marginRaised', { margin: t(`margin.${w.margin}`), mm: w.appliedMm }),
+    ),
+  ];
+
   return (
     <div className="flex h-screen flex-col">
       <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-line bg-surface px-4 py-3">
         <Link href="/" className="text-sm underline">
-          ← Planners
+          {common('planners')}
         </Link>
         <h1 className="font-medium">{project.meta.name}</h1>
         <Segmented
-          label="View"
+          label={t('view')}
           value={view}
           options={[
-            ['spread', 'Spreads'],
-            ['single', 'Single pages'],
+            ['spread', t('spreads')],
+            ['single', t('singlePages')],
           ]}
           onChange={setView}
         />
         <Segmented
-          label="Format"
+          label={t('format')}
           value={project.format}
           options={FORMAT_IDS.map((f) => [f, f] as const)}
           onChange={(f: FormatId) => onChange(withFormat(project, f))}
         />
         <Segmented
-          label="Language"
-          value={project.locale}
+          label={t('plannerLanguage')}
+          value={plannerLocale}
           options={LOCALES.map((l) => [l, l.toUpperCase()] as const)}
           onChange={(locale: Locale) => onChange({ ...project, locale })}
         />
         <label className="flex items-center gap-2 text-sm">
-          Zoom
+          {t('zoom')}
           <select
             className="rounded border border-line bg-surface px-2 py-1"
             value={zoom}
@@ -123,28 +133,36 @@ function Preview({
         </label>
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={guides} onChange={(e) => setGuides(e.target.checked)} />
-          Binding & margin guides
+          {t('guides')}
         </label>
-        <Link href={`/print?id=${project.id}`} className="ml-auto text-sm underline">
-          Print view
-        </Link>
+        <nav className="ml-auto flex items-center gap-4 text-sm">
+          <Link href={`/translations?id=${project.id}`} className="underline">
+            {t('translations')}
+          </Link>
+          <Link href={`/print?id=${project.id}`} className="underline">
+            {t('printView')}
+          </Link>
+          <LanguageSwitcher />
+        </nav>
       </header>
 
       <p className="px-4 py-2 text-sm text-ink-muted" aria-live="polite">
-        {pages.length} pages ({fillers} filler) · {project.format} · margins inner{' '}
-        {project.print.margins.inner} / outer {project.print.margins.outer} mm · print profile{' '}
-        {project.print.profile}
-        {[
-          ...paginationWarnings.map((w) => `unknown template ${w.templateId}`),
-          ...frameWarnings.map((w) => `${w.margin} margin raised to ${w.appliedMm} mm (${w.code})`),
-        ].map((w) => (
+        {t('summary', {
+          pages: pages.length,
+          fillers,
+          format: project.format,
+          inner: project.print.margins.inner,
+          outer: project.print.margins.outer,
+          profile: project.print.profile,
+        })}
+        {warnings.map((w) => (
           <span key={w} className="ml-3 text-danger">
             ⚠ {w}
           </span>
         ))}
       </p>
 
-      <main className="flex-1 overflow-auto bg-bg">
+      <main className="flex-1 overflow-auto bg-bg" lang={plannerLocale}>
         <div className="flex flex-col items-center-safe gap-10 p-8" style={{ zoom }}>
           {view === 'single'
             ? pages.map(renderPage)
@@ -154,7 +172,9 @@ function Preview({
                 return (
                   <section
                     key={i}
-                    aria-label={`Spread ${[s.left?.number, s.right?.number].filter(Boolean).join('–')}`}
+                    aria-label={t('spreadLabel', {
+                      pages: [s.left?.number, s.right?.number].filter(Boolean).join('–'),
+                    })}
                     className="shadow-lg"
                   >
                     <SpreadView

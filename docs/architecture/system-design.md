@@ -602,6 +602,10 @@ Two separate concerns:
 
 1. **UI strings** — `next-intl` message catalogues `apps/web/messages/{en,pl}.json`; locale in URL
    segment (`/pl/…`) so it's switchable anywhere and bookmarkable. UI locale ≠ planner locale.
+   The site is a static export, so there is no middleware: `/` is a tiny page that redirects to the
+   saved choice (`localStorage`), else the browser language, else English. Message keys are
+   type-checked (`global.d.ts`), and a test keeps both catalogues' keys, placeholders and Polish
+   plural forms (one/few/many) in step.
 2. **Planner content** — `LocalizedText` everywhere; `t(text, locale, fallback?)` returns the string or
    a visible `⟨missing: pl⟩` marker in the editor (never in print — print falls back to other locale
    and the export dialog blocks/warns).

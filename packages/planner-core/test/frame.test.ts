@@ -1,6 +1,6 @@
 import { PAGE_FORMATS, createProject, defaultPrintSettings } from '@planner/schema';
 import { describe, expect, it } from 'vitest';
-import { localize, minimumInnerMargin, padToForProfile, resolveFrame, withFormat } from '../src';
+import { minimumInnerMargin, padToForProfile, resolveFrame, withFormat } from '../src';
 
 describe('resolveFrame', () => {
   const print = defaultPrintSettings('A4'); // inner 18, outer 14, top 14, bottom 17
@@ -88,13 +88,5 @@ describe('withFormat', () => {
   it('pads duplex to 2 and 2-up A5 to 4', () => {
     expect(padToForProfile('home-duplex')).toBe(2);
     expect(padToForProfile('home-a5-2up')).toBe(4);
-  });
-});
-
-describe('localize', () => {
-  it('falls back to any translation, then to empty', () => {
-    expect(localize({ en: 'Hi', pl: 'Cześć' }, 'pl')).toBe('Cześć');
-    expect(localize({ en: 'Hi' }, 'pl')).toBe('Hi');
-    expect(localize(undefined, 'pl')).toBe('');
   });
 });

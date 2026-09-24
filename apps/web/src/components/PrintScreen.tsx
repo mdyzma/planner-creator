@@ -2,9 +2,11 @@
 
 import { PageView, PrintDocument } from '@planner/renderer';
 import { PAGE_FORMATS } from '@planner/schema';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+import { ProjectStatus } from '@/components/ProjectStatus';
+import { Link } from '@/i18n/navigation';
 import { FILLER_PATTERN, layoutProject } from '@/lib/pages';
 import { useProject } from '@/lib/useProject';
 
@@ -13,6 +15,7 @@ import { useProject } from '@/lib/useProject';
  * renders this same route to PDF.
  */
 export function PrintScreen() {
+  const t = useTranslations('Print');
   const id = useSearchParams().get('id');
   const { state } = useProject(id);
   const project = state.status === 'ready' ? state.project : undefined;
@@ -21,12 +24,10 @@ export function PrintScreen() {
   if (state.status === 'loading') return null;
   if (!project || !layout) {
     return (
-      <p className="p-6">
-        Planner not found.{' '}
-        <Link className="underline" href="/">
-          Back to your planners
-        </Link>
-      </p>
+      <ProjectStatus
+        status={state.status === 'error' ? 'error' : 'missing'}
+        message={state.status === 'error' ? state.message : undefined}
+      />
     );
   }
 
@@ -37,21 +38,24 @@ export function PrintScreen() {
     <>
       <div className="no-print sticky top-0 z-10 flex flex-wrap items-center gap-4 border-b border-line bg-surface px-4 py-3 text-sm">
         <Link href={`/preview?id=${project.id}`} className="underline">
-          ← Preview
+          {t('back')}
         </Link>
         <span>
-          {layout.pages.length} pages · {project.format}. In the print dialog choose{' '}
-          <strong>Actual size / 100 %</strong>, no margins, and turn headers and footers off.
+          {t.rich('instructions', {
+            pages: layout.pages.length,
+            format: project.format,
+            b: (chunks) => <strong>{chunks}</strong>,
+          })}
         </span>
         <button
           type="button"
           onClick={() => window.print()}
           className="ml-auto rounded bg-accent px-4 py-2 font-medium text-accent-ink"
         >
-          Print / Save as PDF
+          {t('print')}
         </button>
       </div>
-      <div className="print-stack">
+      <div className="print-stack" lang={project.locale}>
         <PrintDocument width={width + 2 * bleed} height={height + 2 * bleed}>
           {layout.pages.map((p) => (
             <PageView
@@ -60,6 +64,7 @@ export function PrintScreen() {
               template={p.template}
               fillerPattern={FILLER_PATTERN}
               locale={project.locale}
+              grammaticalGender={project.i18nOptions.grammaticalGender}
               mode="print"
               pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
             />

@@ -3,21 +3,16 @@
 import type { FormatId, Locale } from '@planner/schema';
 import { FORMAT_IDS, LOCALES, createProject } from '@planner/schema';
 import type { ProjectSummary } from '@planner/storage';
-import Link from 'next/link';
+import { useFormatter, useTranslations } from 'next-intl';
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
 import { createPrintModelDemo } from '@/fixtures/printModelDemo';
+import { Link } from '@/i18n/navigation';
 import { getProjectRepository, requestPersistentStorage } from '@/lib/repository';
 
-const LOCALE_LABELS: Record<Locale, string> = { en: 'English', pl: 'Polski' };
-const EXPORT_LABELS: Record<ProjectSummary['exportStatus'], string> = {
-  never: 'Not exported',
-  exported: 'Exported',
-  stale: 'Changed since export',
-};
-
-const dateFormat = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-
 export function ProjectDashboard() {
+  const t = useTranslations('Dashboard');
+  const common = useTranslations('Common');
+  const format = useFormatter();
   const [projects, setProjects] = useState<ProjectSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,11 +39,13 @@ export function ProjectDashboard() {
     }
   };
 
+  const action = 'rounded border border-line px-3 py-1.5 text-sm hover:bg-bg';
+
   return (
     <div className="space-y-8">
       <NewProjectForm onCreate={(input) => run(() => getProjectRepository().save(input))()} />
       <p className="text-sm text-ink-muted">
-        Development:{' '}
+        {t('devPrefix')}{' '}
         <button
           type="button"
           className="underline"
@@ -63,9 +60,9 @@ export function ProjectDashboard() {
             ),
           )}
         >
-          add a print-model demo planner
+          {t('devDemoButton')}
         </button>{' '}
-        with placeholder pages to check sizes, margins and spreads.
+        {t('devDemoSuffix')}
       </p>
 
       {error && (
@@ -76,12 +73,12 @@ export function ProjectDashboard() {
 
       <section aria-labelledby="projects-heading">
         <h2 id="projects-heading" className="mb-3 text-lg font-medium">
-          Your planners
+          {t('yourPlanners')}
         </h2>
         {projects === null ? (
-          <p className="text-ink-muted">Loading…</p>
+          <p className="text-ink-muted">{common('loading')}</p>
         ) : projects.length === 0 ? (
-          <p className="text-ink-muted">No planners yet. Create one above.</p>
+          <p className="text-ink-muted">{t('empty')}</p>
         ) : (
           <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
             {projects.map((p) => (
@@ -89,37 +86,52 @@ export function ProjectDashboard() {
                 <div className="min-w-48 flex-1">
                   <p className="font-medium">{p.name}</p>
                   <p className="text-sm text-ink-muted">
-                    {p.format} · {LOCALE_LABELS[p.locale]} · {p.pageCount} pages · edited{' '}
-                    {dateFormat.format(new Date(p.updatedAt))} · {EXPORT_LABELS[p.exportStatus]}
+                    {t('summary', {
+                      format: p.format,
+                      language: common(`languages.${p.locale}`),
+                      pages: t('pages', { count: p.pageCount }),
+                      date: format.dateTime(new Date(p.updatedAt), {
+                        dateStyle: 'medium',
+                        timeStyle: 'short',
+                      }),
+                      status: t(`status.${p.exportStatus}`),
+                    })}
                   </p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <Link
                     href={`/preview?id=${p.id}`}
-                    className="rounded border border-line px-3 py-1.5 text-sm hover:bg-bg"
-                    aria-label={`Preview ${p.name}`}
+                    className={action}
+                    aria-label={t('previewLabel', { name: p.name })}
                   >
-                    Preview
+                    {t('preview')}
+                  </Link>
+                  <Link
+                    href={`/translations?id=${p.id}`}
+                    className={action}
+                    aria-label={t('translationsLabel', { name: p.name })}
+                  >
+                    {t('translations')}
                   </Link>
                   <button
                     type="button"
-                    className="rounded border border-line px-3 py-1.5 text-sm hover:bg-bg"
-                    aria-label={`Duplicate ${p.name}`}
+                    className={action}
+                    aria-label={t('duplicateLabel', { name: p.name })}
                     onClick={run(() => getProjectRepository().duplicate(p.id))}
                   >
-                    Duplicate
+                    {t('duplicate')}
                   </button>
                   <button
                     type="button"
-                    className="rounded border border-line px-3 py-1.5 text-sm text-danger hover:bg-bg"
-                    aria-label={`Delete ${p.name}`}
+                    className={`${action} text-danger`}
+                    aria-label={t('deleteLabel', { name: p.name })}
                     onClick={() => {
-                      if (window.confirm(`Delete “${p.name}”? This cannot be undone.`)) {
+                      if (window.confirm(t('confirmDelete', { name: p.name }))) {
                         void run(() => getProjectRepository().delete(p.id))();
                       }
                     }}
                   >
-                    Delete
+                    {t('delete')}
                   </button>
                 </div>
               </li>
@@ -136,8 +148,10 @@ function NewProjectForm({
 }: {
   onCreate: (project: ReturnType<typeof createProject>) => void;
 }) {
+  const t = useTranslations('Dashboard');
+  const common = useTranslations('Common');
   const ids = useId();
-  const [name, setName] = useState('6-Month Recovery Planner');
+  const [name, setName] = useState(() => t('defaultName'));
   const [format, setFormat] = useState<FormatId>('A4');
   const [locale, setLocale] = useState<Locale>('pl');
 
@@ -146,7 +160,7 @@ function NewProjectForm({
     onCreate(
       createProject({
         id: crypto.randomUUID(),
-        name: name.trim() || 'Untitled planner',
+        name: name.trim() || t('untitled'),
         format,
         locale,
         now: new Date().toISOString(),
@@ -163,14 +177,14 @@ function NewProjectForm({
       className="flex flex-wrap items-end gap-4 rounded-lg border border-line bg-surface p-4"
     >
       <h2 id={`${ids}-heading`} className="sr-only">
-        New planner
+        {t('newPlanner')}
       </h2>
       <label className="flex min-w-64 flex-1 flex-col gap-1 text-sm">
-        Name
+        {t('name')}
         <input className={field} value={name} onChange={(e) => setName(e.target.value)} required />
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Format
+        {t('format')}
         <select
           className={field}
           value={format}
@@ -182,15 +196,15 @@ function NewProjectForm({
         </select>
       </label>
       <label className="flex flex-col gap-1 text-sm">
-        Language
+        {t('plannerLanguage')}
         <select
           className={field}
           value={locale}
           onChange={(e) => setLocale(e.target.value as Locale)}
         >
           {LOCALES.map((l) => (
-            <option key={l} value={l}>
-              {LOCALE_LABELS[l]}
+            <option key={l} value={l} lang={l}>
+              {common(`languages.${l}`)}
             </option>
           ))}
         </select>
@@ -199,7 +213,7 @@ function NewProjectForm({
         type="submit"
         className="rounded bg-accent px-4 py-2 font-medium text-accent-ink hover:opacity-90"
       >
-        New planner
+        {t('newPlanner')}
       </button>
     </form>
   );

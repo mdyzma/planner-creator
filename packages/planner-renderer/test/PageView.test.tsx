@@ -64,6 +64,25 @@ describe('PageView', () => {
     expect(html).toContain('Poranek');
   });
 
+  it('resolves gendered wording in labels from the project setting', () => {
+    const gendered: PageTemplate = {
+      ...template,
+      body: { kind: 'stack', gap: 0, label: { pl: 'Jestem {g:gotowy|gotowa}' }, children: [] },
+    };
+    const html = (gender: 'slash' | 'feminine') =>
+      renderToStaticMarkup(
+        <PageView
+          frame={resolveFrame('A4', defaultPrintSettings('A4'), 'right')}
+          template={gendered}
+          locale="pl"
+          grammaticalGender={gender}
+          mode="print"
+        />,
+      );
+    expect(html('slash')).toContain('Jestem gotowy / gotowa');
+    expect(html('feminine')).toContain('Jestem gotowa');
+  });
+
   it('puts the page number in the outer corner', () => {
     expect(render('right', 'print')).toMatch(/data-page-number="true" style="[^"]*right:14mm/);
     expect(render('left', 'print')).toMatch(/data-page-number="true" style="[^"]*left:14mm/);

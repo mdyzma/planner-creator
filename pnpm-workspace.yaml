@@ -6,3 +6,6 @@ packages:
 allowBuilds:
   esbuild: true # bundler used by wrangler
   workerd: true # Cloudflare Workers runtime used by wrangler dev
+  # Pulled in by next-intl's optional message-extraction tooling; prebuilt binaries suffice.
+  '@parcel/watcher': false
+  '@swc/core': false

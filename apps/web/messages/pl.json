@@ -1,0 +1,107 @@
+{
+  "Common": {
+    "appName": "Projektant planerów",
+    "appDescription": "Projektuj i drukuj dwujęzyczne planery terapeutyczne.",
+    "loading": "Wczytywanie…",
+    "notFound": "Nie znaleziono planera.",
+    "backToPlanners": "Wróć do listy planerów",
+    "planners": "← Planery",
+    "interfaceLanguage": "Język interfejsu",
+    "build": "Wersja {sha}",
+    "languages": {
+      "en": "English",
+      "pl": "Polski"
+    }
+  },
+  "Dashboard": {
+    "intro": "Twoje planery są zapisane tylko w tej przeglądarce. Wyeksportuj je do pliku JSON, aby mieć kopię zapasową.",
+    "newPlanner": "Nowy planer",
+    "name": "Nazwa",
+    "format": "Format",
+    "plannerLanguage": "Język planera",
+    "defaultName": "6-miesięczny planer zdrowienia",
+    "untitled": "Planer bez nazwy",
+    "yourPlanners": "Twoje planery",
+    "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",
+    "devPrefix": "Wersja deweloperska:",
+    "devDemoButton": "dodaj demonstracyjny planer modelu druku",
+    "devDemoSuffix": "ze stronami zastępczymi do sprawdzenia rozmiarów, marginesów i rozkładówek.",
+    "pages": "{count, plural, one {# strona} few {# strony} many {# stron} other {# strony}}",
+    "summary": "{format} · {language} · {pages} · zmieniono {date} · {status}",
+    "status": {
+      "never": "Nie wyeksportowano",
+      "exported": "Wyeksportowano",
+      "stale": "Zmieniono po eksporcie"
+    },
+    "preview": "Podgląd",
+    "translations": "Tłumaczenia",
+    "duplicate": "Duplikuj",
+    "delete": "Usuń",
+    "previewLabel": "Podgląd: {name}",
+    "translationsLabel": "Tłumaczenia: {name}",
+    "duplicateLabel": "Duplikuj: {name}",
+    "deleteLabel": "Usuń: {name}",
+    "confirmDelete": "Usunąć „{name}”? Tej operacji nie można cofnąć."
+  },
+  "Preview": {
+    "view": "Widok",
+    "spreads": "Rozkładówki",
+    "singlePages": "Pojedyncze strony",
+    "format": "Format",
+    "plannerLanguage": "Język planera",
+    "zoom": "Powiększenie",
+    "guides": "Prowadnice oprawy i marginesów",
+    "printView": "Widok wydruku",
+    "translations": "Tłumaczenia",
+    "summary": "{pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} (pustych: {fillers}) · {format} · marginesy wewnętrzny {inner} / zewnętrzny {outer} mm · opcja druku {profile}",
+    "pageLabel": "Strona {number}, {side}",
+    "spreadLabel": "Strony {pages}",
+    "side": {
+      "left": "lewa",
+      "right": "prawa"
+    },
+    "filler": "pusta ({reason})",
+    "fillerReason": {
+      "align": "wyrównanie",
+      "sheet-end": "koniec arkusza",
+      "pad": "dopełnienie"
+    },
+    "unknownTemplate": "Nieznany szablon strony {id}",
+    "marginRaised": "Margines ({margin}) zwiększono do {mm} mm",
+    "margin": {
+      "inner": "wewnętrzny",
+      "outer": "zewnętrzny",
+      "top": "górny",
+      "bottom": "dolny"
+    }
+  },
+  "Print": {
+    "back": "← Podgląd",
+    "instructions": "{pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} · {format}. W oknie drukowania wybierz <b>Rzeczywisty rozmiar / 100 %</b>, bez marginesów, i wyłącz nagłówki oraz stopki.",
+    "print": "Drukuj / Zapisz jako PDF"
+  },
+  "Translations": {
+    "title": "Tłumaczenia",
+    "back": "← Podgląd",
+    "summary": "{total, plural, one {# tekst} few {# teksty} many {# tekstów} other {# tekstu}} · brak angielskiego: {missingEn} · brak polskiego: {missingPl}",
+    "onlyMissing": "Pokaż tylko brakujące tłumaczenia",
+    "allDone": "Wszystkie teksty są przetłumaczone.",
+    "noneShown": "Brak pozycji dla tego filtra.",
+    "missing": "Brak: {language}",
+    "copyEnToPl": "Kopiuj EN → PL",
+    "copyPlToEn": "Kopiuj PL → EN",
+    "copyLabel": "Skopiuj {from} do {to} dla {owner} {field}",
+    "fieldLabel": "{owner}, {field} ({language})",
+    "saved": "Zapisano",
+    "kind": {
+      "template": "Planer",
+      "page-template": "Szablony stron",
+      "layout-label": "Nagłówki sekcji na stronach",
+      "block": "Teksty w blokach",
+      "section": "Sekcje szablonu",
+      "variable": "Zmienne",
+      "content": "Biblioteka treści",
+      "document-section": "Struktura planera"
+    }
+  }
+}

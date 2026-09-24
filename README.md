@@ -26,6 +26,7 @@ pnpm check        # lint + typecheck + tests + build, the same as CI
 ```text
 apps/web                 Next.js app (static export, data in the browser's IndexedDB)
 packages/planner-schema  Zod schemas, types, migrations, defaults
+packages/planner-i18n    Translations lookup, dates, plurals, gendered wording, translation scanner
 packages/planner-core    Pagination (sides, spreads, fillers) and page geometry (margins, binding, rail)
 packages/planner-renderer React page rendering in mm, guides, print CSS
 packages/planner-storage Repository interfaces + IndexedDB (Dexie) and in-memory implementations
@@ -33,4 +34,4 @@ templates/               Planner templates and bilingual content (data, not code
 docs/                    Architecture, ADRs, operations, frozen demo reference
 ```
 
-Status: **M1 (print model)**: pagination, mirrored page geometry and true-size rendering. Try it with the dashboard's print-model demo planner → Preview / Print view. See the delivery plan in the design doc, §14.
+Status: **M2 (internationalisation)**: interface in English and Polish (`/en`, `/pl`), bilingual planner content with a Translations screen, Polish date and plural forms, gendered wording. Earlier: M1 print model (pagination, mirrored geometry, true-size rendering). Try it with the dashboard's demo planner → Preview / Translations / Print view. See the delivery plan in the design doc, §14.

@@ -1,11 +1,5 @@
-import type {
-  FormatId,
-  Locale,
-  LocalizedText,
-  PlannerProject,
-  PrintProfile,
-} from '@planner/schema';
-import { LOCALES, defaultPrintSettings, iso838TwoHole } from '@planner/schema';
+import type { FormatId, PlannerProject, PrintProfile } from '@planner/schema';
+import { defaultPrintSettings, iso838TwoHole } from '@planner/schema';
 
 /** Page count multiple each print profile needs so no sheet side is left over. */
 export function padToForProfile(profile: PrintProfile): 1 | 2 | 4 {
@@ -52,13 +46,4 @@ export function withFormat(project: PlannerProject, format: FormatId): PlannerPr
           : binding,
     },
   };
-}
-
-/**
- * Minimal text lookup until planner-i18n (M2): the requested locale, else any translation.
- * Missing translations are reported by the M2 scanner, never thrown.
- */
-export function localize(text: LocalizedText | undefined, locale: Locale): string {
-  if (!text) return '';
-  return text[locale] ?? LOCALES.map((l) => text[l]).find((t) => t !== undefined) ?? '';
 }

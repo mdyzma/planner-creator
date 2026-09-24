@@ -1,4 +1,5 @@
 import type { Box, PageFrame } from '@planner/core';
+import type { GrammaticalGender } from '@planner/i18n';
 import type { Locale, PageTemplate, PatternSpec } from '@planner/schema';
 import type { CSSProperties } from 'react';
 import { Guides } from './Guides';
@@ -14,6 +15,8 @@ export interface PageViewProps {
   /** Pattern for filler pages (the notes page), e.g. 5 mm dots. */
   fillerPattern?: PatternSpec;
   locale: Locale;
+  /** How gendered wording like {g:wdzięczny|wdzięczna} prints (project setting). */
+  grammaticalGender?: GrammaticalGender;
   mode: RenderMode;
   showGuides?: boolean;
   printerSafeMargin?: number;
@@ -40,6 +43,7 @@ export function PageView({
   template,
   fillerPattern,
   locale,
+  grammaticalGender = 'slash',
   mode,
   showGuides = mode === 'edit',
   printerSafeMargin = 5,
@@ -47,7 +51,7 @@ export function PageView({
   renderBlock = placeholderBlock,
   label,
 }: PageViewProps) {
-  const ctx = { locale, mode };
+  const ctx = { locale, mode, gender: grammaticalGender };
   const { trim, bleed, body } = frame;
   const background = template ? template.background : fillerPattern;
 

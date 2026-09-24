@@ -1,5 +1,5 @@
 {
-  "name": "@planner/renderer",
+  "name": "@planner/i18n",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,19 +11,10 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@planner/core": "workspace:*",
-    "@planner/i18n": "workspace:*",
     "@planner/schema": "workspace:*"
-  },
-  "peerDependencies": {
-    "react": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
     "typescript": "~6.0.3",
     "vitest": "^5.0.1"
   }

@@ -1,12 +1,18 @@
-import { localize } from '@planner/core';
-import type { BlockInstance, LayoutNode, Locale } from '@planner/schema';
+import type { GrammaticalGender } from '@planner/i18n';
+import { applyGender, localize } from '@planner/i18n';
+import type { BlockInstance, LayoutNode, Locale, LocalizedText } from '@planner/schema';
 import type { CSSProperties, ReactNode } from 'react';
 import { PAPER, flexFor, mm } from './units';
 
 export interface BlockRenderContext {
   locale: Locale;
   mode: RenderMode;
+  gender: GrammaticalGender;
 }
+
+/** Text for the page: the page locale with fallback, then gendered wording resolved (§7). */
+export const resolveText = (ctx: BlockRenderContext, text: LocalizedText | undefined): string =>
+  applyGender(localize(text, ctx.locale), ctx.gender);
 
 export type RenderMode = 'edit' | 'preview' | 'print';
 
@@ -53,7 +59,7 @@ export function LayoutView({ node, ctx, renderBlock }: LayoutViewProps) {
     minWidth: 0,
     minHeight: 0,
   };
-  const label = node.kind === 'stack' ? localize(node.label, ctx.locale) : '';
+  const label = node.kind === 'stack' ? resolveText(ctx, node.label) : '';
 
   return (
     <div data-layout={node.kind} style={style}>
