@@ -454,7 +454,7 @@
     "progress": "Renderowanie części {done} z {total}…",
     "done": "Gotowe. Pobieranie się rozpoczęło.",
     "fileInfo": "Stron: {pages} · {size} KB",
-    "serviceOffline": "Pliki PDF tworzy usługa eksportu, która nie jest uruchomiona. Na komputerze z kodem planera uruchom:",
+    "serviceOffline": "Pliki PDF tworzy usługa eksportu, która nie jest uruchomiona. Uruchom aplikację poleceniem „pnpm dev” (startuje obie) albo w drugim terminalu uruchom:",
     "serviceUrl": "Oczekiwana pod adresem {url}.",
     "checkAgain": "Sprawdź ponownie",
     "browserPrint": "Drukuj z przeglądarki",

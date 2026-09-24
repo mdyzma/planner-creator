@@ -17,17 +17,13 @@ printer, filled in by hand and ring-bound.
 
 ```bash
 pnpm install
-pnpm dev          # http://localhost:3000
+pnpm dev          # app on http://localhost:3000 + PDF export service on :8787
 pnpm check        # lint + typecheck + tests + build, the same as CI
 ```
 
-PDF export runs through a small local service that drives your installed Google Chrome
-(see apps/export-node/README.md):
-
-```bash
-pnpm --filter @planner/web build
-pnpm --filter @planner/export-node serve   # http://127.0.0.1:8787, used by the Export screen
-```
+`pnpm dev` starts the app and the local PDF export service (it drives your installed Google
+Chrome; see apps/export-node/README.md). For everyday use (starting, printing a month, backups,
+updating, troubleshooting) see the **[runbook](docs/operations/runbook.md)**.
 
 ## Layout
 

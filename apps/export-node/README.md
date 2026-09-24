@@ -6,7 +6,8 @@ Chrome (design §8.3, ADR-0004). It uses the Chrome already installed on the com
 
 ## In the app
 
-1. Build the web app once (the service renders from the build), then start the service:
+1. `pnpm dev` at the repository root starts the app and this service together; the service then
+   renders from the dev server. To render from a production build instead:
 
    ```bash
    pnpm --filter @planner/web build

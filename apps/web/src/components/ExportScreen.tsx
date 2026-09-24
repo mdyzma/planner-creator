@@ -298,7 +298,7 @@ function Export({
                 <>
                   <p>{t('serviceOffline')}</p>
                   <pre className="overflow-x-auto rounded bg-bg p-2 text-xs">
-                    pnpm --filter @planner/export-node serve
+                    pnpm --filter @planner/export-node dev
                   </pre>
                   <p className="text-xs text-ink-muted">
                     {t('serviceUrl', { url: exportServiceUrl() })}

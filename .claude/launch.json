@@ -4,7 +4,7 @@
     {
       "name": "web",
       "runtimeExecutable": "corepack",
-      "runtimeArgs": ["pnpm", "--filter", "@planner/web", "dev"],
+      "runtimeArgs": ["pnpm", "dev"],
       "port": 3000
     }
   ]

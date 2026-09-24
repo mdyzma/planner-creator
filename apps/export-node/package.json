@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Local PDF export service: renders the web app's print route in Chrome (§8.3).",
   "scripts": {
+    "dev": "tsx src/main.ts --web-url http://localhost:3000",
     "serve": "tsx src/main.ts",
     "pdf": "tsx src/cli.ts",
     "typecheck": "tsc -p tsconfig.json",

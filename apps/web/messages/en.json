@@ -454,7 +454,7 @@
     "progress": "Rendering part {done} of {total}…",
     "done": "Done. Your download has started.",
     "fileInfo": "{pages, plural, one {# page} other {# pages}} · {size} KB",
-    "serviceOffline": "PDFs are made by the export service, which isn't running. On the computer with the planner code, run:",
+    "serviceOffline": "PDFs are made by the export service, which isn't running. Start the app with “pnpm dev” (it starts both), or run this in another terminal:",
     "serviceUrl": "Expected at {url}.",
     "checkAgain": "Check again",
     "browserPrint": "Print from the browser instead",
