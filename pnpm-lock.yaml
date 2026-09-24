@@ -187,6 +187,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@planner/core':
+        specifier: workspace:*
+        version: link:../../packages/planner-core
+      '@planner/renderer':
+        specifier: workspace:*
+        version: link:../../packages/planner-renderer
       '@planner/schema':
         specifier: workspace:*
         version: link:../../packages/planner-schema
@@ -224,6 +230,56 @@ importers:
       wrangler:
         specifier: ^4.120.0
         version: 4.137.0(@types/node@24.13.6)
+
+  packages/planner-core:
+    dependencies:
+      '@planner/schema':
+        specifier: workspace:*
+        version: link:../planner-schema
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.13.6
+      fast-check:
+        specifier: ^4.10.2
+        version: 4.10.2
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@24.13.6)(vite@8.3.0(@types/node@24.13.6)(jiti@2.7.0))
+
+  packages/planner-renderer:
+    dependencies:
+      '@planner/core':
+        specifier: workspace:*
+        version: link:../planner-core
+      '@planner/schema':
+        specifier: workspace:*
+        version: link:../planner-schema
+    devDependencies:
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.13.6
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.3.0(@types/react@19.3.0)
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@24.13.6)(vite@8.3.0(@types/node@24.13.6)(jiti@2.7.0))
 
   packages/planner-schema:
     dependencies:

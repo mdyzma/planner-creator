@@ -1,0 +1,125 @@
+import type { Box, PageFrame } from '@planner/core';
+import type { Locale, PageTemplate, PatternSpec } from '@planner/schema';
+import type { CSSProperties } from 'react';
+import { Guides } from './Guides';
+import type { BlockRenderer, RenderMode } from './LayoutView';
+import { LayoutView, placeholderBlock } from './LayoutView';
+import { Pattern } from './Pattern';
+import { PAPER, mm } from './units';
+
+export interface PageViewProps {
+  frame: PageFrame;
+  /** Absent for filler pages. */
+  template?: PageTemplate;
+  /** Pattern for filler pages (the notes page), e.g. 5 mm dots. */
+  fillerPattern?: PatternSpec;
+  locale: Locale;
+  mode: RenderMode;
+  showGuides?: boolean;
+  printerSafeMargin?: number;
+  pageNumber?: number;
+  renderBlock?: BlockRenderer;
+  /** Accessible name for the page region on screen. */
+  label?: string;
+}
+
+const at = (b: Box): CSSProperties => ({
+  position: 'absolute',
+  left: mm(b.x),
+  top: mm(b.y),
+  width: mm(b.w),
+  height: mm(b.h),
+});
+
+/**
+ * One printable page at real size. The outer box is trim + bleed; content is positioned in mm
+ * from the trim box, so screen, print preview and PDF share the same geometry (§8.1).
+ */
+export function PageView({
+  frame,
+  template,
+  fillerPattern,
+  locale,
+  mode,
+  showGuides = mode === 'edit',
+  printerSafeMargin = 5,
+  pageNumber,
+  renderBlock = placeholderBlock,
+  label,
+}: PageViewProps) {
+  const ctx = { locale, mode };
+  const { trim, bleed, body } = frame;
+  const background = template ? template.background : fillerPattern;
+
+  return (
+    <div
+      data-page-side={frame.side}
+      data-format={frame.format}
+      role={mode === 'print' ? undefined : 'region'}
+      aria-label={mode === 'print' ? undefined : label}
+      className={mode === 'print' ? 'planner-print-page' : undefined}
+      style={{
+        position: 'relative',
+        width: mm(trim.w + 2 * bleed),
+        height: mm(trim.h + 2 * bleed),
+        background: PAPER.paper,
+        color: PAPER.ink,
+        overflow: 'hidden',
+        flex: 'none',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          left: mm(bleed),
+          top: mm(bleed),
+          width: mm(trim.w),
+          height: mm(trim.h),
+        }}
+      >
+        {background && (
+          <div style={at(body)}>
+            <Pattern spec={background} width={body.w} height={body.h} />
+          </div>
+        )}
+        {template && (
+          <div data-region="body" style={at(body)}>
+            <LayoutView node={template.body} ctx={ctx} renderBlock={renderBlock} />
+          </div>
+        )}
+        {template?.outerRail && frame.outerRail && (
+          <div
+            data-region="outer-rail"
+            style={{ ...at(frame.outerRail), display: 'flex', flexDirection: 'column', gap: mm(4) }}
+          >
+            {template.outerRail.map((block) => (
+              <div key={block.id} style={{ flex: '0 0 auto' }}>
+                {renderBlock(block, ctx)}
+              </div>
+            ))}
+          </div>
+        )}
+        {pageNumber !== undefined && (
+          <div
+            data-page-number
+            style={{
+              position: 'absolute',
+              bottom: mm(Math.max(4, frame.margins.bottom / 2 - 2)),
+              // Page numbers sit at the outer corner, away from the binding.
+              ...(frame.bindingEdge === 'left'
+                ? { right: mm(frame.margins.right) }
+                : { left: mm(frame.margins.left) }),
+              fontSize: '8pt',
+              color: PAPER.inkMuted,
+            }}
+          >
+            {pageNumber}
+          </div>
+        )}
+        {mode !== 'print' && showGuides && (
+          <Guides frame={frame} printerSafeMargin={printerSafeMargin} />
+        )}
+      </div>
+    </div>
+  );
+}

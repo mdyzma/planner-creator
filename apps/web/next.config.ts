@@ -6,7 +6,7 @@ import type { NextConfig } from 'next';
  */
 const nextConfig: NextConfig = {
   output: 'export',
-  transpilePackages: ['@planner/schema', '@planner/storage'],
+  transpilePackages: ['@planner/core', '@planner/renderer', '@planner/schema', '@planner/storage'],
   images: { unoptimized: true },
   env: {
     NEXT_PUBLIC_BUILD_SHA: (process.env.GITHUB_SHA ?? 'local').slice(0, 7),

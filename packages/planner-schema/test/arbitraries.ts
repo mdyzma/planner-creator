@@ -150,6 +150,7 @@ export const pageTemplate: fc.Arbitrary<PageTemplate> = optional<PageTemplate>(
     ),
     body: layoutNode,
     outerRail: fc.array(blockInstance, { maxLength: 2 }),
+    outerRailWidth: mm,
     free: fc.array(blockInstance, { maxLength: 2 }),
     formatOverrides: optional(
       {
@@ -372,19 +373,24 @@ export const pageInstance: fc.Arbitrary<PageInstance> = optional<PageInstance>(
 );
 
 export const sectionNode: fc.Arbitrary<SectionNode> = fc.letrec((tie) => ({
-  node: fc.record({
-    key: fc.stringMatching(/^[a-z0-9][a-z0-9/-]{0,20}$/),
-    title: localizedText,
-    enabled: fc.boolean(),
-    children: fc.array(
-      fc.oneof(
-        { depthSize: 'small', withCrossShrink: true },
-        pageInstance,
-        tie('node') as fc.Arbitrary<SectionNode>,
+  node: optional<SectionNode>(
+    {
+      key: fc.stringMatching(/^[a-z0-9][a-z0-9/-]{0,20}$/),
+      title: localizedText,
+      enabled: fc.boolean(),
+      startOn,
+      sheetAligned: fc.boolean(),
+      children: fc.array(
+        fc.oneof(
+          { depthSize: 'small', withCrossShrink: true },
+          pageInstance,
+          tie('node') as fc.Arbitrary<SectionNode>,
+        ),
+        { maxLength: 4 },
       ),
-      { maxLength: 4 },
-    ),
-  }),
+    },
+    ['key', 'title', 'enabled', 'children'],
+  ),
 })).node as fc.Arbitrary<SectionNode>;
 
 export const plannerProject: fc.Arbitrary<PlannerProject> = fc.record({

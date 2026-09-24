@@ -301,6 +301,7 @@ interface PageTemplate {
   background?: PatternSpec;                        // blank | lined | dots | squares, pitch, opacity
   body: LayoutNode;                                // flow layout, see §5
   outerRail?: BlockInstance[];                     // blocks pinned to the outer margin
+  outerRailWidth?: number;                         // rail width for this page (mm), e.g. weekly pages
   free?: BlockInstance[];                          // opt-in absolute layer (x,y,w,h in mm)
   formatOverrides?: Partial<Record<FormatId, JsonPatch>>;
   rationale?: LocalizedText;                       // designer guidance ("why this layout"); never printed
@@ -350,6 +351,7 @@ interface PlannerProject {
 interface PlannerDocument { root: SectionNode }
 interface SectionNode {
   key: string; title: LocalizedText; enabled: boolean;
+  startOn?: Side | 'any'; sheetAligned?: boolean;      // copied from the section template; enforced by paginate()
   children: Array<SectionNode | PageInstance>;
 }
 interface PageInstance {

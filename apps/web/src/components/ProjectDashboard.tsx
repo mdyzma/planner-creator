@@ -3,7 +3,9 @@
 import type { FormatId, Locale } from '@planner/schema';
 import { FORMAT_IDS, LOCALES, createProject } from '@planner/schema';
 import type { ProjectSummary } from '@planner/storage';
+import Link from 'next/link';
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
+import { createPrintModelDemo } from '@/fixtures/printModelDemo';
 import { getProjectRepository, requestPersistentStorage } from '@/lib/repository';
 
 const LOCALE_LABELS: Record<Locale, string> = { en: 'English', pl: 'Polski' };
@@ -45,6 +47,26 @@ export function ProjectDashboard() {
   return (
     <div className="space-y-8">
       <NewProjectForm onCreate={(input) => run(() => getProjectRepository().save(input))()} />
+      <p className="text-sm text-ink-muted">
+        Development:{' '}
+        <button
+          type="button"
+          className="underline"
+          onClick={run(() =>
+            getProjectRepository().save(
+              createPrintModelDemo({
+                id: crypto.randomUUID(),
+                now: new Date().toISOString(),
+                format: 'A4',
+                locale: 'pl',
+              }),
+            ),
+          )}
+        >
+          add a print-model demo planner
+        </button>{' '}
+        with placeholder pages to check sizes, margins and spreads.
+      </p>
 
       {error && (
         <p role="alert" className="rounded border border-danger px-3 py-2 text-danger">
@@ -72,6 +94,13 @@ export function ProjectDashboard() {
                   </p>
                 </div>
                 <div className="flex gap-2">
+                  <Link
+                    href={`/preview?id=${p.id}`}
+                    className="rounded border border-line px-3 py-1.5 text-sm hover:bg-bg"
+                    aria-label={`Preview ${p.name}`}
+                  >
+                    Preview
+                  </Link>
                   <button
                     type="button"
                     className="rounded border border-line px-3 py-1.5 text-sm hover:bg-bg"

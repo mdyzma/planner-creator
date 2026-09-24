@@ -29,6 +29,10 @@ export interface SectionNode {
   key: string;
   title: LocalizedText;
   enabled: boolean;
+  /** Copied from the section template by the generator; enforced by pagination. */
+  startOn?: 'left' | 'right' | 'any';
+  /** Start on a recto and end on a verso, so the section occupies whole sheets (§8.4). */
+  sheetAligned?: boolean;
   children: Array<SectionNode | PageInstance>;
 }
 
@@ -37,6 +41,8 @@ export const SectionNode: z.ZodType<SectionNode> = z.lazy(() =>
     key: z.string().min(1).max(300),
     title: LocalizedText,
     enabled: z.boolean(),
+    startOn: z.enum(['left', 'right', 'any']).optional(),
+    sheetAligned: z.boolean().optional(),
     children: z.array(z.union([PageInstance, SectionNode])),
   }),
 );

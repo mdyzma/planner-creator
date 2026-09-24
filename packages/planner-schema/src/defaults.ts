@@ -2,12 +2,12 @@ import { PAGE_FORMATS, type FormatId } from './formats';
 import type { GenerationConfig } from './generation';
 import { PROJECT_MIGRATIONS, TEMPLATE_MIGRATIONS } from './migrations';
 import type { Locale } from './primitives';
-import type { Binding, PrintSettings } from './print';
+import type { PrintSettings, RingBinding } from './print';
 import type { PlannerProject } from './project';
 import type { PlannerTemplate } from './template';
 
 /** ISO 838 two-hole punching: Ø 6 mm holes, centres 12 mm from the edge, 80 mm apart. */
-export function iso838TwoHole(format: FormatId): Binding {
+export function iso838TwoHole(format: FormatId): RingBinding {
   const middle = PAGE_FORMATS[format].height / 2;
   return {
     kind: 'ring',

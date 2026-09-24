@@ -29,6 +29,8 @@ export const PageTemplate = z.object({
   body: LayoutNode,
   /** Blocks pinned to the side-aware outer margin rail. */
   outerRail: z.array(BlockInstance).optional(),
+  /** Rail width for this page; overrides the print setting (e.g. ~28 mm on weekly pages). */
+  outerRailWidth: Mm.optional(),
   /** Opt-in absolute layer. */
   free: z.array(BlockInstance).optional(),
   formatOverrides: z.partialRecord(FormatId, z.array(JsonPatchOp)).optional(),

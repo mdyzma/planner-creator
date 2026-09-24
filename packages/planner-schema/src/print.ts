@@ -24,6 +24,7 @@ export const Binding = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('none') }),
 ]);
 export type Binding = z.infer<typeof Binding>;
+export type RingBinding = Extract<Binding, { kind: 'ring' }>;
 
 export const PrintProfile = z.enum([
   'home-duplex',

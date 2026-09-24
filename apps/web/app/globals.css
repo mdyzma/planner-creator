@@ -47,3 +47,22 @@ body {
   outline: 2px solid var(--ui-focus);
   outline-offset: 2px;
 }
+
+/* Print view: pages spaced out on screen, edge to edge on paper. */
+.print-stack [data-print-document] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8mm;
+  padding: 8mm 0;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  .print-stack [data-print-document] {
+    display: block;
+    padding: 0;
+  }
+}
