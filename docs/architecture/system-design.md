@@ -917,6 +917,12 @@ release to catch drift early.
 - **Offline / PWA** (optional, later): the hosted web app can be installed and work offline, using the
   browser-print fallback until a connection is available.
 
+**As built in M8** (ADR-0008 amendment): a single Worker, `apps/worker`, serves the static site and
+`/api/export/pdf` on one origin, rendering with Browser Run through `@cloudflare/puppeteer`. The web
+app talks to the local export service during development and to its own origin when deployed.
+Security headers come from `apps/web/public/_headers`; the privacy notice is at `/[locale]/privacy`.
+Owner steps (secrets, domain, WAF) are in `docs/operations/cloudflare.md`.
+
 ### 10.5 Environments and CI/CD (GitHub Actions → Cloudflare)
 
 | Environment | Trigger | URL | Purpose |
@@ -972,7 +978,7 @@ planner-creator/
 ├── apps/
 │   ├── web/                     Next.js app, static export (features/ as in the brief + messages/{en,pl}.json)
 │   ├── export-node/             Node + Playwright export server (local dev, CI, Docker escape hatch)
-│   └── export-cf/               Cloudflare Worker on Browser Run (wrangler.jsonc); same HTTP contract
+│   └── worker/                  Cloudflare Worker: static site + PDF export on Browser Run (wrangler.jsonc)
 ├── packages/
 │   ├── planner-schema/          Zod schemas, types, migrations      (no deps)
 │   ├── planner-i18n/            LocalizedText, Intl helpers, scanner

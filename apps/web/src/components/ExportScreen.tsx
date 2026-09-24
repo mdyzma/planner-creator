@@ -13,12 +13,13 @@ import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
 import { downloadText } from '@/lib/content';
 import {
-  EXPORT_SERVICE_URL,
   ExportError,
   downloadBytes,
   exportPdf,
   exportServiceAvailable,
+  exportServiceUrl,
   fileStem,
+  usesLocalExportService,
 } from '@/lib/exportClient';
 import { getProjectRepository } from '@/lib/repository';
 import { projectToJson, templateToJson } from '@/lib/transfer';
@@ -293,13 +294,19 @@ function Export({
           </h2>
           {service === 'offline' ? (
             <div className="flex flex-col gap-2">
-              <p>{t('serviceOffline')}</p>
-              <pre className="overflow-x-auto rounded bg-bg p-2 text-xs">
-                pnpm --filter @planner/export-node serve
-              </pre>
-              <p className="text-xs text-ink-muted">
-                {t('serviceUrl', { url: EXPORT_SERVICE_URL })}
-              </p>
+              {usesLocalExportService() ? (
+                <>
+                  <p>{t('serviceOffline')}</p>
+                  <pre className="overflow-x-auto rounded bg-bg p-2 text-xs">
+                    pnpm --filter @planner/export-node serve
+                  </pre>
+                  <p className="text-xs text-ink-muted">
+                    {t('serviceUrl', { url: exportServiceUrl() })}
+                  </p>
+                </>
+              ) : (
+                <p>{t('hostedUnavailable')}</p>
+              )}
               <div className="flex flex-wrap gap-2">
                 <button type="button" className={secondary} onClick={() => void check()}>
                   {t('checkAgain')}

@@ -36,3 +36,21 @@ needs headless Chromium (ADR-0004). The code is on GitHub.
 − Browser Run limits (60 s idle timeout, extendable to 10 min; per-plan concurrency) shape the design
   into per-section rendering. Re-check the limits before launch.
 − Vendor coupling is limited to `apps/export-cf` and `wrangler.jsonc`; the web build is a portable static site.
+
+## Amendment (2026-09-25, M8 as built)
+- **One Worker, one origin.** `apps/worker` (worker name `planner-creator`) serves the static build
+  through Workers Static Assets and runs code only for `/api/*` (`run_worker_first`). The export
+  endpoint is `POST /api/export/pdf` with the same contract as `apps/export-node`; the request
+  validation is shared (`@planner/pdf/request`). Same origin means no CORS: the Worker refuses
+  requests whose `Origin` is not the site itself.
+- **Browser sessions are reused** (`puppeteer.sessions` / `connect`, `keep_alive` 60 s), so the
+  eight parts of a planner usually share one browser instead of launching eight.
+- **Abuse limits:** Workers rate limiting binding (20 requests per minute per IP), 10 MB body limit,
+  and a zone WAF rule once a domain exists (docs/operations/cloudflare.md).
+- **Security headers** (CSP, nosniff, no-referrer, permissions, COOP, HSTS) come from a `_headers`
+  file in the static build. Next.js' static export needs `'unsafe-inline'` scripts; Zod runs in
+  jitless mode so no `eval` is needed anywhere.
+- **Free plan first.** Browser Run on Workers Free (10 browser-minutes a day) is enough to start;
+  switch to Paid if exports hit the limit.
+- **Preview deploys per PR** are not set up (solo workflow). The drift check runs weekly rather than
+  nightly, to spend fewer browser-minutes.

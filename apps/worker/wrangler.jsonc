@@ -1,0 +1,30 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  // The whole site: static files from the web build, plus the PDF export API (docs/adr/0008).
+  "name": "planner-creator",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "../web/out",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Everything else is served as static files without running the Worker.
+    "run_worker_first": ["/api/*"],
+  },
+  // Browser Run (Browser Rendering) for PDF export. Free plan: 10 browser minutes a day.
+  "browser": { "binding": "BROWSER" },
+  // At most 20 export requests per client per minute (a full planner is about 8).
+  "ratelimits": [
+    {
+      "name": "EXPORT_LIMITER",
+      "namespace_id": "1001",
+      "simple": { "limit": 20, "period": 60 },
+    },
+  ],
+  "observability": { "enabled": true, "head_sampling_rate": 1 },
+  "workers_dev": true,
+  "preview_urls": true,
+  // With a domain, add it here (docs/operations/cloudflare.md):
+  // "routes": [{ "pattern": "planner.example.com", "custom_domain": true }],
+}

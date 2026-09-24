@@ -3,21 +3,29 @@ import { assemble, mergePdfs, planExport } from '@planner/pdf';
 import type { PlannerProject, PrintProfile } from '@planner/schema';
 import { PAGE_FORMATS } from '@planner/schema';
 
+/** The export service on the user's own computer (apps/export-node). */
+export const LOCAL_EXPORT_SERVICE = 'http://127.0.0.1:8787';
+
 /**
- * The PDF export service (§8.3). For now it runs on the user's own computer
- * (`pnpm --filter @planner/export-node serve`); the hosted service arrives in M8 and is selected
- * with NEXT_PUBLIC_EXPORT_URL.
+ * Where the PDF export service is (§8.3): NEXT_PUBLIC_EXPORT_URL when set; else the local
+ * service during development (`pnpm dev`), and the site's own Worker (`/api/export`, Browser Run)
+ * in the built site.
  */
-export const EXPORT_SERVICE_URL = (
-  process.env.NEXT_PUBLIC_EXPORT_URL ?? 'http://127.0.0.1:8787'
-).replace(/\/$/, '');
+export function exportServiceUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_EXPORT_URL;
+  if (configured !== undefined) return configured.replace(/\/$/, '');
+  return process.env.NODE_ENV === 'development' ? LOCAL_EXPORT_SERVICE : '';
+}
+
+/** True when PDFs come from the local service the user starts, not the hosted one. */
+export const usesLocalExportService = () => exportServiceUrl() === LOCAL_EXPORT_SERVICE;
 
 /** Parts rendered at the same time. */
 const CONCURRENCY = 2;
 
 export async function exportServiceAvailable(timeoutMs = 1500): Promise<boolean> {
   try {
-    const res = await fetch(`${EXPORT_SERVICE_URL}/api/export/health`, {
+    const res = await fetch(`${exportServiceUrl()}/api/export/health`, {
       signal: AbortSignal.timeout(timeoutMs),
     });
     return res.ok;
@@ -28,7 +36,7 @@ export async function exportServiceAvailable(timeoutMs = 1500): Promise<boolean>
 
 export class ExportError extends Error {
   constructor(
-    readonly reason: 'offline' | 'rejected' | 'failed',
+    readonly reason: 'offline' | 'busy' | 'rejected' | 'failed',
     message: string,
   ) {
     super(message);
@@ -38,7 +46,7 @@ export class ExportError extends Error {
 async function renderPart(project: PlannerProject, part: ExportPart): Promise<Uint8Array> {
   let res: Response;
   try {
-    res = await fetch(`${EXPORT_SERVICE_URL}/api/export/pdf`, {
+    res = await fetch(`${exportServiceUrl()}/api/export/pdf`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ project, from: part.from, to: part.to, padAfter: part.padAfter }),
@@ -48,7 +56,9 @@ async function renderPart(project: PlannerProject, part: ExportPart): Promise<Ui
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    throw new ExportError(res.status < 500 ? 'rejected' : 'failed', `${res.status} ${detail}`);
+    const reason =
+      res.status === 429 || res.status === 503 ? 'busy' : res.status < 500 ? 'rejected' : 'failed';
+    throw new ExportError(reason, `${res.status} ${detail}`);
   }
   return new Uint8Array(await res.arrayBuffer());
 }

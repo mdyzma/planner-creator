@@ -26,6 +26,13 @@ export default tseslint.config(
     },
   },
   {
+    // Plain Node build scripts.
+    files: ['**/scripts/**/*.mjs'],
+    languageOptions: {
+      globals: { URL: 'readonly', console: 'readonly', process: 'readonly' },
+    },
+  },
+  {
     // Dependency rule (docs/architecture/system-design.md §3): engine packages must not
     // depend on the app or on template data.
     files: ['packages/**/*.ts'],

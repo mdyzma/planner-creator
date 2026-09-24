@@ -23,6 +23,7 @@ jobs:
     timeout-minutes: 10
     environment: production
     env:
+      WRANGLER_SEND_METRICS: false
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
     steps:
@@ -48,9 +49,9 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
 
-      - name: Install wrangler
+      - name: Install the Worker and wrangler
         if: steps.creds.outputs.ready == 'true'
-        run: pnpm install --frozen-lockfile --filter @planner/web
+        run: pnpm install --frozen-lockfile --filter "@planner/worker..."
 
       # Deploy exactly the files that CI tested.
       - uses: actions/download-artifact@v8
@@ -62,7 +63,7 @@ jobs:
       - name: Deploy
         id: deploy
         if: steps.creds.outputs.ready == 'true'
-        working-directory: apps/web
+        working-directory: apps/worker
         run: |
           pnpm exec wrangler deploy --message "${GITHUB_SHA::7}" | tee deploy.log
           url=$(grep -oE 'https://[a-zA-Z0-9.-]+\.workers\.dev' deploy.log | head -n1)
@@ -71,16 +72,24 @@ jobs:
 
       - name: Smoke test
         if: steps.creds.outputs.ready == 'true' && steps.deploy.outputs.url != ''
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
         run: |
+          ok=false
           for attempt in 1 2 3 4 5; do
-            if curl -fsS "${{ steps.deploy.outputs.url }}" | grep -q "Planner Designer"; then
-              echo "Smoke test passed"; exit 0
-            fi
+            if curl -fsSL "$URL/en" | grep -q "Planner Designer"; then ok=true; break; fi
             sleep 5
           done
-          echo "::error::Deployed site did not respond as expected"; exit 1
+          [ "$ok" = true ] || { echo "::error::The site did not respond as expected"; exit 1; }
+          if ! curl -fsS "$URL/api/export/health" | grep -q '"ok":true'; then
+            echo "::error::PDF export is not available (is Browser Run enabled?)"; exit 1
+          fi
+          if ! curl -fsSIL "$URL/en" | grep -qi "^content-security-policy:"; then
+            echo "::error::Security headers are missing"; exit 1
+          fi
+          echo "Smoke test passed: site, PDF export, security headers" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Roll back on failure
         if: failure() && steps.deploy.outcome == 'success'
-        working-directory: apps/web
+        working-directory: apps/worker
         run: pnpm exec wrangler rollback --message "Automatic rollback after failed smoke test (${GITHUB_SHA::7})"

@@ -1,0 +1,56 @@
+name: Drift
+
+# Weekly check that PDFs from the hosted Worker (Cloudflare Browser Run) still match a local
+# Chrome rendering of the same deployed pages (M8 exit criterion, docs/operations/cloudflare.md).
+# Set the repository variable PRODUCTION_URL (e.g. https://planner-creator.<you>.workers.dev).
+
+on:
+  schedule:
+    - cron: '17 5 * * 1' # Mondays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  drift:
+    name: Browser Run vs local Chrome
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DRIFT_URL: ${{ vars.PRODUCTION_URL }}
+    steps:
+      - name: Check configuration
+        id: config
+        run: |
+          if [ -z "$DRIFT_URL" ]; then
+            echo "::notice::Repository variable PRODUCTION_URL is not set; skipping the drift check."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v7
+        if: steps.config.outputs.ready == 'true'
+
+      - uses: pnpm/action-setup@v6
+        if: steps.config.outputs.ready == 'true'
+
+      - uses: actions/setup-node@v7
+        if: steps.config.outputs.ready == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          pnpm install --frozen-lockfile --filter "@planner/export-node..."
+          sudo apt-get install -y --no-install-recommends poppler-utils
+
+      - name: Compare renderings
+        if: steps.config.outputs.ready == 'true'
+        run: pnpm --filter @planner/export-node exec vitest run --config vitest.e2e.config.ts test/drift.e2e.test.ts

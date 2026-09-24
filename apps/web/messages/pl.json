@@ -11,7 +11,8 @@
     "languages": {
       "en": "English",
       "pl": "Polski"
-    }
+    },
+    "privacy": "Prywatność"
   },
   "Dashboard": {
     "intro": "Twoje planery są zapisane tylko w tej przeglądarce. Wyeksportuj je do pliku JSON, aby mieć kopię zapasową.",
@@ -461,12 +462,47 @@
     "error": {
       "offline": "Usługa eksportu przestała odpowiadać. Uruchom ją i spróbuj ponownie.",
       "rejected": "Usługa eksportu odrzuciła ten planer. Zapisz go jako JSON i sprawdź.",
-      "failed": "Usługa eksportu nie mogła wyrenderować stron. Spróbuj ponownie."
+      "failed": "Usługa eksportu nie mogła wyrenderować stron. Spróbuj ponownie.",
+      "busy": "Usługa PDF jest zajęta. Odczekaj minutę i spróbuj ponownie."
     },
     "json": "Pliki JSON",
     "saveProject": "Zapisz planer jako JSON",
     "saveTemplate": "Zapisz szablon jako JSON",
     "jsonHint": "Plik planera to pełna kopia zapasowa, razem z imieniem i datami, do późniejszego importu na pulpicie. Plik szablonu zawiera tylko układ i biblioteki treści, do udostępniania lub kontroli wersji.",
-    "templateName": "Szablon: {name}"
+    "templateName": "Szablon: {name}",
+    "hostedUnavailable": "Eksport do PDF jest teraz niedostępny. Spróbuj ponownie za kilka minut albo wydrukuj z przeglądarki."
+  },
+  "Privacy": {
+    "title": "Prywatność",
+    "updated": "Ostatnia aktualizacja: 25 września 2026",
+    "summary": "Projektant planerów nie ma kont, plików cookie ani analityki. Twoje planery zostają w przeglądarce; opuszczają ją tylko na chwilę, gdy tworzysz PDF.",
+    "stored": {
+      "title": "Co jest zapisywane i gdzie",
+      "body": "Planery, ich teksty i sentencje oraz wszystko, co w nie wpiszesz (np. imię lub daty), są zapisywane wyłącznie w tej przeglądarce, w jej lokalnej bazie danych (IndexedDB). Nie trafiają do nas i nie ma ich kopii na serwerze. Wybrany język interfejsu jest zapamiętywany w pamięci lokalnej przeglądarki."
+    },
+    "tracking": {
+      "title": "Bez śledzenia",
+      "body": "Strona nie ustawia plików cookie i nie korzysta z analityki, reklam ani usług śledzących."
+    },
+    "export": {
+      "title": "Tworzenie PDF",
+      "body": "Gdy naciśniesz „Utwórz PDF”, planer (układ, teksty oraz wpisane imiona i daty) jest wysyłany szyfrowanym połączeniem do usługi PDF tej strony. Usługa otwiera go w tymczasowej przeglądarce w Cloudflare (Browser Run), drukuje strony i odsyła plik PDF. Planer nie jest zapisywany ani logowany. Na Twoim komputerze lokalna usługa eksportu robi to samo, a nic nie opuszcza komputera."
+    },
+    "hosting": {
+      "title": "Hosting",
+      "body": "Strona działa w Cloudflare. Jak każda witryna, Cloudflare przetwarza dane techniczne, np. adresy IP, aby dostarczać i chronić stronę, zgodnie z własną polityką prywatności. Limit tworzenia PDF używa Twojego adresu IP przez minutę i niczego potem nie przechowuje."
+    },
+    "paper": {
+      "title": "Notatki należą do papieru",
+      "body": "Planer jest przeznaczony do wydruku in blanco i wypełniania odręcznie. Nie wpisuj do projektanta notatek o zdrowiu ani z terapii: wydrukowane strony są dla nich najbezpieczniejszym miejscem."
+    },
+    "backups": {
+      "title": "Kopie zapasowe i usuwanie",
+      "body": "Wyczyszczenie danych tej strony w przeglądarce trwale usuwa Twoje planery. Użyj „Zapisz planer jako JSON” na ekranie Eksport, aby zachować kopię. Usunięcie planera na pulpicie usuwa go z tej przeglądarki."
+    },
+    "contact": {
+      "title": "Pytania",
+      "body": "Kod źródłowy jest publiczny. W razie pytań otwórz zgłoszenie (issue) w <repo>repozytorium projektu</repo>."
+    }
   }
 }

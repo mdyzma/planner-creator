@@ -28,7 +28,8 @@ returned directly.
 | `EXPORT_WEB_URL` | — | Render from a running web app (e.g. the dev server) instead of `apps/web/out` |
 | `CHROME_PATH` | Google Chrome | Another Chrome or Chromium |
 
-The web app looks for the service at `NEXT_PUBLIC_EXPORT_URL` (default `http://127.0.0.1:8787`).
+During development (`pnpm dev`) the web app uses this service at `http://127.0.0.1:8787`; the
+deployed site uses its own Worker (apps/worker) instead. `NEXT_PUBLIC_EXPORT_URL` overrides both.
 
 ## From the command line
 

@@ -1,6 +1,7 @@
 import type { Locale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { Link } from '@/i18n/navigation';
 import { ProjectDashboard } from '@/components/ProjectDashboard';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -19,8 +20,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <LanguageSwitcher />
       </header>
       <ProjectDashboard />
-      <footer className="mt-16 text-xs text-ink-muted">
-        {t('build', { sha: process.env.NEXT_PUBLIC_BUILD_SHA ?? 'local' })}
+      <footer className="mt-16 flex flex-wrap gap-4 text-xs text-ink-muted">
+        <Link href="/privacy" className="underline">
+          {t('privacy')}
+        </Link>
+        <span>{t('build', { sha: process.env.NEXT_PUBLIC_BUILD_SHA ?? 'local' })}</span>
       </footer>
     </main>
   );

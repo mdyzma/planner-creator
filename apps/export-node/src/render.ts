@@ -1,18 +1,13 @@
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import type { PlannerProject } from '@planner/schema';
+import type { RenderRequest } from '@planner/pdf';
+import { EXPORT_READY_SELECTOR, printRoute } from '@planner/pdf';
 import type { Browser } from 'playwright-core';
 import { chromium } from 'playwright-core';
 import { serveStatic } from './static';
 
-/** Same shape as the web app's `ExportPayload` (apps/web/src/lib/exportPayload.ts). */
-export interface RenderRequest {
-  project: PlannerProject;
-  from: number;
-  to: number;
-  padAfter: number;
-}
+export type { RenderRequest };
 
 export interface Renderer {
   render(request: RenderRequest): Promise<Uint8Array>;
@@ -84,9 +79,8 @@ export async function createRenderer(options: RendererOptions = {}): Promise<Ren
         (window as unknown as { __PLANNER_EXPORT__: unknown }).__PLANNER_EXPORT__ =
           JSON.parse(json);
       }, JSON.stringify(request));
-      const locale = request.project.locale;
-      await page.goto(`${site.url}/${locale}/print`, { waitUntil: 'load' });
-      await page.waitForSelector('html[data-export-ready="true"]', { timeout: 120_000 });
+      await page.goto(`${site.url}${printRoute(request)}`, { waitUntil: 'load' });
+      await page.waitForSelector(EXPORT_READY_SELECTOR, { timeout: 120_000 });
       const pdf = await page.pdf({ preferCSSPageSize: true, printBackground: true });
       return new Uint8Array(pdf);
     } finally {

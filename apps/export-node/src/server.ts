@@ -1,7 +1,8 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
-import { MAX_IMPORT_BYTES, parseProject } from '@planner/schema';
+import { parseRenderRequest } from '@planner/pdf';
+import { MAX_IMPORT_BYTES } from '@planner/schema';
 import type { Renderer } from './render';
 
 /**
@@ -34,9 +35,6 @@ function readBody(req: IncomingMessage, limit: number): Promise<string> {
     req.on('error', reject);
   });
 }
-
-const isInt = (v: unknown, min = 0): v is number =>
-  typeof v === 'number' && Number.isInteger(v) && v >= min;
 
 export function createExportServer({ port = 8787, allowedOrigins = [], renderer }: ServerOptions) {
   const json = (res: ServerResponse, status: number, body: unknown) => {
@@ -78,15 +76,10 @@ export function createExportServer({ port = 8787, allowedOrigins = [], renderer 
         const tooLarge = e instanceof Error && e.message === 'too-large';
         return json(res, tooLarge ? 413 : 400, { error: tooLarge ? 'too large' : 'invalid JSON' });
       }
-      const { project, from, to, padAfter } = (body ?? {}) as Record<string, unknown>;
-      const parsed = parseProject(project);
-      if (!parsed.ok)
-        return json(res, 422, { error: 'invalid project', issues: parsed.issues.slice(0, 5) });
-      if (!isInt(from) || !isInt(to) || to < from || !isInt(padAfter) || padAfter > 3) {
-        return json(res, 422, { error: 'invalid page range' });
-      }
+      const parsed = parseRenderRequest(body);
+      if (!parsed.ok) return json(res, 422, { error: parsed.error, issues: parsed.issues });
       try {
-        const pdf = await renderer.render({ project: parsed.value, from, to, padAfter });
+        const pdf = await renderer.render(parsed.request);
         res.writeHead(200, { 'content-type': 'application/pdf', 'cache-control': 'no-store' });
         res.end(Buffer.from(pdf));
       } catch (e) {

@@ -11,7 +11,8 @@
     "languages": {
       "en": "English",
       "pl": "Polski"
-    }
+    },
+    "privacy": "Privacy"
   },
   "Dashboard": {
     "intro": "Your planners are stored only in this browser. Export them as JSON to keep a backup.",
@@ -461,12 +462,47 @@
     "error": {
       "offline": "The export service stopped responding. Start it and try again.",
       "rejected": "The export service refused this planner. Save it as JSON and check it.",
-      "failed": "The export service could not render the pages. Try again."
+      "failed": "The export service could not render the pages. Try again.",
+      "busy": "The PDF service is busy. Wait a minute and try again."
     },
     "json": "JSON files",
     "saveProject": "Save planner as JSON",
     "saveTemplate": "Save template as JSON",
     "jsonHint": "The planner file is a full backup, including your name and dates, to import later on the dashboard. The template file holds the layout and content libraries only, for sharing or version control.",
-    "templateName": "Template: {name}"
+    "templateName": "Template: {name}",
+    "hostedUnavailable": "PDF export is not available at the moment. Try again in a few minutes, or print from the browser."
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "updated": "Last updated 25 September 2026",
+    "summary": "Planner Designer has no accounts, no cookies and no analytics. Your planners stay in your browser; they only leave it for a moment when you create a PDF.",
+    "stored": {
+      "title": "What is stored, and where",
+      "body": "Planners, their texts and quotes, and anything you type into them (such as your name or dates) are stored only in this browser, in its local database (IndexedDB). They are not sent to us and there is no copy on a server. The interface language you choose is remembered in the browser's local storage."
+    },
+    "tracking": {
+      "title": "No tracking",
+      "body": "The site sets no cookies and uses no analytics, advertising or tracking services."
+    },
+    "export": {
+      "title": "Creating a PDF",
+      "body": "When you press “Create PDF”, the planner (its layout, texts and any names or dates you filled in) is sent over an encrypted connection to the site's PDF service. The service opens it in a temporary browser on Cloudflare (Browser Run), prints the pages and sends the PDF back. The planner is not stored or logged. On your own computer, the local export service does the same without anything leaving the computer."
+    },
+    "hosting": {
+      "title": "Hosting",
+      "body": "The site runs on Cloudflare. Like any website, Cloudflare processes technical data such as IP addresses to deliver and protect the site, under its own privacy policy. A rate limit on PDF creation uses your IP address for one minute and keeps nothing afterwards."
+    },
+    "paper": {
+      "title": "Your notes belong on paper",
+      "body": "The planner is meant to be printed blank and filled in by hand. Please do not type health or therapy notes into the designer: printed pages are the safest place for them."
+    },
+    "backups": {
+      "title": "Backups and deleting",
+      "body": "Clearing this site's data in your browser deletes your planners for good. Use “Save planner as JSON” on the Export screen to keep a copy. Deleting a planner on the dashboard removes it from this browser."
+    },
+    "contact": {
+      "title": "Questions",
+      "body": "The source code is public. For questions, open an issue in the <repo>project repository</repo>."
+    }
   }
 }
