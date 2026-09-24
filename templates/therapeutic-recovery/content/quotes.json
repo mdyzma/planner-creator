@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "library": "quotes",
+  "items": [
+    {
+      "id": "q-0001",
+      "kind": "quote",
+      "text": {
+        "en": "Asking for help is not failure. It is the first step I take with someone, not against myself.",
+        "pl": "Prośba o pomoc nie jest porażką. To pierwszy krok, który robię razem z kimś, a nie przeciwko sobie."
+      },
+      "license": "original",
+      "categories": ["recovery", "courage"],
+      "tags": ["help", "support"]
+    },
+    {
+      "id": "q-0002",
+      "kind": "quote",
+      "text": {
+        "en": "I don't have to carry my whole life at once. Today it is enough to look after these 24 hours.",
+        "pl": "Nie muszę dźwigać całego życia naraz. Wystarczy, że dziś zadbam o te jedne 24 godziny."
+      },
+      "license": "original",
+      "categories": ["recovery", "patience"],
+      "tags": ["24h", "today"]
+    },
+    {
+      "id": "q-0003",
+      "kind": "quote",
+      "text": {
+        "en": "Today I choose one small thing that makes me stronger – and I see it through.",
+        "pl": "Dziś wybieram jedną małą rzecz, która mnie wzmacnia – i doprowadzam ją do końca."
+      },
+      "license": "original",
+      "categories": ["responsibility", "change"],
+      "tags": ["today", "small-steps"]
+    },
+    {
+      "id": "q-0004",
+      "kind": "quote",
+      "text": {
+        "en": "Before I react, I can take a breath. That short pause belongs to me alone.",
+        "pl": "Zanim zareaguję, mogę wziąć oddech. Ta krótka pauza należy tylko do mnie."
+      },
+      "license": "original",
+      "categories": ["self-compassion", "responsibility"],
+      "tags": ["pause", "emotions"]
+    },
+    {
+      "id": "q-0005",
+      "kind": "quote",
+      "text": {
+        "en": "What I say out loud to someone I trust stops ruling me in secret.",
+        "pl": "To, co powiem na głos zaufanej osobie, przestaje rządzić mną w ukryciu."
+      },
+      "license": "original",
+      "categories": ["relationships", "courage"],
+      "tags": ["shame", "honesty"]
+    },
+    {
+      "id": "q-0006",
+      "kind": "quote",
+      "text": {
+        "en": "Calm doesn't arrive all at once. I build it from every day I live with awareness.",
+        "pl": "Spokój nie przychodzi od razu. Buduję go z każdego dnia przeżytego świadomie."
+      },
+      "license": "original",
+      "categories": ["patience", "recovery"],
+      "tags": ["calm"]
+    },
+    {
+      "id": "q-0007",
+      "kind": "quote",
+      "text": {
+        "en": "My past is not a sentence. It can become experience that one day helps someone else.",
+        "pl": "Moja przeszłość nie jest wyrokiem. Może stać się doświadczeniem, które kiedyś pomoże komuś innemu."
+      },
+      "license": "original",
+      "categories": ["acceptance", "relationships"],
+      "tags": ["past", "service"]
+    },
+    {
+      "id": "q-0008",
+      "kind": "quote",
+      "text": {
+        "en": "Change begins where I stop fighting myself and start understanding myself.",
+        "pl": "Zmiana zaczyna się tam, gdzie przestaję walczyć ze sobą i zaczynam siebie rozumieć."
+      },
+      "license": "original",
+      "categories": ["self-compassion", "change"],
+      "tags": ["self-acceptance"]
+    },
+    {
+      "id": "q-0009",
+      "kind": "quote",
+      "text": {
+        "en": "Sobriety comes first – everything I truly care about stands on it.",
+        "pl": "Trzeźwość na pierwszym miejscu – na niej stoi wszystko, na czym mi naprawdę zależy."
+      },
+      "license": "original",
+      "categories": ["recovery", "responsibility"],
+      "tags": ["priorities"]
+    },
+    {
+      "id": "q-0010",
+      "kind": "quote",
+      "text": {
+        "en": "Accepting the facts doesn't mean agreeing with them. It means no longer spending my strength on what I cannot change.",
+        "pl": "Przyjąć fakty nie znaczy się na nie zgadzać. Znaczy przestać tracić siły na to, czego nie zmienię."
+      },
+      "license": "original",
+      "categories": ["acceptance"],
+      "tags": ["reality"]
+    },
+    {
+      "id": "q-0011",
+      "kind": "quote",
+      "text": {
+        "en": "Recovery is a road walked in steps, not leaps. A steady pace still gets me there.",
+        "pl": "Zdrowienie to droga pokonywana krokami, nie skokami. Spokojne tempo też prowadzi do celu."
+      },
+      "license": "original",
+      "categories": ["patience", "recovery"],
+      "tags": ["pace"]
+    },
+    {
+      "id": "q-0012",
+      "kind": "quote",
+      "text": {
+        "en": "When I set boundaries, I take care of both the relationship and myself.",
+        "pl": "Stawiając granice, dbam jednocześnie o relację i o siebie."
+      },
+      "license": "original",
+      "categories": ["boundaries", "relationships"],
+      "tags": ["boundaries"]
+    }
+  ]
+}

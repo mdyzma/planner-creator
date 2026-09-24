@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interaktywny Planner Terapeutyczny A4 - Wizualizacja Struktury</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+</head>
+<body>
+
+  <!-- ========================================================================
+       NAGŁÓWEK GŁÓWNY I KONTROLKI APLIKACJI
+       ======================================================================== -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-wrapper">
+        <span class="brand-badge">Format Druk A4</span>
+        <div>
+          <h1 class="brand-title">Dziennik Trzeźwości & Planner Terapeutyczny</h1>
+          <p class="brand-subtitle">Architektura tomu 6-miesięcznego (~200 stron) • Zgodność z oprawą twardą i szyciem</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnAutofill" class="btn btn-primary" title="Wypełnij przykładowe autentyczne wpisy pacjenta w procesie zdrowienia">
+          <span>✍️ Wypełnij przykładowe dane pacjenta</span>
+        </button>
+        <button id="btnClearData" class="btn btn-secondary" title="Przywróć czysty szablon plannera">
+          <span>🧼 Czysty szablon</span>
+        </button>
+        <button id="btnRandomQuote" class="btn btn-accent" title="Wylosuj inną sentencję wspierającą do nagłówka">
+          <span>🎲 Zmień sentencję</span>
+        </button>
+        <button id="btnToggleMargins" class="btn btn-secondary" title="Pokaż/ukryj strefę ucieczki marginesu wewnętrznego 15-20 mm na szycie">
+          <span>📐 Marginesy oprawy (15-20mm)</span>
+        </button>
+        <button id="btnOverviewModal" class="btn btn-secondary" title="Zobacz architekturę całego tomu ~200 stron">
+          <span>🗺️ Architektura tomu</span>
+        </button>
+        <button id="btnPrint" class="btn btn-secondary" title="Wydrukuj lub zapisz jako PDF w formacie A4">
+          <span>🖨️ Drukuj / PDF A4</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pasek zakładek sekcji plannera -->
+    <nav class="nav-sections-bar" id="sectionNavBar">
+      <button class="nav-tab active" data-target="daily-page">
+        <span class="tab-icon">☀️</span>
+        <span>Strona Dzienna (24H + HALT)</span>
+        <span class="tab-tag">Rytm Dobowy</span>
+      </button>
+      <button class="nav-tab" data-target="weekly-spread">
+        <span class="tab-icon">🗓️</span>
+        <span>Rozkładówka Tygodniowa</span>
+        <span class="tab-tag">Cele na Marginesie</span>
+      </button>
+      <button class="nav-tab" data-target="monthly-spread">
+        <span class="tab-icon">📅</span>
+        <span>Otwarcie Miesiąca</span>
+        <span class="tab-tag">Siatka & Intencje</span>
+      </button>
+      <button class="nav-tab" data-target="wheel-page">
+        <span class="tab-icon">🎡</span>
+        <span>Koniec Miesiąca: Koło Życia</span>
+        <span class="tab-tag">8 Sfer</span>
+      </button>
+      <button class="nav-tab" data-target="dot-grid-page">
+        <span class="tab-icon">✍️</span>
+        <span>Wolne Karty: Dot Grid</span>
+        <span class="tab-tag">Kropki 5mm</span>
+      </button>
+      <button class="nav-tab crisis" data-target="crisis-warning-signs">
+        <span class="tab-icon">🚨</span>
+        <span>Kryzys: Sygnały Ostrzegawcze</span>
+        <span class="tab-tag">4 Sfery</span>
+      </button>
+      <button class="nav-tab crisis" data-target="crisis-balance">
+        <span class="tab-icon">⚖️</span>
+        <span>Kryzys: Bilans Zysków i Strat</span>
+        <span class="tab-tag">4 Ćwiartki</span>
+      </button>
+      <button class="nav-tab crisis" data-target="crisis-sos">
+        <span class="tab-icon">📞</span>
+        <span>Kryzys: Sieć Wsparcia SOS</span>
+        <span class="tab-tag">Plan Awaryjny</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Pasek informacyjny / założenia introligatorskie i terapeutyczne -->
+  <div class="sub-controls-bar">
+    <div class="rationale-notice" id="rationaleNotice">
+      <span>💡</span>
+      <span id="rationaleText"><strong>Układ dobowy pacjenta:</strong> Zmniejszony nagłówek z datą i dniem trzeźwości na lewej stronie dający maksymalną przestrzeń na swobodne refleksje z dnia (dot-grid). Na prawej stronie: Zasada 24H, 3 kluczowe kroki dnia, skala HALT (oceny 1–5), Plan Dnia co godzinę (07:00–18:00) oraz praktyka wdzięczności rozciągnięta na całą szerokość strony.</span>
+    </div>
+
+    <div class="view-mode-group">
+      <button class="view-btn active" id="viewSpreadBtn" title="Rozkładówka dwustronna (lewa + prawa strona z grzbietem)">
+        <span>📖 Rozkładówka</span>
+      </button>
+      <button class="view-btn" id="viewSingleBtn" title="Pojedyncza strona A4 z powiększeniem">
+        <span>📄 Pojedyncza strona</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       OBSZAR ROBOCZY (STAGE) - PAPIER A4 WIDOK DWUSTRONNY LUB POJEDYNCZY
+       ======================================================================== -->
+  <main class="app-stage" id="appStage">
+    <div class="book-workspace" id="bookWorkspace">
+
+      <!-- ====================================================================
+           WIDOK 1: STRONA DZIENNA (UKŁAD DOBOWY: PORANEK, HALT, WIECZÓR)
+           Rozkładówka: Lewa strona (Karta refleksji z dnia) + Prawa strona (Główna karta dnia + HALT)
+           ==================================================================== -->
+      <section class="section-view active" id="view-daily-page">
+        <div class="book-spread">
+          <!-- LEWA STRONA ROZKŁADÓWKI DZIENNEJ: DZIEŃ TRZEŹWOŚCI, DATA + POWIĘKSZONE REFLEKSJE Z DNIA -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>TOM I • MIESIĄC 2 • BLOK TYGODNIOWY 3</span>
+              <span>STRONA LEWA • KARTA REFLEKSJI Z DNIA</span>
+            </div>
+
+            <!-- Poranek: Dzień trzeźwości i Data przeniesione na początek lewej strony -->
+            <div class="daily-left-header-card">
+              <div class="sobriety-badge-wrap">
+                <span class="sobriety-label">🌱 Dzień Trzeźwości Nr:</span>
+                <input type="text" class="sobriety-input" id="sobrietyDayInput" value="142" maxlength="5">
+              </div>
+
+              <div class="date-field-wrap">
+                <span>Data:</span>
+                <input type="text" class="date-input" id="dailyDateInput" value="Środa, 18 Października">
+              </div>
+            </div>
+
+            <!-- Powiększona przestrzeń na refleksje z dnia (swobodny strumień na dot grid) -->
+            <div class="reflections-daily-box">
+              <div class="section-caption-row">
+                <span class="section-title">📝 Refleksje z Dnia</span>
+                <span class="section-subtitle">Swobodny zapis myśli, obserwacji emocji i przebiegu dnia (kropki 5mm)</span>
+              </div>
+              <textarea class="reflections-daily-textarea" id="dailyReflectionsLeft" placeholder="Napisz swobodnie o dzisiejszym dniu: co czułeś(aś), jakie sytuacje wywołały poruszenie, jakie myśli Ci towarzyszyły, co zauważasz w swoim ciele i relacjach..."></textarea>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PLANNER TRZEŹWOŚCI • FORMAT A4</span>
+              <span class="page-number">STRONA 64</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA ROZKŁADÓWKI DZIENNEJ: ZASADA 24H, CELE, WIECZÓR + WĄSKA KOLUMNA HALT CO 2H NA PRAWYM MARGINESIE -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>RYTM DOBOWY • MONITORING & WIECZÓR</span>
+              <span class="page-number">STRONA 65</span>
+            </div>
+
+            <div class="daily-right-layout">
+              <!-- LEWA CZĘŚĆ STRONY PRAWEJ: ZASADA 24H, 3 KROKI DNIA ORAZ WIECZORNE PYTANIA ANTYNAWROTOWE -->
+              <div class="daily-main-flow">
+                <!-- Zasada 24H (Deklaracja Poranna) -->
+                <div class="pledge-24h-box">
+                  <div class="pledge-title">
+                    <span>☀️ ZASADA 24 GODZIN (Deklaracja Poranna)</span>
+                  </div>
+                  <div class="pledge-text">
+                    „Dzisiaj, przez najbliższe 24 godziny, zrobię wszystko, aby utrzymać abstynencję poprzez:
+                    <input type="text" class="input-line" id="pledgeInput" value="uważność na głód fizyczny, telefon do Marka po pracy i ominięcie ulicy ze starym pubem.">
+                    ”
+                  </div>
+                </div>
+
+                <!-- Kluczowe kroki dnia: Maks. 3 (Rozszerzone linie / więcej miejsca na opis) -->
+                <div class="daily-priorities-box">
+                  <div class="section-caption-row">
+                    <span class="section-title">🎯 Kluczowe Kroki Dnia (Maks. 3)</span>
+                    <span class="section-subtitle">Ochrona przed przebodźcowaniem</span>
+                  </div>
+                  <ul class="priority-list">
+                    <li class="priority-item-block">
+                      <div class="priority-row-main">
+                        <span class="item-num">1</span>
+                        <input type="text" class="item-input priority-main-input" id="dailyTask1" value="Krok 4 – dokończenie listy urazów z terapeutą" placeholder="Główny krok dnia...">
+                        <input type="checkbox" class="item-check" checked>
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask1Sub" value="Skupienie na faktach, bez oceniania siebie i bez zbędnego pośpiechu" placeholder="Plan działania / bezpieczny krok...">
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask1Note" value="W razie oporu: 3 głębokie oddechy i kontakt ze sponsorem Markiem" placeholder="Bezpiecznik / ochrona granic...">
+                      </div>
+                    </li>
+
+                    <li class="priority-item-block">
+                      <div class="priority-row-main">
+                        <span class="item-num">2</span>
+                        <input type="text" class="item-input priority-main-input" id="dailyTask2" value="30 minut spokojnego spaceru w lesie bez telefonu" placeholder="Główny krok dnia...">
+                        <input type="checkbox" class="item-check" checked>
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask2Sub" value="Ścieżka przyrodnicza za miastem, uważność na zmysły i rytm oddechu" placeholder="Plan działania / bezpieczny krok...">
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask2Note" value="Czysta obecność tu i teraz, wyciszenie gonitwy myśli po pracy" placeholder="Bezpiecznik / ochrona granic...">
+                      </div>
+                    </li>
+
+                    <li class="priority-item-block">
+                      <div class="priority-row-main">
+                        <span class="item-num">3</span>
+                        <input type="text" class="item-input priority-main-input" id="dailyTask3" value="Ugotowanie ciepłego posiłku na dwa dni" placeholder="Główny krok dnia...">
+                        <input type="checkbox" class="item-check">
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask3Sub" value="Zupa krem i pieczone warzywa (ochrona przed Hungry w skali HALT)" placeholder="Plan działania / bezpieczny krok...">
+                      </div>
+                      <div class="priority-row-sub">
+                        <span class="item-num-spacer"></span>
+                        <input type="text" class="item-input priority-sub-input" id="dailyTask3Note" value="Spokojne przygotowanie wieczorem przy relaksującej muzyce" placeholder="Bezpiecznik / ochrona granic...">
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- PRAWA CZĘŚĆ STRONY PRAWEJ: PLAN DNIA CO GODZINĘ (07:00 - 18:00) Z DWOMA LINIJKAMI NA GODZINĘ -->
+              <aside class="daily-schedule-col">
+                <div class="schedule-col-title">📅 PLAN DNIA • CO GODZINĘ (2 LINIE)</div>
+                <div class="schedule-list">
+                  <!-- 07:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">07:00</span>
+                      <input type="text" class="schedule-plan-input" value="Pobudka, wdzięczność, szklanka wody" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Poranny rozruch i modlitwa o spokój ducha" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 08:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">08:00</span>
+                      <input type="text" class="schedule-plan-input" value="Ciepłe śniadanie białkowe (ochrona HALT)" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Krótki spacer z psem przed pracą" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 09:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">09:00</span>
+                      <input type="text" class="schedule-plan-input" value="Rozpoczęcie pracy: priorytety bez pośpiechu" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Przegląd kalendarza i wyznaczenie przerw" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 10:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">10:00</span>
+                      <input type="text" class="schedule-plan-input" value="Blok pracy głębokiej w skupieniu" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="5 minut ćwiczeń oddechowych przy oknie" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 11:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">11:00</span>
+                      <input type="text" class="schedule-plan-input" value="Krótka przerwa na owoc i nawodnienie" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Telefon kontrolny do przyjaciela z AA" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 12:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">12:00</span>
+                      <input type="text" class="schedule-plan-input" value="Pożywny, ciepły obiad (ochrona Hungry)" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Odpoczynek bez telefonu i mediów" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 13:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">13:00</span>
+                      <input type="text" class="schedule-plan-input" value="Bieżąca korespondencja i sprawy biurowe" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Uważność na pierwsze sygnały zmęczenia" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 14:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">14:00</span>
+                      <input type="text" class="schedule-plan-input" value="Spotkanie zespołowe – asertywność i spokój" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Unikanie zbędnych sporów i obrony ego" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 15:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">15:00</span>
+                      <input type="text" class="schedule-plan-input" value="Herbata ziołowa, podwieczorek (orzechy)" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Chwila uważności: ocena tabeli HALT" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 16:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">16:00</span>
+                      <input type="text" class="schedule-plan-input" value="Zamykanie zadań dnia, czyste biurko" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Przygotowanie planu na kolejny poranek" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 17:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">17:00</span>
+                      <input type="text" class="schedule-plan-input" value="Zakończenie pracy i bezpieczny powrót" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Ominięcie miejsc wyzwalających i pubów" placeholder="................................................................">
+                    </div>
+                  </div>
+
+                  <!-- 18:00 -->
+                  <div class="schedule-hour-block">
+                    <div class="schedule-row-line">
+                      <span class="schedule-hour">18:00</span>
+                      <input type="text" class="schedule-plan-input" value="Mityng grupy wsparcia / Sesja terapii" placeholder="................................................................">
+                    </div>
+                    <div class="schedule-row-line sub-line">
+                      <span class="schedule-hour-spacer"></span>
+                      <input type="text" class="schedule-plan-input" value="Dzielenie się siłą i doświadczeniem" placeholder="................................................................">
+                    </div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <!-- SKALA HALT NA CAŁĄ SZEROKOŚĆ STRONY (MONITORING EMOCJONALNY 1-5) -->
+            <div class="daily-halt-fullwidth">
+              <div class="section-caption-row">
+                <span class="section-title">⚖️ Skala HALT • Monitoring Emocjonalny & Fizyczny</span>
+                <span class="section-subtitle">Ocena poziomu napięcia w skali 1–5 (H • A • L • T)</span>
+              </div>
+              <div class="halt-categories-fullgrid">
+                <div class="halt-cat-box cat-h" title="Hungry: Głód fizyczny / potrzeby organizmu (1-5)">
+                  <span class="halt-cat-badge">H</span>
+                  <input type="text" class="halt-scale-input" id="haltInputH" maxlength="1" value="2" title="H: Głód fizyczny (1-5)">
+                </div>
+
+                <div class="halt-cat-box cat-a" title="Angry: Złość / Stres / Napięcie emocjonalne (1-5)">
+                  <span class="halt-cat-badge">A</span>
+                  <input type="text" class="halt-scale-input" id="haltInputA" maxlength="1" value="3" title="A: Złość / Stres (1-5)">
+                </div>
+
+                <div class="halt-cat-box cat-l" title="Lonely: Samotność / Izolacja od ludzi (1-5)">
+                  <span class="halt-cat-badge">L</span>
+                  <input type="text" class="halt-scale-input" id="haltInputL" maxlength="1" value="1" title="L: Samotność (1-5)">
+                </div>
+
+                <div class="halt-cat-box cat-t" title="Tired: Zmęczenie / Wyczerpanie / Brak snu (1-5)">
+                  <span class="halt-cat-badge">T</span>
+                  <input type="text" class="halt-scale-input" id="haltInputT" maxlength="1" value="3" title="T: Zmęczenie (1-5)">
+                </div>
+              </div>
+            </div>
+
+            <!-- PRAKTYKA WDZIĘCZNOŚCI NA CAŁĄ SZEROKOŚĆ STRONY -->
+            <div class="daily-gratitude-fullwidth">
+              <div class="section-caption-row">
+                <span class="section-title gratitude-full-title">🙏 Praktyka Wdzięczności (Za co jestem dziś wdzięczny(a)?)</span>
+                <span class="section-subtitle">Ochrona przed rozżaleniem & budowanie spokoju ducha</span>
+              </div>
+              <div class="gratitude-full-list">
+                <div class="gratitude-full-item">
+                  <span class="gratitude-num">1</span>
+                  <input type="text" class="gratitude-full-input" id="gratitudeInput1" value="Za kolejny dzień w pełnej trzeźwości i poranny spokój bez kaca moralnego." placeholder="................................................................................................................................................................">
+                </div>
+                <div class="gratitude-full-item">
+                  <span class="gratitude-num">2</span>
+                  <input type="text" class="gratitude-full-input" id="gratitudeInput2" value="Za to, że zadzwoniłem do sponsora zamiast tłumić złość po trudnej rozmowie w pracy." placeholder="................................................................................................................................................................">
+                </div>
+                <div class="gratitude-full-item">
+                  <span class="gratitude-num">3</span>
+                  <input type="text" class="gratitude-full-input" id="gratitudeInput3" value="Za ciepłą herbatę, bezpieczny dom i poczucie wolności, z którym kładę się dziś spać." placeholder="................................................................................................................................................................">
+                </div>
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>„TYLKO DZISIAJ” • 24 GODZINY ABSTYNENCJI</span>
+              <span class="page-number">STRONA 65</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 2: ROZKŁADÓWKA TYGODNIOWA (BIEŻĄCY TYDZIEŃ)
+           Kluczowe: Boks "W tym tygodniu pamiętaj o..." + Cele na ZEWNĘTRZNYM marginesie
+           ==================================================================== -->
+      <section class="section-view" id="view-weekly-spread">
+        <div class="book-spread">
+          <!-- LEWA STRONA ROZKŁADÓWKI TYGODNIOWEJ (PON - ŚR + CELE NA ZEWNĘTRZNYM LEWYM MARGINESIE) -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>MIESIĄC 2 • ROZKŁADÓWKA TYGODNIOWA</span>
+              <span>TYDZIEŃ 7 (DNI 43–49)</span>
+            </div>
+
+            <!-- Boks skupienia tygodniowego z planu miesiąca -->
+            <div class="focus-reminder-box">
+              <div class="focus-header">
+                <span>🎯 W tym tygodniu pamiętaj o (z planu miesiąca):</span>
+              </div>
+              <div class="focus-content" id="weeklyFocusBox">
+                „Stabilizacja rytmu snu i bezwzględna ochrona granic: żadnych spotkań ze starym towarzystwem w piątek.”
+              </div>
+            </div>
+
+            <!-- Cele tygodniowe na ZEWNĘTRZNYM marginesie (po lewej stronie na lewej kartce!) -->
+            <div class="outer-margin-goals">
+              <div class="goals-header">
+                <span>🎯 Cele Tygodnia (Zewnętrzny margines)</span>
+                <span class="goals-badge-limit">Maks. 3-4 cele</span>
+              </div>
+              <ul class="priority-list">
+                <li class="priority-item">
+                  <span class="item-num">1</span>
+                  <input type="text" class="item-input" value="Udział w 3 mityngach (Pn, Śr, Sob)">
+                  <input type="checkbox" class="item-check" checked>
+                </li>
+                <li class="priority-item">
+                  <span class="item-num">2</span>
+                  <input type="text" class="item-input" value="Szczera rozmowa ze sponsorem o Kroku 4">
+                  <input type="checkbox" class="item-check" checked>
+                </li>
+                <li class="priority-item">
+                  <span class="item-num">3</span>
+                  <input type="text" class="item-input" value="Kładzenie się spać przed 22:30 (ochrona HALT: Tired)">
+                  <input type="checkbox" class="item-check">
+                </li>
+              </ul>
+            </div>
+
+            <!-- Dni tygodnia lewa strona: Poniedziałek, Wtorek, Środa -->
+            <div class="weekly-grid-days">
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">PONIEDZIAŁEK • Dzień 43</span>
+                  <div class="day-event-tags">
+                    <span class="tag-meeting">Mityng AA 19:00</span>
+                  </div>
+                </div>
+                <input type="text" class="input-line" value="Praca, obiad o 13:00, mityng w salce parafialnej. Wieczorem spokój.">
+              </div>
+
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">WTOREK • Dzień 44</span>
+                  <div class="day-event-tags">
+                    <span class="tag-therapy">Terapia Indywidualna 16:30</span>
+                  </div>
+                </div>
+                <input type="text" class="input-line" value="Omówienie złości z weekendu; spacer po parku.">
+              </div>
+
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">ŚRODA • Dzień 45</span>
+                  <div class="day-event-tags">
+                    <span class="tag-meeting">Grupa Wsparcia 18:00</span>
+                  </div>
+                </div>
+                <input type="text" class="input-line" value="Telefon do Michała w południe; zakupy żywnościowe na kolejne 3 dni.">
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>LEWY MARGINES ZEWNĘTRZNY = ŁATWY DOSTĘP DO CELÓW</span>
+              <span class="page-number">STRONA 58</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA ROZKŁADÓWKI TYGODNIOWEJ (CZW - NDZ + CELE NA ZEWNĘTRZNYM PRAWYM MARGINESIE) -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>WEEKEND & PODSUMOWANIE TYGODNIA</span>
+              <span class="page-number">STRONA 59</span>
+            </div>
+
+            <!-- Dni tygodnia prawa strona: Czwartek, Piątek, Sobota, Niedziela -->
+            <div class="weekly-grid-days" style="margin-bottom: 0.85rem;">
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">CZWARTEK • Dzień 46</span>
+                  <span style="font-size:0.68rem; color:#64748b;">Telefon Sponsor</span>
+                </div>
+                <input type="text" class="input-line" value="Przegląd trudnych emocji w pracy; regeneracja w domu.">
+              </div>
+
+              <div class="day-strip" style="background: #fff8f8; border-color: #fecaca;">
+                <div class="day-strip-header">
+                  <span class="day-name" style="color:#991b1b;">PIĄTEK • Dzień 47 (Strefa Podwyższonego Ryzyka)</span>
+                  <span class="tag-meeting">Mityng Wieczorny 20:00</span>
+                </div>
+                <input type="text" class="input-line" value="Bezpośrednio po pracy do domu; nie odbierać telefonów od starych znajomych.">
+              </div>
+
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">SOBOTA • Dzień 48</span>
+                  <span style="font-size:0.68rem; color:#059669;">Regeneracja & Trzeźwe Relacje</span>
+                </div>
+                <input type="text" class="input-line" value="Wycieczka rowerowa z bratem; porządki w mieszkaniu.">
+              </div>
+
+              <div class="day-strip">
+                <div class="day-strip-header">
+                  <span class="day-name">NIEDZIELA • Dzień 49</span>
+                  <span style="font-size:0.68rem; color:#2563eb;">Planowanie kolejnego tygodnia</span>
+                </div>
+                <input type="text" class="input-line" value="Spokojna niedziela, lektura literatury trzeźwościowej, przygotowanie posiłków.">
+              </div>
+            </div>
+
+            <!-- Prawy zewnętrzny margines na podsumowanie i nawyki -->
+            <div class="outer-margin-goals" style="border-color:#bbf7d0; background:#f0fdf4;">
+              <div class="goals-header" style="color:#166534;">
+                <span>🛡️ Podsumowanie Tygodnia: Zwycięstwa</span>
+                <span class="goals-badge-limit" style="background:#dcfce7; color:#14532d;">Klucz</span>
+              </div>
+              <div style="font-size: 0.78rem; line-height: 1.4; color: #166534;">
+                <p><strong>Największe zwycięstwo:</strong> <input type="text" class="input-line" value="Odmówiłem udziału w zakrapianej imprezie firmowej bez poczucia wstydu."></p>
+                <p style="margin-top: 0.35rem;"><strong>Co chroniło mój spokój:</strong> <input type="text" class="input-line" value="Codzienny telefon do sponsora i pełny żołądek (HALT: Hungry)."></p>
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PRAWY MARGINES ZEWNĘTRZNY = BLISKO KRAWĘDZI KARTKI</span>
+              <span class="page-number">STRONA 59</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 3: OTWARCIE MIESIĄCA (SIATKA ROZCIĄGNIĘTA NA LEWĄ I PRAWĄ STRONĘ DO POŁOWY)
+           POD SPODEM: GŁÓWNE CELE, WAŻNE DATY I INTENCJE
+           ==================================================================== -->
+      <section class="section-view" id="view-monthly-spread">
+        <div class="book-spread">
+          <!-- LEWA STRONA: GÓRNA POŁOWA (SIATKA: PN, WT, ŚR, CZW) + DOLNA POŁOWA (GŁÓWNE CELE MIESIĄCA) -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>PLANOWANIE MIESIĘCZNE • ROZKŁADÓWKA OTWARCIA</span>
+              <span>STRONA LEWA (DNI TYGODNIA PN–CZW)</span>
+            </div>
+
+            <div class="month-half-banner">
+              <span class="month-title-text">MIESIĄC 2: ODBUDOWA CIAŁA I RELACJI</span>
+              <span class="month-tag-meta">CZĘŚĆ 1 • DNI 31–60</span>
+            </div>
+
+            <!-- Siatka miesięczna lewej strony: 4 kolumny (Pn, Wt, Śr, Czw), sięga do połowy strony (~360px) -->
+            <div class="month-half-grid">
+              <div class="calendar-header-cell">Poniedziałek</div>
+              <div class="calendar-header-cell">Wtorek</div>
+              <div class="calendar-header-cell">Środa</div>
+              <div class="calendar-header-cell">Czwartek</div>
+
+              <!-- Tydzień 1 -->
+              <div class="month-split-day-cell"><span class="day-num">1</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">2</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">3</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">4</span><div class="cell-dot-marker"></div></div>
+
+              <!-- Tydzień 2 -->
+              <div class="month-split-day-cell"><span class="day-num">8</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">9</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">10</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">11</span><div class="cell-dot-marker"></div></div>
+
+              <!-- Tydzień 3 -->
+              <div class="month-split-day-cell"><span class="day-num">15</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">16</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">17</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">18</span><div class="cell-dot-marker"></div></div>
+
+              <!-- Tydzień 4 -->
+              <div class="month-split-day-cell"><span class="day-num">22</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">23</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">24</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">25</span><div class="cell-dot-marker"></div></div>
+
+              <!-- Tydzień 5 -->
+              <div class="month-split-day-cell"><span class="day-num">29</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">30</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell other-month"><span class="day-num">1</span></div>
+              <div class="month-split-day-cell other-month"><span class="day-num">2</span></div>
+            </div>
+
+            <!-- Dolna połowa lewej strony: Główne Cele Miesiąca (Maks. 3-4 cele) -->
+            <div class="month-bottom-area">
+              <div class="daily-priorities-box">
+                <div class="section-caption-row">
+                  <span class="section-title">🎯 3-4 Główne Cele Miesiąca (Mniej znaczy bezpieczniej)</span>
+                  <span class="section-subtitle">Chroń się przed gonitwą zadań</span>
+                </div>
+                <ul class="priority-list">
+                  <li class="priority-item" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                      <span class="item-num">1</span>
+                      <input type="text" class="item-input" style="font-weight: 700;" value="Utrzymanie pełnej abstynencji dzień po dniu (zasada 24H)">
+                    </div>
+                    <span style="font-size: 0.7rem; color: #64748b; margin-left: 24px;">Dlaczego to chroni moją trzeźwość: fundament wszystkiego innego.</span>
+                  </li>
+
+                  <li class="priority-item" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                      <span class="item-num">2</span>
+                      <input type="text" class="item-input" style="font-weight: 700;" value="Regularne mityngi: minimum 3 razy w tygodniu">
+                    </div>
+                    <span style="font-size: 0.7rem; color: #64748b; margin-left: 24px;">Dlaczego to chroni moją trzeźwość: przeciwdziała izolacji i zapobiega iluzjom głowy.</span>
+                  </li>
+
+                  <li class="priority-item" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                      <span class="item-num">3</span>
+                      <input type="text" class="item-input" style="font-weight: 700;" value="Uregulowanie posiłków i snu (ochrona HALT)">
+                    </div>
+                    <span style="font-size: 0.7rem; color: #64748b; margin-left: 24px;">Dlaczego to chroni moją trzeźwość: wyczerpane ciało wyzwala głód substancji.</span>
+                  </li>
+
+                  <li class="priority-item" style="flex-direction: column; align-items: flex-start; gap: 0.2rem;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%;">
+                      <span class="item-num">4</span>
+                      <input type="text" class="item-input" style="font-weight: 700;" value="Rozpoczęcie pisania Kroku 4 ze sponsorem">
+                    </div>
+                    <span style="font-size: 0.7rem; color: #64748b; margin-left: 24px;">Dlaczego to chroni moją trzeźwość: oczyszczenie z nawarstwionych urazów.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Główny filar ochronny -->
+              <div class="morning-card" style="background: #f8fafc; border-left: 3.5px solid #0284c7;">
+                <div class="section-caption-row">
+                  <span class="section-title" style="color:#0369a1;">🛡️ Mój Główny Filar Ochronny Miesiąca</span>
+                </div>
+                <input type="text" class="input-line" value="Codzienny kontakt z grupą / sponsorem przed godz. 21:00 i bezwzględny zakaz przebywania sam na sam z głodem.">
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>SIATKA MIESIĘCZNA A4 • POŁOWA LEWA</span>
+              <span class="page-number">STRONA 52</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA: GÓRNA POŁOWA (SIATKA: PT, SB, ND, FOCUS) + DOLNA POŁOWA (WAŻNE DATY I INTENCJE) -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>PLANOWANIE MIESIĘCZNE • ROZKŁADÓWKA OTWARCIA (CD.)</span>
+              <span>STRONA PRAWA (DNI WEEKENDOWE & FOCUS)</span>
+            </div>
+
+            <div class="month-half-banner">
+              <span class="month-title-text">SIATKA MIESIĘCZNA (CD.)</span>
+              <span class="month-tag-meta">CZĘŚĆ 2 • DNI 31–60</span>
+            </div>
+
+            <!-- Siatka miesięczna prawej strony: 4 kolumny (Pt, Sb, Nd, Notatki/Focus), sięga do połowy strony (~360px) -->
+            <div class="month-half-grid">
+              <div class="calendar-header-cell" style="color:#b91c1c;">Piątek</div>
+              <div class="calendar-header-cell">Sobota</div>
+              <div class="calendar-header-cell">Niedziela</div>
+              <div class="calendar-header-cell" style="background:#e0f2fe; color:#0369a1;">Fokus Tygodnia</div>
+
+              <!-- Tydzień 1 -->
+              <div class="month-split-day-cell"><span class="day-num">5</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">6</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">7</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell" style="background:#f0f9ff;"><span class="cell-mini-note">T1: Spokojny start</span></div>
+
+              <!-- Tydzień 2 -->
+              <div class="month-split-day-cell"><span class="day-num">12</span><div class="cell-dot-marker"></div><span class="cell-mini-note" style="color:#059669;">Medal 4 mies.</span></div>
+              <div class="month-split-day-cell"><span class="day-num">13</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">14</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell" style="background:#f0f9ff;"><span class="cell-mini-note">T2: Świętowanie b/alko</span></div>
+
+              <!-- Tydzień 3 -->
+              <div class="month-split-day-cell"><span class="day-num">19</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">20</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">21</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell" style="background:#f0f9ff;"><span class="cell-mini-note">T3: HALT pod kontrolą</span></div>
+
+              <!-- Tydzień 4 -->
+              <div class="month-split-day-cell"><span class="day-num">26</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">27</span><div class="cell-dot-marker"></div></div>
+              <div class="month-split-day-cell"><span class="day-num">28</span><div class="cell-dot-marker"></div><span class="cell-mini-note">Warsztat OTU</span></div>
+              <div class="month-split-day-cell" style="background:#f0f9ff;"><span class="cell-mini-note">T4: Warsztaty nawrotów</span></div>
+
+              <!-- Tydzień 5 -->
+              <div class="month-split-day-cell other-month"><span class="day-num">3</span></div>
+              <div class="month-split-day-cell other-month"><span class="day-num">4</span></div>
+              <div class="month-split-day-cell other-month"><span class="day-num">5</span></div>
+              <div class="month-split-day-cell" style="background:#f0f9ff;"><span class="cell-mini-note">T5: Koło Życia & bilans</span></div>
+            </div>
+
+            <!-- Dolna połowa prawej strony: Ważne Daty oraz Intencje Emocjonalne -->
+            <div class="month-bottom-area">
+              <!-- Ważne daty i rocznice -->
+              <div class="morning-card">
+                <div class="section-caption-row">
+                  <span class="section-title">🧭 Ważne Daty i Rocznice w Tym Miesiącu</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:0.35rem;">
+                  <input type="text" class="input-line" value="• 12-ty: 4 miesiące trzeźwości (odebranie medalu na mityngu macierzystym)">
+                  <input type="text" class="input-line" value="• 24-ty: Wizyta kontrolna u lekarza psychiatry (stabilizacja snu)">
+                  <input type="text" class="input-line" value="• 28-ty: Sobotnie warsztaty profilaktyki nawrotów w ośrodku (10:00–14:00)">
+                </div>
+              </div>
+
+              <!-- Intencje emocjonalne miesiąca -->
+              <div class="morning-card">
+                <div class="section-caption-row">
+                  <span class="section-title">🌊 Moje Intencje Emocjonalne na Ten Miesiąc</span>
+                  <span class="section-subtitle">Jakość bycia ze sobą</span>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:0.35rem; font-size:0.8rem;">
+                  <input type="text" class="input-line" value="• Praktyka cierpliwości: nie muszę naprawić wszystkich błędów z 10 lat w 30 dni.">
+                  <input type="text" class="input-line" value="• Uważność na wstyd: jeśli popełnię błąd w pracy, natychmiast mówię prawdę.">
+                  <input type="text" class="input-line" value="• Zgoda na bezsilność: akceptuję rzeczy, na które nie mam wpływu.">
+                </div>
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>SIATKA MIESIĘCZNA A4 • POŁOWA PRAWA</span>
+              <span class="page-number">STRONA 53</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 4: KONIEC MIESIĄCA (KOŁO ŻYCIA & PODSUMOWANIE MIESIĄCA)
+           ==================================================================== -->
+      <section class="section-view" id="view-wheel-page">
+        <div class="book-spread">
+          <!-- LEWA STRONA: KOŁO ŻYCIA (8 SFER DO KOLOROWANIA / INTERAKCJI) -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>KONIEC MIESIĄCA • BILANS ROZWOJU</span>
+              <span>STRONA 84</span>
+            </div>
+
+            <div style="margin-bottom: 0.6rem;">
+              <h2 style="font-size: 1.05rem; font-weight: 800; text-transform: uppercase;">🎡 KOŁO ŻYCIA (8 SFER ZDROWIENIA)</h2>
+              <p style="font-size: 0.72rem; color: #64748b;">Oceń poziom zadowolenia i równowagi w skali 1-10. Sprawdź, czy Twoje koło toczy się gładko.</p>
+            </div>
+
+            <div class="wheel-section-wrap">
+              <!-- Interaktywny wykres SVG Koła Życia -->
+              <div class="wheel-canvas-container">
+                <svg class="wheel-svg" id="wheelSvg" viewBox="0 0 300 300">
+                  <!-- Siatka okręgów 1-10 generowana przez skrypt -->
+                  <g id="wheelGridCircles"></g>
+                  <!-- Osie 8 sfer -->
+                  <g id="wheelGridAxes"></g>
+                  <!-- Wielokąt wypełnienia ocen -->
+                  <polygon id="wheelPolygon" points="" fill="rgba(13, 148, 136, 0.35)" stroke="#0d9488" stroke-width="2.5" />
+                  <!-- Węzły sfer -->
+                  <g id="wheelPolygonNodes"></g>
+                </svg>
+              </div>
+
+              <!-- Suwaki interaktywne do 8 sfer -->
+              <div class="wheel-sectors-control" id="wheelSlidersContainer">
+                <!-- Generowane dynamicznie przez JS -->
+              </div>
+            </div>
+
+            <div class="wheel-rationale-box">
+              <strong>Znaczenie terapeutyczne Koła Życia:</strong>
+              Widząc z miesiąca na miesiąc, jak koło staje się równiejsze i pełniejsze, pacjent zyskuje twardy, wizualny dowód, że terapia i abstynencja realnie przekładają się na jakość życia.
+            </div>
+
+            <div class="page-footer-meta">
+              <span>POMIAR RÓWNOWAGI ŻYCIOWEJ</span>
+              <span class="page-number">STRONA 84</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA: PODSUMOWANIE MIESIĄCA -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>REFLEKSJA MIESIĘCZNA • PODSUMOWANIE</span>
+              <span class="page-number">STRONA 85</span>
+            </div>
+
+            <div class="morning-card">
+              <div class="section-caption-row">
+                <span class="section-title">🏆 Moje 3 Największe Zwycięstwa w Tym Miesiącu</span>
+              </div>
+              <ul class="priority-list">
+                <li class="priority-item">
+                  <span class="item-num">1</span>
+                  <input type="text" class="item-input" value="Utrzymałem 100% trzeźwości pomimo silnego stresu przy zmianie pracy.">
+                </li>
+                <li class="priority-item">
+                  <span class="item-num">2</span>
+                  <input type="text" class="item-input" value="Przeprosiłem córkę za spóźnienie bez złości i usprawiedliwień.">
+                </li>
+                <li class="priority-item">
+                  <span class="item-num">3</span>
+                  <input type="text" class="item-input" value="Zrobiłem badania krwi i zacząłem regularnie brać witaminy.">
+                </li>
+              </ul>
+            </div>
+
+            <div class="morning-card">
+              <div class="section-caption-row">
+                <span class="section-title">⚠️ Najtrudniejszy Moment i Czego Mnie Nauczył</span>
+              </div>
+              <textarea class="stream-of-consciousness" style="min-height: 80px;" placeholder="Opisz trudny moment...">Gdy w piątek poczułem nagły głód po telefonie od klienta. Nauczyło mnie to, że nie mogę pomijać obiadu – gdy jestem głodny i zmęczony, mój mózg od razu szuka starego znieczulenia.</textarea>
+            </div>
+
+            <div class="morning-card">
+              <div class="section-caption-row">
+                <span class="section-title">🌱 Główny Fokus na Kolejny Miesiąc</span>
+              </div>
+              <input type="text" class="input-line" value="Praca nad Krokami 5 i 6 oraz nauka asertywnego odmawiania w weekendy.">
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PLANNER TRZEŹWOŚCI • FORMAT A4</span>
+              <span class="page-number">STRONA 85</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 5: WOLNE KARTY (DOT GRID 5MM - ZERO STRACHU PRZED CZYSTĄ KARTKĄ)
+           ==================================================================== -->
+      <section class="section-view" id="view-dot-grid-page">
+        <div class="book-spread">
+          <!-- LEWA STRONA: WOLNA KARTA DOT GRID -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>WOLNE KARTY • NOTATNIK W KROPKI (DOT GRID 5MM)</span>
+              <span>STRONA LEWA</span>
+            </div>
+
+            <div class="dot-grid-page">
+              <div class="dot-grid-header">
+                <input type="text" class="input-line" style="font-weight:700; font-size:0.95rem;" value="Temat: Refleksje po Warsztatach Nawrotowych (Sobota)">
+                <span style="font-size: 0.72rem; color:#64748b;">Data: 14.10.2026</span>
+              </div>
+
+              <div class="sample-dot-note">
+                „Nawrót nie zaczyna się od sięgnięcia po butelkę.<br>
+                Nawrót zaczyna się w głowie 3 tygodnie wcześniej:<br>
+                1. Przestaję mówić o tym, co czuję.<br>
+                2. Zaczynam osądzać innych na mityngu.<br>
+                3. Zaniedbuję sen i mówię sobie: »przecież już panuję nad tym«.<br>
+                Dlatego codziennie rano sprawdzam HALT.”
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>DELIKATNA SIATKA KROPEK 5×5 MM</span>
+              <span class="page-number">STRONA 88</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA: CZYSTA KARTA DOT GRID DO DYSPOZYCJI PACJENTA -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>WOLNA PRZESTRZEŃ NA NOTATKI, TABELE, SZKICE</span>
+              <span class="page-number">STRONA 89</span>
+            </div>
+
+            <div class="dot-grid-page">
+              <div class="dot-grid-header">
+                <input type="text" class="input-line" placeholder="Wpisz temat notatki...">
+                <span style="font-size: 0.72rem; color:#64748b;">Data: __.__.____</span>
+              </div>
+
+              <textarea class="stream-of-consciousness" style="border:none; background:transparent; font-size: 0.95rem; height: 100%;" placeholder="Przestrzeń w kropki eliminuje lęk przed czystą kartką. Ułatwia pisanie w prostych liniach, rysowanie własnych tabel lub swobodne notowanie myśli..."></textarea>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PLANNER TRZEŹWOŚCI • FORMAT A4</span>
+              <span class="page-number">STRONA 89</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 6: SEKCJA KRYZYSOWA - MOJE SYGNAŁY OSTRZEGAWCZE (2 STRONY)
+           Sfery: Ciało, Myśli, Emocje, Zachowania
+           ==================================================================== -->
+      <section class="section-view" id="view-crisis-warning-signs">
+        <div class="book-spread">
+          <!-- LEWA STRONA: SYGNAŁY Z CIAŁA I MYŚLI -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>SEKCJA KRYZYSOWA • PROFILAKTYKA NAWROTÓW</span>
+              <span>KARTA OSTRZEGAWCZA A</span>
+            </div>
+
+            <div class="crisis-banner-header">
+              <div class="crisis-banner-title">
+                <span>🚨 MOJE SYGNAŁY OSTRZEGAWCZE (Zwiastuny Głodu)</span>
+              </div>
+              <span style="font-size:0.7rem; font-weight:600;">Rozpoznaj nawrót ZANIM sięgniesz po substancję</span>
+            </div>
+
+            <div class="warning-signs-grid">
+              <!-- Sfera 1: Sygnały ze strony Ciała -->
+              <div class="warning-sphere-card">
+                <div class="sphere-header sphere-body">
+                  <span>💓 1. Sygnały ze Strony Ciała</span>
+                </div>
+                <ul class="symptoms-checklist">
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Bezsenność, wybudzanie się o 3:00 w nocy</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Zaciskanie szczęki, napięcie karku i ramion</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Suchość w ustach, płytki oddech w klatce</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Chroniczne zmęczenie mimo braku wysiłku</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Zaniedbywanie regularnych posiłków (HALT: Hungry)</span>
+                  </li>
+                </ul>
+                <input type="text" class="input-line" style="margin-top:auto;" placeholder="+ Mój własny sygnał ciała...">
+              </div>
+
+              <!-- Sfera 2: Sygnały ze strony Myśli -->
+              <div class="warning-sphere-card">
+                <div class="sphere-header sphere-thoughts">
+                  <span>🧠 2. Sygnały ze Strony Myśli</span>
+                </div>
+                <ul class="symptoms-checklist">
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>„Jeden raz mi nie zaszkodzi, przecież mam kontrolę”</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>„Sam sobie poradzę, nie potrzebuję już mityngów”</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Rozpamiętywanie „starych dobrych czasów” w nałogu</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Porównywanie się: „Inni pili gorzej ode mnie”</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Myśli ucieczkowe: „Wszystko jest bez sensu”</span>
+                  </li>
+                </ul>
+                <input type="text" class="input-line" style="margin-top:auto;" placeholder="+ Mój własny zwiastun w myślach...">
+              </div>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>SEKCJA KRYZYSOWA (KOŃCÓWKA TOMU)</span>
+              <span class="page-number">STRONA 186</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA: SYGNAŁY Z EMOCJI I ZACHOWAŃ -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>SEKCJA KRYZYSOWA • PROFILAKTYKA NAWROTÓW</span>
+              <span>KARTA OSTRZEGAWCZA B</span>
+            </div>
+
+            <div class="warning-signs-grid" style="margin-bottom: 0.9rem;">
+              <!-- Sfera 3: Sygnały ze strony Emocji -->
+              <div class="warning-sphere-card">
+                <div class="sphere-header sphere-emotions">
+                  <span>🌊 3. Sygnały ze Strony Emocji</span>
+                </div>
+                <ul class="symptoms-checklist">
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Narastająca irytacja i złość na błahe sprawy</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Użalanie się nad sobą: „Dlaczego to mnie spotkało”</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Poczucie nieznośnej pustki, nudy lub lęku</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Poczucie wyższości nad innymi („ja już wszystko wiem”)</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Znieczulenie emocjonalne i obojętność</span>
+                  </li>
+                </ul>
+                <input type="text" class="input-line" style="margin-top:auto;" placeholder="+ Mój własny sygnał emocjonalny...">
+              </div>
+
+              <!-- Sfera 4: Sygnały ze strony Zachowań -->
+              <div class="warning-sphere-card">
+                <div class="sphere-header sphere-behaviors">
+                  <span>🚶 4. Sygnały ze Strony Zachowań</span>
+                </div>
+                <ul class="symptoms-checklist">
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Odwoływanie wizyt u terapeuty, opuszczanie mityngów</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Izolowanie się od bliskich i zamykanie w pokoju</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox" checked>
+                    <span>Drobne kłamstwa i zatajanie prawdy o swoim samopoczuciu</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Odwiedzanie starych miejsc lub szukanie kontaktu ze starymi znajomymi</span>
+                  </li>
+                  <li class="symptom-item">
+                    <input type="checkbox" class="symptom-checkbox">
+                    <span>Porzucanie higieny snu i zdrowego odżywiania</span>
+                  </li>
+                </ul>
+                <input type="text" class="input-line" style="margin-top:auto;" placeholder="+ Mój własny sygnał w zachowaniu...">
+              </div>
+            </div>
+
+            <div class="morning-card" style="border-left: 3.5px solid #dc2626;">
+              <div class="section-caption-row">
+                <span class="section-title" style="color:#b91c1c;">🚦 ZASADA TRZECH SYGNAŁÓW (Algorytm Bezpieczeństwa)</span>
+              </div>
+              <p style="font-size: 0.8rem; color: #450a0a; line-height: 1.4;">
+                Gdy zauważysz u siebie <strong>więcej niż 2 zaznaczone zwiastuny</strong> z dowolnej sfery, oznacza to <strong>STAN PODWYŻSZONEGO RYZYKA NAWROTU</strong>.
+                Natychmiast przejdź do strony: <em>Moja Sieć Wsparcia / Procedury SOS</em> i zadzwoń do sponsora.
+              </p>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PLANNER TRZEŹWOŚCI • FORMAT A4</span>
+              <span class="page-number">STRONA 187</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 7: SEKCJA KRYZYSOWA - BILANS ZYSKÓW I STRAT (4 WIELKIE ĆWIARTKI)
+           ==================================================================== -->
+      <section class="section-view" id="view-crisis-balance">
+        <div class="book-spread">
+          <!-- ROZKŁADÓWKA A4: 4 WIELKIE ĆWIARTKI MATRYCY POZNAWCZO-BEHAWIORALNEJ -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>NARZĘDZIE POZNAWCZO-BEHAWIORALNE (CBT)</span>
+              <span>CZĘŚĆ 1: KONSEKWENCJE DECYZJI</span>
+            </div>
+
+            <div style="margin-bottom: 0.6rem;">
+              <h2 style="font-size: 1.05rem; font-weight: 800; text-transform: uppercase;">⚖️ BILANS ZYSKÓW I STRAT (Rozkładówka Decyzyjna)</h2>
+              <p style="font-size: 0.72rem; color: #64748b;">Gdy pojawia się głód, Twój mózg pamięta tylko iluzję ulgi. Spójrz na całą prawdę.</p>
+            </div>
+
+            <!-- ĆWIARTKA 1: CO ZYSKUJĘ, GDY JESTEM TRZEŹWY(A)? -->
+            <div class="matrix-quadrant quadrant-gains-sober" style="margin-bottom: 0.75rem;">
+              <span class="quadrant-title" style="color:#15803d;">🌿 1. Co zyskuję, gdy pozostaję trzeźwy(a)?</span>
+              <span class="quadrant-sub">Relacje, zdrowie, finanse, wolność, szacunek do siebie, spokojny sen</span>
+              <textarea class="quadrant-textarea" id="matrixGainsSober">
+• Prawdziwy szacunek moich dzieci – gdy wracam do domu, nie boją się mojego wzroku.
+• Spokojny sen bez dławiącego lęku i porannego koszmaru moralnego.
+• Czyste finanse: brak długów, kontrola nad wydatkami, oszczędności na przyszłość.
+• Jasny umysł w pracy: zdolność do logicznego myślenia, pamięć, stabilność zawodowa.
+• Wolność od kłamstwa – nie muszę pamiętać, co komu zmyśliłem.</textarea>
+            </div>
+
+            <!-- ĆWIARTKA 2: CO TRACĘ, JEŚLI WRÓCĘ DO NAŁOGU? -->
+            <div class="matrix-quadrant quadrant-losses-relapse">
+              <span class="quadrant-title" style="color:#b91c1c;">💥 2. Co tracę, jeśli wrócę do nałogu?</span>
+              <span class="quadrant-sub">Rodzina, praca, godność, zdrowie psychiczne, a ostatecznie życie</span>
+              <textarea class="quadrant-textarea" id="matrixLossesRelapse">
+• Całkowita utrata zaufania żony i dzieci – kolejnej szansy już nie będzie.
+• Utrata pracy i upadłość finansowa.
+• Ostateczne złamanie godności osobistej i powrót do koszmaru bezsilności.
+• Realne zagrożenie zawałem, udarem i śmiercią w samotności.</textarea>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>MATRYCA DECYZYJNA W GŁODZIE NAŁOGOWYM</span>
+              <span class="page-number">STRONA 188</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA BILANSU: FUNKCJA SUBSTANCJI I KOSZTY PRZESZŁOŚCI -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>NARZĘDZIE POZNAWCZO-BEHAWIORALNE (CBT)</span>
+              <span>CZĘŚĆ 2: ROZPRACOWANIE MECHANIZMU</span>
+            </div>
+
+            <!-- ĆWIARTKA 3: CO "DAWAŁA" MI SUBSTANCJA? (UZNANIE FUNKCJI W CELU ZNALEZIENIA ZAMIENNIKÓW) -->
+            <div class="matrix-quadrant quadrant-substance-function" style="margin-bottom: 0.75rem;">
+              <span class="quadrant-title" style="color:#b45309;">🎭 3. Co „dawała” mi substancja? (Uznaj tę funkcję!)</span>
+              <span class="quadrant-sub">Złudne znieczulenie bólu, szybka ucieczka od stresu – znajdź zdrowe zamienniki!</span>
+              <textarea class="quadrant-textarea" id="matrixSubstanceFunction">
+• Dawała natychmiastowe „wyłączenie” gonitwy myśli po 10 godzinach stresu.
+  → ZDROWA ALTERNATYWNA: 40 minut szybkiego marszu w lesie + prysznic.
+• Dawała fałszywą odwagę w kontaktach z ludźmi.
+  → ZDROWA ALTERNATYWNA: Akceptacja, że mogę czuć nieśmiałość; mityng AA.
+• Dawała szybką nagrodę, gdy czułem się niedoceniony.
+  → ZDROWA ALTERNATYWNA: Zjedzenie dobrego posiłku, telefon do przyjaciela.</textarea>
+            </div>
+
+            <!-- ĆWIARTKA 4: JAKIE KOSZTY PONOSIŁEM(AM), PIJĄC / BIORĄC? -->
+            <div class="matrix-quadrant quadrant-past-costs">
+              <span class="quadrant-title" style="color:#334155;">⛓️ 4. Jakie koszty ponosiłem(am), pijąc / biorąc?</span>
+              <span class="quadrant-sub">Bolesna prawda o przeszłości, która ma chronić Twoją teraźniejszość</span>
+              <textarea class="quadrant-textarea" id="matrixPastCosts">
+• Tysiące zmarnowanych godzin w stanie zamroczenia i na leczeniu kaca.
+• Olbrzymi wstyd przed sąsiadami i rodziną po incydentach.
+• Ciągły lęk, że ktoś wyczuje woń alkoholu w pracy.
+• Zniszczone zdrowie żołądka, wątroby i układu nerwowego.</textarea>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>PLANNER TRZEŹWOŚCI • FORMAT A4</span>
+              <span class="page-number">STRONA 189</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ====================================================================
+           WIDOK 8: SEKCJA KRYZYSOWA - MOJA SIEĆ WSPARCIA & PLAN AWARYJNY SOS
+           ==================================================================== -->
+      <section class="section-view" id="view-crisis-sos">
+        <div class="book-spread">
+          <!-- LEWA STRONA: PRZYKŁAD ZASTOSOWANIA I KARTA KONTAKTOWA -->
+          <article class="page-a4 page-left">
+            <div class="page-header-meta">
+              <span>PLAN RATUNKOWY SOS • STRONA LEWA</span>
+              <span>STRONA 190</span>
+            </div>
+
+            <div class="crisis-banner-header">
+              <div class="crisis-banner-title">
+                <span>📞 MOJA SIEĆ WSPARCIA (Numery Ratunkowe)</span>
+              </div>
+              <span style="font-size:0.7rem; font-weight:600;">Wpisz długopisem – nie polegaj tylko na telefonie!</span>
+            </div>
+
+            <div class="emergency-network-grid">
+              <div class="emergency-contact-card">
+                <span class="contact-role">🤝 Mój Sponsor AA / Opiekun</span>
+                <div class="contact-name-val">Marek W.</div>
+                <div class="contact-phone-val">tel. 601 234 567</div>
+                <div style="font-size:0.68rem; color:#64748b; margin-top:0.25rem;">Dostępny: 24/7 w stanie głodu</div>
+              </div>
+
+              <div class="emergency-contact-card">
+                <span class="contact-role">🩺 Terapeuta Prowadzący</span>
+                <div class="contact-name-val">mgr Anna Kowalska (OTU)</div>
+                <div class="contact-phone-val">tel. 22 876 54 32</div>
+                <div style="font-size:0.68rem; color:#64748b; margin-top:0.25rem;">Dyżury: Pn-Pt 8:00 - 18:00</div>
+              </div>
+
+              <div class="emergency-contact-card">
+                <span class="contact-role">🛡️ Przyjaciel z Grupy Wsparcia</span>
+                <div class="contact-name-val">Tomasz Z. (Grupa „Nadzieja”)</div>
+                <div class="contact-phone-val">tel. 502 987 654</div>
+                <div style="font-size:0.68rem; color:#64748b; margin-top:0.25rem;">Zawsze odbiera lub oddzwania</div>
+              </div>
+
+              <div class="emergency-contact-card">
+                <span class="contact-role">🆘 Całodobowe Infolinie Pomocowe</span>
+                <div class="contact-name-val">Ogólnopolski Tel. Zaufania</div>
+                <div class="contact-phone-val">800 199 990 (Bezpłatny)</div>
+                <div style="font-size:0.68rem; color:#64748b; margin-top:0.25rem;">Telefon Zaufania AA: 801 033 242</div>
+              </div>
+            </div>
+
+            <div class="morning-card" style="margin-top: auto;">
+              <div class="section-caption-row">
+                <span class="section-title">📍 Moje Bezpieczne Mityngi Awaryjne</span>
+              </div>
+              <p style="font-size: 0.78rem; color: #334155; line-height: 1.4;">
+                • <strong>Mityng stacjonarny codzienny:</strong> Kościół św. Krzyża, sala 4, godz. 18:30<br>
+                • <strong>Mityngi online (Zoom 24/7):</strong> pokój trzezwosc24h.pl (hasło w notatkach)
+              </p>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>SIEĆ WSPARCIA W STANIE GŁODU</span>
+              <span class="page-number">STRONA 190</span>
+            </div>
+          </article>
+
+          <!-- PRAWA STRONA: PROCEDURA SOS - NATYCHMIASTOWE DZIAŁANIE W GŁODZIE -->
+          <article class="page-a4 page-right">
+            <div class="page-header-meta">
+              <span>PROCEDURA AWARYJNA SOS</span>
+              <span class="page-number">STRONA 191</span>
+            </div>
+
+            <div class="sos-procedures-box">
+              <div class="sos-header">
+                <span>🚨 PROCEDURA RATUNKOWA W MOMENCIE SILNEGO IMPULSU (GŁODU)</span>
+              </div>
+
+              <ul class="sos-steps-list">
+                <li class="sos-step-item">
+                  <div class="sos-step-badge">1</div>
+                  <div>
+                    <strong>STOP I NATYCHMIASTOWA ZMIANA OTOCZENIA:</strong>
+                    Przerwij to, co robisz. Jeśli jesteś w pobliżu sklepu lub w ryzykownym towarzystwie, odejdź natychmiast. Zmień fizyczne pomieszczenie.
+                  </div>
+                </li>
+
+                <li class="sos-step-item">
+                  <div class="sos-step-badge">2</div>
+                  <div>
+                    <strong>FIZYCZNY RESET ORGANIZMU:</strong>
+                    Przemyj twarz lodowatą wodą. Wypij powoli dużą szklankę zimnej wody lub zjedz coś słodkiego (nagły spadek glukozy często udaje głód nałogowy!). Weź 10 głębokich oddechów (wdech 4s, zatrzymanie 4s, wydech 6s).
+                  </div>
+                </li>
+
+                <li class="sos-step-item">
+                  <div class="sos-step-badge">3</div>
+                  <div>
+                    <strong>ZADZWOŃ – NIE BĄDŹ SAM Z GŁODEM:</strong>
+                    Wybierz numer sponsora lub zaufanej osoby z listy obok. Powiedz prosto: <em>„Czuję głód, potrzebuję pogadać przez 10 minut”</em>. Głód traci siłę, gdy zostaje wypowiedziany na głos.
+                  </div>
+                </li>
+
+                <li class="sos-step-item">
+                  <div class="sos-step-badge">4</div>
+                  <div>
+                    <strong>ZASTOSUJ ZASADĘ 15 MINUT / 24 GODZIN:</strong>
+                    Nie decyduj o całym życiu. Powiedz sobie: <em>„Przez najbliższe 15 minut na pewno niczego się nie napiję / nie wezmę. Przeczekam te 15 minut”</em>. Pamiętaj, że fala głodu fizjologicznie opada po 20-30 minutach.
+                  </div>
+                </li>
+
+                <li class="sos-step-item">
+                  <div class="sos-step-badge">5</div>
+                  <div>
+                    <strong>IDŹ NA MITYNG:</strong>
+                    Nawet jeśli nie masz ochoty i wstydzisz się swoich myśli – mityng jest najbezpieczniejszym miejscem na ziemi w trakcie kryzysu.
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="page-footer-meta">
+              <span>NAJWAŻNIEJSZA STRONA W CAŁYM PLANNERZE</span>
+              <span class="page-number">STRONA 191</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ========================================================================
+       MODAL: WIZUALIZACJA ARCHITEKTURY CAŁEGO TOMU (~200 STRON)
+       ======================================================================== -->
+  <aside class="structure-map-overlay" id="structureModal">
+    <div class="structure-modal-content">
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-app); padding-bottom:1rem;">
+        <div>
+          <h2 style="font-size: 1.25rem; color:#fff; font-weight:800;">🗺️ Architektura Fizycznego Tomu A4 (Okres 6 Miesięcy • ~200 Stron)</h2>
+          <p style="font-size: 0.8rem; color:var(--text-app-muted);">Matryca strukturalna książki z uwzględnieniem oprawy twardej, szycia i cyklu terapeutycznego</p>
+        </div>
+        <button class="btn btn-secondary" id="btnCloseModal">✕ Zamknij</button>
+      </div>
+
+      <div class="structure-timeline">
+        <div class="timeline-block">
+          <div class="timeline-title">
+            <span>1. WSTĘP I KONTRAKT TERAPEUTYCZNY (Strony 1–8)</span>
+            <span style="font-size:0.75rem; color:#38bdf8;">8 stron</span>
+          </div>
+          <p class="timeline-desc">
+            Instrukcja korzystania z plannera, Deklaracja gotowości pacjenta, Mój osobisty program zdrowienia (cele długofalowe), Zasady bezpieczeństwa emocjonalnego.
+          </p>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-title">
+            <span>2. CYKL MIESIĘCZNY × 6 BLOKÓW (Strony 9–180, ~28-30 stron / miesiąc)</span>
+            <span style="font-size:0.75rem; color:#10b981;">~172 strony</span>
+          </div>
+          <p class="timeline-desc">
+            • <strong>Początek miesiąca:</strong> Rozkładówka otwierająca (siatka miesięczna 35-dniowa + 3-4 cele i intencje).<br>
+            • <strong>4-5 Bloków Tygodniowych:</strong> Każdy blok to rozkładówka tygodniowa z boksem skupienia i celami na ZEWNĘTRZNYM marginesie (zabezpieczenie przed ucieczką w szycie 15-20 mm) + 7 pełnych stron dziennych (Rano: 24H, Środek: monitoring HALT, Wieczór: 2 pytania antynawrotowe i strumień myśli na dot grid).<br>
+            • <strong>Koniec miesiąca:</strong> Koło Życia (8 sfer do zakolorowania) + Podsumowanie sukcesów i lekcji + 2-4 wolne karty dot grid.
+          </p>
+        </div>
+
+        <div class="timeline-block crisis-block">
+          <div class="timeline-title">
+            <span>3. SEKCJA KRYZYSOWA I ANTYNAWROTOWA (Ostatnie 6–10 stron tomu, Strony 181–192)</span>
+            <span style="font-size:0.75rem; color:#f87171;">Ostatnie 10 stron</span>
+          </div>
+          <p class="timeline-desc">
+            • <strong>Moje Sygnały Ostrzegawcze (2 strony):</strong> Tabela 4 sfer nawrotu (Ciało, Myśli, Emocje, Zachowania).<br>
+            • <strong>Bilans Zysków i Strat (2 strony):</strong> 4 wielkie ćwiartki matrycy decyzyjnej CBT.<br>
+            • <strong>Moja Sieć Wsparcia & Procedura SOS (2 strony):</strong> Numery ratunkowe i 5 natychmiastowych kroków ratunkowych w głodzie.<br>
+            • <strong>Trzeźwy Pamiętnik Kryzysowy (4 strony):</strong> Strony dot-grid na zapisywanie trudnych momentów po przejściu kryzysu.
+          </p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <script src="app.js"></script>
+</body>
+</html>
