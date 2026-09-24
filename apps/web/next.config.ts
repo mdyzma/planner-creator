@@ -11,6 +11,7 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig: NextConfig = {
   output: 'export',
   transpilePackages: [
+    '@planner/blocks',
     '@planner/core',
     '@planner/i18n',
     '@planner/renderer',

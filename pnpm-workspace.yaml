@@ -1,6 +1,7 @@
 packages:
   - apps/*
   - packages/*
+  - templates/*
 
 # Install scripts are blocked unless listed here (supply-chain policy).
 allowBuilds:

@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
-import { FILLER_PATTERN, layoutProject } from '@/lib/pages';
+import { FILLER_PATTERN, blockRegistry, layoutProject } from '@/lib/pages';
 import { useProject } from '@/lib/useProject';
 
 /**
@@ -63,6 +63,11 @@ export function PrintScreen() {
               frame={p.frame}
               template={p.template}
               fillerPattern={FILLER_PATTERN}
+              renderBlock={blockRegistry.render}
+              pageContext={p.page.instance?.context}
+              vars={p.vars}
+              range={layout.range}
+              contentFor={p.contentFor}
               locale={project.locale}
               grammaticalGender={project.i18nOptions.grammaticalGender}
               mode="print"

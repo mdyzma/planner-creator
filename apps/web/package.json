@@ -12,11 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@planner/blocks": "workspace:*",
     "@planner/core": "workspace:*",
     "@planner/i18n": "workspace:*",
     "@planner/renderer": "workspace:*",
     "@planner/schema": "workspace:*",
     "@planner/storage": "workspace:*",
+    "@planner/template-therapeutic-recovery": "workspace:*",
     "next": "^16.3.6",
     "next-intl": "^4.14.0",
     "react": "^19.3.0",

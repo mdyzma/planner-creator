@@ -24,8 +24,8 @@
     "yourPlanners": "Your planners",
     "empty": "No planners yet. Create one above.",
     "devPrefix": "Development:",
-    "devDemoButton": "add a print-model demo planner",
-    "devDemoSuffix": "with placeholder pages to check sizes, margins and spreads.",
+    "devDemoButton": "add the 6-month recovery planner demo",
+    "devDemoSuffix": "with one month, one week, the month-end pages and the crisis section.",
     "pages": "{count, plural, one {# page} other {# pages}}",
     "summary": "{format} · {language} · {pages} · edited {date} · {status}",
     "status": {

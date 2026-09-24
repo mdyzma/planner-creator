@@ -41,6 +41,7 @@
 body {
   background: var(--ui-bg);
   color: var(--ui-ink);
+  font-family: var(--planner-font, ui-sans-serif, system-ui, sans-serif);
 }
 
 :focus-visible {

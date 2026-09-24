@@ -11,7 +11,7 @@ import { useMemo, useState, type ReactNode } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
-import { FILLER_PATTERN, layoutProject, type RenderedPage } from '@/lib/pages';
+import { FILLER_PATTERN, blockRegistry, layoutProject, type RenderedPage } from '@/lib/pages';
 import { useProject } from '@/lib/useProject';
 
 type ViewMode = 'spread' | 'single';
@@ -44,7 +44,7 @@ function Preview({
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>(0.5);
   const [guides, setGuides] = useState(true);
 
-  const { pages, paginationWarnings, frameWarnings } = useMemo(
+  const { pages, range, paginationWarnings, frameWarnings } = useMemo(
     () => layoutProject(project),
     [project],
   );
@@ -64,6 +64,11 @@ function Preview({
         frame={p.frame}
         template={p.template}
         fillerPattern={FILLER_PATTERN}
+        renderBlock={blockRegistry.render}
+        pageContext={p.page.instance?.context}
+        vars={p.vars}
+        range={range}
+        contentFor={p.contentFor}
         locale={plannerLocale}
         grammaticalGender={project.i18nOptions.grammaticalGender}
         mode="preview"

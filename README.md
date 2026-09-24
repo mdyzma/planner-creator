@@ -29,9 +29,10 @@ packages/planner-schema  Zod schemas, types, migrations, defaults
 packages/planner-i18n    Translations lookup, dates, plurals, gendered wording, translation scanner
 packages/planner-core    Pagination (sides, spreads, fillers) and page geometry (margins, binding, rail)
 packages/planner-renderer React page rendering in mm, guides, print CSS
+packages/planner-blocks  Block registry and built-in block types (text, lists, HALT, calendar, Wheel of Life…)
 packages/planner-storage Repository interfaces + IndexedDB (Dexie) and in-memory implementations
-templates/               Planner templates and bilingual content (data, not code)
+templates/               Planner templates: TypeScript source compiled to template.json, plus bilingual content
 docs/                    Architecture, ADRs, operations, frozen demo reference
 ```
 
-Status: **M2 (internationalisation)**: interface in English and Polish (`/en`, `/pl`), bilingual planner content with a Translations screen, Polish date and plural forms, gendered wording. Earlier: M1 print model (pagination, mirrored geometry, true-size rendering). Try it with the dashboard's demo planner → Preview / Translations / Print view. See the delivery plan in the design doc, §14.
+Status: **M3 (therapeutic pages)**: block registry with 15 built-in block types, and the bilingual 6-month therapeutic template (daily, weekly, monthly, Wheel of Life, review and crisis pages) in A4 and A5. Earlier: M2 internationalisation, M1 print model. Try it with the dashboard's demo planner → Preview / Translations / Print view. See the delivery plan in the design doc, §14.

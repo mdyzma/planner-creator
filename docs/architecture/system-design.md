@@ -966,8 +966,8 @@ planner-creator/
 │   ├── planner-renderer/        PageView, layout nodes, print CSS
 │   ├── planner-pdf/             Exporter interface + adapters
 │   └── planner-storage/         Repository interfaces, IndexedDB (Dexie) + in-memory adapters (§10.1)
-├── templates/therapeutic-recovery/
-│   ├── template.json
+├── templates/therapeutic-recovery/  workspace package; src/template.ts (TypeScript, type-checked) → template.json
+│   ├── template.json            generated data the app loads; a test keeps it in sync with the source
 │   ├── content/{quotes,affirmations,prompts,sos,warning-signs}.json   (LocalizedText per record)
 │   └── README.md
 ├── .github/workflows/           ci.yml, deploy.yml, drift.yml

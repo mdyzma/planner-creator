@@ -1,18 +1,50 @@
 import type { GrammaticalGender } from '@planner/i18n';
-import { applyGender, localize } from '@planner/i18n';
-import type { BlockInstance, LayoutNode, Locale, LocalizedText } from '@planner/schema';
+import { applyGender, fillVariables, localize } from '@planner/i18n';
+import type {
+  BlockInstance,
+  ContentItem,
+  LayoutNode,
+  Locale,
+  LocalizedText,
+  PageContext,
+} from '@planner/schema';
 import type { CSSProperties, ReactNode } from 'react';
 import { PAPER, flexFor, mm } from './units';
 
+/** Everything a block may need to render on a particular page. */
 export interface BlockRenderContext {
   locale: Locale;
   mode: RenderMode;
   gender: GrammaticalGender;
+  /** The page's place in time: its date, or the seven dates of a week page. */
+  page: PageContext;
+  /** Page variables for {{tokens}}; unset ones print as a writing line. */
+  vars: Readonly<Record<string, string>>;
+  /** First and last day of the planner, so days outside it can be greyed out. */
+  range?: { start: string; end: string };
+  /** Content item assigned to a block on this page (e.g. the day's quote). */
+  contentFor: (blockId: string) => ContentItem | undefined;
 }
 
-/** Text for the page: the page locale with fallback, then gendered wording resolved (§7). */
+export const emptyRenderContext = (
+  locale: Locale,
+  mode: RenderMode,
+  gender: GrammaticalGender = 'slash',
+): BlockRenderContext => ({
+  locale,
+  mode,
+  gender,
+  page: {},
+  vars: {},
+  contentFor: () => undefined,
+});
+
+/**
+ * Text as it prints on this page: page locale with fallback, then {{variables}}, then gendered
+ * wording (§7).
+ */
 export const resolveText = (ctx: BlockRenderContext, text: LocalizedText | undefined): string =>
-  applyGender(localize(text, ctx.locale), ctx.gender);
+  applyGender(fillVariables(localize(text, ctx.locale), ctx.vars), ctx.gender);
 
 export type RenderMode = 'edit' | 'preview' | 'print';
 

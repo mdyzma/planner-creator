@@ -1,0 +1,31 @@
+{
+  "name": "@planner/template-therapeutic-recovery",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Therapeutic Recovery Planner — 6 months (English/Polish). template.json is generated from src/template.ts.",
+  "exports": {
+    "./template.json": "./template.json",
+    "./content/quotes.json": "./content/quotes.json"
+  },
+  "scripts": {
+    "build:template": "tsx src/build.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@planner/blocks": "workspace:*",
+    "@planner/core": "workspace:*",
+    "@planner/i18n": "workspace:*",
+    "@planner/renderer": "workspace:*",
+    "@planner/schema": "workspace:*",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsx": "^4.23.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

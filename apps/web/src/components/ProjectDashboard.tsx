@@ -5,7 +5,7 @@ import { FORMAT_IDS, LOCALES, createProject } from '@planner/schema';
 import type { ProjectSummary } from '@planner/storage';
 import { useFormatter, useTranslations } from 'next-intl';
 import { useCallback, useEffect, useId, useState, type FormEvent } from 'react';
-import { createPrintModelDemo } from '@/fixtures/printModelDemo';
+import { createTherapeuticDemo } from '@/fixtures/therapeuticDemo';
 import { Link } from '@/i18n/navigation';
 import { getProjectRepository, requestPersistentStorage } from '@/lib/repository';
 
@@ -51,8 +51,9 @@ export function ProjectDashboard() {
           className="underline"
           onClick={run(() =>
             getProjectRepository().save(
-              createPrintModelDemo({
+              createTherapeuticDemo({
                 id: crypto.randomUUID(),
+                name: t('defaultName'),
                 now: new Date().toISOString(),
                 format: 'A4',
                 locale: 'pl',

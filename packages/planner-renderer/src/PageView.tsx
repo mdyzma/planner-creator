@@ -1,12 +1,12 @@
 import type { Box, PageFrame } from '@planner/core';
 import type { GrammaticalGender } from '@planner/i18n';
-import type { Locale, PageTemplate, PatternSpec } from '@planner/schema';
+import type { ContentItem, Locale, PageContext, PageTemplate, PatternSpec } from '@planner/schema';
 import type { CSSProperties } from 'react';
 import { Guides } from './Guides';
-import type { BlockRenderer, RenderMode } from './LayoutView';
+import type { BlockRenderContext, BlockRenderer, RenderMode } from './LayoutView';
 import { LayoutView, placeholderBlock } from './LayoutView';
 import { Pattern } from './Pattern';
-import { PAPER, mm } from './units';
+import { PAPER, flexFor, mm } from './units';
 
 export interface PageViewProps {
   frame: PageFrame;
@@ -22,6 +22,14 @@ export interface PageViewProps {
   printerSafeMargin?: number;
   pageNumber?: number;
   renderBlock?: BlockRenderer;
+  /** The page's date context (from its page instance). */
+  pageContext?: PageContext;
+  /** Resolved page variables for {{tokens}}. */
+  vars?: Readonly<Record<string, string>>;
+  /** First and last planner day. */
+  range?: { start: string; end: string };
+  /** Content assigned to blocks on this page, keyed by block id. */
+  contentFor?: (blockId: string) => ContentItem | undefined;
   /** Accessible name for the page region on screen. */
   label?: string;
 }
@@ -49,9 +57,21 @@ export function PageView({
   printerSafeMargin = 5,
   pageNumber,
   renderBlock = placeholderBlock,
+  pageContext = {},
+  vars = {},
+  range,
+  contentFor = () => undefined,
   label,
 }: PageViewProps) {
-  const ctx = { locale, mode, gender: grammaticalGender };
+  const ctx: BlockRenderContext = {
+    locale,
+    mode,
+    gender: grammaticalGender,
+    page: pageContext,
+    vars,
+    range,
+    contentFor,
+  };
   const { trim, bleed, body } = frame;
   const background = template ? template.background : fillerPattern;
 
@@ -68,6 +88,9 @@ export function PageView({
         height: mm(trim.h + 2 * bleed),
         background: PAPER.paper,
         color: PAPER.ink,
+        fontFamily: PAPER.font,
+        fontSize: '9pt',
+        lineHeight: 1.3,
         overflow: 'hidden',
         flex: 'none',
       }}
@@ -97,8 +120,11 @@ export function PageView({
             style={{ ...at(frame.outerRail), display: 'flex', flexDirection: 'column', gap: mm(4) }}
           >
             {template.outerRail.map((block) => (
-              <div key={block.id} style={{ flex: '0 0 auto' }}>
-                {renderBlock(block, ctx)}
+              <div
+                key={block.id}
+                style={{ ...flexFor(block.size?.height ?? 'auto'), minHeight: 0, display: 'flex' }}
+              >
+                <div style={{ flex: 1, minWidth: 0 }}>{renderBlock(block, ctx)}</div>
               </div>
             ))}
           </div>

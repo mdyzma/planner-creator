@@ -26,4 +26,11 @@ export const PAPER = {
   ink: '#1e2424',
   inkMuted: '#525c5a',
   rule: inkColor(0.45),
+  /** Ruled lines and boxes: darker than the dot grid so they survive home printers (§8.4). */
+  line: inkColor(0.55),
+  /** Set by the app (self-hosted font); falls back to the system sans-serif. */
+  font: 'var(--planner-font, ui-sans-serif, system-ui, sans-serif)',
 } as const;
+
+/** CSS pixels per millimetre (CSS units are absolute: 96 px = 25.4 mm). */
+export const PX_PER_MM = 96 / 25.4;

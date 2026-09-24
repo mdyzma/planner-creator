@@ -24,8 +24,8 @@
     "yourPlanners": "Twoje planery",
     "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",
     "devPrefix": "Wersja deweloperska:",
-    "devDemoButton": "dodaj demonstracyjny planer modelu druku",
-    "devDemoSuffix": "ze stronami zastępczymi do sprawdzenia rozmiarów, marginesów i rozkładówek.",
+    "devDemoButton": "dodaj demonstracyjny 6-miesięczny planer zdrowienia",
+    "devDemoSuffix": "z jednym miesiącem, jednym tygodniem, podsumowaniem miesiąca i sekcją kryzysową.",
     "pages": "{count, plural, one {# strona} few {# strony} many {# stron} other {# strony}}",
     "summary": "{format} · {language} · {pages} · zmieniono {date} · {status}",
     "status": {

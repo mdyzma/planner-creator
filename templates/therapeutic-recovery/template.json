@@ -1,0 +1,2266 @@
+{
+  "schemaVersion": 1,
+  "id": "therapeutic-recovery-6-month",
+  "version": "1.0.0",
+  "name": {
+    "en": "Therapeutic Recovery Planner — 6 Months",
+    "pl": "Planer terapeutyczny zdrowienia — 6 miesięcy"
+  },
+  "description": {
+    "en": "A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
+    "pl": "Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom."
+  },
+  "supportedFormats": [
+    "A4",
+    "A5"
+  ],
+  "supportedLocales": [
+    "en",
+    "pl"
+  ],
+  "defaults": {
+    "print": {
+      "profile": "home-duplex",
+      "margins": {
+        "inner": 18,
+        "outer": 14,
+        "top": 14,
+        "bottom": 17
+      },
+      "printerSafeMargin": 5,
+      "outerRail": 0,
+      "bleed": 0,
+      "cropMarks": false,
+      "binding": {
+        "kind": "ring",
+        "preset": "iso838-2hole",
+        "holeCentreFromEdge": 12,
+        "holeDiameter": 6,
+        "holePositions": [
+          108.5,
+          188.5
+        ],
+        "punchGuides": false
+      },
+      "pageNumbers": true,
+      "color": "color",
+      "calibrationPage": false
+    },
+    "theme": {},
+    "generation": {
+      "durationMonths": 6,
+      "monthMode": "calendar",
+      "weekOwnership": "monday",
+      "dailyLayout": "spread",
+      "weeklyLayout": "spread",
+      "quoteCadence": "daily",
+      "volumes": 1
+    }
+  },
+  "pageTemplates": {
+    "cover": {
+      "id": "cover",
+      "name": {
+        "en": "Cover",
+        "pl": "Strona tytułowa"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 6,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "top",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 2
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "title",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Therapeutic Recovery Planner",
+                  "pl": "Planer terapeutyczny zdrowienia"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "subtitle",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Six months, one day at a time",
+                  "pl": "Sześć miesięcy, dzień po dniu"
+                },
+                "variant": "subheading"
+              },
+              "size": {
+                "height": {
+                  "mm": 10
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "gap",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "owner",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "This planner belongs to",
+                  "pl": "Ten planer należy do"
+                },
+                "pattern": "lines",
+                "pitch": 8
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "start",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I start on",
+                  "pl": "Zaczynam dnia"
+                },
+                "pattern": "lines",
+                "pitch": 8
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "bottom",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "how-to": {
+      "id": "how-to",
+      "name": {
+        "en": "How to use this planner",
+        "pl": "Jak korzystać z planera"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "How to use this planner",
+                  "pl": "Jak korzystać z planera"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "body",
+              "type": "text",
+              "props": {
+                "variant": "body",
+                "text": {
+                  "en": "Each day has two facing pages. In the morning, use the left page: your 24-hour commitment, up to three priorities and a plan for the day. During the day, check HALT: are you hungry, angry, lonely or tired? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: zobowiązanie na 24 godziny, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj HALT: czy jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna} lub {g:zmęczony|zmęczona}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                }
+              },
+              "size": {
+                "height": {
+                  "fr": 3
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My notes",
+                  "pl": "Moje notatki"
+                },
+                "pattern": "dots"
+              },
+              "size": {
+                "height": {
+                  "fr": 2
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "contract": {
+      "id": "contract",
+      "name": {
+        "en": "Therapeutic contract",
+        "pl": "Kontrakt terapeutyczny"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My therapeutic contract",
+                  "pl": "Mój kontrakt terapeutyczny"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "intro",
+              "type": "text",
+              "props": {
+                "variant": "body",
+                "text": {
+                  "en": "Write down, in your own words, what you commit to during these six months. You can agree it with your therapist.",
+                  "pl": "Zapisz własnymi słowami, do czego zobowiązujesz się w ciągu tych sześciu miesięcy. Możesz uzgodnić to ze swoim terapeutą lub terapeutką."
+                }
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "commitments",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "I commit to",
+                  "pl": "Zobowiązuję się"
+                },
+                "count": 8,
+                "lineHeight": 9
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "signature",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "My signature",
+                      "pl": "Mój podpis"
+                    },
+                    "pattern": "lines",
+                    "pitch": 10
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "therapist",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Therapist",
+                      "pl": "Terapeuta / terapeutka"
+                    },
+                    "pattern": "lines",
+                    "pitch": 10
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "date",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Date",
+                      "pl": "Data"
+                    },
+                    "pattern": "lines",
+                    "pitch": 10
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 22
+            }
+          }
+        ]
+      }
+    },
+    "safety-rules": {
+      "id": "safety-rules",
+      "name": {
+        "en": "Safety rules",
+        "pl": "Zasady bezpieczeństwa"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My safety rules",
+                  "pl": "Moje zasady bezpieczeństwa"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "rules",
+              "type": "numbered-list",
+              "props": {
+                "count": 10,
+                "lineHeight": 9,
+                "items": [
+                  {
+                    "en": "I do not keep alcohol or substances at home.",
+                    "pl": "Nie trzymam w domu alkoholu ani substancji."
+                  },
+                  {
+                    "en": "When a craving comes, I call someone before I decide anything.",
+                    "pl": "Gdy pojawia się głód, dzwonię do kogoś, zanim cokolwiek zdecyduję."
+                  },
+                  {
+                    "en": "I avoid places and people linked to my drinking or using.",
+                    "pl": "Unikam miejsc i osób związanych z piciem lub używaniem."
+                  },
+                  {
+                    "en": "I eat, sleep and rest regularly (HALT).",
+                    "pl": "Regularnie jem, śpię i odpoczywam (HALT)."
+                  },
+                  {
+                    "en": "I go to my meetings and therapy even when I do not feel like it.",
+                    "pl": "Chodzę na mityngi i terapię, nawet gdy nie mam ochoty."
+                  }
+                ]
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "emergency",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "If you are in danger or thinking about harming yourself, call your local emergency number or go to the nearest emergency department.",
+                  "pl": "Jeśli grozi Ci niebezpieczeństwo lub myślisz o zrobieniu sobie krzywdy, zadzwoń pod lokalny numer alarmowy albo zgłoś się na najbliższy szpitalny oddział ratunkowy."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "month-divider": {
+      "id": "month-divider",
+      "name": {
+        "en": "Month divider",
+        "pl": "Przekładka miesiąca"
+      },
+      "rationale": {
+        "en": "A right-hand page that starts each month on a new sheet, so months can be printed and filed in the ring binder one at a time.",
+        "pl": "Prawa strona rozpoczynająca każdy miesiąc na nowym arkuszu, dzięki czemu miesiące można drukować i wpinać do segregatora osobno."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "top",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 2
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "month",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "{{monthName}}",
+                  "pl": "{{monthName}}"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "intention",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "One word for this month",
+                  "pl": "Jedno słowo na ten miesiąc"
+                },
+                "pattern": "lines",
+                "pitch": 9
+              },
+              "size": {
+                "height": {
+                  "mm": 20
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "bottom",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 3
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "month-open-left": {
+      "id": "month-open-left",
+      "name": {
+        "en": "Month opening (left)",
+        "pl": "Otwarcie miesiąca (lewa)"
+      },
+      "spread": {
+        "group": "month-open",
+        "position": "left"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "month",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "{{monthName}}",
+                  "pl": "{{monthName}}"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "calendar",
+              "type": "calendar-grid",
+              "props": {
+                "columns": [
+                  0,
+                  4
+                ]
+              },
+              "size": {
+                "height": {
+                  "mm": 110
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "intention",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Main intention",
+                  "pl": "Główna intencja"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 26
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "goals",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "Main goals this month (3–4)",
+                  "pl": "Główne cele miesiąca (3–4)"
+                },
+                "count": 4,
+                "marker": "checkbox"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/1/block/size/height",
+            "value": {
+              "mm": 76
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2/block/size/height",
+            "value": {
+              "mm": 20
+            }
+          }
+        ]
+      }
+    },
+    "month-open-right": {
+      "id": "month-open-right",
+      "name": {
+        "en": "Month opening (right)",
+        "pl": "Otwarcie miesiąca (prawa)"
+      },
+      "spread": {
+        "group": "month-open",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "focus",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Recovery focus",
+                  "pl": "Fokus zdrowienia"
+                },
+                "pattern": "lines",
+                "pitch": 6
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "calendar",
+              "type": "calendar-grid",
+              "props": {
+                "columns": [
+                  4,
+                  7
+                ]
+              },
+              "size": {
+                "height": {
+                  "mm": 110
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "remember",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "This month I want to remember…",
+                  "pl": "W tym miesiącu chcę pamiętać o…"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 26
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "appointments",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Meetings, therapy and appointments",
+                      "pl": "Mityngi, terapia i wizyty"
+                    },
+                    "pattern": "lines"
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "habits",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Habits and milestones",
+                      "pl": "Nawyki i kamienie milowe"
+                    },
+                    "pattern": "lines"
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 1
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/1/block/size/height",
+            "value": {
+              "mm": 76
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2/block/size/height",
+            "value": {
+              "mm": 20
+            }
+          }
+        ]
+      }
+    },
+    "week-left": {
+      "id": "week-left",
+      "name": {
+        "en": "Week (left)",
+        "pl": "Tydzień (lewa)"
+      },
+      "spread": {
+        "group": "week",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "Weekly goals sit in the outer column, near the page edge, where they stay visible and clear of the binding.",
+        "pl": "Cele tygodnia są w zewnętrznej kolumnie, przy krawędzi strony: dobrze widoczne i z dala od oprawy."
+      },
+      "outerRailWidth": 34,
+      "outerRail": [
+        {
+          "id": "goals",
+          "type": "numbered-list",
+          "props": {
+            "title": {
+              "en": "Goals this week (3–4)",
+              "pl": "Cele tygodnia (3–4)"
+            },
+            "count": 4,
+            "marker": "checkbox"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        }
+      ],
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "range",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Week {{weekRange}}",
+                  "pl": "Tydzień {{weekRange}}"
+                },
+                "variant": "subheading"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "remember",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "This week remember:",
+                  "pl": "W tym tygodniu pamiętaj o:"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 28
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "mon",
+              "type": "day-strip",
+              "props": {
+                "weekday": 0
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tue",
+              "type": "day-strip",
+              "props": {
+                "weekday": 1
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "wed",
+              "type": "day-strip",
+              "props": {
+                "weekday": 2
+              }
+            }
+          }
+        ]
+      }
+    },
+    "week-right": {
+      "id": "week-right",
+      "name": {
+        "en": "Week (right)",
+        "pl": "Tydzień (prawa)"
+      },
+      "spread": {
+        "group": "week",
+        "position": "right"
+      },
+      "outerRailWidth": 34,
+      "outerRail": [
+        {
+          "id": "wins",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "Wins this week",
+              "pl": "Zwycięstwa tygodnia"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        },
+        {
+          "id": "helped",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "What protected my calm",
+              "pl": "Co chroniło mój spokój"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        }
+      ],
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "thu",
+              "type": "day-strip",
+              "props": {
+                "weekday": 3
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "fri",
+              "type": "day-strip",
+              "props": {
+                "weekday": 4
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "sat",
+              "type": "day-strip",
+              "props": {
+                "weekday": 5
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "sun",
+              "type": "day-strip",
+              "props": {
+                "weekday": 6
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "legend",
+              "type": "marker-legend",
+              "props": {},
+              "size": {
+                "height": "auto"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "day-left": {
+      "id": "day-left",
+      "name": {
+        "en": "Day: morning and day (left)",
+        "pl": "Dzień: poranek i dzień (lewa)"
+      },
+      "spread": {
+        "group": "day",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "Read left to right: the morning plan and the day on the left page, the evening reflection on the right.",
+        "pl": "Czytaj od lewej do prawej: poranny plan i dzień na lewej stronie, wieczorna refleksja na prawej."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 5,
+        "children": [
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "date",
+                  "type": "day-header",
+                  "props": {},
+                  "size": {
+                    "width": {
+                      "fr": 2
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "quote",
+                  "type": "quote",
+                  "props": {},
+                  "size": {
+                    "width": {
+                      "fr": 3
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 20
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 4,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "commitment",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Today, for the next 24 hours, I will do everything I can to protect my sobriety by…",
+                      "pl": "Dzisiaj, przez najbliższe 24 godziny, zrobię wszystko, aby utrzymać abstynencję poprzez…"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 34
+            },
+            "label": {
+              "en": "Morning",
+              "pl": "Poranek"
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 4,
+            "children": [
+              {
+                "kind": "row",
+                "gap": 5,
+                "children": [
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "priorities",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "My three priorities today",
+                          "pl": "Moje trzy najważniejsze cele na dziś"
+                        },
+                        "count": 3,
+                        "subLines": [
+                          {
+                            "en": "How:",
+                            "pl": "Jak:"
+                          },
+                          {
+                            "en": "If it gets hard:",
+                            "pl": "Gdy będzie trudno:"
+                          }
+                        ]
+                      },
+                      "size": {
+                        "width": {
+                          "fr": 3
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "schedule",
+                      "type": "time-grid",
+                      "props": {
+                        "title": {
+                          "en": "Plan of the day",
+                          "pl": "Plan dnia"
+                        },
+                        "from": 7,
+                        "to": 18,
+                        "linesPerSlot": 2
+                      },
+                      "size": {
+                        "width": {
+                          "fr": 2
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "height": {
+              "fr": 1
+            },
+            "label": {
+              "en": "Day",
+              "pl": "Dzień"
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "halt",
+              "type": "rating-matrix",
+              "props": {
+                "title": {
+                  "en": "HALT check (1 = not at all, 5 = very)",
+                  "pl": "Skala HALT (1 = wcale, 5 = bardzo)"
+                },
+                "rows": [
+                  {
+                    "badge": "H",
+                    "label": {
+                      "en": "Hungry",
+                      "pl": "Głód fizyczny"
+                    }
+                  },
+                  {
+                    "badge": "A",
+                    "label": {
+                      "en": "Angry / stressed",
+                      "pl": "Złość / stres"
+                    }
+                  },
+                  {
+                    "badge": "L",
+                    "label": {
+                      "en": "Lonely",
+                      "pl": "Samotność / izolacja"
+                    }
+                  },
+                  {
+                    "badge": "T",
+                    "label": {
+                      "en": "Tired",
+                      "pl": "Zmęczenie / wyczerpanie"
+                    }
+                  }
+                ],
+                "mode": "scale-1-5",
+                "noteColumn": true,
+                "noteLabel": {
+                  "en": "What helped?",
+                  "pl": "Co pomogło?"
+                }
+              },
+              "size": {
+                "height": {
+                  "mm": 44
+                }
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/2/children/0/children/1/block/props/linesPerSlot",
+            "value": 1
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2/children/0/children/0/block/props/subLines",
+            "value": [
+              {
+                "en": "If it gets hard:",
+                "pl": "Gdy będzie trudno:"
+              }
+            ]
+          },
+          {
+            "op": "add",
+            "path": "/body/children/3/block/size/height",
+            "value": {
+              "mm": 36
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/0/children/1/block/props/fallbackLines",
+            "value": 1
+          }
+        ]
+      }
+    },
+    "day-right": {
+      "id": "day-right",
+      "name": {
+        "en": "Day: evening (right)",
+        "pl": "Dzień: wieczór (prawa)"
+      },
+      "spread": {
+        "group": "day",
+        "position": "right"
+      },
+      "rationale": {
+        "en": "The largest writing space in the planner: a 5 mm dot grid for the evening reflection, framed by two relapse-prevention questions.",
+        "pl": "Największa przestrzeń do pisania w planerze: kropki 5 mm na wieczorną refleksję, między dwoma pytaniami chroniącymi przed nawrotem."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 5,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "threat",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What threatened my sobriety today?",
+                  "pl": "Co dzisiaj zagroziło mojej trzeźwości?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 32
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "reflection",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Reflections on the day",
+                  "pl": "Refleksje z dnia"
+                },
+                "pattern": "dots",
+                "pitch": 5
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "gratitude",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "What am I grateful for today?",
+                  "pl": "Za co jestem dziś {g:wdzięczny|wdzięczna}?"
+                },
+                "count": 3
+              },
+              "size": {
+                "height": {
+                  "mm": 32
+                }
+              }
+            }
+          }
+        ],
+        "label": {
+          "en": "Evening",
+          "pl": "Wieczór"
+        }
+      }
+    },
+    "wheel-of-life": {
+      "id": "wheel-of-life",
+      "name": {
+        "en": "Wheel of Life",
+        "pl": "Koło Życia"
+      },
+      "spread": {
+        "group": "month-end",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "Coloured by hand each month; seen month after month, a wheel that becomes rounder is tangible evidence of change.",
+        "pl": "Kolorowane ręcznie co miesiąc; koło, które z miesiąca na miesiąc staje się równiejsze, jest namacalnym dowodem zmiany."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Wheel of Life · {{monthName}}",
+                  "pl": "Koło Życia · {{monthName}}"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Colour each area from the centre (1) out to how satisfied you feel (10).",
+                  "pl": "Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10)."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "wheel",
+              "type": "radial-scale",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "notice",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What do I notice?",
+                  "pl": "Co zauważam?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 40
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "monthly-review": {
+      "id": "monthly-review",
+      "name": {
+        "en": "Monthly review",
+        "pl": "Podsumowanie miesiąca"
+      },
+      "spread": {
+        "group": "month-end",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Monthly review",
+                  "pl": "Podsumowanie miesiąca"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-1",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What helped me most this month?",
+                  "pl": "Co najbardziej mi pomogło w tym miesiącu?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-2",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What was difficult?",
+                  "pl": "Co było trudne?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-3",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What warning signs did I notice?",
+                  "pl": "Jakie sygnały ostrzegawcze {g:zauważyłem|zauważyłam}?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-4",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What did I learn about myself?",
+                  "pl": "Czego {g:dowiedziałem|dowiedziałam} się o sobie?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-5",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What do I want to continue next month?",
+                  "pl": "Co chcę kontynuować w przyszłym miesiącu?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "prompt-6",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What needs more attention?",
+                  "pl": "Co wymaga więcej uwagi?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "notes": {
+      "id": "notes",
+      "name": {
+        "en": "Notes (5 mm dot grid)",
+        "pl": "Notatki (kropki 5 mm)"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "pattern": "dots",
+                "pitch": 5
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "warning-signs-left": {
+      "id": "warning-signs-left",
+      "name": {
+        "en": "Warning signs (left)",
+        "pl": "Sygnały ostrzegawcze (lewa)"
+      },
+      "spread": {
+        "group": "warning-signs",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "Relapse starts long before the first drink or use. Four areas help the patient notice it early.",
+        "pl": "Nawrót zaczyna się długo przed sięgnięciem po substancję. Cztery obszary pomagają zauważyć go wcześnie."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My warning signs",
+                  "pl": "Moje sygnały ostrzegawcze"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Write the signs you know from your own experience. The examples are only a prompt; cross out what does not fit.",
+                  "pl": "Zapisz sygnały, które znasz z własnego doświadczenia. Przykłady są tylko podpowiedzią; skreśl to, co nie pasuje."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 10
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "grid",
+              "type": "category-grid",
+              "props": {
+                "columns": 1,
+                "cells": [
+                  {
+                    "title": {
+                      "en": "Body",
+                      "pl": "Ciało"
+                    },
+                    "examples": [
+                      {
+                        "en": "insomnia",
+                        "pl": "bezsenność"
+                      },
+                      {
+                        "en": "muscle tension",
+                        "pl": "napięcie mięśni"
+                      },
+                      {
+                        "en": "jaw clenching",
+                        "pl": "zaciskanie szczęki"
+                      },
+                      {
+                        "en": "exhaustion",
+                        "pl": "wyczerpanie"
+                      }
+                    ]
+                  },
+                  {
+                    "title": {
+                      "en": "Thoughts",
+                      "pl": "Myśli"
+                    },
+                    "examples": [
+                      {
+                        "en": "“One time will not hurt.”",
+                        "pl": "„Jeden raz nie zaszkodzi.”"
+                      },
+                      {
+                        "en": "“I can control it now.”",
+                        "pl": "„Teraz już nad tym panuję.”"
+                      },
+                      {
+                        "en": "“I do not need meetings anymore.”",
+                        "pl": "„Nie potrzebuję już mityngów.”"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "warning-signs-right": {
+      "id": "warning-signs-right",
+      "name": {
+        "en": "Warning signs (right)",
+        "pl": "Sygnały ostrzegawcze (prawa)"
+      },
+      "spread": {
+        "group": "warning-signs",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "grid",
+              "type": "category-grid",
+              "props": {
+                "columns": 1,
+                "cells": [
+                  {
+                    "title": {
+                      "en": "Emotions",
+                      "pl": "Emocje"
+                    },
+                    "examples": [
+                      {
+                        "en": "frustration",
+                        "pl": "frustracja"
+                      },
+                      {
+                        "en": "self-pity",
+                        "pl": "użalanie się nad sobą"
+                      },
+                      {
+                        "en": "anger",
+                        "pl": "złość"
+                      },
+                      {
+                        "en": "hopelessness",
+                        "pl": "beznadzieja"
+                      }
+                    ]
+                  },
+                  {
+                    "title": {
+                      "en": "Behaviours",
+                      "pl": "Zachowania"
+                    },
+                    "examples": [
+                      {
+                        "en": "isolation",
+                        "pl": "izolowanie się"
+                      },
+                      {
+                        "en": "avoiding meetings",
+                        "pl": "unikanie mityngów"
+                      },
+                      {
+                        "en": "lying",
+                        "pl": "kłamstwa"
+                      },
+                      {
+                        "en": "abandoning routines",
+                        "pl": "porzucanie codziennych rutyn"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "three-signs",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I notice three of these signs, I will…",
+                  "pl": "Gdy zauważę trzy z tych sygnałów, zrobię…"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 36
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "gains-losses": {
+      "id": "gains-losses",
+      "name": {
+        "en": "Gains and losses",
+        "pl": "Bilans zysków i strat"
+      },
+      "rationale": {
+        "en": "Headings can be changed for programmes that use a different model; acknowledging what the substance gave helps find healthier replacements.",
+        "pl": "Nagłówki można zmienić dla programów opartych na innym modelu; uznanie, co dawała substancja, pomaga znaleźć zdrowsze zamienniki."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Balance of gains and losses",
+                  "pl": "Bilans zysków i strat"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "quadrants",
+              "type": "category-grid",
+              "props": {
+                "columns": 2,
+                "cells": [
+                  {
+                    "title": {
+                      "en": "Benefits of drinking / using",
+                      "pl": "Zyski z picia / używania"
+                    },
+                    "examples": []
+                  },
+                  {
+                    "title": {
+                      "en": "Costs of drinking / using",
+                      "pl": "Straty wynikające z picia / używania"
+                    },
+                    "examples": []
+                  },
+                  {
+                    "title": {
+                      "en": "Benefits of sobriety",
+                      "pl": "Zyski z trzeźwości"
+                    },
+                    "examples": []
+                  },
+                  {
+                    "title": {
+                      "en": "Challenges of sobriety",
+                      "pl": "Trudności związane z trzeźwością"
+                    },
+                    "examples": []
+                  }
+                ]
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "support-network": {
+      "id": "support-network",
+      "name": {
+        "en": "Support network",
+        "pl": "Sieć wsparcia"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My support network",
+                  "pl": "Moja sieć wsparcia"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "contacts",
+              "type": "contact-table",
+              "props": {
+                "roles": [
+                  {
+                    "en": "Sponsor",
+                    "pl": "Sponsor"
+                  },
+                  {
+                    "en": "Therapist",
+                    "pl": "Terapeuta / terapeutka"
+                  },
+                  {
+                    "en": "Friend",
+                    "pl": "Przyjaciel / przyjaciółka"
+                  },
+                  {
+                    "en": "Family member",
+                    "pl": "Ktoś z rodziny"
+                  },
+                  {
+                    "en": "Doctor",
+                    "pl": "Lekarz / lekarka"
+                  },
+                  {
+                    "en": "Emergency contact",
+                    "pl": "Kontakt alarmowy"
+                  }
+                ],
+                "fields": [
+                  {
+                    "en": "Name",
+                    "pl": "Imię i nazwisko"
+                  },
+                  {
+                    "en": "Phone",
+                    "pl": "Telefon"
+                  },
+                  {
+                    "en": "Alternative phone",
+                    "pl": "Telefon dodatkowy"
+                  },
+                  {
+                    "en": "Notes",
+                    "pl": "Uwagi"
+                  }
+                ]
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "sos": {
+      "id": "sos",
+      "name": {
+        "en": "SOS plan",
+        "pl": "Plan SOS"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My SOS plan",
+                  "pl": "Mój plan SOS"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "steps",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "Five steps",
+                  "pl": "Pięć kroków"
+                },
+                "items": [
+                  {
+                    "en": "Stop and recognise what is happening.",
+                    "pl": "Zatrzymaj się i nazwij, co się dzieje."
+                  },
+                  {
+                    "en": "Do not stay alone with the craving.",
+                    "pl": "Nie zostawaj w samotności z głodem."
+                  },
+                  {
+                    "en": "Contact someone from my support network.",
+                    "pl": "Skontaktuj się z kimś z mojej sieci wsparcia."
+                  },
+                  {
+                    "en": "Change environment and remove access to alcohol or substances.",
+                    "pl": "Zmień otoczenie i usuń dostęp do alkoholu lub substancji."
+                  },
+                  {
+                    "en": "Use my emergency coping strategy and seek professional help if necessary.",
+                    "pl": "Zastosuj swoją awaryjną strategię radzenia sobie i w razie potrzeby szukaj profesjonalnej pomocy."
+                  }
+                ],
+                "count": 5,
+                "lineHeight": 10
+              },
+              "size": {
+                "height": {
+                  "mm": 70
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "strategy",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My emergency coping strategy",
+                  "pl": "Moja awaryjna strategia radzenia sobie"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "places",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Safe places and meetings I can go to",
+                  "pl": "Bezpieczne miejsca i mityngi, do których mogę pójść"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 40
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "sections": [
+    {
+      "id": "intro",
+      "title": {
+        "en": "Introduction",
+        "pl": "Wprowadzenie"
+      },
+      "startOn": "right",
+      "sheetAligned": true,
+      "children": [
+        {
+          "page": "cover"
+        },
+        {
+          "page": "how-to"
+        },
+        {
+          "page": "contract"
+        },
+        {
+          "page": "safety-rules"
+        }
+      ]
+    },
+    {
+      "id": "month",
+      "title": {
+        "en": "Month",
+        "pl": "Miesiąc"
+      },
+      "repeat": {
+        "over": "months"
+      },
+      "sheetAligned": true,
+      "children": [
+        {
+          "page": "month-divider"
+        },
+        {
+          "page": "month-open-left"
+        },
+        {
+          "page": "month-open-right"
+        },
+        {
+          "id": "week",
+          "title": {
+            "en": "Week",
+            "pl": "Tydzień"
+          },
+          "repeat": {
+            "over": "weeksOfMonth"
+          },
+          "children": [
+            {
+              "page": "week-left"
+            },
+            {
+              "page": "week-right"
+            },
+            {
+              "id": "day",
+              "title": {
+                "en": "Day",
+                "pl": "Dzień"
+              },
+              "repeat": {
+                "over": "daysOfWeek",
+                "group": 1
+              },
+              "children": [
+                {
+                  "page": "day-left"
+                },
+                {
+                  "page": "day-right"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "page": "wheel-of-life"
+        },
+        {
+          "page": "monthly-review"
+        },
+        {
+          "page": "notes"
+        },
+        {
+          "page": "notes"
+        }
+      ]
+    },
+    {
+      "id": "crisis",
+      "title": {
+        "en": "Crisis and relapse prevention",
+        "pl": "Kryzys i zapobieganie nawrotom"
+      },
+      "sheetAligned": true,
+      "children": [
+        {
+          "page": "sos"
+        },
+        {
+          "page": "warning-signs-left"
+        },
+        {
+          "page": "warning-signs-right"
+        },
+        {
+          "page": "gains-losses"
+        },
+        {
+          "page": "support-network"
+        }
+      ]
+    }
+  ],
+  "variables": [
+    {
+      "name": "patientName",
+      "label": {
+        "en": "Name",
+        "pl": "Imię"
+      },
+      "type": "text",
+      "personal": true
+    },
+    {
+      "name": "therapistName",
+      "label": {
+        "en": "Therapist",
+        "pl": "Terapeuta / terapeutka"
+      },
+      "type": "text",
+      "personal": true
+    },
+    {
+      "name": "sobrietyStartDate",
+      "label": {
+        "en": "Sobriety start date",
+        "pl": "Data rozpoczęcia trzeźwości"
+      },
+      "type": "date",
+      "personal": true
+    }
+  ],
+  "contentLibraryRefs": [
+    "quotes"
+  ]
+}
