@@ -149,6 +149,7 @@ export function generate(input: GenerateInput): GenerateResult {
   };
 
   const expand = (section: SectionTemplate, parentKey: string, scope: Scope): SectionNode[] => {
+    if (section.enabled === false) return [];
     if (section.when && !evaluateCondition(section.when, conditionScope)) return [];
     return iterations(section, scope).map((it) => {
       const key = it.global ? it.key : `${parentKey}/${it.key}`;
@@ -161,6 +162,8 @@ export function generate(input: GenerateInput): GenerateResult {
           }
           const n = (seen.get(child.page) ?? 0) + 1;
           seen.set(child.page, n);
+          // Counted before skipping, so switching one page off keeps the other pages' keys.
+          if (child.enabled === false) continue;
           const instance: PageInstance = {
             key: `${key}/${child.page}${n > 1 ? `#${n}` : ''}`,
             templateId: child.page,

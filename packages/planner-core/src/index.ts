@@ -3,3 +3,6 @@ export * from './frame';
 export * from './project';
 export * from './patch';
 export * from './condition';
+export * from './blocks';
+export * from './template-edit';
+export * from './resolve';

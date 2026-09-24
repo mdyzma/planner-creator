@@ -175,6 +175,31 @@ describe('generate: options', () => {
     expect(keys('spread')).not.toContain('root/extra/notes');
     expect(keys('two-per-page')).toContain('root/extra/notes');
   });
+
+  it('leaves out switched-off sections and pages, keeping the other pages keys', () => {
+    const extra: PlannerTemplate = {
+      ...template,
+      sections: [
+        ...template.sections,
+        {
+          id: 'extra',
+          title: { en: 'Extra' },
+          children: [{ page: 'notes', enabled: false }, { page: 'notes' }],
+        },
+        { id: 'off', title: { en: 'Off' }, enabled: false, children: [{ page: 'notes' }] },
+      ],
+    };
+    const keys = pagesOf(
+      generate({
+        template: extra,
+        config: project('2026-10-01').generation,
+        content: [],
+        seed: 's',
+      }).document.root,
+    ).map((p) => p.key);
+    expect(keys.filter((k) => k.startsWith('root/extra/'))).toEqual(['root/extra/notes#2']);
+    expect(keys.some((k) => k.startsWith('root/off'))).toBe(false);
+  });
 });
 
 describe('validateTemplate', () => {

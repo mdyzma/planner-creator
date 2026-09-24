@@ -1,4 +1,4 @@
-import { resolveText } from '@planner/renderer';
+import { resolveText, typographyCss } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
 import { TYPE, quoteMarks, BlockTitle, WriteLine, column } from '../primitives';
@@ -35,8 +35,15 @@ export const textBlock = defineBlock({
       ],
     },
   ],
-  Render: ({ props, ctx }) => (
-    <div style={{ ...TYPE[props.variant], textAlign: props.align, whiteSpace: 'pre-line' }}>
+  Render: ({ props, block, ctx }) => (
+    <div
+      style={{
+        ...TYPE[props.variant],
+        textAlign: props.align,
+        whiteSpace: 'pre-line',
+        ...typographyCss(block.style),
+      }}
+    >
       {resolveText(ctx, props.text)}
     </div>
   ),
@@ -82,7 +89,9 @@ export const quoteBlock = defineBlock({
     }
     return (
       <figure style={{ margin: 0, ...column, justifyContent: 'center' }}>
-        <blockquote style={{ margin: 0, ...TYPE.body, fontStyle: 'italic' }}>
+        <blockquote
+          style={{ margin: 0, ...TYPE.body, fontStyle: 'italic', ...typographyCss(block.style) }}
+        >
           {open}
           {resolveText(ctx, item.text)}
           {close}

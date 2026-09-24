@@ -47,7 +47,7 @@ export function ProjectDashboard() {
     setError(null);
     try {
       await getProjectRepository().save(project);
-      router.push(`/preview?id=${project.id}`);
+      router.push(`/editor?id=${project.id}`);
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     }
@@ -93,6 +93,13 @@ export function ProjectDashboard() {
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
+                  <Link
+                    href={`/editor?id=${p.id}`}
+                    className={`${action} bg-accent font-medium text-accent-ink hover:bg-accent`}
+                    aria-label={t('editLabel', { name: p.name })}
+                  >
+                    {t('edit')}
+                  </Link>
                   <Link
                     href={`/preview?id=${p.id}`}
                     className={action}

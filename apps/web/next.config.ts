@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     '@planner/blocks',
     '@planner/content',
     '@planner/core',
+    '@planner/editor',
     '@planner/generator',
     '@planner/i18n',
     '@planner/renderer',

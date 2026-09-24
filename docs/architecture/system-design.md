@@ -764,7 +764,7 @@ bundling. No server actions touch project data.
 
 | Store | Contents | Persisted | Undo |
 |---|---|---|---|
-| `documentStore` | the `PlannerProject` | yes (autosave) | yes — immer patches, 200-step history |
+| `documentStore` | the `PlannerProject` | yes (autosave) | yes — immutable snapshots, 200-step history (ADR-0009) |
 | `editorStore` | selection, edit scope (`this page` / `all pages using template`), zoom, view (single/spread), guides toggles, active panel tab | per-project prefs only | no |
 | `libraryStore` | content-library filters, search | no | no |
 
@@ -788,6 +788,15 @@ Overridden blocks show a marker (icon + outline style, not colour only) and "Res
 
 dnd-kit handles palette→canvas drops and tree/flow reordering; resize handles use plain pointer
 events (dnd-kit is not a resize library), snapping in mm.
+
+**As built in M6** (ADR-0009): commands live in `@planner/editor` and undo keeps immutable
+snapshots (not immer patches), with typing and resize drags merged into one step. The left panel
+has Pages (the **structure recipe**, where switching or reordering an entry applies to every month
+and regenerates, plus this planner's page tree with per-page switches), Layers (the page's blocks
+by container, drag to reorder), Components, Templates, Content and Variables. The canvas has mm
+rulers, a 5 mm grid, 1 or 5 mm snap, fit-to-width zoom and bottom/right resize handles. Page-only
+edits cover values and hiding; structure edits always change the template. Alignment guides, the
+free layer, multi-select and rich text remain after M7.
 
 ---
 

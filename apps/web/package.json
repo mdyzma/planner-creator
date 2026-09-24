@@ -12,9 +12,13 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@planner/blocks": "workspace:*",
     "@planner/content": "workspace:*",
     "@planner/core": "workspace:*",
+    "@planner/editor": "workspace:*",
     "@planner/generator": "workspace:*",
     "@planner/i18n": "workspace:*",
     "@planner/renderer": "workspace:*",
@@ -24,7 +28,8 @@
     "next": "^16.3.6",
     "next-intl": "^4.14.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",

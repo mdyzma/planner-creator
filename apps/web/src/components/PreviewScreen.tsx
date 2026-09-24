@@ -143,6 +143,9 @@ function Preview({
           {t('guides')}
         </label>
         <nav className="ml-auto flex items-center gap-4 text-sm">
+          <Link href={`/editor?id=${project.id}`} className="underline">
+            {t('designer')}
+          </Link>
           <Link href={`/translations?id=${project.id}`} className="underline">
             {t('translations')}
           </Link>

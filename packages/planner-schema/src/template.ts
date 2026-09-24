@@ -20,6 +20,8 @@ export const StartOn = z.union([Side, z.literal('any')]);
 export interface PageRef {
   page: string;
   startOn?: 'left' | 'right' | 'any';
+  /** `false` leaves the page out of generated planners (the designer's structure switch). */
+  enabled?: boolean;
 }
 
 export interface SectionTemplate {
@@ -30,11 +32,17 @@ export interface SectionTemplate {
   /** Start on a recto and end on a verso so the section can be printed on its own sheets. */
   sheetAligned?: boolean;
   optional?: boolean;
+  /** `false` leaves the section out of generated planners (the designer's structure switch). */
+  enabled?: boolean;
   when?: Condition;
   children: Array<SectionTemplate | PageRef>;
 }
 
-const PageRefSchema = z.object({ page: Id, startOn: StartOn.optional() });
+const PageRefSchema = z.object({
+  page: Id,
+  startOn: StartOn.optional(),
+  enabled: z.boolean().optional(),
+});
 
 export const SectionTemplate: z.ZodType<SectionTemplate> = z.lazy(() =>
   z.object({
@@ -44,6 +52,7 @@ export const SectionTemplate: z.ZodType<SectionTemplate> = z.lazy(() =>
     startOn: StartOn.optional(),
     sheetAligned: z.boolean().optional(),
     optional: z.boolean().optional(),
+    enabled: z.boolean().optional(),
     when: Condition.optional(),
     children: z.array(z.union([PageRefSchema, SectionTemplate])),
   }),

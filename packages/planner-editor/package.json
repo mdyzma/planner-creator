@@ -1,0 +1,24 @@
+{
+  "name": "@planner/editor",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@planner/core": "workspace:*",
+    "@planner/generator": "workspace:*",
+    "@planner/schema": "workspace:*"
+  },
+  "devDependencies": {
+    "@planner/template-therapeutic-recovery": "workspace:*",
+    "@types/node": "^24.0.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

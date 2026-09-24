@@ -1,5 +1,5 @@
 import type { BlockRenderContext, BlockRenderer } from '@planner/renderer';
-import { PAPER, mm } from '@planner/renderer';
+import { PAPER, boxCss, mm } from '@planner/renderer';
 import type { BlockInstance, LocalizedText } from '@planner/schema';
 import type { ReactNode } from 'react';
 import type { z } from 'zod';
@@ -93,7 +93,13 @@ export function createBlockRegistry(
       <div
         data-block-type={block.type}
         data-block-id={block.id}
-        style={{ height: '100%', width: '100%', color: PAPER.ink, position: 'relative' }}
+        style={{
+          height: '100%',
+          width: '100%',
+          color: PAPER.ink,
+          position: 'relative',
+          ...boxCss(block.style),
+        }}
       >
         <def.Render props={parsed.data} block={block} ctx={ctx} />
       </div>
