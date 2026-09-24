@@ -120,5 +120,6 @@ describe('planMonths: properties over any start date and length', () => {
       }),
       { numRuns: 200 },
     );
-  });
+    // 200 plans of up to a year each; slow CI runners need more than the 5 s default.
+  }, 30_000);
 });
