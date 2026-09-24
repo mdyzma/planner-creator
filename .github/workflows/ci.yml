@@ -36,6 +36,11 @@ jobs:
       - run: pnpm test
       - run: pnpm build
 
+      # M7 exit criteria on real PDFs: exact page sizes, ring holes clear of content. Uses the
+      # Google Chrome preinstalled on GitHub's Ubuntu runners.
+      - name: PDF export in Chrome
+        run: pnpm --filter @planner/export-node test:e2e
+
       - name: Upload static site
         uses: actions/upload-artifact@v7
         with:

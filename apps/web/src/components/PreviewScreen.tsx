@@ -152,8 +152,8 @@ function Preview({
           <Link href={`/content?id=${project.id}`} className="underline">
             {t('content')}
           </Link>
-          <Link href={`/print?id=${project.id}`} className="underline">
-            {t('printView')}
+          <Link href={`/export?id=${project.id}`} className="underline">
+            {t('export')}
           </Link>
           <LanguageSwitcher />
         </nav>

@@ -11,6 +11,7 @@ import {
   StorageError,
   defaultDeps,
   summarize,
+  withExport,
   validateForWrite,
   validateStored,
 } from './repository';
@@ -79,6 +80,14 @@ export class DexieProjectRepository implements ProjectRepository {
       await this.db.projects.put(summarize(stamped));
     });
     return stamped;
+  }
+
+  async recordExport(id: string, kind: 'pdf' | 'json', pageCount?: number): Promise<void> {
+    const project = withExport(await this.require(id), this.deps.now(), kind, pageCount);
+    await this.db.transaction('rw', this.db.projects, this.db.projectDocs, async () => {
+      await this.db.projectDocs.put({ id, doc: project });
+      await this.db.projects.put(summarize(project));
+    });
   }
 
   async duplicate(id: string, name?: string): Promise<PlannerProject> {

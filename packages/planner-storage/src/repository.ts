@@ -31,6 +31,11 @@ export interface ProjectRepository {
   /** Validates before writing; stamps `meta.updatedAt`. */
   save(project: PlannerProject): Promise<PlannerProject>;
   duplicate(id: string, name?: string): Promise<PlannerProject>;
+  /**
+   * Notes that the project was exported, without counting as an edit: the dashboard then shows
+   * "exported" until the next change.
+   */
+  recordExport(id: string, kind: 'pdf' | 'json', pageCount?: number): Promise<void>;
   /** Removes the project and all its versions. */
   delete(id: string): Promise<void>;
   saveVersion(id: string, label?: string): Promise<VersionSummary>;
@@ -86,6 +91,22 @@ export function validateStored(raw: unknown, id: string): PlannerProject {
   const result = parseProject(raw);
   if (!result.ok) throw new StorageError(`Stored project ${id} is invalid.`, result.issues);
   return result.value;
+}
+
+/** The project with its export noted; `updatedAt` is left alone. */
+export function withExport(
+  project: PlannerProject,
+  at: string,
+  kind: 'pdf' | 'json',
+  pageCount?: number,
+): PlannerProject {
+  return {
+    ...project,
+    meta: {
+      ...project.meta,
+      lastExport: { at, kind, ...(pageCount !== undefined ? { pageCount } : {}) },
+    },
+  };
 }
 
 /** Validates before any write. */

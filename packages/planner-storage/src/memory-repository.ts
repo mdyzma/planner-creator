@@ -12,6 +12,7 @@ import {
   summarize,
   validateForWrite,
   validateStored,
+  withExport,
 } from './repository';
 
 interface StoredVersion extends VersionSummary {
@@ -43,6 +44,11 @@ export class MemoryProjectRepository implements ProjectRepository {
     });
     this.docs.set(stamped.id, structuredClone(stamped));
     return stamped;
+  }
+
+  async recordExport(id: string, kind: 'pdf' | 'json', pageCount?: number): Promise<void> {
+    const project = await this.require(id);
+    this.docs.set(id, withExport(project, this.deps.now(), kind, pageCount));
   }
 
   async duplicate(id: string, name?: string): Promise<PlannerProject> {

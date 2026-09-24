@@ -11,11 +11,13 @@ import { Link, useRouter } from '@/i18n/navigation';
 import { createGeneratedProject } from '@/lib/newProject';
 import { getProjectRepository, requestPersistentStorage } from '@/lib/repository';
 import { BUNDLED_TEMPLATES, firstOfNextMonth, spineMm } from '@/lib/templates';
+import { asNewProject, localeFor, readImport } from '@/lib/transfer';
 
 export function ProjectDashboard() {
   const t = useTranslations('Dashboard');
   const common = useTranslations('Common');
   const format = useFormatter();
+  const uiLocale = useLocale() as Locale;
   const router = useRouter();
   const [projects, setProjects] = useState<ProjectSummary[] | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -55,6 +57,40 @@ export function ProjectDashboard() {
 
   const action = 'rounded border border-line px-3 py-1.5 text-sm hover:bg-bg';
 
+  /** Imports a planner backup or a template (bundle) from a JSON file (brief 28). */
+  const importFile = async (file: File) => {
+    setError(null);
+    const result = readImport(await file.text());
+    const now = new Date().toISOString();
+    if (result.kind === 'error') {
+      const known = ['too-large', 'not-json', 'unknown'].includes(result.message);
+      setError(
+        t('importFailed', {
+          reason: known
+            ? t(`importReason.${result.message as 'too-large' | 'not-json' | 'unknown'}`)
+            : result.message,
+        }),
+      );
+      return;
+    }
+    if (result.kind === 'project') {
+      await create(asNewProject(result.project, crypto.randomUUID(), now));
+      return;
+    }
+    const { template, content } = result;
+    const { project } = createGeneratedProject({
+      bundle: { template, content },
+      id: crypto.randomUUID(),
+      name: localize(template.name, uiLocale) || t('untitled'),
+      format: template.supportedFormats[0]!,
+      locale: localeFor(template, uiLocale),
+      now,
+      startDate: template.sections.length > 0 ? firstOfNextMonth() : undefined,
+      durationMonths: template.defaults.generation.durationMonths ?? 6,
+    });
+    await create(project);
+  };
+
   return (
     <div className="space-y-8">
       <NewProjectForm onCreate={(project) => void create(project)} />
@@ -66,9 +102,24 @@ export function ProjectDashboard() {
       )}
 
       <section aria-labelledby="projects-heading">
-        <h2 id="projects-heading" className="mb-3 text-lg font-medium">
-          {t('yourPlanners')}
-        </h2>
+        <div className="mb-3 flex flex-wrap items-center gap-3">
+          <h2 id="projects-heading" className="text-lg font-medium">
+            {t('yourPlanners')}
+          </h2>
+          <label className={`${action} ml-auto cursor-pointer`}>
+            {t('import')}
+            <input
+              type="file"
+              accept="application/json,.json"
+              className="sr-only"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                e.target.value = '';
+                if (file) void importFile(file);
+              }}
+            />
+          </label>
+        </div>
         {projects === null ? (
           <p className="text-ink-muted">{common('loading')}</p>
         ) : projects.length === 0 ? (
@@ -99,6 +150,13 @@ export function ProjectDashboard() {
                     aria-label={t('editLabel', { name: p.name })}
                   >
                     {t('edit')}
+                  </Link>
+                  <Link
+                    href={`/export?id=${p.id}`}
+                    className={action}
+                    aria-label={t('exportLabel', { name: p.name })}
+                  >
+                    {t('export')}
                   </Link>
                   <Link
                     href={`/preview?id=${p.id}`}

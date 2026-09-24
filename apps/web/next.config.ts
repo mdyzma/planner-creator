@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     '@planner/editor',
     '@planner/generator',
     '@planner/i18n',
+    '@planner/pdf',
     '@planner/renderer',
     '@planner/schema',
     '@planner/storage',

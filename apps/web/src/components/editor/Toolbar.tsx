@@ -166,8 +166,8 @@ export function Toolbar() {
         <Link href={`/preview?id=${project.id}`} className="underline">
           {t('preview')}
         </Link>
-        <Link href={`/print?id=${project.id}`} className="underline">
-          {t('print')}
+        <Link href={`/export?id=${project.id}`} className="underline">
+          {t('export')}
         </Link>
         <LanguageSwitcher />
       </nav>

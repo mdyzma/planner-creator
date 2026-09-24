@@ -679,6 +679,14 @@ The payload is design data only. Personal variables are off by default (blank te
   onto output sheets, so text stays vector.
 - **CMYK / PDF/X:** out of scope (home printing). This can come back later as a `print-shop` profile.
 
+**As built in M7** (ADR-0004 amendment): the Export screen plans one PDF part per top-level
+section (`planExport`), sends each to the export service (`apps/export-node`, local for now, Browser
+Run in M8), and merges and imposes them in the browser with `@planner/pdf`. Profiles offered:
+`home-duplex`, `home-manual-duplex` (fronts and backs files), `home-a5-2up` (cut-and-stack, short-edge
+flip) and `home-a5-native`. A single month can be exported on its own, padded to whole sheets (or
+multiples of four for 2-up). The calibration sheet is drawn directly with pdf-lib, so it works
+without the service. Crop marks, grayscale tokens and booklets are not built yet.
+
 ### 8.4 Printing on the user's own hardware (ADR-0006)
 
 Home inkjet/laser printers can't print to the paper edge, may not duplex, and have print dialogs that

@@ -62,6 +62,18 @@ export function projectRepositoryContract(
       expect((await repo.list())[0]?.exportStatus).toBe('stale');
     });
 
+    it('records an export without counting it as an edit', async () => {
+      const repo = await create(testDeps());
+      const saved = await repo.save(sample('p'));
+      await repo.recordExport('p', 'pdf', 476);
+      expect((await repo.list())[0]?.exportStatus).toBe('exported');
+      const stored = (await repo.get('p'))!;
+      expect(stored.meta.updatedAt).toBe(saved.meta.updatedAt);
+      expect(stored.meta.lastExport).toMatchObject({ kind: 'pdf', pageCount: 476 });
+      await repo.save(stored);
+      expect((await repo.list())[0]?.exportStatus).toBe('stale');
+    });
+
     it('refuses to save an invalid project', async () => {
       const repo = await create(testDeps());
       const broken = { ...sample('x'), format: 'A3' } as unknown as PlannerProject;

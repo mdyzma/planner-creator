@@ -51,7 +51,16 @@
     "content": "Content",
     "contentLabel": "Content for {name}",
     "edit": "Design",
-    "editLabel": "Design {name}"
+    "editLabel": "Design {name}",
+    "import": "Import JSON…",
+    "importFailed": "Could not import the file: {reason}",
+    "importReason": {
+      "too-large": "it is larger than 10 MB.",
+      "not-json": "it is not a JSON file.",
+      "unknown": "it is neither a planner nor a template."
+    },
+    "export": "Export",
+    "exportLabel": "Export {name}"
   },
   "Preview": {
     "view": "View",
@@ -90,10 +99,11 @@
     "regenerated": "Regenerated: {pages} pages.",
     "orphans": "Edited pages that no longer fit the new dates: {count}.",
     "content": "Content",
-    "designer": "Designer"
+    "designer": "Designer",
+    "export": "Export"
   },
   "Print": {
-    "back": "← Preview",
+    "back": "← Export",
     "instructions": "{pages, plural, one {# page} other {# pages}} · {format}. In the print dialog choose <b>Actual size / 100 %</b>, no margins, and turn headers and footers off.",
     "print": "Print / Save as PDF"
   },
@@ -385,6 +395,78 @@
       "left": "Left-hand pages only",
       "right": "Right-hand pages only",
       "custom": "Custom rule"
-    }
+    },
+    "export": "Export"
+  },
+  "Export": {
+    "title": "Export",
+    "designer": "Designer",
+    "preview": "Preview",
+    "what": "What to print",
+    "wholePlanner": "The whole planner",
+    "pageRange": "pages {from}–{to}",
+    "ringHint": "Every month fills whole sheets, so for a ring binder you can print one month at a time and add it when you need it.",
+    "how": "How you print",
+    "profile": {
+      "home-duplex": {
+        "name": "Two-sided, automatic",
+        "hint": "For a printer that prints both sides by itself (duplex)."
+      },
+      "home-manual-duplex": {
+        "name": "Two-sided, by hand",
+        "hint": "For a printer without duplex: print the fronts, put the stack back in, print the backs. Two files."
+      },
+      "home-a5-2up": {
+        "name": "A5 on A4 paper (two per sheet)",
+        "hint": "Two A5 pages on each A4 sheet, both sides. Cut the whole stack in half once and put the right pile under the left: the pages are in order."
+      },
+      "home-a5-native": {
+        "name": "A5 paper",
+        "hint": "For a printer with an A5 tray, both sides."
+      }
+    },
+    "reverseBacks": "Backs in reverse order (most printers; check with the calibration sheet)",
+    "pageNumbers": "Page numbers",
+    "before": "Before you print",
+    "summary": "{pages, plural, one {# page} other {# pages}} on {sheets, plural, one {# sheet} other {# sheets}} · {format} · {language}",
+    "missingTranslations": "{count, plural, one {# text is} other {# texts are}} not translated into the planner language yet.",
+    "fixTranslations": "Translate",
+    "personal": "Your personal details (such as your name) are printed where the planner uses them.",
+    "actualSize": "In the print dialog choose “Actual size” / 100 % and no scaling, or the margins and holes will not line up.",
+    "instructions": {
+      "home-duplex": "Print on both sides, flipping on the long edge.",
+      "home-manual-duplex": "Print file 1 (fronts). Put the printed stack back in the tray as the calibration sheet shows, then print file 2 (backs).",
+      "home-a5-2up": "Print on both sides, flipping on the short edge. Cut each stack of sheets down the middle (the marks at the top and bottom), then put the right-hand pile under the left-hand pile.",
+      "home-a5-native": "Print on both sides, flipping on the long edge."
+    },
+    "calibrationHint": "Print the calibration sheet first: both rulers must be exactly 100 mm, and the crosses on the two sides should meet when you hold the sheet against the light.",
+    "calibrationDownload": "Download calibration sheet",
+    "calibration": {
+      "title": "Printer calibration",
+      "rulers": "Each ruler must measure exactly 100 mm. If not, turn off “Fit to page” and print at 100 %.",
+      "front": "Print this sheet on both sides. Hold it against the light: the crosses on the front and back should meet. A few millimetres off is normal; the binding margin allows for it.",
+      "back": "Back side. The crosses should meet the ones on the front. If this side is upside down, choose the other flip edge in the print dialog."
+    },
+    "pdf": "PDF",
+    "createPdf": "Create PDF",
+    "checking": "Looking for the export service…",
+    "progress": "Rendering part {done} of {total}…",
+    "done": "Done. Your download has started.",
+    "fileInfo": "{pages, plural, one {# page} other {# pages}} · {size} KB",
+    "serviceOffline": "PDFs are made by the export service, which isn't running. On the computer with the planner code, run:",
+    "serviceUrl": "Expected at {url}.",
+    "checkAgain": "Check again",
+    "browserPrint": "Print from the browser instead",
+    "browserPrintHint": "Browser printing works without the service, but only in reading order: no two-per-sheet or by-hand options. Choose “Save as PDF” to keep a file.",
+    "error": {
+      "offline": "The export service stopped responding. Start it and try again.",
+      "rejected": "The export service refused this planner. Save it as JSON and check it.",
+      "failed": "The export service could not render the pages. Try again."
+    },
+    "json": "JSON files",
+    "saveProject": "Save planner as JSON",
+    "saveTemplate": "Save template as JSON",
+    "jsonHint": "The planner file is a full backup, including your name and dates, to import later on the dashboard. The template file holds the layout and content libraries only, for sharing or version control.",
+    "templateName": "Template: {name}"
   }
 }

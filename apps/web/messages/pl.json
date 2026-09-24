@@ -51,7 +51,16 @@
     "content": "Treści",
     "contentLabel": "Treści: {name}",
     "edit": "Projektuj",
-    "editLabel": "Projektuj {name}"
+    "editLabel": "Projektuj {name}",
+    "import": "Importuj JSON…",
+    "importFailed": "Nie udało się zaimportować pliku: {reason}",
+    "importReason": {
+      "too-large": "jest większy niż 10 MB.",
+      "not-json": "to nie jest plik JSON.",
+      "unknown": "to nie jest ani planer, ani szablon."
+    },
+    "export": "Eksport",
+    "exportLabel": "Eksportuj {name}"
   },
   "Preview": {
     "view": "Widok",
@@ -90,10 +99,11 @@
     "regenerated": "Wygenerowano ponownie: stron {pages}.",
     "orphans": "Edytowane strony, które nie pasują do nowych dat: {count}.",
     "content": "Treści",
-    "designer": "Projektant"
+    "designer": "Projektant",
+    "export": "Eksport"
   },
   "Print": {
-    "back": "← Podgląd",
+    "back": "← Eksport",
     "instructions": "{pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} · {format}. W oknie drukowania wybierz <b>Rzeczywisty rozmiar / 100 %</b>, bez marginesów, i wyłącz nagłówki oraz stopki.",
     "print": "Drukuj / Zapisz jako PDF"
   },
@@ -385,6 +395,78 @@
       "left": "Tylko lewych stronach",
       "right": "Tylko prawych stronach",
       "custom": "Własna reguła"
-    }
+    },
+    "export": "Eksport"
+  },
+  "Export": {
+    "title": "Eksport",
+    "designer": "Projektant",
+    "preview": "Podgląd",
+    "what": "Co wydrukować",
+    "wholePlanner": "Cały planer",
+    "pageRange": "strony {from}–{to}",
+    "ringHint": "Każdy miesiąc zajmuje pełne kartki, więc do segregatora możesz drukować po jednym miesiącu i dokładać go, gdy będzie potrzebny.",
+    "how": "Jak drukujesz",
+    "profile": {
+      "home-duplex": {
+        "name": "Dwustronnie, automatycznie",
+        "hint": "Dla drukarki, która sama drukuje po obu stronach (dupleks)."
+      },
+      "home-manual-duplex": {
+        "name": "Dwustronnie, ręcznie",
+        "hint": "Dla drukarki bez dupleksu: wydrukuj przody, włóż stos z powrotem, wydrukuj tyły. Dwa pliki."
+      },
+      "home-a5-2up": {
+        "name": "A5 na papierze A4 (dwie na kartce)",
+        "hint": "Dwie strony A5 na każdej kartce A4, obustronnie. Przetnij cały stos raz na pół i połóż prawy stos pod lewym: strony będą po kolei."
+      },
+      "home-a5-native": {
+        "name": "Papier A5",
+        "hint": "Dla drukarki z podajnikiem A5, obustronnie."
+      }
+    },
+    "reverseBacks": "Tyły w odwrotnej kolejności (większość drukarek; sprawdź arkuszem kalibracyjnym)",
+    "pageNumbers": "Numery stron",
+    "before": "Zanim wydrukujesz",
+    "summary": "Stron: {pages} · kartek: {sheets} · {format} · {language}",
+    "missingTranslations": "Nieprzetłumaczone teksty w języku planera: {count}.",
+    "fixTranslations": "Przetłumacz",
+    "personal": "Twoje dane osobowe (np. imię) drukują się tam, gdzie planer ich używa.",
+    "actualSize": "W oknie drukowania wybierz „Rzeczywisty rozmiar” / 100 % bez skalowania, inaczej marginesy i otwory nie trafią na miejsce.",
+    "instructions": {
+      "home-duplex": "Drukuj dwustronnie, z obracaniem wzdłuż dłuższej krawędzi.",
+      "home-manual-duplex": "Wydrukuj plik 1 (przody). Włóż zadrukowany stos z powrotem tak, jak pokazuje arkusz kalibracyjny, i wydrukuj plik 2 (tyły).",
+      "home-a5-2up": "Drukuj dwustronnie, z obracaniem wzdłuż krótszej krawędzi. Przetnij stos kartek na pół (znaczniki u góry i u dołu), a potem połóż prawy stos pod lewym.",
+      "home-a5-native": "Drukuj dwustronnie, z obracaniem wzdłuż dłuższej krawędzi."
+    },
+    "calibrationHint": "Najpierw wydrukuj arkusz kalibracyjny: obie linijki muszą mieć dokładnie 100 mm, a krzyżyki po obu stronach powinny się pokrywać pod światło.",
+    "calibrationDownload": "Pobierz arkusz kalibracyjny",
+    "calibration": {
+      "title": "Kalibracja drukarki",
+      "rulers": "Każda linijka musi mieć dokładnie 100 mm. Jeśli nie, wyłącz „Dopasuj do strony” i drukuj w skali 100 %.",
+      "front": "Wydrukuj ten arkusz dwustronnie. Spójrz pod światło: krzyżyki z przodu i z tyłu powinny się pokrywać. Kilka milimetrów różnicy to norma; margines oprawy to uwzględnia.",
+      "back": "Tył arkusza. Krzyżyki powinny pokrywać się z tymi z przodu. Jeśli ta strona jest do góry nogami, wybierz w oknie drukowania drugą krawędź obracania."
+    },
+    "pdf": "PDF",
+    "createPdf": "Utwórz PDF",
+    "checking": "Szukam usługi eksportu…",
+    "progress": "Renderowanie części {done} z {total}…",
+    "done": "Gotowe. Pobieranie się rozpoczęło.",
+    "fileInfo": "Stron: {pages} · {size} KB",
+    "serviceOffline": "Pliki PDF tworzy usługa eksportu, która nie jest uruchomiona. Na komputerze z kodem planera uruchom:",
+    "serviceUrl": "Oczekiwana pod adresem {url}.",
+    "checkAgain": "Sprawdź ponownie",
+    "browserPrint": "Drukuj z przeglądarki",
+    "browserPrintHint": "Drukowanie z przeglądarki działa bez usługi, ale tylko po kolei: bez dwóch stron na kartce i bez druku ręcznego. Wybierz „Zapisz jako PDF”, aby zachować plik.",
+    "error": {
+      "offline": "Usługa eksportu przestała odpowiadać. Uruchom ją i spróbuj ponownie.",
+      "rejected": "Usługa eksportu odrzuciła ten planer. Zapisz go jako JSON i sprawdź.",
+      "failed": "Usługa eksportu nie mogła wyrenderować stron. Spróbuj ponownie."
+    },
+    "json": "Pliki JSON",
+    "saveProject": "Zapisz planer jako JSON",
+    "saveTemplate": "Zapisz szablon jako JSON",
+    "jsonHint": "Plik planera to pełna kopia zapasowa, razem z imieniem i datami, do późniejszego importu na pulpicie. Plik szablonu zawiera tylko układ i biblioteki treści, do udostępniania lub kontroli wersji.",
+    "templateName": "Szablon: {name}"
   }
 }

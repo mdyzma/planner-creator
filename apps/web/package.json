@@ -21,6 +21,7 @@
     "@planner/editor": "workspace:*",
     "@planner/generator": "workspace:*",
     "@planner/i18n": "workspace:*",
+    "@planner/pdf": "workspace:*",
     "@planner/renderer": "workspace:*",
     "@planner/schema": "workspace:*",
     "@planner/storage": "workspace:*",

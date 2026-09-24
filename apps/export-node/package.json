@@ -1,0 +1,28 @@
+{
+  "name": "@planner/export-node",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local PDF export service: renders the web app's print route in Chrome (§8.3).",
+  "scripts": {
+    "serve": "tsx src/main.ts",
+    "pdf": "tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:e2e": "vitest run --config vitest.e2e.config.ts"
+  },
+  "dependencies": {
+    "@planner/pdf": "workspace:*",
+    "@planner/schema": "workspace:*",
+    "playwright-core": "^1.63.0",
+    "tsx": "^4.23.15"
+  },
+  "devDependencies": {
+    "@planner/generator": "workspace:*",
+    "@planner/template-therapeutic-recovery": "workspace:*",
+    "@types/node": "^24.0.0",
+    "pdf-lib": "^1.17.1",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}
