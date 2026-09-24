@@ -107,6 +107,13 @@ export function ProjectDashboard() {
                   >
                     {t('translations')}
                   </Link>
+                  <Link
+                    href={`/content?id=${p.id}`}
+                    className={action}
+                    aria-label={t('contentLabel', { name: p.name })}
+                  >
+                    {t('content')}
+                  </Link>
                   <button
                     type="button"
                     className={action}

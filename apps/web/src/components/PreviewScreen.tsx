@@ -146,6 +146,9 @@ function Preview({
           <Link href={`/translations?id=${project.id}`} className="underline">
             {t('translations')}
           </Link>
+          <Link href={`/content?id=${project.id}`} className="underline">
+            {t('content')}
+          </Link>
           <Link href={`/print?id=${project.id}`} className="underline">
             {t('printView')}
           </Link>

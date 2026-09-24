@@ -47,7 +47,9 @@
     "budget": "About {pages, plural, one {# page} other {# pages}} · {sheets} sheets · spine about {spine} mm",
     "quotes": "Quotes: {available} for {slots} days, each used up to {maxUses} times",
     "quotesLow": "Add more quotes to avoid repeats within 30 days.",
-    "create": "Create planner"
+    "create": "Create planner",
+    "content": "Content",
+    "contentLabel": "Content for {name}"
   },
   "Preview": {
     "view": "View",
@@ -84,7 +86,8 @@
     "length": "Length",
     "regenerate": "Regenerate",
     "regenerated": "Regenerated: {pages} pages.",
-    "orphans": "Edited pages that no longer fit the new dates: {count}."
+    "orphans": "Edited pages that no longer fit the new dates: {count}.",
+    "content": "Content"
   },
   "Print": {
     "back": "← Preview",
@@ -114,5 +117,61 @@
       "content": "Content library",
       "document-section": "Planner structure"
     }
+  },
+  "Content": {
+    "title": "Content",
+    "back": "← Preview",
+    "kind": {
+      "quote": "Quotes",
+      "affirmation": "Affirmations",
+      "prompt": "Prompts",
+      "sos-step": "SOS steps",
+      "warning-sign": "Warning signs",
+      "exercise": "Exercises"
+    },
+    "search": "Search",
+    "category": "Category",
+    "allCategories": "All",
+    "onlyIssues": "Only items with problems",
+    "add": "Add",
+    "import": "Import CSV",
+    "export": "Export CSV",
+    "redeal": "Re-deal quotes",
+    "redealt": "Quotes re-dealt across {slots, plural, one {# day} other {# days}}.",
+    "coverage": "{slots, plural, one {# day} other {# days}} · {available, plural, one {# quote} other {# quotes}} · each used up to {maxUses, plural, one {# time} other {# times}}",
+    "minGap": "a quote returns after {minGap, plural, one {# day} other {# days}} at the earliest",
+    "noRepeats": "no quote repeats",
+    "repeatWarning": "Quotes repeat within 30 days. Add more quotes to space them out.",
+    "missingWarning": "{count, plural, one {# page shows} other {# pages show}} a deleted quote. Re-deal to fix.",
+    "unusedKind": "Items of this kind are not placed on pages automatically yet; they are kept for templates and the editor.",
+    "importDone": "Imported {count, plural, one {# item} other {# items}}.",
+    "importErrors": "Some rows were skipped:",
+    "line": "Line {line}: {message}",
+    "author": "Author",
+    "source": "Source",
+    "license": "Licence",
+    "licenses": {
+      "original": "Original",
+      "public-domain": "Public domain",
+      "cc-by": "CC BY (with attribution)",
+      "user": "Your own use only"
+    },
+    "categories": "Categories (comma-separated)",
+    "tags": "Tags (comma-separated)",
+    "delete": "Delete",
+    "confirmDelete": "Delete {id}?",
+    "chars": "{count}/{max}",
+    "issues": {
+      "missing-translation": "Missing: {language}",
+      "too-long": "Too long for the quote box",
+      "too-long-for-a5": "May not fit on A5",
+      "not-shippable": "Not for a shared template",
+      "needs-attribution": "Needs an author or source",
+      "duplicate": "Same as {other}",
+      "duplicate-id": "Duplicate id"
+    },
+    "empty": "No items.",
+    "textLabel": "{id}, {language}",
+    "saved": "Saved"
   }
 }

@@ -174,3 +174,67 @@ export function assignContent(
   }
   return { root: result, report };
 }
+
+export interface ContentCoverage extends ContentReport {
+  /** Pages whose assigned item no longer exists in the libraries (it was deleted). */
+  missing: number;
+}
+
+/**
+ * Measures the content actually on the planner's pages, in page order: how many blocks show an
+ * item, how often items repeat, and how many point at deleted items.
+ */
+export function measureContent(
+  root: SectionNode,
+  libraries: readonly ContentLibrary[],
+): ContentCoverage {
+  const known = new Set(libraries.flatMap((l) => l.items.map((i) => i.id)));
+  const coverage: ContentCoverage = { slots: 0, available: known.size, maxUses: 0, missing: 0 };
+  const uses = new Map<string, number[]>();
+  const visit = (node: SectionNode) => {
+    for (const child of node.children) {
+      if (!isPageInstance(child)) {
+        visit(child);
+        continue;
+      }
+      if (!child.enabled) continue;
+      for (const id of Object.values(child.contentAssignments ?? {})) {
+        coverage.slots++;
+        if (!known.has(id)) coverage.missing++;
+        uses.set(id, [...(uses.get(id) ?? []), coverage.slots]);
+      }
+    }
+  };
+  visit(root);
+  for (const slots of uses.values()) {
+    coverage.maxUses = Math.max(coverage.maxUses, slots.length);
+    for (let i = 1; i < slots.length; i++) {
+      const gap = slots[i]! - slots[i - 1]!;
+      coverage.minGap = coverage.minGap === undefined ? gap : Math.min(coverage.minGap, gap);
+    }
+  }
+  return coverage;
+}
+
+/** Removes every content assignment, so the library can be dealt again. */
+function clearAssignments(node: SectionNode): SectionNode {
+  return {
+    ...node,
+    children: node.children.map((child) => {
+      if (!isPageInstance(child)) return clearAssignments(child);
+      const { contentAssignments: _dropped, ...rest } = child;
+      return rest;
+    }),
+  };
+}
+
+/**
+ * Deals the current library onto the planner again after it was edited (M5), keeping pages,
+ * their order and their edits. Uses the same date-based dealing as generation.
+ */
+export function redealContent(
+  root: SectionNode,
+  options: Parameters<typeof assignContent>[1],
+): { root: SectionNode; report: ContentReport } {
+  return assignContent(clearAssignments(root), options);
+}

@@ -20,6 +20,33 @@ pnpm --filter @planner/template-therapeutic-recovery build:template
 pnpm --filter @planner/template-therapeutic-recovery test
 ```
 
+## Writing quotes in a spreadsheet
+
+Quotes can be written in Excel or Google Sheets, one row per quote with English and Polish side by side.
+
+1. Export the current quotes to start from:
+
+   ```bash
+   pnpm --filter @planner/template-therapeutic-recovery quotes:export quotes.csv
+   ```
+
+2. Edit `quotes.csv`. Columns: `id, kind, en, pl, author, source, license, categories, tags, months`.
+   Leave `id` empty for new rows (the next free `q-0013`… is used). Use `original` for your own
+   writing and `public-domain` only when that is certain. Separate list values with `|`
+   (e.g. `recovery|patience`). Saving from Polish Excel with semicolons is fine.
+3. Import it back into `content/quotes.json`:
+
+   ```bash
+   pnpm --filter @planner/template-therapeutic-recovery quotes:import quotes.csv
+   ```
+
+   Nothing is written unless every quote has both languages, fits the quote box (160 characters;
+   over 110 gives an A5 warning), has a shippable licence and a unique id.
+
+Target: at least 60 quotes, so no quote repeats within 30 days across a six-month planner (the
+generator deals quotes by date: a quote returns after as many days as there are quotes).
+The app's **Content** screen does the same per planner: edit, import/export CSV, and re-deal.
+
 ## Pages
 
 | Section | Pages |

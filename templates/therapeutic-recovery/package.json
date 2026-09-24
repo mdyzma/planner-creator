@@ -11,10 +11,13 @@
   "scripts": {
     "build:template": "tsx src/build.ts",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "quotes:export": "tsx src/export-quotes.ts",
+    "quotes:import": "tsx src/import-quotes.ts"
   },
   "devDependencies": {
     "@planner/blocks": "workspace:*",
+    "@planner/content": "workspace:*",
     "@planner/core": "workspace:*",
     "@planner/i18n": "workspace:*",
     "@planner/renderer": "workspace:*",

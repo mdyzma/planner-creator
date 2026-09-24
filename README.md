@@ -31,9 +31,10 @@ packages/planner-core    Pagination (sides, spreads, fillers) and page geometry 
 packages/planner-renderer React page rendering in mm, guides, print CSS
 packages/planner-blocks  Block registry and built-in block types (text, lists, HALT, calendar, Wheel of Life…)
 packages/planner-generator Calendar planning, template expansion, content dealing, page budget, regeneration
+packages/planner-content  Content checks (translations, length, licence, duplicates), CSV import/export, filters
 packages/planner-storage Repository interfaces + IndexedDB (Dexie) and in-memory implementations
 templates/               Planner templates: TypeScript source compiled to template.json, plus bilingual content
 docs/                    Architecture, ADRs, operations, frozen demo reference
 ```
 
-Status: **M4 (generator)**: pick a template, start date and length in the new-planner form (live page count), and the full planner is generated: calendar months, Monday-owned weeks, daily spreads, quotes dealt by date. Changing the dates regenerates the planner and keeps edits. Earlier: M3 therapeutic pages, M2 internationalisation, M1 print model. See the delivery plan in the design doc, §14.
+Status: **M5 (content)**: a Content screen per planner (quotes and other libraries, English and Polish side by side, problems flagged, CSV import/export, re-deal with coverage report) and a spreadsheet workflow for the template quotes (see templates/therapeutic-recovery/README.md). Earlier: M4 generator, M3 therapeutic pages, M2 internationalisation, M1 print model. See the delivery plan in the design doc, §14.

@@ -94,3 +94,15 @@ describe('therapeutic recovery template', () => {
       expect(template.pageTemplates[id], id).toBeDefined();
   });
 });
+
+describe('bundled quotes', () => {
+  it('can ship: both languages, fits the quote box, original or public-domain, no duplicates', async () => {
+    const { validateItems } = await import('@planner/content');
+    const quotes = parseContentLibrary(JSON.parse(read('../content/quotes.json')));
+    if (!quotes.ok) throw new Error('quotes.json is invalid');
+    const errors = validateItems(quotes.value.items, { forShipping: true }).filter(
+      (i) => i.severity === 'error',
+    );
+    expect(errors).toEqual([]);
+  });
+});

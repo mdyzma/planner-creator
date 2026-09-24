@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@planner/blocks": "workspace:*",
+    "@planner/content": "workspace:*",
     "@planner/core": "workspace:*",
     "@planner/generator": "workspace:*",
     "@planner/i18n": "workspace:*",

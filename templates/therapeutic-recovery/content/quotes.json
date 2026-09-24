@@ -10,8 +10,14 @@
         "pl": "Prośba o pomoc nie jest porażką. To pierwszy krok, który robię razem z kimś, a nie przeciwko sobie."
       },
       "license": "original",
-      "categories": ["recovery", "courage"],
-      "tags": ["help", "support"]
+      "categories": [
+        "recovery",
+        "courage"
+      ],
+      "tags": [
+        "help",
+        "support"
+      ]
     },
     {
       "id": "q-0002",
@@ -21,8 +27,14 @@
         "pl": "Nie muszę dźwigać całego życia naraz. Wystarczy, że dziś zadbam o te jedne 24 godziny."
       },
       "license": "original",
-      "categories": ["recovery", "patience"],
-      "tags": ["24h", "today"]
+      "categories": [
+        "recovery",
+        "patience"
+      ],
+      "tags": [
+        "24h",
+        "today"
+      ]
     },
     {
       "id": "q-0003",
@@ -32,8 +44,14 @@
         "pl": "Dziś wybieram jedną małą rzecz, która mnie wzmacnia – i doprowadzam ją do końca."
       },
       "license": "original",
-      "categories": ["responsibility", "change"],
-      "tags": ["today", "small-steps"]
+      "categories": [
+        "responsibility",
+        "change"
+      ],
+      "tags": [
+        "today",
+        "small-steps"
+      ]
     },
     {
       "id": "q-0004",
@@ -43,8 +61,14 @@
         "pl": "Zanim zareaguję, mogę wziąć oddech. Ta krótka pauza należy tylko do mnie."
       },
       "license": "original",
-      "categories": ["self-compassion", "responsibility"],
-      "tags": ["pause", "emotions"]
+      "categories": [
+        "self-compassion",
+        "responsibility"
+      ],
+      "tags": [
+        "pause",
+        "emotions"
+      ]
     },
     {
       "id": "q-0005",
@@ -54,8 +78,14 @@
         "pl": "To, co powiem na głos zaufanej osobie, przestaje rządzić mną w ukryciu."
       },
       "license": "original",
-      "categories": ["relationships", "courage"],
-      "tags": ["shame", "honesty"]
+      "categories": [
+        "relationships",
+        "courage"
+      ],
+      "tags": [
+        "shame",
+        "honesty"
+      ]
     },
     {
       "id": "q-0006",
@@ -65,8 +95,13 @@
         "pl": "Spokój nie przychodzi od razu. Buduję go z każdego dnia przeżytego świadomie."
       },
       "license": "original",
-      "categories": ["patience", "recovery"],
-      "tags": ["calm"]
+      "categories": [
+        "patience",
+        "recovery"
+      ],
+      "tags": [
+        "calm"
+      ]
     },
     {
       "id": "q-0007",
@@ -76,8 +111,14 @@
         "pl": "Moja przeszłość nie jest wyrokiem. Może stać się doświadczeniem, które kiedyś pomoże komuś innemu."
       },
       "license": "original",
-      "categories": ["acceptance", "relationships"],
-      "tags": ["past", "service"]
+      "categories": [
+        "acceptance",
+        "relationships"
+      ],
+      "tags": [
+        "past",
+        "service"
+      ]
     },
     {
       "id": "q-0008",
@@ -87,8 +128,13 @@
         "pl": "Zmiana zaczyna się tam, gdzie przestaję walczyć ze sobą i zaczynam siebie rozumieć."
       },
       "license": "original",
-      "categories": ["self-compassion", "change"],
-      "tags": ["self-acceptance"]
+      "categories": [
+        "self-compassion",
+        "change"
+      ],
+      "tags": [
+        "self-acceptance"
+      ]
     },
     {
       "id": "q-0009",
@@ -98,8 +144,13 @@
         "pl": "Trzeźwość na pierwszym miejscu – na niej stoi wszystko, na czym mi naprawdę zależy."
       },
       "license": "original",
-      "categories": ["recovery", "responsibility"],
-      "tags": ["priorities"]
+      "categories": [
+        "recovery",
+        "responsibility"
+      ],
+      "tags": [
+        "priorities"
+      ]
     },
     {
       "id": "q-0010",
@@ -109,8 +160,12 @@
         "pl": "Przyjąć fakty nie znaczy się na nie zgadzać. Znaczy przestać tracić siły na to, czego nie zmienię."
       },
       "license": "original",
-      "categories": ["acceptance"],
-      "tags": ["reality"]
+      "categories": [
+        "acceptance"
+      ],
+      "tags": [
+        "reality"
+      ]
     },
     {
       "id": "q-0011",
@@ -120,8 +175,13 @@
         "pl": "Zdrowienie to droga pokonywana krokami, nie skokami. Spokojne tempo też prowadzi do celu."
       },
       "license": "original",
-      "categories": ["patience", "recovery"],
-      "tags": ["pace"]
+      "categories": [
+        "patience",
+        "recovery"
+      ],
+      "tags": [
+        "pace"
+      ]
     },
     {
       "id": "q-0012",
@@ -131,8 +191,13 @@
         "pl": "Stawiając granice, dbam jednocześnie o relację i o siebie."
       },
       "license": "original",
-      "categories": ["boundaries", "relationships"],
-      "tags": ["boundaries"]
+      "categories": [
+        "boundaries",
+        "relationships"
+      ],
+      "tags": [
+        "boundaries"
+      ]
     }
   ]
 }

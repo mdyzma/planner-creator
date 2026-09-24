@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   output: 'export',
   transpilePackages: [
     '@planner/blocks',
+    '@planner/content',
     '@planner/core',
     '@planner/generator',
     '@planner/i18n',

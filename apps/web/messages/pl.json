@@ -47,7 +47,9 @@
     "budget": "Około {pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} · arkusze: {sheets} · grzbiet około {spine} mm",
     "quotes": "Sentencje: {available} na {slots} dni, każda użyta najwyżej {maxUses} razy",
     "quotesLow": "Dodaj więcej sentencji, aby uniknąć powtórzeń w ciągu 30 dni.",
-    "create": "Utwórz planer"
+    "create": "Utwórz planer",
+    "content": "Treści",
+    "contentLabel": "Treści: {name}"
   },
   "Preview": {
     "view": "Widok",
@@ -84,7 +86,8 @@
     "length": "Długość",
     "regenerate": "Wygeneruj ponownie",
     "regenerated": "Wygenerowano ponownie: stron {pages}.",
-    "orphans": "Edytowane strony, które nie pasują do nowych dat: {count}."
+    "orphans": "Edytowane strony, które nie pasują do nowych dat: {count}.",
+    "content": "Treści"
   },
   "Print": {
     "back": "← Podgląd",
@@ -114,5 +117,61 @@
       "content": "Biblioteka treści",
       "document-section": "Struktura planera"
     }
+  },
+  "Content": {
+    "title": "Treści",
+    "back": "← Podgląd",
+    "kind": {
+      "quote": "Sentencje",
+      "affirmation": "Afirmacje",
+      "prompt": "Pytania",
+      "sos-step": "Kroki SOS",
+      "warning-sign": "Sygnały ostrzegawcze",
+      "exercise": "Ćwiczenia"
+    },
+    "search": "Szukaj",
+    "category": "Kategoria",
+    "allCategories": "Wszystkie",
+    "onlyIssues": "Tylko pozycje z problemami",
+    "add": "Dodaj",
+    "import": "Importuj CSV",
+    "export": "Eksportuj CSV",
+    "redeal": "Rozdaj sentencje ponownie",
+    "redealt": "Rozdano sentencje na {slots, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}}.",
+    "coverage": "{slots, plural, one {# dzień} few {# dni} many {# dni} other {# dnia}} · {available, plural, one {# sentencja} few {# sentencje} many {# sentencji} other {# sentencji}} · każda użyta najwyżej {maxUses, plural, one {# raz} few {# razy} many {# razy} other {# razy}}",
+    "minGap": "powtórka najwcześniej po {minGap, plural, one {# dniu} few {# dniach} many {# dniach} other {# dniach}}",
+    "noRepeats": "żadna sentencja się nie powtarza",
+    "repeatWarning": "Sentencje powtarzają się w ciągu 30 dni. Dodaj więcej sentencji, aby je rozłożyć.",
+    "missingWarning": "{count, plural, one {# strona pokazuje} few {# strony pokazują} many {# stron pokazuje} other {# strony pokazuje}} usuniętą sentencję. Rozdaj ponownie, aby to naprawić.",
+    "unusedKind": "Pozycje tego rodzaju nie są jeszcze automatycznie umieszczane na stronach; są przechowywane dla szablonów i edytora.",
+    "importDone": "Zaimportowano {count, plural, one {# pozycję} few {# pozycje} many {# pozycji} other {# pozycji}}.",
+    "importErrors": "Pominięto niektóre wiersze:",
+    "line": "Wiersz {line}: {message}",
+    "author": "Autor",
+    "source": "Źródło",
+    "license": "Licencja",
+    "licenses": {
+      "original": "Własna",
+      "public-domain": "Domena publiczna",
+      "cc-by": "CC BY (z podaniem autora)",
+      "user": "Tylko do własnego użytku"
+    },
+    "categories": "Kategorie (po przecinku)",
+    "tags": "Tagi (po przecinku)",
+    "delete": "Usuń",
+    "confirmDelete": "Usunąć {id}?",
+    "chars": "{count}/{max}",
+    "issues": {
+      "missing-translation": "Brak: {language}",
+      "too-long": "Za długa do pola sentencji",
+      "too-long-for-a5": "Może się nie zmieścić w A5",
+      "not-shippable": "Nie do udostępnianego szablonu",
+      "needs-attribution": "Wymaga autora lub źródła",
+      "duplicate": "Taka sama jak {other}",
+      "duplicate-id": "Powtórzony identyfikator"
+    },
+    "empty": "Brak pozycji.",
+    "textLabel": "{id}, {language}",
+    "saved": "Zapisano"
   }
 }
