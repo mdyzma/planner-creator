@@ -3,8 +3,8 @@
   "id": "therapeutic-recovery-6-month",
   "version": "1.0.0",
   "name": {
-    "en": "Therapeutic Recovery Planner — 6 Months",
-    "pl": "Planer terapeutyczny zdrowienia — 6 miesięcy"
+    "en": "Day by Day",
+    "pl": "Dzień po Dniu"
   },
   "description": {
     "en": "A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
@@ -83,22 +83,50 @@
             }
           },
           {
-            "kind": "block",
-            "block": {
-              "id": "title",
-              "type": "text",
-              "props": {
-                "text": {
-                  "en": "Therapeutic Recovery Planner",
-                  "pl": "Planer terapeutyczny zdrowienia"
-                },
-                "variant": "heading"
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "title",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Day by Day",
+                      "pl": "Dzień po Dniu"
+                    },
+                    "variant": "heading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 10
+                    }
+                  }
+                }
               },
-              "size": {
-                "height": {
-                  "mm": 16
+              {
+                "kind": "block",
+                "block": {
+                  "id": "subtitle",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "A planner for the everyday, balance and a good life",
+                      "pl": "Planer codzienności, równowagi i dobrego życia"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 8
+                    }
+                  }
                 }
               }
+            ],
+            "height": {
+              "mm": 20
             }
           },
           {

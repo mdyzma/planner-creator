@@ -9,10 +9,10 @@ export default function NotFound() {
           <h1 className="text-xl font-semibold">Page not found · Nie znaleziono strony</h1>
           <p className="mt-4 flex gap-4">
             <a className="underline" href="/en">
-              Planner Designer (English)
+              YAPCO (English)
             </a>
             <a className="underline" href="/pl" lang="pl">
-              Projektant planerów (polski)
+              YAPCO (polski)
             </a>
           </p>
         </main>

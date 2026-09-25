@@ -109,8 +109,8 @@ function finalize(doc: PDFDocument, title: string, duplex: Duplex | null, date: 
   if (duplex) prefs.setDuplex(duplex);
   prefs.setDisplayDocTitle(true);
   doc.setTitle(title);
-  doc.setProducer('Planner Designer');
-  doc.setCreator('Planner Designer');
+  doc.setProducer('YAPCO');
+  doc.setCreator('YAPCO');
   doc.setCreationDate(date);
   doc.setModificationDate(date);
 }

@@ -5,10 +5,10 @@ import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl'
 import { GUIDES, SAMPLES } from './samples';
 
 /**
- * Therapeutic Recovery Planner — 6 months (brief §5–§21), authored in TypeScript for type
- * checking and compiled to template.json, the data the app loads. The layout follows the
- * reference demo with the daily spread reversed: morning and day on the left, evening on the
- * right (design §5.3).
+ * "Day by Day" ("Dzień po Dniu"), the 6-month therapeutic recovery planner (brief §5–§21),
+ * authored in TypeScript for type checking and compiled to template.json, the data the app
+ * loads. The layout follows the reference demo with the daily spread reversed: morning and day
+ * on the left, evening on the right (design §5.3).
  */
 
 const heading = (id: string, text: ReturnType<typeof L>, height = 12) =>
@@ -40,7 +40,24 @@ const cover: PageTemplate = {
   body: stack(
     [
       block('top', 'spacer', {}, { height: fr(2) }),
-      heading('title', L('Therapeutic Recovery Planner', 'Planer terapeutyczny zdrowienia'), 16),
+      stack(
+        [
+          heading('title', L('Day by Day', 'Dzień po Dniu'), 10),
+          block(
+            'subtitle',
+            'text',
+            {
+              text: L(
+                'A planner for the everyday, balance and a good life',
+                'Planer codzienności, równowagi i dobrego życia',
+              ),
+              variant: 'subheading',
+            },
+            { height: mmH(8) },
+          ),
+        ],
+        { height: mmH(20), gap: 1 },
+      ),
       block('gap', 'spacer', {}, { height: fr(1) }),
       block(
         'owner',
@@ -812,10 +829,7 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
   schemaVersion: TEMPLATE_MIGRATIONS.current,
   id: 'therapeutic-recovery-6-month',
   version: '1.0.0',
-  name: L(
-    'Therapeutic Recovery Planner — 6 Months',
-    'Planer terapeutyczny zdrowienia — 6 miesięcy',
-  ),
+  name: L('Day by Day', 'Dzień po Dniu'),
   description: L(
     'A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.',
     'Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom.',

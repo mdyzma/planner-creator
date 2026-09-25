@@ -1,6 +1,7 @@
 import type { Locale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { Logo } from '@/components/Logo';
 import { Link } from '@/i18n/navigation';
 import { ProjectDashboard } from '@/components/ProjectDashboard';
 
@@ -14,7 +15,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <main className="mx-auto max-w-5xl px-6 py-10">
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">{t('appName')}</h1>
+          <h1 className="flex items-center gap-3 text-2xl font-semibold tracking-wide">
+            <Logo size={44} />
+            {t('appName')}
+          </h1>
           <p className="mt-1 text-ink-muted">{d('intro')}</p>
           <Link href="/guide" className="mt-2 inline-block text-sm underline">
             {t('guide')}

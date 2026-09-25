@@ -158,7 +158,7 @@ export async function calibrationPdf(options: CalibrationOptions): Promise<Uint8
   prefs.setPrintScaling(PrintScaling.None);
   prefs.setDuplex(Duplex.DuplexFlipLongEdge);
   doc.setTitle(toWinAnsi(labels.title));
-  doc.setProducer('Planner Designer');
+  doc.setProducer('YAPCO');
   const date = options.date ?? new Date();
   doc.setCreationDate(date);
   doc.setModificationDate(date);

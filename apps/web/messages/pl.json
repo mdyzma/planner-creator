@@ -1,6 +1,6 @@
 {
   "Common": {
-    "appName": "Projektant planerów",
+    "appName": "YAPCO",
     "appDescription": "Projektuj i drukuj dwujęzyczne planery terapeutyczne.",
     "loading": "Wczytywanie…",
     "notFound": "Nie znaleziono planera.",
@@ -21,7 +21,7 @@
     "name": "Nazwa",
     "format": "Format",
     "plannerLanguage": "Język planera",
-    "defaultName": "{count}-miesięczny planer zdrowienia",
+    "defaultName": "Dzień po Dniu — {count, plural, one {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}",
     "untitled": "Planer bez nazwy",
     "yourPlanners": "Twoje planery",
     "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",
@@ -486,7 +486,7 @@
   "Privacy": {
     "title": "Prywatność",
     "updated": "Ostatnia aktualizacja: 25 września 2026",
-    "summary": "Projektant planerów nie ma kont, plików cookie ani analityki. Twoje planery zostają w przeglądarce; opuszczają ją tylko na chwilę, gdy tworzysz PDF.",
+    "summary": "YAPCO nie ma kont, plików cookie ani analityki. Twoje planery zostają w przeglądarce; opuszczają ją tylko na chwilę, gdy tworzysz PDF.",
     "stored": {
       "title": "Co jest zapisywane i gdzie",
       "body": "Planery, ich teksty i sentencje oraz wszystko, co w nie wpiszesz (np. imię lub daty), są zapisywane wyłącznie w tej przeglądarce, w jej lokalnej bazie danych (IndexedDB). Nie trafiają do nas i nie ma ich kopii na serwerze. Wybrany język interfejsu jest zapamiętywany w pamięci lokalnej przeglądarki."

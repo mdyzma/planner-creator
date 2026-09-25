@@ -1,6 +1,9 @@
-# planner-creator
+<p align="center"><img src="docs/brand/yapco-logo.svg" alt="YAPCO — Yet Another Planner Creator" width="400"></p>
 
-A web application to design, customise and print bilingual (Polish / English) therapeutic planners.
+# YAPCO
+
+*Yet Another Planner Creator* — a web application to design, customise and print bilingual
+(Polish / English) planners.
 The first template is a 6-month recovery planner. Planners are printed blank on the user's own
 printer, filled in by hand and ring-bound.
 

@@ -1,6 +1,6 @@
 {
   "Common": {
-    "appName": "Planner Designer",
+    "appName": "YAPCO",
     "appDescription": "Design and print bilingual therapeutic planners.",
     "loading": "Loading…",
     "notFound": "Planner not found.",
@@ -21,7 +21,7 @@
     "name": "Name",
     "format": "Format",
     "plannerLanguage": "Planner language",
-    "defaultName": "{count}-Month Recovery Planner",
+    "defaultName": "Day by Day — {count, plural, one {# month} other {# months}}",
     "untitled": "Untitled planner",
     "yourPlanners": "Your planners",
     "empty": "No planners yet. Create one above.",
@@ -486,7 +486,7 @@
   "Privacy": {
     "title": "Privacy",
     "updated": "Last updated 25 September 2026",
-    "summary": "Planner Designer has no accounts, no cookies and no analytics. Your planners stay in your browser; they only leave it for a moment when you create a PDF.",
+    "summary": "YAPCO has no accounts, no cookies and no analytics. Your planners stay in your browser; they only leave it for a moment when you create a PDF.",
     "stored": {
       "title": "What is stored, and where",
       "body": "Planners, their texts and quotes, and anything you type into them (such as your name or dates) are stored only in this browser, in its local database (IndexedDB). They are not sent to us and there is no copy on a server. The interface language you choose is remembered in the browser's local storage."

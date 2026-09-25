@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Therapeutic Recovery Planner — 6 months (English/Polish). template.json is generated from src/template.ts.",
+  "description": "Day by Day (Dzień po Dniu), a 6-month therapeutic recovery planner (English/Polish). template.json is generated from src/template.ts.",
   "exports": {
     "./template.json": "./template.json",
     "./content/quotes.json": "./content/quotes.json"
