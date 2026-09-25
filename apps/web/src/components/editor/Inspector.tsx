@@ -366,7 +366,7 @@ function FieldRow({
           <select
             id={id}
             className={inputClass}
-            value={typeof value === 'string' ? value : ''}
+            value={typeof value === 'string' || typeof value === 'number' ? String(value) : ''}
             disabled={locked}
             onChange={(e) => commit(e.target.value)}
           >

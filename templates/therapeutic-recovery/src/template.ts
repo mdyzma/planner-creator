@@ -413,7 +413,7 @@ const dayLeft = a5(
               block(
                 'schedule',
                 'time-grid',
-                { title: L('Plan of the day', 'Plan dnia'), from: 7, to: 18, linesPerSlot: 2 },
+                { title: L('Plan of the day', 'Plan dnia'), from: 6, to: 22, linesPerSlot: 1 },
                 { width: fr(2) },
               ),
             ]),
@@ -437,7 +437,6 @@ const dayLeft = a5(
     ),
   },
   [
-    ['schedule', 'props/linesPerSlot', 1],
     ['priorities', 'props/subLines', [L('If it gets hard:', 'Gdy będzie trudno:')]],
     ['halt', 'size/height', { mm: 36 }],
     ['quote', 'props/fallbackLines', 1],

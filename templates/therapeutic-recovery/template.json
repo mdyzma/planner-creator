@@ -1564,9 +1564,9 @@
                           "en": "Plan of the day",
                           "pl": "Plan dnia"
                         },
-                        "from": 7,
-                        "to": 18,
-                        "linesPerSlot": 2
+                        "from": 6,
+                        "to": 22,
+                        "linesPerSlot": 1
                       },
                       "size": {
                         "width": {
@@ -1644,11 +1644,6 @@
       },
       "formatOverrides": {
         "A5": [
-          {
-            "op": "add",
-            "path": "/body/children/2/children/0/children/1/block/props/linesPerSlot",
-            "value": 1
-          },
           {
             "op": "add",
             "path": "/body/children/2/children/0/children/0/block/props/subLines",
@@ -1782,6 +1777,10 @@
             "18:00": {
               "en": "meeting",
               "pl": "mityng"
+            },
+            "21:00": {
+              "en": "evening page, then rest",
+              "pl": "strona wieczorna, potem odpoczynek"
             }
           },
           "note": {

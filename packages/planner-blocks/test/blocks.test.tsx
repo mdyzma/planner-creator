@@ -109,6 +109,12 @@ describe('HALT and schedule', () => {
       '18:00',
     ]);
   });
+
+  it('lists half-hour slots, also when the designer stores the interval as text', () => {
+    const html = render('time-grid', { from: 20, to: 22, stepMinutes: '30' });
+    const times = [...html.matchAll(/(\d{2}:\d{2})/g)].map((m) => m[1]);
+    expect(times).toEqual(['20:00', '20:30', '21:00', '21:30', '22:00']);
+  });
 });
 
 describe('calendar blocks', () => {

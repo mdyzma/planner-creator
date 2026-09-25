@@ -151,22 +151,36 @@ const TimeGridProps = z.object({
   title: LocalizedText.optional(),
   from: z.number().int().min(0).max(23),
   to: z.number().int().min(1).max(24),
-  stepMinutes: z.union([z.literal(30), z.literal(60)]),
+  // The designer's select stores '30' / '60' as text.
+  stepMinutes: z.union([
+    z.literal(30),
+    z.literal(60),
+    z.enum(['30', '60']).transform((v) => Number(v) as 30 | 60),
+  ]),
   linesPerSlot: z.number().int().min(1).max(3),
 });
 
-/** Optional hour-by-hour schedule (§13), e.g. 07:00–18:00 with two lines per hour. */
+/** Optional hour-by-hour schedule (§13), e.g. 06:00–22:00 with two lines per hour. */
 export const timeGridBlock = defineBlock({
   type: 'time-grid',
   version: 1,
   label: L('Schedule', 'Plan godzinowy'),
   category: 'calendar',
   propsSchema: TimeGridProps,
-  defaults: { from: 7, to: 18, stepMinutes: 60, linesPerSlot: 1 },
+  defaults: { from: 6, to: 22, stepMinutes: 60, linesPerSlot: 1 },
   inspector: [
     { key: 'title', kind: 'localized-text', label: L('Title', 'Tytuł') },
     { key: 'from', kind: 'number', label: L('From hour', 'Od godziny'), min: 0, max: 23 },
     { key: 'to', kind: 'number', label: L('To hour', 'Do godziny'), min: 1, max: 24 },
+    {
+      key: 'stepMinutes',
+      kind: 'select',
+      label: L('Interval', 'Odstęp'),
+      options: [
+        { value: '60', label: L('Every hour', 'Co godzinę') },
+        { value: '30', label: L('Every 30 minutes', 'Co 30 minut') },
+      ],
+    },
     {
       key: 'linesPerSlot',
       kind: 'number',
@@ -178,7 +192,7 @@ export const timeGridBlock = defineBlock({
   Render: ({ props, block, ctx }) => {
     const sample = sampleFill(ctx, block.id, TimeSample);
     const slots: string[] = [];
-    // Both ends are included (07:00 … 18:00); there is no 24:00 slot.
+    // Both ends are included (06:00 … 22:00); there is no 24:00 slot.
     for (let m = props.from * 60; m <= props.to * 60 && m < 24 * 60; m += props.stepMinutes) {
       slots.push(
         `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`,

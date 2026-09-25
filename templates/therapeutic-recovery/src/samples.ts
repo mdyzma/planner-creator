@@ -223,6 +223,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         '13:00': L('lunch with Ola', 'obiad z Olą'),
         '17:00': L('leave work', 'wyjście z pracy'),
         '18:00': L('meeting', 'mityng'),
+        '21:00': L('evening page, then rest', 'strona wieczorna, potem odpoczynek'),
       },
       note: L('fixed points only', 'tylko stałe punkty'),
     },
