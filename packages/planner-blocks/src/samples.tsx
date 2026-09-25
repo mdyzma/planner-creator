@@ -1,4 +1,3 @@
-import { HANDWRITING_BLANK } from '@planner/i18n';
 import type { BlockRenderContext } from '@planner/renderer';
 import { mm } from '@planner/renderer';
 import type { ReactNode } from 'react';
@@ -61,9 +60,13 @@ export const ContactSample = z.array(z.array(SampleText));
 /** text, day-header: values written into the printed blanks ("__________"), in order. */
 export const BlanksSample = z.array(SampleText);
 
+/** Width of a writing blank per underscore: "__________" (the default blank) is 18 mm. */
+const BLANK_MM_PER_CHAR = 1.8;
+
 /**
- * Printed text whose writing blanks are filled with handwriting: "Sobriety day: __________"
- * becomes "Sobriety day: 42" with the number handwritten on the line.
+ * Printed text whose writing blanks ("___" or longer; "Mood _____ /10" is a short one for a
+ * number) are filled with handwriting in example mode, in order, on a line as long as the blank.
+ * Without examples the text prints as it is.
  */
 export function withBlanks(
   ctx: BlockRenderContext,
@@ -71,23 +74,24 @@ export function withBlanks(
   values: readonly SampleText[] | undefined,
   size = 4.6,
 ): ReactNode {
-  if (!values?.length || !text.includes(HANDWRITING_BLANK)) return text;
-  const parts = text.split(HANDWRITING_BLANK);
-  return parts.map((part, i) => (
-    <span key={i}>
-      {part}
-      {i < parts.length - 1 && (
-        <span
-          style={{
-            display: 'inline-block',
-            minWidth: mm(18),
-            borderBottom: '0.1mm solid currentColor',
-            textAlign: 'center',
-          }}
-        >
-          <Hand size={size}>{handText(ctx, values[i]) || ' '}</Hand>
-        </span>
-      )}
-    </span>
-  ));
+  if (!values?.length || !/_{3,}/.test(text)) return text;
+  let blank = 0;
+  // Splitting on a captured group keeps the blanks at the odd indexes.
+  return text.split(/(_{3,})/).map((part, i) =>
+    i % 2 === 0 ? (
+      <span key={i}>{part}</span>
+    ) : (
+      <span
+        key={i}
+        style={{
+          display: 'inline-block',
+          minWidth: mm(part.length * BLANK_MM_PER_CHAR),
+          borderBottom: '0.1mm solid currentColor',
+          textAlign: 'center',
+        }}
+      >
+        <Hand size={size}>{handText(ctx, values?.[blank++]) || ' '}</Hand>
+      </span>
+    ),
+  );
 }

@@ -75,13 +75,22 @@ Compatible with the intent of the reviews; keep unless there is a reason to chan
 
 Completes the daily spread; the evening is done.
 
-- Move "Plan dnia" into the **outer column of the left page**, mirroring the evening check-out on
-  the right; S2 asks for fixed points only, so a narrow column is enough.
-- Main column: check-in (numbers on lines, like the check-out, plus sleep) → "Moje 24 godziny"
-  with four prompts → three priorities → "important / pleasant" → HALT-B.
+Done:
+
+- The long 24-hour commitment is replaced by a "Poranek" block: a check-in (mood, energy,
+  tension, craving 0–10, sleep hours and quality 1–5) as numbers spread across one line (A4) or
+  two lines of three (A5), and one line "Dziś chronię swoją trzeźwość przez:".
+- The header is one line (weekday, date, sobriety day) with the quote beside it (A4) or under it
+  (A5); "Plan dnia" stays where it is.
+
+Still to do:
+
 - Evening: "Jutro warto pamiętać".
-- Generic weekly markers instead of "Mityng AA"; HALT label "Złość / napięcie".
-- A5: a compact variant, as for the evening page.
+- Weekly markers: keep "Mityng AA" and add "Grupa" (therapy groups such as "Nawroty").
+- HALT label "Złość / napięcie".
+- Later, if room is needed: the rest of S2's "Moje 24 godziny" and "important / pleasant"
+  (e.g. by moving "Plan dnia" into the outer column). "Plan dnia" in A5 is tight (about 4 mm
+  per hour) but kept as it is.
 
 ### v0.4.0 — Safety and relapse prevention
 
@@ -120,11 +129,11 @@ Before the front matter, because new content has to be split into Core and Recov
 - Production deployment on Cloudflare (needs `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and
   `PRODUCTION_URL`; see [operations/cloudflare.md](operations/cloudflare.md)).
 
-## Decisions before v0.3.0
+## Decisions for v0.3.0
 
-1. "Plan dnia" in the outer column of the left page (recommended), or another split?
-2. Mood 0–10 like the other scales (recommended), or 1–10 as in S2?
-3. "Mityng AA" → "Mityng / grupa" for everyone now, or keep AA until the "Balance" preset exists?
+1. "Plan dnia" stays beside the priorities; the space came from a compact check-in and header.
+2. Mood is 0–10, like every other scale.
+3. "Mityng AA" stays; "Grupa" is added as a separate marker.
 
 ## Guard rails (from S1)
 

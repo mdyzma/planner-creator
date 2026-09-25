@@ -10,8 +10,15 @@ const L = (en: string, pl: string) => ({ en, pl });
 const TextProps = z.object({
   text: LocalizedText,
   variant: z.enum(['heading', 'subheading', 'body', 'caption', 'label']),
-  align: z.enum(['start', 'center', 'end']),
+  /**
+   * `spread` lays each line out as fields separated by " · ", spaced evenly across the full
+   * width (e.g. a line of check-in numbers); each field stays together.
+   */
+  align: z.enum(['start', 'center', 'end', 'spread']),
 });
+
+const SEPARATOR = ' · ';
+const blankCount = (text: string) => text.match(/_{3,}/g)?.length ?? 0;
 
 /** Printed text: headings, instructions, captions. Supports {{variables}} and gendered wording. */
 export const textBlock = defineBlock({
@@ -36,18 +43,48 @@ export const textBlock = defineBlock({
       ],
     },
   ],
-  Render: ({ props, block, ctx }) => (
-    <div
-      style={{
-        ...TYPE[props.variant],
-        textAlign: props.align,
-        whiteSpace: 'pre-line',
-        ...typographyCss(block.style),
-      }}
-    >
-      {withBlanks(ctx, resolveText(ctx, props.text), sampleFill(ctx, block.id, BlanksSample))}
-    </div>
-  ),
+  Render: ({ props, block, ctx }) => {
+    const text = resolveText(ctx, props.text);
+    const values = sampleFill(ctx, block.id, BlanksSample);
+    if (props.align === 'spread') {
+      // Example values fill the blanks in order across all fields and lines.
+      let used = 0;
+      const field = (part: string, key: string) => {
+        const node = <span key={key}>{withBlanks(ctx, part, values?.slice(used))}</span>;
+        used += blankCount(part);
+        return node;
+      };
+      return (
+        <div style={{ ...TYPE[props.variant], ...typographyCss(block.style) }}>
+          {text.split('\n').map((line, l) => (
+            <div
+              key={l}
+              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}
+            >
+              {line
+                .split(SEPARATOR)
+                .flatMap((part, f) => [
+                  ...(f > 0 ? [<span key={`s${f}`}>·</span>] : []),
+                  field(part, `f${f}`),
+                ])}
+            </div>
+          ))}
+        </div>
+      );
+    }
+    return (
+      <div
+        style={{
+          ...TYPE[props.variant],
+          textAlign: props.align,
+          whiteSpace: 'pre-line',
+          ...typographyCss(block.style),
+        }}
+      >
+        {withBlanks(ctx, text, values)}
+      </div>
+    );
+  },
 });
 
 const QuoteProps = z.object({

@@ -7,8 +7,8 @@
     "pl": "Dzień po Dniu"
   },
   "description": {
-    "en": "A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
-    "pl": "Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom."
+    "en": "A six-month recovery planner: daily two-page spreads with a morning check-in and commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
+    "pl": "Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z porannym check-inem i zobowiązaniem, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom."
   },
   "supportedFormats": [
     "A4",
@@ -255,8 +255,8 @@
               "props": {
                 "variant": "body",
                 "text": {
-                  "en": "Each day has two facing pages. In the morning, use the left page: your 24-hour commitment, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: zobowiązanie na 24 godziny, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
                 }
               },
               "size": {
@@ -1448,7 +1448,7 @@
       },
       "body": {
         "kind": "stack",
-        "gap": 5,
+        "gap": 4,
         "children": [
           {
             "kind": "row",
@@ -1459,10 +1459,12 @@
                 "block": {
                   "id": "date",
                   "type": "day-header",
-                  "props": {},
+                  "props": {
+                    "inline": true
+                  },
                   "size": {
                     "width": {
-                      "fr": 2
+                      "fr": 3
                     }
                   }
                 }
@@ -1475,14 +1477,17 @@
                   "props": {},
                   "size": {
                     "width": {
-                      "fr": 3
+                      "fr": 2
                     }
+                  },
+                  "style": {
+                    "fontSizePt": 8
                   }
                 }
               }
             ],
             "height": {
-              "mm": 20
+              "mm": 9
             }
           },
           {
@@ -1492,12 +1497,30 @@
               {
                 "kind": "block",
                 "block": {
+                  "id": "checkin",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Mood _____ /10 · Energy _____ /10 · Tension _____ /10 · Craving _____ /10 · Sleep _____ h · quality _____ /5",
+                      "pl": "Nastrój _____ /10 · Energia _____ /10 · Napięcie _____ /10 · Głód _____ /10 · Sen _____ h · jakość _____ /5"
+                    },
+                    "variant": "body",
+                    "align": "spread"
+                  },
+                  "size": {
+                    "height": "auto"
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
                   "id": "commitment",
                   "type": "writing-area",
                   "props": {
                     "title": {
-                      "en": "Today, for the next 24 hours, I will do everything I can to protect my sobriety by…",
-                      "pl": "Dzisiaj, przez najbliższe 24 godziny, zrobię wszystko, aby utrzymać abstynencję poprzez…"
+                      "en": "Today I protect my sobriety by:",
+                      "pl": "Dziś chronię swoją trzeźwość przez:"
                     },
                     "pattern": "lines"
                   },
@@ -1510,7 +1533,7 @@
               }
             ],
             "height": {
-              "mm": 27
+              "mm": 28
             },
             "label": {
               "en": "Morning",
@@ -1673,12 +1696,71 @@
             "op": "add",
             "path": "/body/children/0/children/1/block/props/fallbackLines",
             "value": 1
+          },
+          {
+            "op": "add",
+            "path": "/body/children/1/children/0/block/props/text",
+            "value": {
+              "en": "Mood _____ /10 · Energy _____ /10 · Tension _____ /10\nCraving _____ /10 · Sleep _____ h · quality _____ /5",
+              "pl": "Nastrój _____ /10 · Energia _____ /10 · Napięcie _____ /10\nGłód _____ /10 · Sen _____ h · jakość _____ /5"
+            }
+          },
+          {
+            "op": "replace",
+            "path": "/body/children/0",
+            "value": {
+              "kind": "stack",
+              "gap": 0,
+              "children": [
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "date",
+                    "type": "day-header",
+                    "props": {
+                      "inline": true
+                    },
+                    "size": {
+                      "height": {
+                        "mm": 9
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "quote",
+                    "type": "quote",
+                    "props": {},
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    },
+                    "style": {
+                      "fontSizePt": 8
+                    }
+                  }
+                }
+              ],
+              "height": {
+                "mm": 16
+              }
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/1/height",
+            "value": {
+              "mm": 33
+            }
           }
         ]
       },
       "guide": {
-        "en": "The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.",
-        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu."
+        "en": "The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.",
+        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu."
       },
       "sampleContent": {
         "date": {
@@ -1688,7 +1770,18 @@
           "note": {
             "en": "count from your sobriety date",
             "pl": "licz od daty trzeźwości"
-          }
+          },
+          "noteAt": "bottom-left"
+        },
+        "checkin": {
+          "fill": [
+            "6",
+            "5",
+            "4",
+            "3",
+            "6",
+            "3"
+          ]
         },
         "commitment": {
           "fill": {

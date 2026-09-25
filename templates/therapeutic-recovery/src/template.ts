@@ -18,6 +18,42 @@ import { GUIDES, SAMPLES } from './samples';
  * on the left, evening on the right (design §5.3).
  */
 
+/** A line to write a number or word on; example fills write on it (see withBlanks). */
+const BLANK = '__________';
+/** A short line, for a number such as 7 or 6,5. */
+const NUM = '_____';
+
+/** Morning check-in fields: label, blank for the number, unit. */
+const CHECKIN: Array<[en: string, pl: string, unit: string]> = [
+  ['Mood', 'Nastrój', '/10'],
+  ['Energy', 'Energia', '/10'],
+  ['Tension', 'Napięcie', '/10'],
+  ['Craving', 'Głód', '/10'],
+  ['Sleep', 'Sen', 'h'],
+  ['quality', 'jakość', '/5'],
+];
+
+/**
+ * The check-in as lines of `perLine` fields. Each field is held together by non-breaking spaces,
+ * so a text block aligned to `spread` spaces the fields out evenly across the line.
+ */
+const checkin = (perLine: number[]) => {
+  const text = (lang: 0 | 1) => {
+    const fields = CHECKIN.map((f) => [f[lang], NUM, f[2]].join(' '));
+    let at = 0;
+    return perLine.map((n) => fields.slice(at, (at += n)).join(' · ')).join('\n');
+  };
+  return L(text(0), text(1));
+};
+
+/** The day's quote in slightly smaller type, so it fits beside the date. */
+const quoteBlock = (size: { width?: Length; height?: Length }): LayoutNode => {
+  const node = block('quote', 'quote', {}, size);
+  return node.kind === 'block'
+    ? { ...node, block: { ...node.block, style: { fontSizePt: 8 } } }
+    : node;
+};
+
 const heading = (id: string, text: ReturnType<typeof L>, height = 12) =>
   block(id, 'text', { text, variant: 'heading' }, { height: mmH(height) });
 const caption = (id: string, text: ReturnType<typeof L>, height = 8) =>
@@ -105,8 +141,8 @@ const howTo: PageTemplate = {
       {
         variant: 'body',
         text: L(
-          'Each day has two facing pages. In the morning, use the left page: your 24-hour commitment, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.',
-          'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: zobowiązanie na 24 godziny, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
+          'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.',
+          'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
         ),
       },
       { height: fr(3) },
@@ -391,31 +427,34 @@ const dayLeft = a5(
     ),
     body: stack(
       [
+        // Weekday, date and the sobriety day on one line, the quote beside it in smaller type.
         row(
           [
-            block('date', 'day-header', {}, { width: fr(2) }),
-            block('quote', 'quote', {}, { width: fr(3) }),
+            block('date', 'day-header', { inline: true }, { width: fr(3) }),
+            quoteBlock({ width: fr(2) }),
           ],
-          {
-            height: mmH(20),
-          },
+          { height: mmH(9) },
         ),
         stack(
           [
+            // A quick check-in (0–10, like the evening check-out), then the one action for today.
+            block(
+              'checkin',
+              'text',
+              { text: checkin([CHECKIN.length]), variant: 'body', align: 'spread' },
+              { height: 'auto' },
+            ),
             block(
               'commitment',
               'writing-area',
               {
-                title: L(
-                  'Today, for the next 24 hours, I will do everything I can to protect my sobriety by…',
-                  'Dzisiaj, przez najbliższe 24 godziny, zrobię wszystko, aby utrzymać abstynencję poprzez…',
-                ),
+                title: L('Today I protect my sobriety by:', 'Dziś chronię swoją trzeźwość przez:'),
                 pattern: 'lines',
               },
               { height: fr(1) },
             ),
           ],
-          { height: mmH(27), label: L('Morning', 'Poranek') },
+          { height: mmH(28), label: L('Morning', 'Poranek') },
         ),
         stack(
           [
@@ -458,18 +497,32 @@ const dayLeft = a5(
           { height: mmH(53) },
         ),
       ],
-      { gap: 5 },
+      { gap: 4 },
     ),
   },
   [
     ['priorities', 'props/subLines', [L('If it gets hard:', 'Gdy będzie trudno:')]],
     ['halt', 'size/height', { mm: 43 }],
     ['quote', 'props/fallbackLines', 1],
+    // The check-in on two lines of three.
+    ['checkin', 'props/text', checkin([3, 3])],
+    // Too narrow for the quote beside the date: the header's one line, the quote under it.
+    // (Block changes above use pointers into the unpatched body, so they come first.)
+    {
+      op: 'replace',
+      path: '/body/children/0',
+      value: stack(
+        [
+          block('date', 'day-header', { inline: true }, { height: mmH(9) }),
+          quoteBlock({ height: fr(1) }),
+        ],
+        { height: mmH(16), gap: 0 },
+      ) as JsonPatchOp['value'],
+    },
+    // The morning section (the body's second child) grows by the check-in's second line.
+    { op: 'add', path: '/body/children/1/height', value: { mm: 33 } },
   ],
 );
-
-/** A line to write a number or word on; example fills write on it (see withBlanks). */
-const BLANK = '__________';
 
 /** Check-out numbers written on blanks; examples fill the blanks in order. */
 const CHECKOUT = L(
@@ -1290,8 +1343,8 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
   version: '1.0.0',
   name: L('Day by Day', 'Dzień po Dniu'),
   description: L(
-    'A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.',
-    'Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom.',
+    'A six-month recovery planner: daily two-page spreads with a morning check-in and commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.',
+    'Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z porannym check-inem i zobowiązaniem, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom.',
   ),
   supportedFormats: ['A4', 'A5'],
   supportedLocales: ['en', 'pl'],

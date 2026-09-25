@@ -187,6 +187,8 @@ export const calendarGridBlock = defineBlock({
 const DayHeaderProps = z.object({
   showSobriety: z.boolean(),
   sobrietyLabel: LocalizedText,
+  /** Weekday, date and counter on one line ("Tuesday 6 October · Sobriety day number: __"). */
+  inline: z.boolean(),
 });
 
 /** Date and sobriety day counter at the top of the daily page (§10). */
@@ -202,14 +204,44 @@ export const dayHeaderBlock = defineBlock({
       'Sobriety day number: {{sobrietyDayNumber}}',
       'Dzień trzeźwości numer: {{sobrietyDayNumber}}',
     ),
+    inline: false,
   },
   inspector: [
+    { key: 'inline', kind: 'boolean', label: L('On one line', 'W jednej linii') },
     { key: 'showSobriety', kind: 'boolean', label: L('Sobriety counter', 'Licznik trzeźwości') },
     { key: 'sobrietyLabel', kind: 'localized-text', label: L('Counter text', 'Tekst licznika') },
   ],
   Render: ({ props, block, ctx }) => {
     const date = ctx.page.date;
     const sample = sampleFill(ctx, block.id, BlanksSample);
+    const counter = props.showSobriety && (
+      <div style={{ ...TYPE.caption, color: PAPER.ink }}>
+        {withBlanks(ctx, resolveText(ctx, props.sobrietyLabel), sample)}
+      </div>
+    );
+    if (props.inline) {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'baseline',
+            flexWrap: 'wrap',
+            columnGap: mm(3),
+            height: '100%',
+          }}
+        >
+          {date ? (
+            <>
+              <span style={TYPE.heading}>{weekdayName(date, ctx.locale)}</span>
+              <span style={TYPE.body}>{formatDate(date, ctx.locale, 'day-month')}</span>
+            </>
+          ) : (
+            <WriteLine height={8} style={{ flex: '0 0 60mm' }} />
+          )}
+          {counter && <span style={{ marginLeft: 'auto' }}>{counter}</span>}
+        </div>
+      );
+    }
     return (
       <div style={{ ...column, justifyContent: 'space-between' }}>
         <div>
@@ -222,11 +254,7 @@ export const dayHeaderBlock = defineBlock({
             <WriteLine height={8} />
           )}
         </div>
-        {props.showSobriety && (
-          <div style={{ ...TYPE.caption, color: PAPER.ink }}>
-            {withBlanks(ctx, resolveText(ctx, props.sobrietyLabel), sample)}
-          </div>
-        )}
+        {counter}
       </div>
     );
   },

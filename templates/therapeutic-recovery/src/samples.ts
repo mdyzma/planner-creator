@@ -229,7 +229,11 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     date: {
       fill: ['42'],
       note: L('count from your sobriety date', 'licz od daty trzeźwości'),
+      // The counter sits at the right of the header line: the note goes under the date.
+      noteAt: 'bottom-left',
     },
+    // Mood, energy, tension, craving, hours of sleep, sleep quality.
+    checkin: { fill: ['6', '5', '4', '3', '6', '3'] },
     commitment: {
       // One line: the A5 page has room for only one.
       fill: L('the 18:00 meeting and a call to my sponsor', 'mityng o 18:00 i telefon do sponsora'),
@@ -518,8 +522,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Koniec tygodnia w dwie–trzy minuty. Przejrzyj strony wieczorne i podsumuj: średni nastrój i napięcie, najsilniejszy głód oraz ile dni miało wsparcie, ruch lub mityng. Zaznacz, które odczucia HALT były najczęściej wysoko, jakie wyzwalacze się pojawiły i co najbardziej Cię chroniło. Potem trzy zwycięstwa (nie tylko „nie piłem”), jeden wzorzec, który zauważasz, co zachować, co zmienić, i plan jeśli–to do przepisania na kolejny tydzień.',
   ),
   'day-left': L(
-    'The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.',
-    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu.',
+    'The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.',
+    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu.',
   ),
   'day-right': L(
     'The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, and end with three things you are grateful for.',

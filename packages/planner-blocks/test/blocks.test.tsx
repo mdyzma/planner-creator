@@ -52,6 +52,16 @@ describe('registry', () => {
 });
 
 describe('text and quote', () => {
+  it('spreads fields evenly across a line, filling blanks in order', () => {
+    const html = render(
+      'text',
+      { text: { pl: 'Nastrój ___ /10 · Sen ___ h' }, align: 'spread' },
+      ctx({ sample: () => ({ fill: ['6', '7'] }) }),
+    );
+    expect(html).toContain('justify-content:space-between');
+    expect(text(html)).toBe('Nastrój 6 /10 · Sen 7 h');
+  });
+
   it('fills variables, leaving a writing line when unset', () => {
     const t = { en: 'Day {{sobrietyDayNumber}}', pl: 'Dzień {{sobrietyDayNumber}}' };
     expect(text(render('text', { text: t }, ctx({ vars: { sobrietyDayNumber: '12' } })))).toBe(
