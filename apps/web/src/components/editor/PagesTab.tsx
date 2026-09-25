@@ -10,6 +10,7 @@ import { countPageInstances, isPageInstance } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useEditor } from '@/lib/editorStore';
+import { shownLabel } from '@/lib/pages';
 import type { DragData } from './EditorScreen';
 import { currentPageIndex, useLayout } from './context';
 
@@ -243,7 +244,7 @@ function PageRow({ page, depth }: { page: PageInstance; depth: number }) {
                 ◆
               </span>
             )}
-            {t('pageNumber', { number: layout.pages[index]!.page.number })}
+            {t('pageNumber', { number: shownLabel(layout.pages[index]!) })}
           </span>
         )}
       </div>

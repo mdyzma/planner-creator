@@ -1,5 +1,12 @@
-import type { ContentLibrary, PlannerProject, PlannerTemplate } from '@planner/schema';
-import { blankTemplate, parseContentLibrary, parseTemplate } from '@planner/schema';
+import type {
+  ContentLibrary,
+  PageNumbering,
+  PlannerProject,
+  PlannerTemplate,
+  SectionNode,
+  SectionTemplate,
+} from '@planner/schema';
+import { blankTemplate, isPageInstance, parseContentLibrary, parseTemplate } from '@planner/schema';
 import quotesJson from '@planner/template-therapeutic-recovery/content/quotes.json';
 import therapeuticJson from '@planner/template-therapeutic-recovery/template.json';
 
@@ -59,4 +66,49 @@ export function withExampleContent(project: PlannerProject): PlannerProject {
     }),
   );
   return { ...project, template: { ...project.template, pageTemplates } };
+}
+
+/** Template section id of a generated section: "root/intro" → intro, "month:2026-10" → month. */
+const sectionIdOf = (key: string) => (key.split('/').at(-1) ?? key).split(':')[0] ?? key;
+
+/**
+ * The project with page numbering on every section and page that has none yet: from the
+ * project's own template, else from the bundled template of the same id. Planners created before
+ * numbering existed then print front matter in roman numerals and the crisis pages as S1, S2…
+ * like new ones.
+ */
+export function withNumbering(project: PlannerProject): PlannerProject {
+  const bundled = BUNDLED_TEMPLATES.find((b) => b.template.id === project.template.id)?.template;
+  const numbering = new Map<string, PageNumbering>();
+  const collect = (sections: readonly SectionTemplate[]) => {
+    for (const s of sections) {
+      if (s.numbering && !numbering.has(s.id)) numbering.set(s.id, s.numbering);
+      collect(s.children.filter((c): c is SectionTemplate => !('page' in c)));
+    }
+  };
+  collect(project.template.sections);
+  if (bundled) collect(bundled.sections);
+  if (numbering.size === 0) return project;
+
+  const annotate = (node: SectionNode): SectionNode => {
+    const found = node.numbering ?? numbering.get(sectionIdOf(node.key));
+    return {
+      ...node,
+      ...(found ? { numbering: found } : {}),
+      children: node.children.map((c) => (isPageInstance(c) ? c : annotate(c))),
+    };
+  };
+  const pageTemplates = Object.fromEntries(
+    Object.entries(project.template.pageTemplates).map(([id, page]) => [
+      id,
+      page.hidePageNumber === undefined && bundled?.pageTemplates[id]?.hidePageNumber
+        ? { ...page, hidePageNumber: true }
+        : page,
+    ]),
+  );
+  return {
+    ...project,
+    template: { ...project.template, pageTemplates },
+    document: { root: annotate(project.document.root) },
+  };
 }

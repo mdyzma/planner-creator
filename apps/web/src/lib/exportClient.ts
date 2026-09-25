@@ -2,7 +2,7 @@ import type { ExportPart, OutputFile } from '@planner/pdf';
 import { assemble, mergePdfs, planExport } from '@planner/pdf';
 import type { PlannerProject, PrintProfile } from '@planner/schema';
 import { PAGE_FORMATS } from '@planner/schema';
-import { withExampleContent } from './templates';
+import { withExampleContent, withNumbering } from './templates';
 
 /** The export service on the user's own computer (apps/export-node). */
 export const LOCAL_EXPORT_SERVICE = 'http://127.0.0.1:8787';
@@ -92,8 +92,10 @@ export async function exportPdf(
   request: ExportRequest,
   onProgress?: (done: number, total: number) => void,
 ): Promise<OutputFile[]> {
-  const plan = planExport(project, request);
-  const source = request.samples ? withExampleContent(project) : project;
+  // Numbering and examples come from the bundled template where the planner has none (older
+  // planners); the export service renders exactly this project.
+  const source = withNumbering(request.samples ? withExampleContent(project) : project);
+  const plan = planExport(source, request);
   const results: Uint8Array[] = new Array(plan.parts.length);
   let next = 0;
   let done = 0;
@@ -116,6 +118,7 @@ export async function exportPdf(
     title: project.meta.name,
     bleedMm: bleed,
     reverseBacks: request.reverseBacks,
+    pageLabels: plan.labels,
   });
 }
 

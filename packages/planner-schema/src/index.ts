@@ -8,6 +8,7 @@ export * from './page-template';
 export * from './content';
 export * from './print';
 export * from './generation';
+export * from './numbering';
 export * from './template';
 export * from './document';
 export * from './project';

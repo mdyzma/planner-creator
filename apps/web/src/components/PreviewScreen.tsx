@@ -13,7 +13,13 @@ import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { LazyVisible } from '@/components/LazyVisible';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
-import { FILLER_PATTERN, blockRegistry, layoutProject, type RenderedPage } from '@/lib/pages';
+import {
+  FILLER_PATTERN,
+  blockRegistry,
+  layoutProject,
+  shownLabel,
+  type RenderedPage,
+} from '@/lib/pages';
 import { withExampleContent } from '@/lib/templates';
 import { useProject } from '@/lib/useProject';
 
@@ -79,11 +85,11 @@ function Preview({
         showGuides={guides}
         samples={samples}
         printerSafeMargin={project.print.printerSafeMargin}
-        pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
-        label={t('pageLabel', { number: p.page.number, side: t(`side.${p.page.side}`) })}
+        pageNumber={project.print.pageNumbers && p.label.printed ? p.label.text : undefined}
+        label={t('pageLabel', { number: shownLabel(p), side: t(`side.${p.page.side}`) })}
       />
       <figcaption className="text-center text-ink-muted" style={{ fontSize: `${12 / zoom}px` }}>
-        {p.page.number} · {t(`side.${p.page.side}`)} · {caption(p)}
+        {shownLabel(p)} · {t(`side.${p.page.side}`)} · {caption(p)}
       </figcaption>
     </figure>
   );
@@ -204,7 +210,10 @@ function Preview({
                   <section
                     key={i}
                     aria-label={t('spreadLabel', {
-                      pages: [s.left?.number, s.right?.number].filter(Boolean).join('–'),
+                      pages: [left, right]
+                        .filter((x): x is RenderedPage => Boolean(x))
+                        .map(shownLabel)
+                        .join('–'),
                     })}
                     className="shadow-lg"
                   >

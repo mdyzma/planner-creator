@@ -154,7 +154,7 @@ function PrintPages({
             locale={project.locale}
             grammaticalGender={project.i18nOptions.grammaticalGender}
             mode="print"
-            pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
+            pageNumber={project.print.pageNumbers && p.label.printed ? p.label.text : undefined}
             samples={samples}
           />
         ))}

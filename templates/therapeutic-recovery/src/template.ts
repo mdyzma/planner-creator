@@ -36,6 +36,7 @@ function a5(
 const cover: PageTemplate = {
   id: 'cover',
   name: L('Cover', 'Strona tytułowa'),
+  hidePageNumber: true,
   body: stack(
     [
       block('top', 'spacer', {}, { height: fr(2) }),
@@ -734,6 +735,8 @@ const sections: SectionTemplate[] = [
     title: L('Introduction', 'Wprowadzenie'),
     startOn: 'right',
     sheetAligned: true,
+    // Front matter: i (the cover, not printed), ii, iii, iv; the first month starts at 1.
+    numbering: { style: 'roman' },
     children: [page('cover'), page('how-to'), page('contract'), page('safety-rules')],
   },
   {
@@ -770,6 +773,8 @@ const sections: SectionTemplate[] = [
     id: 'crisis',
     title: L('Crisis and relapse prevention', 'Kryzys i zapobieganie nawrotom'),
     sheetAligned: true,
+    // Its own sequence, S1, S2…: "the SOS plan is S1" is easy to find in a hurry.
+    numbering: { style: 'arabic', prefix: 'S', restart: true },
     // SOS first: the page needed fastest opens the section on a right-hand page.
     children: [
       page('sos'),

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Condition } from './condition';
+import { PageNumbering } from './numbering';
 import { FormatId } from './formats';
 import { GenerationConfig } from './generation';
 import { PageTemplate } from './page-template';
@@ -34,6 +35,7 @@ export interface SectionTemplate {
   optional?: boolean;
   /** `false` leaves the section out of generated planners (the designer's structure switch). */
   enabled?: boolean;
+  numbering?: PageNumbering;
   when?: Condition;
   children: Array<SectionTemplate | PageRef>;
 }
@@ -53,6 +55,7 @@ export const SectionTemplate: z.ZodType<SectionTemplate> = z.lazy(() =>
     sheetAligned: z.boolean().optional(),
     optional: z.boolean().optional(),
     enabled: z.boolean().optional(),
+    numbering: PageNumbering.optional(),
     when: Condition.optional(),
     children: z.array(z.union([PageRefSchema, SectionTemplate])),
   }),

@@ -182,6 +182,7 @@ export function generate(input: GenerateInput): GenerateResult {
         enabled: true,
         ...(section.startOn ? { startOn: section.startOn } : {}),
         ...(section.sheetAligned ? { sheetAligned: true } : {}),
+        ...(section.numbering ? { numbering: section.numbering } : {}),
         children,
       };
     });

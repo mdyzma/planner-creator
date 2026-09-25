@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { BlockPatch } from './block';
 import { Id, IsoDate, LocalizedText } from './primitives';
+import { PageNumbering } from './numbering';
 
 /** Where a generated page sits in time and structure; drives variables like {{dayName}}. */
 export const PageContext = z.object({
@@ -33,6 +34,8 @@ export interface SectionNode {
   startOn?: 'left' | 'right' | 'any';
   /** Start on a recto and end on a verso, so the section occupies whole sheets (§8.4). */
   sheetAligned?: boolean;
+  /** Page numbering, copied from the section template by the generator. */
+  numbering?: PageNumbering;
   children: Array<SectionNode | PageInstance>;
 }
 
@@ -43,6 +46,7 @@ export const SectionNode: z.ZodType<SectionNode> = z.lazy(() =>
     enabled: z.boolean(),
     startOn: z.enum(['left', 'right', 'any']).optional(),
     sheetAligned: z.boolean().optional(),
+    numbering: PageNumbering.optional(),
     children: z.array(z.union([PageInstance, SectionNode])),
   }),
 );

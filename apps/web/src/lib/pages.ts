@@ -1,14 +1,17 @@
 import { createDefaultRegistry } from '@planner/blocks';
 import type { PageFrame, PatchWarning, PhysicalPage } from '@planner/core';
+import type { PageLabel } from '@planner/core';
 import {
   listBlocks,
   padToForProfile,
+  pageLabels,
   paginate,
   resolveFrame,
   resolvePageTemplate,
 } from '@planner/core';
 import { pageVariables, plannerEndDate } from '@planner/i18n';
 import type { ContentItem, PageTemplate, PatternSpec, PlannerProject } from '@planner/schema';
+import { withNumbering } from './templates';
 
 /** All built-in block types; the renderer calls this for every block on every page. */
 export const blockRegistry = createDefaultRegistry();
@@ -20,6 +23,8 @@ export interface RenderedPage {
   template?: PageTemplate;
   /** Blocks left out on this page (hidden on the page or by a visibility rule). */
   hidden: string[];
+  /** Printed page number: "iv", "12", "S1" (the physical position is `page.number`). */
+  label: PageLabel;
   vars: Record<string, string>;
   contentFor: (blockId: string) => ContentItem | undefined;
 }
@@ -31,12 +36,14 @@ export const FILLER_PATTERN: PatternSpec = { kind: 'dots', pitch: 5, ink: 0.45 }
  * Paginates a project and prepares every page for rendering: physical frame, format-adjusted
  * template, page variables and assigned content.
  */
-export function layoutProject(project: PlannerProject) {
+export function layoutProject(input: PlannerProject) {
+  const project = withNumbering(input);
   const templates = project.template.pageTemplates;
   const { pages, warnings } = paginate(project.document.root, {
     templates,
     padTo: padToForProfile(project.print.profile),
   });
+  const labels = pageLabels(pages, project.document.root, templates);
 
   const items = new Map<string, ContentItem>();
   for (const library of project.content) for (const item of library.items) items.set(item.id, item);
@@ -76,7 +83,7 @@ export function layoutProject(project: PlannerProject) {
     return shared.get(key)!;
   };
 
-  const rendered: RenderedPage[] = pages.map((page) => {
+  const rendered: RenderedPage[] = pages.map((page, i) => {
     const instance = page.instance;
     const vars = pageVariables(project, instance?.context ?? {}, project.locale);
     const resolved = resolveFor(page, vars);
@@ -86,6 +93,7 @@ export function layoutProject(project: PlannerProject) {
       page,
       template,
       hidden: resolved?.hidden ?? [],
+      label: labels[i]!,
       frame: resolveFrame(project.format, project.print, page.side, template?.outerRailWidth),
       vars,
       contentFor: (blockId) => {
@@ -104,4 +112,20 @@ export function layoutProject(project: PlannerProject) {
     frameWarnings: rendered[0]?.frame.warnings ?? [],
     formatWarnings,
   };
+}
+
+/** A page's printed number for screens: "iv", "12", "S1", or "–" for unnumbered pages. */
+export const shownLabel = (p: RenderedPage) => p.label.text || '–';
+
+/**
+ * The page a typed number means: its printed label first ("iv", "S1", "12"), else its position
+ * in the file ("5" when no page is labelled 5).
+ */
+export function findPage(pages: readonly RenderedPage[], typed: string): number {
+  const wanted = typed.trim().toLowerCase();
+  if (!wanted) return -1;
+  const byLabel = pages.findIndex((p) => p.label.text.toLowerCase() === wanted);
+  if (byLabel >= 0) return byLabel;
+  const n = Number(wanted);
+  return Number.isInteger(n) && n >= 1 && n <= pages.length ? n - 1 : -1;
 }

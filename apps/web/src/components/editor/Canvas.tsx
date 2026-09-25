@@ -14,7 +14,7 @@ import type { PointerEvent as ReactPointerEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useEditor } from '@/lib/editorStore';
 import type { RenderedPage } from '@/lib/pages';
-import { FILLER_PATTERN, blockRegistry } from '@/lib/pages';
+import { FILLER_PATTERN, blockRegistry, findPage, shownLabel } from '@/lib/pages';
 import { turnPage } from './actions';
 import type { DragData } from './EditorScreen';
 import { currentPageIndex, useLayout } from './context';
@@ -56,16 +56,18 @@ export function Canvas() {
   const pageH = any.frame.trim.h + 2 * any.frame.bleed;
   const widthMm = RULER_MM + (shown.single ? pageW : 2 * pageW + 1);
   const heightMm = RULER_MM + pageH + 10;
-  const numbers = (shown.single ? [shown.single] : [shown.left, shown.right])
-    .filter((p): p is RenderedPage => Boolean(p))
-    .map((p) => p.page.number);
+  const visible = (shown.single ? [shown.single] : [shown.left, shown.right]).filter(
+    (p): p is RenderedPage => Boolean(p),
+  );
+  const labels = visible.map(shownLabel).join('–');
+  const positions = visible.map((p) => p.page.number).join('–');
   // "Fit" scales the spread to the canvas width (48 px of padding).
   const fit = available > 0 ? (available - 48) / (widthMm * PX_PER_MM) : 0.5;
   const zoom = chosenZoom === 'fit' ? Math.min(2, Math.max(0.2, fit)) : chosenZoom;
 
   return (
     <div className="flex h-full flex-col">
-      <PageNav numbers={numbers} total={layout.pages.length} />
+      <PageNav labels={labels} positions={positions} first={visible[0]?.label.text ?? ''} />
       <div
         ref={scroller}
         className="flex-1 overflow-auto bg-bg p-6"
@@ -105,19 +107,28 @@ const Blank = ({ widthMm }: { widthMm: number }) => (
   <div aria-hidden="true" style={{ width: `${widthMm}mm` }} />
 );
 
-function PageNav({ numbers, total }: { numbers: number[]; total: number }) {
+function PageNav({
+  labels,
+  positions,
+  first,
+}: {
+  labels: string;
+  positions: string;
+  first: string;
+}) {
   const t = useTranslations('Editor');
   const layout = useLayout();
   const select = useEditor((s) => s.select);
-  const [text, setText] = useState(String(numbers[0] ?? 1));
-  useEffect(() => setText(String(numbers[0] ?? 1)), [numbers]);
+  const [text, setText] = useState(first);
+  useEffect(() => setText(first), [first]);
 
+  // Printed numbers first ("iv", "S1", "12"), else the position in the file.
   const go = () => {
-    const n = Math.round(Number(text));
-    if (!Number.isFinite(n) || n < 1 || n > total) return;
+    const index = findPage(layout.pages, text);
+    if (index < 0) return;
     select({
-      pageIndex: n - 1,
-      pageKey: layout.pages[n - 1]?.page.instance?.key,
+      pageIndex: index,
+      pageKey: layout.pages[index]?.page.instance?.key,
       blockId: undefined,
     });
   };
@@ -130,13 +141,14 @@ function PageNav({ numbers, total }: { numbers: number[]; total: number }) {
       <button type="button" className={smallButton} onClick={() => turnPage(layout, -1)}>
         {t('previous')}
       </button>
-      <span>{t('showing', { pages: numbers.join('–'), total })}</span>
+      <span>
+        {t('showing', { pages: labels, position: positions, total: layout.pages.length })}
+      </span>
       <label className="flex items-center gap-1.5">
         {t('goTo')}
         <input
-          type="number"
-          min={1}
-          max={total}
+          type="text"
+          inputMode="text"
           className="w-20 rounded border border-line bg-surface px-2 py-0.5"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -212,15 +224,15 @@ function EditPage({ page }: { page: RenderedPage }) {
           mode="edit"
           showGuides={guides}
           printerSafeMargin={project.print.printerSafeMargin}
-          pageNumber={project.print.pageNumbers && !page.page.filler ? page.page.number : undefined}
-          label={t('pageLabel', { number: page.page.number, side: t(`side.${page.page.side}`) })}
+          pageNumber={project.print.pageNumbers && page.label.printed ? page.label.text : undefined}
+          label={t('pageLabel', { number: shownLabel(page), side: t(`side.${page.page.side}`) })}
         />
         {grid && <GridOverlay frame={page.frame} />}
       </div>
       <figcaption
         className={`mt-1 text-center text-[3mm] ${current ? 'font-semibold' : 'text-ink-muted'}`}
       >
-        {page.page.number} · {t(`side.${page.page.side}`)} · {caption}
+        {shownLabel(page)} · {t(`side.${page.page.side}`)} · {caption}
       </figcaption>
     </figure>
   );

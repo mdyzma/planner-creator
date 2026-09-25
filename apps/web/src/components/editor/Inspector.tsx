@@ -27,7 +27,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
 import { useId, useMemo } from 'react';
 import { useEditor } from '@/lib/editorStore';
-import { blockRegistry } from '@/lib/pages';
+import { blockRegistry, shownLabel } from '@/lib/pages';
 import { duplicateSelected, nudgeSelected, removeSelected } from './actions';
 import { useLayout, selectedBlock, currentPageIndex } from './context';
 import { Group, NumberInput, Origin, inputClass, smallButton } from './controls';
@@ -103,7 +103,7 @@ export function Inspector() {
         <p className="mt-1 text-xs text-ink-muted" data-scope-note>
           {scopeKind === 'page'
             ? t('appliesToPage', {
-                number: page.page.number,
+                number: shownLabel(page),
                 date: date ? formatDate(date, uiLocale, 'weekday-day-month') : templateName,
               })
             : t('appliesToTemplate', { count: usage[ref.templateId] ?? 0, name: templateName })}
@@ -264,7 +264,7 @@ function PageSummary() {
   return (
     <div className="flex flex-col gap-2 px-4 py-3 text-sm">
       <h2 className="font-medium">
-        {t('pageLabel', { number: page.page.number, side: t(`side.${page.page.side}`) })}
+        {t('pageLabel', { number: shownLabel(page), side: t(`side.${page.page.side}`) })}
       </h2>
       <p className="text-ink-muted">
         {page.template ? localize(page.template.name, uiLocale) : t('filler')}

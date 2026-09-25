@@ -78,4 +78,30 @@ describe('planExport', () => {
     expect(plan.pageCount).toBe(expected);
     expect(plan.pageCount % 2).toBe(0);
   });
+
+  it('labels pages like a book: roman front matter, months from 1, the crisis section S1…', () => {
+    const project = planner('A4');
+    const plan = planExport(project, { profile: 'home-duplex' });
+    const at = (key: string) => plan.sections.find((s) => s.key === key)!;
+    const text = (i: number) => plan.allLabels[i]!.text;
+    const intro = at('root/intro');
+    expect([intro.from, intro.to].map(text)).toEqual(['i', 'iv']);
+    expect(plan.allLabels[0]!.printed).toBe(false); // the cover
+    expect(text(at('month:2026-10').from)).toBe('1');
+    expect(text(at('month:2026-11').from)).toBe(String(Number(text(at('month:2026-10').to)) + 1));
+    expect(text(at('root/crisis').from)).toBe('S1');
+    expect(plan.labels).toHaveLength(plan.pageCount);
+  });
+
+  it('labels a single month as printed, with pads continuing the sequence', () => {
+    const plan = planExport(planner('A5'), {
+      profile: 'home-a5-2up',
+      sections: ['root/crisis'],
+    });
+    expect(plan.labels.map((l) => l.text).slice(0, 2)).toEqual(['S1', 'S2']);
+    expect(plan.labels).toHaveLength(plan.pageCount);
+    expect(
+      plan.labels.every((l, i) => i < plan.parts[0]!.to - plan.parts[0]!.from + 1 || !l.printed),
+    ).toBe(true);
+  });
 });

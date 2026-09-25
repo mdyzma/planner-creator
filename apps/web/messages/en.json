@@ -247,7 +247,7 @@
     "pageNav": "Pages",
     "previous": "← Previous",
     "next": "Next →",
-    "showing": "Pages {pages} of {total}",
+    "showing": "Pages {pages} · {position} of {total} in the file",
     "goTo": "Go to page",
     "shortcuts": "Ctrl+Z undo · Del delete · Ctrl+D duplicate · Alt+↑↓ move · PgUp/PgDn turn page",
     "filler": "Blank page (added for binding)",

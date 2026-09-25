@@ -107,6 +107,35 @@ describe('assemble', () => {
     ]);
   });
 
+  it('lists pages by their printed labels: i, ii, then 1, 2, then S1', async () => {
+    const source = await PDFDocument.load(await pages(6, 210, 297));
+    const label = (text: string, style: 'roman' | 'arabic', prefix: string, value: number) => ({
+      text,
+      style,
+      prefix,
+      value,
+      printed: true,
+    });
+    const [file] = await assemble(source, {
+      profile: 'home-duplex',
+      title: 'L',
+      date,
+      pageLabels: [
+        label('i', 'roman', '', 1),
+        label('ii', 'roman', '', 2),
+        label('1', 'arabic', '', 1),
+        label('2', 'arabic', '', 2),
+        label('S1', 'arabic', 'S', 1),
+        label('S2', 'arabic', 'S', 2),
+      ],
+    });
+    const out = await PDFDocument.load(file!.bytes);
+    const labels = out.catalog.lookup(PDFName.of('PageLabels'))?.toString() ?? '';
+    expect(labels.replace(/\s+/g, ' ')).toMatch(
+      /\/Nums \[ 0 <<.*\/S \/r.*>> 2 <<.*\/S \/D.*>> 4 <<.*\/P \(S\).*>> \]/s,
+    );
+  });
+
   it('marks trim and bleed boxes when there is bleed', async () => {
     const source = await PDFDocument.load(await pages(2, 216, 303));
     const [file] = await assemble(source, { profile: 'print-shop', title: 'B', bleedMm: 3, date });

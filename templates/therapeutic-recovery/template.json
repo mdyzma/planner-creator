@@ -64,6 +64,7 @@
         "en": "Cover",
         "pl": "Strona tytułowa"
       },
+      "hidePageNumber": true,
       "body": {
         "kind": "stack",
         "gap": 6,
@@ -2981,6 +2982,9 @@
       },
       "startOn": "right",
       "sheetAligned": true,
+      "numbering": {
+        "style": "roman"
+      },
       "children": [
         {
           "page": "cover"
@@ -3074,6 +3078,11 @@
         "pl": "Kryzys i zapobieganie nawrotom"
       },
       "sheetAligned": true,
+      "numbering": {
+        "style": "arabic",
+        "prefix": "S",
+        "restart": true
+      },
       "children": [
         {
           "page": "sos"

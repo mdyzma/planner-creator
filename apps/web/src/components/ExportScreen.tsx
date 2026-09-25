@@ -22,6 +22,7 @@ import {
   usesLocalExportService,
 } from '@/lib/exportClient';
 import { getProjectRepository } from '@/lib/repository';
+import { withNumbering } from '@/lib/templates';
 import { projectToJson, templateToJson } from '@/lib/transfer';
 import { useProject } from '@/lib/useProject';
 
@@ -89,10 +90,9 @@ function Export({
   }, [check]);
 
   // Sections that fill whole sheets can be printed on their own (all of them in this template).
-  const offered = useMemo(
-    () => planExport(project, { profile: 'home-duplex' }).sections.filter((s) => s.wholeSheets),
-    [project],
-  );
+  const numbered = useMemo(() => withNumbering(project), [project]);
+  const overview = useMemo(() => planExport(numbered, { profile: 'home-duplex' }), [numbered]);
+  const offered = overview.sections.filter((s) => s.wholeSheets);
   const selected = chosen ?? new Set(offered.map((s) => s.key));
   const everything = offered.every((s) => selected.has(s.key));
   const sections = everything
@@ -228,7 +228,10 @@ function Export({
                 />
                 {localize(s.title, project.locale) || s.key}
                 <span className="text-xs text-ink-muted">
-                  {t('pageRange', { from: s.from + 1, to: s.to + 1 })}
+                  {t('pageRange', {
+                    from: overview.allLabels[s.from]?.text || s.from + 1,
+                    to: overview.allLabels[s.to]?.text || s.to + 1,
+                  })}
                 </span>
               </label>
             ))}

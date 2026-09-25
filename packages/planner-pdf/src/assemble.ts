@@ -1,6 +1,7 @@
+import type { PageLabel } from '@planner/core';
 import type { PrintProfile } from '@planner/schema';
 import type { PDFPage } from 'pdf-lib';
-import { Duplex, PDFDocument, PrintScaling, grayscale } from 'pdf-lib';
+import { Duplex, PDFDocument, PDFName, PDFString, PrintScaling, grayscale } from 'pdf-lib';
 import { cutAndStack, manualDuplex } from './impose';
 
 /** Points per millimetre (PDF user space is 1/72 inch). */
@@ -23,8 +24,38 @@ export interface AssembleOptions {
   bleedMm?: number;
   /** Manual duplex: print the backs in reverse order (most home printers). */
   reverseBacks?: boolean;
+  /**
+   * Printed label of each page (i, ii, 1, 2, S1…), written as the PDF's page labels so viewers
+   * list pages by their printed numbers. Used for files in reading order only.
+   */
+  pageLabels?: readonly PageLabel[];
   /** Fixed dates keep output byte-stable in tests. */
   date?: Date;
+}
+
+/**
+ * Writes PDF page labels (ISO 32000 §12.4.2): one range per run of pages sharing a style and
+ * prefix with consecutive values.
+ */
+export function setPageLabels(doc: PDFDocument, labels: readonly PageLabel[]) {
+  const nums: unknown[] = [];
+  labels.forEach((label, i) => {
+    const prev = labels[i - 1];
+    const continues =
+      prev &&
+      prev.style === label.style &&
+      prev.prefix === label.prefix &&
+      (label.style === 'none' || prev.value + 1 === label.value);
+    if (continues) return;
+    const dict: Record<string, unknown> = {};
+    if (label.style === 'roman') dict.S = PDFName.of('r');
+    if (label.style === 'arabic') dict.S = PDFName.of('D');
+    if (label.prefix) dict.P = PDFString.of(label.prefix);
+    if (label.style !== 'none' && label.value !== 1) dict.St = label.value;
+    nums.push(i, doc.context.obj(dict as never));
+  });
+  if (nums.length === 0) return;
+  doc.catalog.set(PDFName.of('PageLabels'), doc.context.obj({ Nums: nums as never }));
 }
 
 /**
@@ -157,11 +188,18 @@ export async function assemble(
     return { suffix, bytes: await doc.save(), pageCount: doc.getPageCount() };
   };
 
+  const readingOrder = () => {
+    if (options.pageLabels?.length === source.getPageCount()) {
+      setPageLabels(source, options.pageLabels);
+    }
+    return source;
+  };
+
   switch (options.profile) {
     case 'home-duplex':
     case 'home-a5-native':
     case 'print-shop':
-      return [await save(source, '', Duplex.DuplexFlipLongEdge, options.title)];
+      return [await save(readingOrder(), '', Duplex.DuplexFlipLongEdge, options.title)];
     case 'home-manual-duplex': {
       const { fronts, backs } = manualDuplex(source.getPageCount(), options.reverseBacks ?? true);
       return [

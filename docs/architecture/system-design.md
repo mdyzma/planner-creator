@@ -750,6 +750,14 @@ Aids built into every home export:
   thin light lines away, lasers dither light greys. The daily page is test-printed on one inkjet and
   one laser each release (§15).
 
+**Page numbering** (as built): printed numbers follow book convention. Sections set a numbering
+style (`arabic` / `roman` / `none`, optional prefix, optional restart); unset sections follow their
+parent, and the planner defaults to arabic. The therapeutic template numbers the introduction in
+roman (the cover counts as i but prints nothing), the months from 1, and the crisis section S1, S2….
+Screens show these printed labels; the position in the file appears only where both matter (the
+designer's page navigation). Reading-order PDFs carry the labels as PDF page labels. Filler pages are
+counted in their section's sequence but never print a number.
+
 Duplex alignment on home printers is a few mm off at best. The mirrored binding margin (≥ 18 mm with
 rings) covers this, which is another reason the inner margin must never drop below the safe minimum.
 

@@ -27,6 +27,8 @@ export const PageTemplate = z.object({
   spread: z.object({ group: Id, position: Side }).optional(),
   background: PatternSpec.optional(),
   body: LayoutNode,
+  /** Counted but not printed, e.g. the cover (page i of the front matter). */
+  hidePageNumber: z.boolean().optional(),
   /** Blocks pinned to the side-aware outer margin rail. */
   outerRail: z.array(BlockInstance).optional(),
   /** Rail width for this page; overrides the print setting (e.g. ~28 mm on weekly pages). */

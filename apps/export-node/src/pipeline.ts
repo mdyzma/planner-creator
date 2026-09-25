@@ -48,6 +48,7 @@ export async function exportPlanner(
     title: project.meta.name,
     bleedMm: project.print.bleed,
     reverseBacks: options.reverseBacks,
+    pageLabels: plan.labels,
     date: options.date,
   });
 }

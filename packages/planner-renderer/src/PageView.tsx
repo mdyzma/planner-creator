@@ -20,7 +20,8 @@ export interface PageViewProps {
   mode: RenderMode;
   showGuides?: boolean;
   printerSafeMargin?: number;
-  pageNumber?: number;
+  /** Printed page label ("12", "iv", "S1"), in the outer bottom corner. */
+  pageNumber?: number | string;
   renderBlock?: BlockRenderer;
   /** The page's date context (from its page instance). */
   pageContext?: PageContext;

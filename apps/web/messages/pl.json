@@ -247,7 +247,7 @@
     "pageNav": "Strony",
     "previous": "← Poprzednie",
     "next": "Następne →",
-    "showing": "Strony {pages} z {total}",
+    "showing": "Strony {pages} · {position} z {total} w pliku",
     "goTo": "Przejdź do strony",
     "shortcuts": "Ctrl+Z cofnij · Del usuń · Ctrl+D powiel · Alt+↑↓ przenieś · PgUp/PgDn przewiń",
     "filler": "Pusta strona (dla oprawy)",

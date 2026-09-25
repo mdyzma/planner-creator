@@ -1,5 +1,5 @@
-import type { SectionRange } from '@planner/core';
-import { padToForProfile, paginate, sectionRanges } from '@planner/core';
+import type { PageLabel, SectionRange } from '@planner/core';
+import { padToForProfile, pageLabels, paginate, sectionRanges, toRoman } from '@planner/core';
 import type { PlannerProject, PrintProfile } from '@planner/schema';
 
 /** One PDF part the renderer produces: printed pages `from`…`to` (0-based) plus blank pads. */
@@ -16,6 +16,10 @@ export interface ExportPlan {
   pageCount: number;
   /** Every top-level section, for choosing "print one month". */
   sections: SectionRange[];
+  /** Printed label of each page of the output, in order (pads continue the last sequence). */
+  labels: PageLabel[];
+  /** Printed label of every page of the planner, by position. */
+  allLabels: PageLabel[];
 }
 
 /** Pages to add so `count` fills whole sheets for the profile (2, or 4 for 2-up). */
@@ -39,6 +43,7 @@ export function planExport(
     padTo: padToForProfile(project.print.profile),
   });
   const sections = sectionRanges(pages, project.document.root);
+  const allLabels = pageLabels(pages, project.document.root, project.template.pageTemplates);
 
   const wanted = options.sections ? new Set(options.sections) : undefined;
   if (wanted) {
@@ -58,5 +63,17 @@ export function planExport(
   const count = parts.reduce((n, p) => n + p.to - p.from + 1, 0);
   const padAfter = padFor(count, options.profile);
   if (parts.length > 0) parts[parts.length - 1]!.padAfter = padAfter;
-  return { parts, pageCount: count + padAfter, sections };
+  const labels = parts.flatMap((p) => allLabels.slice(p.from, p.to + 1));
+  const last = labels.at(-1);
+  for (let i = 1; i <= padAfter && last; i++) {
+    const value = last.value + i;
+    const number = last.style === 'roman' ? toRoman(value) : String(value);
+    labels.push({
+      ...last,
+      value,
+      text: last.style === 'none' ? '' : `${last.prefix}${number}`,
+      printed: false,
+    });
+  }
+  return { parts, pageCount: count + padAfter, sections, labels, allLabels };
 }
