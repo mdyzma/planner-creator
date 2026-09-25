@@ -53,7 +53,7 @@ The app's **Content** screen does the same per planner: edit, import/export CSV,
 |---|---|
 | Introduction (whole sheets) | cover · how to use · therapeutic contract · safety rules |
 | Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals, an if–then plan and what to watch out for in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, 24-hour commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: check-out and tick lists for triggers and protection in the outer column (A4), what was hard, dot-grid reflection, small victory, good life, gratitude) · end of each week: "My week" review spread with the optional situation analysis (off by default) · Wheel of Life · monthly review · notes |
-| Crisis and relapse prevention (whole sheets) | SOS plan · warning signs (body, thoughts, emotions, behaviours) · gains and losses · support network |
+| Crisis and relapse prevention (whole sheets) | plan for a hard moment (stop, SOBER, contacts, change the situation) · alarm thresholds for craving · emergency list and the craving wave · warning signs with a threshold · relapse chain · plan after a slip · gains and losses · support network · two craving cards |
 
 A5 uses the same pages with fewer lines where space runs out (`formatOverrides.A5`): one schedule
 line per hour, one sub-line per priority, a shorter HALT table and calendar.

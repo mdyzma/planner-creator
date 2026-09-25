@@ -1,4 +1,4 @@
-import { HALT_B_ROWS, SOS_STEPS } from '@planner/blocks';
+import { HALT_B_ROWS } from '@planner/blocks';
 import type {
   JsonPatchOp,
   LayoutNode,
@@ -141,8 +141,8 @@ const howTo: PageTemplate = {
       {
         variant: 'body',
         text: L(
-          'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.',
-          'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
+          'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.',
+          'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
         ),
       },
       { height: fr(3) },
@@ -1144,19 +1144,20 @@ const warningRight: PageTemplate = {
       },
       { height: fr(1) },
     ),
+    // My own threshold, then three steps: an early, concrete response.
     block(
-      'three-signs',
-      'writing-area',
+      'threshold',
+      'text',
       {
-        title: L(
-          'When I notice three of these signs, I will…',
-          'Gdy zauważę trzy z tych sygnałów, zrobię…',
+        text: L(
+          `When I notice ${NUM} of these signs, I will:`,
+          `Gdy zauważę ${NUM} z tych sygnałów, robię:`,
         ),
-        pattern: 'lines',
-        framed: true,
+        variant: 'subheading',
       },
-      { height: mmH(36) },
+      { height: mmH(8) },
     ),
+    block('three-signs', 'numbered-list', { count: 3 }, { height: mmH(28) }),
   ]),
 };
 
@@ -1209,49 +1210,490 @@ const supportNetwork: PageTemplate = {
         fields: [
           L('Name', 'Imię i nazwisko'),
           L('Phone', 'Telefon'),
-          L('Alternative phone', 'Telefon dodatkowy'),
+          L('When I can call', 'Kiedy mogę zadzwonić'),
           L('Notes', 'Uwagi'),
         ],
       },
       { height: fr(1) },
     ),
-  ]),
-};
-
-const sos: PageTemplate = {
-  id: 'sos',
-  name: L('SOS plan', 'Plan SOS'),
-  body: stack([
-    heading('heading', L('My SOS plan', 'Mój plan SOS')),
     block(
-      'steps',
-      'numbered-list',
-      { title: L('Five steps', 'Pięć kroków'), items: SOS_STEPS, count: 5, lineHeight: 10 },
-      { height: mmH(70) },
-    ),
-    block(
-      'strategy',
-      'writing-area',
-      {
-        title: L('My emergency coping strategy', 'Moja awaryjna strategia radzenia sobie'),
-        pattern: 'lines',
-        framed: true,
-      },
-      { height: fr(1) },
-    ),
-    block(
-      'places',
+      'isolate',
       'writing-area',
       {
         title: L(
-          'Safe places and meetings I can go to',
-          'Bezpieczne miejsca i mityngi, do których mogę pójść',
+          'When I feel like isolating, first I contact:',
+          'Gdy mam ochotę się izolować, najpierw kontaktuję się z:',
         ),
         pattern: 'lines',
+        framed: true,
       },
-      { height: mmH(40) },
+      { height: mmH(20) },
     ),
   ]),
+};
+
+/** A list of printed choices to tick. */
+const ticks = (
+  id: string,
+  title: ReturnType<typeof L> | undefined,
+  items: ReturnType<typeof L>[],
+  height: Length,
+) =>
+  block(
+    id,
+    'numbered-list',
+    { ...(title ? { title } : {}), marker: 'checkbox', items, count: items.length, lineHeight: 5 },
+    { height },
+  );
+
+const sos: PageTemplate = {
+  id: 'sos',
+  name: L('My plan for a hard moment', 'Mój plan na trudny moment'),
+  rationale: L(
+    'First in the crisis section, so it is found in a hurry: three steps for the next few minutes (stop, do not stay alone, change the situation), with the SOBER pause.',
+    'Na początku sekcji kryzysowej, żeby znaleźć go w pośpiechu: trzy kroki na najbliższe minuty (zatrzymaj się, nie zostawaj sam, zmień sytuację), z pauzą SOBER.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('My plan for a hard moment', 'Mój plan na trudny moment')),
+      caption(
+        'how',
+        L(
+          'When tension or craving is strong, I do not have to solve my whole life. First I take care of the next few minutes.',
+          'Kiedy jestem w silnym napięciu lub głodzie, nie muszę rozwiązywać całego życia. Najpierw mam zadbać o najbliższe minuty.',
+        ),
+        10,
+      ),
+      stack(
+        [
+          row([
+            ticks(
+              'feelings',
+              L('What is happening to me?', 'Co się ze mną dzieje?'),
+              [
+                L('craving', 'głód'),
+                L('tension', 'napięcie'),
+                L('anger', 'złość'),
+                L('loneliness', 'samotność'),
+                L('tiredness', 'zmęczenie'),
+                L('boredom', 'nuda'),
+                L('fear', 'lęk'),
+                L('hopelessness', 'beznadzieja'),
+                L('other:', 'inne:'),
+              ],
+              fr(1),
+            ),
+            // SOBER, from mindfulness-based relapse prevention: a pause between urge and action.
+            block(
+              'sober',
+              'numbered-list',
+              {
+                title: L('SOBER: a pause before I act', 'SOBER: pauza, zanim zareaguję'),
+                marker: 'none',
+                items: [
+                  L('S — Stop', 'S — Stop: zatrzymuję się'),
+                  L('O — Observe body, thoughts, feelings', 'O — zauważam ciało, myśli, emocje'),
+                  L('B — Breathe', 'B — oddycham'),
+                  L('E — Expand my attention', 'E — poszerzam uwagę'),
+                  L('R — Respond: choose what to do', 'R — świadomie wybieram, co zrobię'),
+                ],
+                count: 5,
+                lineHeight: 6,
+              },
+              { height: fr(1) },
+            ),
+          ]),
+        ],
+        { height: mmH(66), label: L('Step 1 — I stop', 'Krok 1 — Zatrzymuję się') },
+      ),
+      stack(
+        [
+          block(
+            'contacts',
+            'contact-table',
+            {
+              roles: [L('1.', '1.'), L('2.', '2.'), L('3.', '3.')],
+              fields: [L('Name', 'Imię'), L('Phone', 'Telefon')],
+            },
+            { height: fr(1) },
+          ),
+        ],
+        {
+          height: mmH(58),
+          label: L(
+            'Step 2 — I do not stay alone with it',
+            'Krok 2 — Nie zostaję z tym {g:sam|sama}',
+          ),
+        },
+      ),
+      stack(
+        [
+          ticks(
+            'change',
+            L('I can:', 'Mogę:'),
+            [
+              L('leave the place', 'wyjść z miejsca'),
+              L('remove access to alcohol / substances', 'usunąć dostęp do alkoholu / substancji'),
+              L('call someone', 'zadzwonić'),
+              L('go somewhere safe', 'pójść w bezpieczne miejsce'),
+              L('go to a meeting / group', 'pójść na mityng / grupę'),
+              L('stay with someone', 'zostać z kimś'),
+              L('other:', 'inne:'),
+            ],
+            mmH(46),
+          ),
+          writeLines(
+            'places',
+            L(
+              'Safe places and meetings I can go to:',
+              'Bezpieczne miejsca i mityngi, do których mogę pójść:',
+            ),
+            fr(1),
+          ),
+        ],
+        {
+          height: fr(1),
+          label: L('Step 3 — I change the situation', 'Krok 3 — Zmieniam sytuację'),
+        },
+      ),
+    ],
+    { gap: 4 },
+  ),
+};
+
+/**
+ * A5: one line per contact, shorter steps, and no safe places line, so the whole plan fits on
+ * one page. Body children: 0 heading, 1 caption, 2–4 steps 1–3.
+ */
+const sosPage = a5(sos, [
+  ['contacts', 'props/fields', [L('Name and phone', 'Imię i telefon')]],
+  { op: 'add', path: '/body/children/2/height', value: { mm: 61 } },
+  { op: 'add', path: '/body/children/3/height', value: { mm: 38 } },
+  { op: 'remove', path: '/body/children/4/children/1' },
+]);
+
+const cravingThresholds: PageTemplate = {
+  id: 'craving-thresholds',
+  name: L('How I respond to craving', 'Jak reaguję na głód'),
+  rationale: L(
+    'A personal alarm threshold: the stronger the craving, the less is decided alone. Written in a calm moment, used in a hard one.',
+    'Osobisty próg alarmowy: im silniejszy głód, tym mniej decyzji podejmuję sam. Pisany w spokojnej chwili, używany w trudnej.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('How do I respond to craving?', 'Jak reaguję na głód?')),
+      caption(
+        'how',
+        L(
+          'My alarm threshold. Fill it in on a calm day, ideally with your therapist or sponsor.',
+          'Mój próg alarmowy. Wypełnij go w spokojny dzień, najlepiej z terapeutą lub sponsorem.',
+        ),
+      ),
+      writeLines(
+        'low',
+        L('0–3 · On my own I can use:', '0–3 · Mogę samodzielnie zastosować:'),
+        fr(1),
+      ),
+      writeLines(
+        'mid',
+        L('4–6 · I contact … and I do:', '4–6 · Kontaktuję się z … i robię:'),
+        fr(1),
+      ),
+      writeLines(
+        'high',
+        L(
+          '7–8 · I make no decision alone. Who and where:',
+          '7–8 · Nie podejmuję decyzji {g:sam|sama}. Kontakt i miejsce:',
+        ),
+        fr(1),
+      ),
+      writeLines(
+        'top',
+        L(
+          '9–10 · I do not stay alone. I contact … and go to:',
+          '9–10 · Nie zostaję {g:sam|sama}. Kontaktuję się z … i idę do:',
+        ),
+        fr(1),
+      ),
+      block(
+        'negotiate',
+        'text',
+        {
+          text: L(
+            `When I start bargaining with myself: I make no decision for ${NUM} minutes, and first I call ${BLANK}.`,
+            `Gdy zaczynam negocjować {g:sam|sama} ze sobą: nie podejmuję decyzji przez ${NUM} minut, najpierw dzwonię do ${BLANK}.`,
+          ),
+          variant: 'subheading',
+        },
+        { height: mmH(16) },
+      ),
+    ],
+    { gap: 4 },
+  ),
+};
+
+const emergencyList: PageTemplate = {
+  id: 'emergency-list',
+  name: L('When I do not know what to do', 'Kiedy nie wiem, co zrobić'),
+  rationale: L(
+    'A ready list for the moment when nothing comes to mind, and the craving wave (urge surfing): a craving rises, peaks and falls.',
+    'Gotowa lista na chwilę, gdy nic nie przychodzi do głowy, oraz fala głodu (urge surfing): głód narasta, osiąga szczyt i opada.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('When I do not know what to do', 'Kiedy nie wiem, co zrobić')),
+      caption('how', L('First I choose one thing.', 'Najpierw wybieram jedną rzecz.')),
+      row(
+        [
+          ticks(
+            'first',
+            undefined,
+            [
+              L('water / a meal', 'woda / posiłek'),
+              L('a shower', 'prysznic'),
+              L('a walk / exercise', 'spacer / ruch'),
+              L('a change of place', 'zmiana miejsca'),
+              L('a phone call', 'telefon'),
+              L('meeting someone', 'spotkanie z kimś'),
+              L('a meeting / group', 'mityng / grupa'),
+            ],
+            fr(1),
+          ),
+          ticks(
+            'more',
+            undefined,
+            [
+              L('breathing', 'oddech'),
+              L('music', 'muzyka'),
+              L('sleep / rest', 'sen / odpoczynek'),
+              L('writing my thoughts down', 'zapisanie myśli'),
+              L('talking to my therapist', 'rozmowa z terapeutą'),
+              L('other:', 'inne:'),
+            ],
+            fr(1),
+          ),
+        ],
+        { height: mmH(46) },
+      ),
+      block(
+        'best',
+        'numbered-list',
+        {
+          title: L('My three most effective strategies', 'Moje trzy najskuteczniejsze strategie'),
+          count: 3,
+        },
+        { height: mmH(32) },
+      ),
+      stack(
+        [
+          block(
+            'wave',
+            'text',
+            {
+              text: L(
+                'It rises → it peaks → it falls.\nI do not have to fight it. I do not have to act on it. I can watch it until it passes.',
+                'Narasta → osiąga szczyt → opada.\nNie muszę z nim walczyć. Nie muszę go realizować. Mogę go obserwować, aż przejdzie.',
+              ),
+              variant: 'body',
+            },
+            { height: mmH(14) },
+          ),
+          writeLines(
+            'where',
+            L('Where do I feel the craving in my body?', 'Gdzie czuję głód w ciele?'),
+            mmH(20),
+          ),
+          block(
+            'strength',
+            'text',
+            {
+              text: L(
+                `How does its strength change? ${NUM} → ${NUM} → ${NUM} → ${NUM} /10`,
+                `Jak zmienia się jego siła? ${NUM} → ${NUM} → ${NUM} → ${NUM} /10`,
+              ),
+              variant: 'body',
+            },
+            { height: mmH(8) },
+          ),
+          writeLines(
+            'ride-out',
+            L('What helps me ride out the wave?', 'Co pomaga mi przeczekać falę?'),
+            fr(1),
+          ),
+        ],
+        { height: fr(1), label: L('A craving is a wave', 'Głód jest falą'), gap: 3 },
+      ),
+    ],
+    { gap: 4 },
+  ),
+};
+
+const relapseChain: PageTemplate = {
+  id: 'relapse-chain',
+  name: L('My relapse chain', 'Mój łańcuch nawrotu'),
+  rationale: L(
+    'Relapse usually starts long before using, as a chain of small changes. Knowing one’s own chain shows the earliest place to break it.',
+    'Nawrót zwykle zaczyna się długo przed użyciem, jako łańcuch drobnych zmian. Znajomość własnego łańcucha pokazuje, gdzie najwcześniej go przerwać.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('My relapse chain', 'Mój łańcuch nawrotu')),
+      caption(
+        'how',
+        L(
+          'How does trouble usually start for me? Write your own typical sequence, step by step.',
+          'Jak zwykle zaczyna się u mnie problem? Zapisz swój typowy przebieg, krok po kroku.',
+        ),
+      ),
+      writeLines('first', L('1. First I start…', '1. Najpierw zaczynam…'), fr(1)),
+      writeLines('think', L('↓ 2. Then I start thinking…', '↓ 2. Potem zaczynam myśleć…'), fr(1)),
+      writeLines('neglect', L('↓ 3. Next I neglect…', '↓ 3. Następnie zaniedbuję…'), fr(1)),
+      writeLines('pull-away', L('↓ 4. I pull away from…', '↓ 4. Odsuwam się od…'), fr(1)),
+      writeLines(
+        'tell-myself',
+        L('↓ 5. I start telling myself…', '↓ 5. Zaczynam sobie tłumaczyć…'),
+        fr(1),
+      ),
+      writeLines('risk', L('↓ 6. The risk grows when…', '↓ 6. Ryzyko rośnie, gdy…'), fr(1)),
+      block(
+        'break',
+        'writing-area',
+        {
+          title: L(
+            'The earliest I can break this chain is here:',
+            'Najwcześniej mogę przerwać ten łańcuch tutaj:',
+          ),
+          pattern: 'lines',
+          framed: true,
+        },
+        { height: fr(1) },
+      ),
+      writeLines('then', L('Then I will:', 'Wtedy zrobię:'), fr(1)),
+    ],
+    { gap: 3 },
+  ),
+};
+
+const afterSlip: PageTemplate = {
+  id: 'after-slip',
+  name: L('If I slipped', 'Jeśli doszło do potknięcia'),
+  rationale: L(
+    'A plan for after a slip, without the language of failure: recovery is a process, and the next hour matters more than counting lost days.',
+    'Plan na czas po potknięciu, bez języka porażki: zdrowienie jest procesem, a najbliższa godzina jest ważniejsza niż liczenie straconych dni.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('If I slipped', 'Jeśli doszło do potknięcia')),
+      caption(
+        'how',
+        L(
+          'One event does not have to decide what I do next.',
+          'Jedno zdarzenie nie musi decydować o tym, co zrobię dalej.',
+        ),
+      ),
+      writeLines('what', L('What happened?', 'Co się wydarzyło?'), fr(1)),
+      writeLines('before', L('What was happening before?', 'Co działo się wcześniej?'), fr(1)),
+      writeLines(
+        'risk-now',
+        L('What now raises the risk of using more?', 'Co teraz zwiększa ryzyko dalszego używania?'),
+        fr(1),
+      ),
+      writeLines(
+        'next-hour',
+        L('What will I do in the next hour?', 'Co zrobię w ciągu najbliższej godziny?'),
+        fr(1),
+      ),
+      writeLines('contact', L('Who will I contact?', 'Z kim się skontaktuję?'), fr(1)),
+      writeLines(
+        'safety',
+        L('How will I keep myself safe?', 'Jak zadbam o bezpieczeństwo?'),
+        fr(1),
+      ),
+      writeLines('learn', L('What can I learn from it?', 'Czego mogę się nauczyć?'), fr(1)),
+      block(
+        'next-step',
+        'writing-area',
+        {
+          title: L('What is my next small step?', 'Jaki jest mój następny mały krok?'),
+          pattern: 'lines',
+          framed: true,
+        },
+        { height: fr(1) },
+      ),
+    ],
+    { gap: 3 },
+  ),
+};
+
+const cravingCard: PageTemplate = {
+  id: 'craving-card',
+  name: L('Craving card', 'Karta głodu'),
+  rationale: L(
+    'For a strong craving (e.g. 4 or more): a record of the moment, how the craving changed over twenty minutes, and what worked. Over time the cards show patterns.',
+    'Na silny głód (np. 4 i więcej): zapis chwili, jak głód zmieniał się przez dwadzieścia minut i co zadziałało. Z czasem karty pokazują wzorce.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('When a craving comes', 'Kiedy pojawia się głód')),
+      block(
+        'when',
+        'text',
+        {
+          text: L(`Date ${BLANK} · time ${NUM}`, `Data ${BLANK} · godzina ${NUM}`),
+          variant: 'body',
+        },
+        { height: mmH(8) },
+      ),
+      writeLines('where', L('Where am I?', 'Gdzie jestem?'), fr(1)),
+      writeLines('happened', L('What has just happened?', 'Co właśnie się wydarzyło?'), fr(1)),
+      row(
+        [
+          ticks(
+            'feel',
+            L('What do I feel?', 'Co czuję?'),
+            [
+              L('tension', 'napięcie'),
+              L('anger', 'złość'),
+              L('sadness', 'smutek'),
+              L('loneliness', 'samotność'),
+              L('fear', 'lęk'),
+              L('frustration', 'frustrację'),
+              L('boredom', 'nudę'),
+              L('euphoria', 'euforię'),
+              L('tiredness', 'zmęczenie'),
+              L('other:', 'inne:'),
+            ],
+            fr(1),
+          ),
+          block(
+            'strength',
+            'text',
+            {
+              text: L(
+                `Craving\nat the start ${NUM} /10\nafter 10 minutes ${NUM} /10\nafter 20 minutes ${NUM} /10`,
+                `Głód\nna początku ${NUM} /10\npo 10 minutach ${NUM} /10\npo 20 minutach ${NUM} /10`,
+              ),
+              variant: 'body',
+            },
+            { height: fr(1) },
+          ),
+        ],
+        { height: mmH(62) },
+      ),
+      writeLines(
+        'instead',
+        L('What did I do instead of using?', 'Co {g:zrobiłem|zrobiłam} zamiast użycia?'),
+        fr(1),
+      ),
+      writeLines('worked', L('What worked?', 'Co zadziałało?'), fr(1)),
+      writeLines(
+        'learned',
+        L('What did I learn about myself?', 'Czego {g:dowiedziałem|dowiedziałam} się o sobie?'),
+        fr(1),
+      ),
+    ],
+    { gap: 3 },
+  ),
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -1307,15 +1749,22 @@ const sections: SectionTemplate[] = [
     id: 'crisis',
     title: L('Crisis and relapse prevention', 'Kryzys i zapobieganie nawrotom'),
     sheetAligned: true,
-    // Its own sequence, S1, S2…: "the SOS plan is S1" is easy to find in a hurry.
+    // Its own sequence, S1, S2…: "the plan for a hard moment is S1" is easy to find in a hurry.
     numbering: { style: 'arabic', prefix: 'S', restart: true },
-    // SOS first: the page needed fastest opens the section on a right-hand page.
+    // The plan for a hard moment first: the page needed fastest opens the section on a
+    // right-hand page. The order keeps the warning signs spread facing, with no blank pages.
     children: [
       page('sos'),
+      page('craving-thresholds'),
+      page('emergency-list'),
       page('warning-signs-left'),
       page('warning-signs-right'),
+      page('relapse-chain'),
+      page('after-slip'),
       page('gains-losses'),
       page('support-network'),
+      page('craving-card'),
+      page('craving-card'),
     ],
   },
 ];
@@ -1341,7 +1790,12 @@ const pageTemplates = [
   warningRight,
   gainsLosses,
   supportNetwork,
-  sos,
+  sosPage,
+  cravingThresholds,
+  emergencyList,
+  relapseChain,
+  afterSlip,
+  cravingCard,
 ];
 
 export const therapeuticRecoveryTemplate: PlannerTemplate = {

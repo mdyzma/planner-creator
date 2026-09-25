@@ -428,12 +428,17 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         L('skipping meetings\nlate nights', 'opuszczanie mityngów\npóźne noce'),
       ],
     },
+    threshold: { fill: ['3'] },
     'three-signs': {
-      fill: L(
-        'I call Tomek and go to a meeting the same day.',
-        'Dzwonię do Tomka i idę na mityng tego samego dnia.',
-      ),
+      fill: {
+        items: [
+          L('call Tomek the same day', 'dzwonię do Tomka tego samego dnia'),
+          L('go to a meeting', 'idę na mityng'),
+          L('tell my therapist', 'mówię o tym terapeutce'),
+        ],
+      },
       note: L('agree this plan with your therapist', 'uzgodnij ten plan z terapeutą'),
+      noteAt: 'bottom-right',
     },
   },
   'gains-losses': {
@@ -451,31 +456,110 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
   'support-network': {
     contacts: {
       fill: [
-        ['Tomek', '600 100 200', '', L('any time', 'o każdej porze')],
-        ['Anna Nowak', '600 300 400', '', L('Tue 17:00', 'wt 17:00')],
-        ['Piotr', '600 500 600'],
-        [L('sister Kasia', 'siostra Kasia'), '600 700 800'],
-        ['dr Lis', '600 900 100', '', L('clinic', 'przychodnia')],
+        ['Tomek', '600 100 200', L('any time', 'o każdej porze')],
+        ['Anna Nowak', '600 300 400', L('weekdays until 17:00', 'w tygodniu do 17:00')],
+        ['Piotr', '600 500 600', L('evenings', 'wieczorem')],
+        [L('sister Kasia', 'siostra Kasia'), '600 700 800', L('any time', 'o każdej porze')],
+        ['dr Lis', '600 900 100', L('surgery hours', 'godziny przychodni')],
         [L('Ola', 'Ola'), '600 200 300'],
       ],
       note: L('fake numbers: write your own', 'numery przykładowe: wpisz swoje'),
     },
+    isolate: { fill: L('Tomek, even with a text message', 'Tomek, choćby SMS-em') },
   },
   sos: {
-    steps: {
-      note: L('read aloud when the craving comes', 'przeczytaj na głos, gdy przyjdzie głód'),
+    feelings: { fill: { done: [0, 1] } },
+    sober: {
+      note: L('aloud, slowly', 'na głos, powoli'),
+      noteAt: 'bottom-right',
     },
-    strategy: {
-      fill: L(
-        'Leave, walk for 20 minutes, cold water,\ncall Tomek, then a meeting.',
-        'Wyjść, 20 minut spaceru, zimna woda,\ntelefon do Tomka, potem mityng.',
-      ),
+    contacts: {
+      fill: [
+        ['Tomek', '600 100 200'],
+        ['Anna', '600 300 400'],
+        [L('sister Kasia', 'siostra Kasia'), '600 700 800'],
+      ],
+      note: L('fake numbers: write your own', 'numery przykładowe: wpisz swoje'),
     },
+    change: { fill: { done: [0, 2, 4] } },
     places: {
       fill: L(
-        'Thursday group, parish hall 18:30\nOnline meeting 21:00',
-        'Grupa czwartkowa, salka 18:30\nMityng online 21:00',
+        'Thursday group, parish hall 18:30; online meeting 21:00',
+        'grupa czwartkowa, salka 18:30; mityng online 21:00',
       ),
+    },
+  },
+  'craving-thresholds': {
+    low: { fill: L('walk, cold water, breathing', 'spacer, zimna woda, oddech') },
+    mid: { fill: L('Tomek; I leave the house', 'Tomek; wychodzę z domu') },
+    high: { fill: L('Anna; the Thursday group', 'Anna; grupa czwartkowa') },
+    top: { fill: L('Tomek; I stay at my sister’s', 'Tomek; zostaję u siostry') },
+    negotiate: {
+      fill: ['20', L('Tomek', 'Tomka')],
+      note: L('bargaining is a warning sign', 'negocjowanie to sygnał ostrzegawczy'),
+      noteAt: 'bottom-right',
+    },
+  },
+  'emergency-list': {
+    first: { fill: { done: [2, 4] } },
+    more: { fill: { done: [0] } },
+    best: {
+      fill: {
+        items: [
+          L('a walk, 20 minutes', 'spacer, 20 minut'),
+          L('calling Tomek', 'telefon do Tomka'),
+          L('a meeting the same day', 'mityng tego samego dnia'),
+        ],
+      },
+    },
+    where: { fill: L('tight stomach, dry mouth', 'ścisk w żołądku, suchość w ustach') },
+    'ride-out': {
+      fill: L('cold water, a walk, counting breaths', 'zimna woda, spacer, liczenie oddechów'),
+    },
+    strength: {
+      fill: ['7', '8', '5', '3'],
+      note: L('it passes', 'to mija'),
+      noteAt: 'bottom-right',
+    },
+  },
+  'relapse-chain': {
+    first: { fill: L('sleeping less, skipping meals', 'mniej spać, pomijać posiłki') },
+    think: { fill: L('I can handle it myself', 'poradzę sobie sam') },
+    neglect: { fill: L('meetings and the planner', 'mityngi i planer') },
+    'pull-away': { fill: L('Tomek and my family', 'Tomka i rodziny') },
+    'tell-myself': { fill: L('one beer will not hurt', 'jedno piwo nie zaszkodzi') },
+    risk: { fill: L('I am alone on a Friday evening', 'jestem sam w piątek wieczorem') },
+    break: {
+      fill: L('at step 1: when I sleep less', 'przy kroku 1: gdy mniej śpię'),
+      note: L('the earlier, the easier', 'im wcześniej, tym łatwiej'),
+      noteAt: 'bottom-right',
+    },
+    then: { fill: L('call Tomek, go to bed by 23:00', 'telefon do Tomka, sen przed 23:00') },
+  },
+  'after-slip': {
+    'next-hour': {
+      fill: L('stop, pour it out, call Tomek', 'przerwać, wylać, zadzwonić do Tomka'),
+      note: L('the next hour matters most', 'najważniejsza jest najbliższa godzina'),
+      noteAt: 'bottom-right',
+    },
+    contact: { fill: L('Tomek, then my therapist', 'Tomek, potem terapeutka') },
+  },
+  'craving-card': {
+    when: { fill: ['14.10', '18:40'] },
+    where: { fill: L('at home, after work', 'w domu, po pracy') },
+    happened: { fill: L('an argument on the phone', 'kłótnia przez telefon') },
+    feel: { fill: { done: [0, 1] } },
+    strength: {
+      fill: ['8', '6', '3'],
+      note: L('write it down every 10 minutes', 'zapisuj co 10 minut'),
+      noteAt: 'bottom-right',
+    },
+    instead: {
+      fill: L('went out for a walk, called Tomek', 'wyszedłem na spacer, telefon do Tomka'),
+    },
+    worked: { fill: L('leaving the flat straight away', 'wyjście z mieszkania od razu') },
+    learned: {
+      fill: L('phone arguments are my trigger', 'kłótnie przez telefon to mój wyzwalacz'),
     },
   },
 };
@@ -551,19 +635,39 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Wydrukowane przykłady są podpowiedzią; wpisz własne sygnały, własnymi słowami.',
   ),
   'warning-signs-right': L(
-    'Emotions and behaviours, and the most important line: what you will do as soon as you notice three of these signs. Agree it with your therapist.',
-    'Emocje i zachowania oraz najważniejsza linia: co zrobisz, gdy zauważysz trzy z tych sygnałów. Uzgodnij to z terapeutą.',
+    'Emotions and behaviours, and the most important part: your own threshold (how many signs) and three things you will do as soon as you reach it. Agree it with your therapist.',
+    'Emocje i zachowania oraz najważniejsza część: Twój próg (ile sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą.',
   ),
   'gains-losses': L(
     'The decisional balance: honest gains and losses of drinking or using, and of sobriety. Both sides matter; the hard parts of sobriety are worth naming too.',
     'Bilans decyzyjny: szczere zyski i straty z picia lub używania oraz z trzeźwości. Obie strony są ważne; trudności trzeźwości też warto nazwać.',
   ),
   'support-network': L(
-    'The people you can call: sponsor, therapist, friends, family, doctor. Write numbers you actually use; the planner never prints emergency numbers for you.',
-    'Osoby, do których możesz zadzwonić: sponsor, terapeuta, przyjaciele, rodzina, lekarz. Wpisz numery, z których naprawdę korzystasz; planer nigdy nie drukuje za Ciebie numerów alarmowych.',
+    'The people you can call: sponsor, therapist, friends, family, doctor, and when you can call each of them. Write numbers you actually use; the planner never prints emergency numbers for you. At the bottom: who you contact first when you feel like isolating.',
+    'Osoby, do których możesz zadzwonić: sponsor, terapeuta, przyjaciele, rodzina, lekarz, i kiedy możesz do każdej zadzwonić. Wpisz numery, z których naprawdę korzystasz; planer nigdy nie drukuje za Ciebie numerów alarmowych. Na dole: z kim kontaktujesz się najpierw, gdy masz ochotę się izolować.',
   ),
   sos: L(
-    'The SOS plan, placed first in the crisis section so it is quick to find. Read the five steps aloud when a craving comes, and write your own emergency strategy and safe places.',
-    'Plan SOS, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Przeczytaj pięć kroków na głos, gdy pojawi się głód, i wpisz własną strategię awaryjną oraz bezpieczne miejsca.',
+    'Your plan for a hard moment, first in the crisis section so it is quick to find. Step 1: stop and tick what is happening, then take the SOBER pause. Step 2: three people you can call. Step 3: tick how you can change the situation. Fill it in on a calm day.',
+    'Twój plan na trudny moment, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Krok 1: zatrzymaj się i zaznacz, co się dzieje, potem zrób pauzę SOBER. Krok 2: trzy osoby, do których możesz zadzwonić. Krok 3: zaznacz, jak możesz zmienić sytuację. Wypełnij go w spokojny dzień.',
+  ),
+  'craving-thresholds': L(
+    'Your personal alarm threshold: what you do on your own at 0–3, whom you contact at 4–6, and when you do not decide or stay alone (7–10). The last line is for the moment you start bargaining with yourself.',
+    'Twój osobisty próg alarmowy: co robisz {g:sam|sama} przy 0–3, z kim się kontaktujesz przy 4–6 i kiedy nie decydujesz ani nie zostajesz {g:sam|sama} (7–10). Ostatnia linia jest na chwilę, gdy zaczynasz negocjować ze sobą.',
+  ),
+  'emergency-list': L(
+    'When nothing comes to mind: tick what usually helps you and pick one thing first. Write your three most effective strategies. The wave reminds you that a craving rises, peaks and falls; note where you feel it and how its strength changes.',
+    'Gdy nic nie przychodzi do głowy: zaznacz, co zwykle Ci pomaga, i wybierz najpierw jedną rzecz. Wpisz trzy najskuteczniejsze strategie. Fala przypomina, że głód narasta, osiąga szczyt i opada; zapisz, gdzie go czujesz i jak zmienia się jego siła.',
+  ),
+  'relapse-chain': L(
+    'How trouble usually starts for you, as a chain: what you start doing, thinking, neglecting, whom you pull away from, what you tell yourself, when the risk grows. Then mark the earliest link where you can break the chain, and what you will do there.',
+    'Jak zwykle zaczyna się u Ciebie problem, jako łańcuch: co zaczynasz robić, myśleć, zaniedbywać, od kogo się odsuwasz, co sobie tłumaczysz, kiedy rośnie ryzyko. Potem zaznacz najwcześniejsze ogniwo, w którym możesz przerwać łańcuch, i co wtedy zrobisz.',
+  ),
+  'after-slip': L(
+    'If you drank or used: this page is for what comes next, not for blame. Answer the questions, above all what you will do in the next hour and whom you will contact. There is no line for "days lost".',
+    'Jeśli doszło do picia lub użycia: ta strona jest o tym, co dalej, a nie o winie. Odpowiedz na pytania, przede wszystkim co zrobisz w najbliższej godzinie i z kim się skontaktujesz. Nie ma tu rubryki „ile dni {g:straciłem|straciłam}”.',
+  ),
+  'craving-card': L(
+    'Two cards for a strong craving (for example 4 or more). Note when and where it came and what had just happened, tick what you feel, and write the craving at the start and after 10 and 20 minutes. Then what you did instead, what worked and what you learned.',
+    'Dwie karty na silny głód (na przykład 4 i więcej). Zapisz, kiedy i gdzie się pojawił i co się właśnie wydarzyło, zaznacz, co czujesz, i wpisz siłę głodu na początku oraz po 10 i 20 minutach. Potem co {g:zrobiłeś|zrobiłaś} zamiast tego, co zadziałało i czego się {g:dowiedziałeś|dowiedziałaś}.',
   ),
 };

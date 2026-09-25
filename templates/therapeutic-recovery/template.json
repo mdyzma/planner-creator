@@ -255,8 +255,8 @@
               "props": {
                 "variant": "body",
                 "text": {
-                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
                 }
               },
               "size": {
@@ -4214,19 +4214,33 @@
           {
             "kind": "block",
             "block": {
-              "id": "three-signs",
-              "type": "writing-area",
+              "id": "threshold",
+              "type": "text",
               "props": {
-                "title": {
-                  "en": "When I notice three of these signs, I will…",
-                  "pl": "Gdy zauważę trzy z tych sygnałów, zrobię…"
+                "text": {
+                  "en": "When I notice _____ of these signs, I will:",
+                  "pl": "Gdy zauważę _____ z tych sygnałów, robię:"
                 },
-                "pattern": "lines",
-                "framed": true
+                "variant": "subheading"
               },
               "size": {
                 "height": {
-                  "mm": 36
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "three-signs",
+              "type": "numbered-list",
+              "props": {
+                "count": 3
+              },
+              "size": {
+                "height": {
+                  "mm": 28
                 }
               }
             }
@@ -4234,8 +4248,8 @@
         ]
       },
       "guide": {
-        "en": "Emotions and behaviours, and the most important line: what you will do as soon as you notice three of these signs. Agree it with your therapist.",
-        "pl": "Emocje i zachowania oraz najważniejsza linia: co zrobisz, gdy zauważysz trzy z tych sygnałów. Uzgodnij to z terapeutą."
+        "en": "Emotions and behaviours, and the most important part: your own threshold (how many signs) and three things you will do as soon as you reach it. Agree it with your therapist.",
+        "pl": "Emocje i zachowania oraz najważniejsza część: Twój próg (ile sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą."
       },
       "sampleContent": {
         "grid": {
@@ -4250,15 +4264,33 @@
             }
           ]
         },
+        "threshold": {
+          "fill": [
+            "3"
+          ]
+        },
         "three-signs": {
           "fill": {
-            "en": "I call Tomek and go to a meeting the same day.",
-            "pl": "Dzwonię do Tomka i idę na mityng tego samego dnia."
+            "items": [
+              {
+                "en": "call Tomek the same day",
+                "pl": "dzwonię do Tomka tego samego dnia"
+              },
+              {
+                "en": "go to a meeting",
+                "pl": "idę na mityng"
+              },
+              {
+                "en": "tell my therapist",
+                "pl": "mówię o tym terapeutce"
+              }
+            ]
           },
           "note": {
             "en": "agree this plan with your therapist",
             "pl": "uzgodnij ten plan z terapeutą"
-          }
+          },
+          "noteAt": "bottom-right"
         }
       }
     },
@@ -4445,8 +4477,8 @@
                     "pl": "Telefon"
                   },
                   {
-                    "en": "Alternative phone",
-                    "pl": "Telefon dodatkowy"
+                    "en": "When I can call",
+                    "pl": "Kiedy mogę zadzwonić"
                   },
                   {
                     "en": "Notes",
@@ -4460,12 +4492,32 @@
                 }
               }
             }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "isolate",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I feel like isolating, first I contact:",
+                  "pl": "Gdy mam ochotę się izolować, najpierw kontaktuję się z:"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 20
+                }
+              }
+            }
           }
         ]
       },
       "guide": {
-        "en": "The people you can call: sponsor, therapist, friends, family, doctor. Write numbers you actually use; the planner never prints emergency numbers for you.",
-        "pl": "Osoby, do których możesz zadzwonić: sponsor, terapeuta, przyjaciele, rodzina, lekarz. Wpisz numery, z których naprawdę korzystasz; planer nigdy nie drukuje za Ciebie numerów alarmowych."
+        "en": "The people you can call: sponsor, therapist, friends, family, doctor, and when you can call each of them. Write numbers you actually use; the planner never prints emergency numbers for you. At the bottom: who you contact first when you feel like isolating.",
+        "pl": "Osoby, do których możesz zadzwonić: sponsor, terapeuta, przyjaciele, rodzina, lekarz, i kiedy możesz do każdej zadzwonić. Wpisz numery, z których naprawdę korzystasz; planer nigdy nie drukuje za Ciebie numerów alarmowych. Na dole: z kim kontaktujesz się najpierw, gdy masz ochotę się izolować."
       },
       "sampleContent": {
         "contacts": {
@@ -4473,7 +4525,6 @@
             [
               "Tomek",
               "600 100 200",
-              "",
               {
                 "en": "any time",
                 "pl": "o każdej porze"
@@ -4482,30 +4533,36 @@
             [
               "Anna Nowak",
               "600 300 400",
-              "",
               {
-                "en": "Tue 17:00",
-                "pl": "wt 17:00"
+                "en": "weekdays until 17:00",
+                "pl": "w tygodniu do 17:00"
               }
             ],
             [
               "Piotr",
-              "600 500 600"
+              "600 500 600",
+              {
+                "en": "evenings",
+                "pl": "wieczorem"
+              }
             ],
             [
               {
                 "en": "sister Kasia",
                 "pl": "siostra Kasia"
               },
-              "600 700 800"
+              "600 700 800",
+              {
+                "en": "any time",
+                "pl": "o każdej porze"
+              }
             ],
             [
               "dr Lis",
               "600 900 100",
-              "",
               {
-                "en": "clinic",
-                "pl": "przychodnia"
+                "en": "surgery hours",
+                "pl": "godziny przychodni"
               }
             ],
             [
@@ -4520,14 +4577,24 @@
             "en": "fake numbers: write your own",
             "pl": "numery przykładowe: wpisz swoje"
           }
+        },
+        "isolate": {
+          "fill": {
+            "en": "Tomek, even with a text message",
+            "pl": "Tomek, choćby SMS-em"
+          }
         }
       }
     },
     "sos": {
       "id": "sos",
       "name": {
-        "en": "SOS plan",
-        "pl": "Plan SOS"
+        "en": "My plan for a hard moment",
+        "pl": "Mój plan na trudny moment"
+      },
+      "rationale": {
+        "en": "First in the crisis section, so it is found in a hurry: three steps for the next few minutes (stop, do not stay alone, change the situation), with the SOBER pause.",
+        "pl": "Na początku sekcji kryzysowej, żeby znaleźć go w pośpiechu: trzy kroki na najbliższe minuty (zatrzymaj się, nie zostawaj sam, zmień sytuację), z pauzą SOBER."
       },
       "body": {
         "kind": "stack",
@@ -4540,8 +4607,8 @@
               "type": "text",
               "props": {
                 "text": {
-                  "en": "My SOS plan",
-                  "pl": "Mój plan SOS"
+                  "en": "My plan for a hard moment",
+                  "pl": "Mój plan na trudny moment"
                 },
                 "variant": "heading"
               },
@@ -4555,41 +4622,400 @@
           {
             "kind": "block",
             "block": {
-              "id": "steps",
-              "type": "numbered-list",
+              "id": "how",
+              "type": "text",
               "props": {
-                "title": {
-                  "en": "Five steps",
-                  "pl": "Pięć kroków"
+                "text": {
+                  "en": "When tension or craving is strong, I do not have to solve my whole life. First I take care of the next few minutes.",
+                  "pl": "Kiedy jestem w silnym napięciu lub głodzie, nie muszę rozwiązywać całego życia. Najpierw mam zadbać o najbliższe minuty."
                 },
-                "items": [
-                  {
-                    "en": "Stop and recognise what is happening.",
-                    "pl": "Zatrzymaj się i nazwij, co się dzieje."
-                  },
-                  {
-                    "en": "Do not stay alone with the craving.",
-                    "pl": "Nie zostawaj w samotności z głodem."
-                  },
-                  {
-                    "en": "Contact someone from my support network.",
-                    "pl": "Skontaktuj się z kimś z mojej sieci wsparcia."
-                  },
-                  {
-                    "en": "Change environment and remove access to alcohol or substances.",
-                    "pl": "Zmień otoczenie i usuń dostęp do alkoholu lub substancji."
-                  },
-                  {
-                    "en": "Use my emergency coping strategy and seek professional help if necessary.",
-                    "pl": "Zastosuj swoją awaryjną strategię radzenia sobie i w razie potrzeby szukaj profesjonalnej pomocy."
-                  }
-                ],
-                "count": 5,
-                "lineHeight": 10
+                "variant": "caption"
               },
               "size": {
                 "height": {
-                  "mm": 70
+                  "mm": 10
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 4,
+            "children": [
+              {
+                "kind": "row",
+                "gap": 5,
+                "children": [
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "feelings",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "What is happening to me?",
+                          "pl": "Co się ze mną dzieje?"
+                        },
+                        "marker": "checkbox",
+                        "items": [
+                          {
+                            "en": "craving",
+                            "pl": "głód"
+                          },
+                          {
+                            "en": "tension",
+                            "pl": "napięcie"
+                          },
+                          {
+                            "en": "anger",
+                            "pl": "złość"
+                          },
+                          {
+                            "en": "loneliness",
+                            "pl": "samotność"
+                          },
+                          {
+                            "en": "tiredness",
+                            "pl": "zmęczenie"
+                          },
+                          {
+                            "en": "boredom",
+                            "pl": "nuda"
+                          },
+                          {
+                            "en": "fear",
+                            "pl": "lęk"
+                          },
+                          {
+                            "en": "hopelessness",
+                            "pl": "beznadzieja"
+                          },
+                          {
+                            "en": "other:",
+                            "pl": "inne:"
+                          }
+                        ],
+                        "count": 9,
+                        "lineHeight": 5
+                      },
+                      "size": {
+                        "height": {
+                          "fr": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "sober",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "SOBER: a pause before I act",
+                          "pl": "SOBER: pauza, zanim zareaguję"
+                        },
+                        "marker": "none",
+                        "items": [
+                          {
+                            "en": "S — Stop",
+                            "pl": "S — Stop: zatrzymuję się"
+                          },
+                          {
+                            "en": "O — Observe body, thoughts, feelings",
+                            "pl": "O — zauważam ciało, myśli, emocje"
+                          },
+                          {
+                            "en": "B — Breathe",
+                            "pl": "B — oddycham"
+                          },
+                          {
+                            "en": "E — Expand my attention",
+                            "pl": "E — poszerzam uwagę"
+                          },
+                          {
+                            "en": "R — Respond: choose what to do",
+                            "pl": "R — świadomie wybieram, co zrobię"
+                          }
+                        ],
+                        "count": 5,
+                        "lineHeight": 6
+                      },
+                      "size": {
+                        "height": {
+                          "fr": 1
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "height": {
+              "mm": 66
+            },
+            "label": {
+              "en": "Step 1 — I stop",
+              "pl": "Krok 1 — Zatrzymuję się"
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 4,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "contacts",
+                  "type": "contact-table",
+                  "props": {
+                    "roles": [
+                      {
+                        "en": "1.",
+                        "pl": "1."
+                      },
+                      {
+                        "en": "2.",
+                        "pl": "2."
+                      },
+                      {
+                        "en": "3.",
+                        "pl": "3."
+                      }
+                    ],
+                    "fields": [
+                      {
+                        "en": "Name",
+                        "pl": "Imię"
+                      },
+                      {
+                        "en": "Phone",
+                        "pl": "Telefon"
+                      }
+                    ]
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 58
+            },
+            "label": {
+              "en": "Step 2 — I do not stay alone with it",
+              "pl": "Krok 2 — Nie zostaję z tym {g:sam|sama}"
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 4,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "change",
+                  "type": "numbered-list",
+                  "props": {
+                    "title": {
+                      "en": "I can:",
+                      "pl": "Mogę:"
+                    },
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "leave the place",
+                        "pl": "wyjść z miejsca"
+                      },
+                      {
+                        "en": "remove access to alcohol / substances",
+                        "pl": "usunąć dostęp do alkoholu / substancji"
+                      },
+                      {
+                        "en": "call someone",
+                        "pl": "zadzwonić"
+                      },
+                      {
+                        "en": "go somewhere safe",
+                        "pl": "pójść w bezpieczne miejsce"
+                      },
+                      {
+                        "en": "go to a meeting / group",
+                        "pl": "pójść na mityng / grupę"
+                      },
+                      {
+                        "en": "stay with someone",
+                        "pl": "zostać z kimś"
+                      },
+                      {
+                        "en": "other:",
+                        "pl": "inne:"
+                      }
+                    ],
+                    "count": 7,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 46
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "places",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Safe places and meetings I can go to:",
+                      "pl": "Bezpieczne miejsca i mityngi, do których mogę pójść:"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 1
+            },
+            "label": {
+              "en": "Step 3 — I change the situation",
+              "pl": "Krok 3 — Zmieniam sytuację"
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/3/children/0/block/props/fields",
+            "value": [
+              {
+                "en": "Name and phone",
+                "pl": "Imię i telefon"
+              }
+            ]
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2/height",
+            "value": {
+              "mm": 61
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/3/height",
+            "value": {
+              "mm": 38
+            }
+          },
+          {
+            "op": "remove",
+            "path": "/body/children/4/children/1"
+          }
+        ]
+      },
+      "guide": {
+        "en": "Your plan for a hard moment, first in the crisis section so it is quick to find. Step 1: stop and tick what is happening, then take the SOBER pause. Step 2: three people you can call. Step 3: tick how you can change the situation. Fill it in on a calm day.",
+        "pl": "Twój plan na trudny moment, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Krok 1: zatrzymaj się i zaznacz, co się dzieje, potem zrób pauzę SOBER. Krok 2: trzy osoby, do których możesz zadzwonić. Krok 3: zaznacz, jak możesz zmienić sytuację. Wypełnij go w spokojny dzień."
+      },
+      "sampleContent": {
+        "feelings": {
+          "fill": {
+            "done": [
+              0,
+              1
+            ]
+          }
+        },
+        "sober": {
+          "note": {
+            "en": "aloud, slowly",
+            "pl": "na głos, powoli"
+          },
+          "noteAt": "bottom-right"
+        },
+        "contacts": {
+          "fill": [
+            [
+              "Tomek",
+              "600 100 200"
+            ],
+            [
+              "Anna",
+              "600 300 400"
+            ],
+            [
+              {
+                "en": "sister Kasia",
+                "pl": "siostra Kasia"
+              },
+              "600 700 800"
+            ]
+          ],
+          "note": {
+            "en": "fake numbers: write your own",
+            "pl": "numery przykładowe: wpisz swoje"
+          }
+        },
+        "change": {
+          "fill": {
+            "done": [
+              0,
+              2,
+              4
+            ]
+          }
+        },
+        "places": {
+          "fill": {
+            "en": "Thursday group, parish hall 18:30; online meeting 21:00",
+            "pl": "grupa czwartkowa, salka 18:30; mityng online 21:00"
+          }
+        }
+      }
+    },
+    "craving-thresholds": {
+      "id": "craving-thresholds",
+      "name": {
+        "en": "How I respond to craving",
+        "pl": "Jak reaguję na głód"
+      },
+      "rationale": {
+        "en": "A personal alarm threshold: the stronger the craving, the less is decided alone. Written in a calm moment, used in a hard one.",
+        "pl": "Osobisty próg alarmowy: im silniejszy głód, tym mniej decyzji podejmuję sam. Pisany w spokojnej chwili, używany w trudnej."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "How do I respond to craving?",
+                  "pl": "Jak reaguję na głód?"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
                 }
               }
             }
@@ -4597,12 +5023,665 @@
           {
             "kind": "block",
             "block": {
-              "id": "strategy",
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My alarm threshold. Fill it in on a calm day, ideally with your therapist or sponsor.",
+                  "pl": "Mój próg alarmowy. Wypełnij go w spokojny dzień, najlepiej z terapeutą lub sponsorem."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "low",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "My emergency coping strategy",
-                  "pl": "Moja awaryjna strategia radzenia sobie"
+                  "en": "0–3 · On my own I can use:",
+                  "pl": "0–3 · Mogę samodzielnie zastosować:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "mid",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "4–6 · I contact … and I do:",
+                  "pl": "4–6 · Kontaktuję się z … i robię:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "high",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "7–8 · I make no decision alone. Who and where:",
+                  "pl": "7–8 · Nie podejmuję decyzji {g:sam|sama}. Kontakt i miejsce:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "top",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "9–10 · I do not stay alone. I contact … and go to:",
+                  "pl": "9–10 · Nie zostaję {g:sam|sama}. Kontaktuję się z … i idę do:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "negotiate",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "When I start bargaining with myself: I make no decision for _____ minutes, and first I call __________.",
+                  "pl": "Gdy zaczynam negocjować {g:sam|sama} ze sobą: nie podejmuję decyzji przez _____ minut, najpierw dzwonię do __________."
+                },
+                "variant": "subheading"
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Your personal alarm threshold: what you do on your own at 0–3, whom you contact at 4–6, and when you do not decide or stay alone (7–10). The last line is for the moment you start bargaining with yourself.",
+        "pl": "Twój osobisty próg alarmowy: co robisz {g:sam|sama} przy 0–3, z kim się kontaktujesz przy 4–6 i kiedy nie decydujesz ani nie zostajesz {g:sam|sama} (7–10). Ostatnia linia jest na chwilę, gdy zaczynasz negocjować ze sobą."
+      },
+      "sampleContent": {
+        "low": {
+          "fill": {
+            "en": "walk, cold water, breathing",
+            "pl": "spacer, zimna woda, oddech"
+          }
+        },
+        "mid": {
+          "fill": {
+            "en": "Tomek; I leave the house",
+            "pl": "Tomek; wychodzę z domu"
+          }
+        },
+        "high": {
+          "fill": {
+            "en": "Anna; the Thursday group",
+            "pl": "Anna; grupa czwartkowa"
+          }
+        },
+        "top": {
+          "fill": {
+            "en": "Tomek; I stay at my sister’s",
+            "pl": "Tomek; zostaję u siostry"
+          }
+        },
+        "negotiate": {
+          "fill": [
+            "20",
+            {
+              "en": "Tomek",
+              "pl": "Tomka"
+            }
+          ],
+          "note": {
+            "en": "bargaining is a warning sign",
+            "pl": "negocjowanie to sygnał ostrzegawczy"
+          },
+          "noteAt": "bottom-right"
+        }
+      }
+    },
+    "emergency-list": {
+      "id": "emergency-list",
+      "name": {
+        "en": "When I do not know what to do",
+        "pl": "Kiedy nie wiem, co zrobić"
+      },
+      "rationale": {
+        "en": "A ready list for the moment when nothing comes to mind, and the craving wave (urge surfing): a craving rises, peaks and falls.",
+        "pl": "Gotowa lista na chwilę, gdy nic nie przychodzi do głowy, oraz fala głodu (urge surfing): głód narasta, osiąga szczyt i opada."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "When I do not know what to do",
+                  "pl": "Kiedy nie wiem, co zrobić"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "First I choose one thing.",
+                  "pl": "Najpierw wybieram jedną rzecz."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "first",
+                  "type": "numbered-list",
+                  "props": {
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "water / a meal",
+                        "pl": "woda / posiłek"
+                      },
+                      {
+                        "en": "a shower",
+                        "pl": "prysznic"
+                      },
+                      {
+                        "en": "a walk / exercise",
+                        "pl": "spacer / ruch"
+                      },
+                      {
+                        "en": "a change of place",
+                        "pl": "zmiana miejsca"
+                      },
+                      {
+                        "en": "a phone call",
+                        "pl": "telefon"
+                      },
+                      {
+                        "en": "meeting someone",
+                        "pl": "spotkanie z kimś"
+                      },
+                      {
+                        "en": "a meeting / group",
+                        "pl": "mityng / grupa"
+                      }
+                    ],
+                    "count": 7,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "more",
+                  "type": "numbered-list",
+                  "props": {
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "breathing",
+                        "pl": "oddech"
+                      },
+                      {
+                        "en": "music",
+                        "pl": "muzyka"
+                      },
+                      {
+                        "en": "sleep / rest",
+                        "pl": "sen / odpoczynek"
+                      },
+                      {
+                        "en": "writing my thoughts down",
+                        "pl": "zapisanie myśli"
+                      },
+                      {
+                        "en": "talking to my therapist",
+                        "pl": "rozmowa z terapeutą"
+                      },
+                      {
+                        "en": "other:",
+                        "pl": "inne:"
+                      }
+                    ],
+                    "count": 6,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 46
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "best",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "My three most effective strategies",
+                  "pl": "Moje trzy najskuteczniejsze strategie"
+                },
+                "count": 3
+              },
+              "size": {
+                "height": {
+                  "mm": 32
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 3,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "wave",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "It rises → it peaks → it falls.\nI do not have to fight it. I do not have to act on it. I can watch it until it passes.",
+                      "pl": "Narasta → osiąga szczyt → opada.\nNie muszę z nim walczyć. Nie muszę go realizować. Mogę go obserwować, aż przejdzie."
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 14
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "where",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Where do I feel the craving in my body?",
+                      "pl": "Gdzie czuję głód w ciele?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 20
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "strength",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "How does its strength change? _____ → _____ → _____ → _____ /10",
+                      "pl": "Jak zmienia się jego siła? _____ → _____ → _____ → _____ /10"
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 8
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "ride-out",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What helps me ride out the wave?",
+                      "pl": "Co pomaga mi przeczekać falę?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 1
+            },
+            "label": {
+              "en": "A craving is a wave",
+              "pl": "Głód jest falą"
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "When nothing comes to mind: tick what usually helps you and pick one thing first. Write your three most effective strategies. The wave reminds you that a craving rises, peaks and falls; note where you feel it and how its strength changes.",
+        "pl": "Gdy nic nie przychodzi do głowy: zaznacz, co zwykle Ci pomaga, i wybierz najpierw jedną rzecz. Wpisz trzy najskuteczniejsze strategie. Fala przypomina, że głód narasta, osiąga szczyt i opada; zapisz, gdzie go czujesz i jak zmienia się jego siła."
+      },
+      "sampleContent": {
+        "first": {
+          "fill": {
+            "done": [
+              2,
+              4
+            ]
+          }
+        },
+        "more": {
+          "fill": {
+            "done": [
+              0
+            ]
+          }
+        },
+        "best": {
+          "fill": {
+            "items": [
+              {
+                "en": "a walk, 20 minutes",
+                "pl": "spacer, 20 minut"
+              },
+              {
+                "en": "calling Tomek",
+                "pl": "telefon do Tomka"
+              },
+              {
+                "en": "a meeting the same day",
+                "pl": "mityng tego samego dnia"
+              }
+            ]
+          }
+        },
+        "where": {
+          "fill": {
+            "en": "tight stomach, dry mouth",
+            "pl": "ścisk w żołądku, suchość w ustach"
+          }
+        },
+        "ride-out": {
+          "fill": {
+            "en": "cold water, a walk, counting breaths",
+            "pl": "zimna woda, spacer, liczenie oddechów"
+          }
+        },
+        "strength": {
+          "fill": [
+            "7",
+            "8",
+            "5",
+            "3"
+          ],
+          "note": {
+            "en": "it passes",
+            "pl": "to mija"
+          },
+          "noteAt": "bottom-right"
+        }
+      }
+    },
+    "relapse-chain": {
+      "id": "relapse-chain",
+      "name": {
+        "en": "My relapse chain",
+        "pl": "Mój łańcuch nawrotu"
+      },
+      "rationale": {
+        "en": "Relapse usually starts long before using, as a chain of small changes. Knowing one’s own chain shows the earliest place to break it.",
+        "pl": "Nawrót zwykle zaczyna się długo przed użyciem, jako łańcuch drobnych zmian. Znajomość własnego łańcucha pokazuje, gdzie najwcześniej go przerwać."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My relapse chain",
+                  "pl": "Mój łańcuch nawrotu"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "How does trouble usually start for me? Write your own typical sequence, step by step.",
+                  "pl": "Jak zwykle zaczyna się u mnie problem? Zapisz swój typowy przebieg, krok po kroku."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "first",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "1. First I start…",
+                  "pl": "1. Najpierw zaczynam…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "think",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "↓ 2. Then I start thinking…",
+                  "pl": "↓ 2. Potem zaczynam myśleć…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "neglect",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "↓ 3. Next I neglect…",
+                  "pl": "↓ 3. Następnie zaniedbuję…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "pull-away",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "↓ 4. I pull away from…",
+                  "pl": "↓ 4. Odsuwam się od…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tell-myself",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "↓ 5. I start telling myself…",
+                  "pl": "↓ 5. Zaczynam sobie tłumaczyć…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "risk",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "↓ 6. The risk grows when…",
+                  "pl": "↓ 6. Ryzyko rośnie, gdy…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "break",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "The earliest I can break this chain is here:",
+                  "pl": "Najwcześniej mogę przerwać ten łańcuch tutaj:"
                 },
                 "pattern": "lines",
                 "framed": true
@@ -4617,18 +5696,18 @@
           {
             "kind": "block",
             "block": {
-              "id": "places",
+              "id": "then",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "Safe places and meetings I can go to",
-                  "pl": "Bezpieczne miejsca i mityngi, do których mogę pójść"
+                  "en": "Then I will:",
+                  "pl": "Wtedy zrobię:"
                 },
                 "pattern": "lines"
               },
               "size": {
                 "height": {
-                  "mm": 40
+                  "fr": 1
                 }
               }
             }
@@ -4636,26 +5715,595 @@
         ]
       },
       "guide": {
-        "en": "The SOS plan, placed first in the crisis section so it is quick to find. Read the five steps aloud when a craving comes, and write your own emergency strategy and safe places.",
-        "pl": "Plan SOS, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Przeczytaj pięć kroków na głos, gdy pojawi się głód, i wpisz własną strategię awaryjną oraz bezpieczne miejsca."
+        "en": "How trouble usually starts for you, as a chain: what you start doing, thinking, neglecting, whom you pull away from, what you tell yourself, when the risk grows. Then mark the earliest link where you can break the chain, and what you will do there.",
+        "pl": "Jak zwykle zaczyna się u Ciebie problem, jako łańcuch: co zaczynasz robić, myśleć, zaniedbywać, od kogo się odsuwasz, co sobie tłumaczysz, kiedy rośnie ryzyko. Potem zaznacz najwcześniejsze ogniwo, w którym możesz przerwać łańcuch, i co wtedy zrobisz."
       },
       "sampleContent": {
-        "steps": {
+        "first": {
+          "fill": {
+            "en": "sleeping less, skipping meals",
+            "pl": "mniej spać, pomijać posiłki"
+          }
+        },
+        "think": {
+          "fill": {
+            "en": "I can handle it myself",
+            "pl": "poradzę sobie sam"
+          }
+        },
+        "neglect": {
+          "fill": {
+            "en": "meetings and the planner",
+            "pl": "mityngi i planer"
+          }
+        },
+        "pull-away": {
+          "fill": {
+            "en": "Tomek and my family",
+            "pl": "Tomka i rodziny"
+          }
+        },
+        "tell-myself": {
+          "fill": {
+            "en": "one beer will not hurt",
+            "pl": "jedno piwo nie zaszkodzi"
+          }
+        },
+        "risk": {
+          "fill": {
+            "en": "I am alone on a Friday evening",
+            "pl": "jestem sam w piątek wieczorem"
+          }
+        },
+        "break": {
+          "fill": {
+            "en": "at step 1: when I sleep less",
+            "pl": "przy kroku 1: gdy mniej śpię"
+          },
           "note": {
-            "en": "read aloud when the craving comes",
-            "pl": "przeczytaj na głos, gdy przyjdzie głód"
+            "en": "the earlier, the easier",
+            "pl": "im wcześniej, tym łatwiej"
+          },
+          "noteAt": "bottom-right"
+        },
+        "then": {
+          "fill": {
+            "en": "call Tomek, go to bed by 23:00",
+            "pl": "telefon do Tomka, sen przed 23:00"
+          }
+        }
+      }
+    },
+    "after-slip": {
+      "id": "after-slip",
+      "name": {
+        "en": "If I slipped",
+        "pl": "Jeśli doszło do potknięcia"
+      },
+      "rationale": {
+        "en": "A plan for after a slip, without the language of failure: recovery is a process, and the next hour matters more than counting lost days.",
+        "pl": "Plan na czas po potknięciu, bez języka porażki: zdrowienie jest procesem, a najbliższa godzina jest ważniejsza niż liczenie straconych dni."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "If I slipped",
+                  "pl": "Jeśli doszło do potknięcia"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "One event does not have to decide what I do next.",
+                  "pl": "Jedno zdarzenie nie musi decydować o tym, co zrobię dalej."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "what",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What happened?",
+                  "pl": "Co się wydarzyło?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "before",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What was happening before?",
+                  "pl": "Co działo się wcześniej?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "risk-now",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What now raises the risk of using more?",
+                  "pl": "Co teraz zwiększa ryzyko dalszego używania?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "next-hour",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What will I do in the next hour?",
+                  "pl": "Co zrobię w ciągu najbliższej godziny?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "contact",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Who will I contact?",
+                  "pl": "Z kim się skontaktuję?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "safety",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "How will I keep myself safe?",
+                  "pl": "Jak zadbam o bezpieczeństwo?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "learn",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What can I learn from it?",
+                  "pl": "Czego mogę się nauczyć?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "next-step",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What is my next small step?",
+                  "pl": "Jaki jest mój następny mały krok?"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "If you drank or used: this page is for what comes next, not for blame. Answer the questions, above all what you will do in the next hour and whom you will contact. There is no line for \"days lost\".",
+        "pl": "Jeśli doszło do picia lub użycia: ta strona jest o tym, co dalej, a nie o winie. Odpowiedz na pytania, przede wszystkim co zrobisz w najbliższej godzinie i z kim się skontaktujesz. Nie ma tu rubryki „ile dni {g:straciłem|straciłam}”."
+      },
+      "sampleContent": {
+        "next-hour": {
+          "fill": {
+            "en": "stop, pour it out, call Tomek",
+            "pl": "przerwać, wylać, zadzwonić do Tomka"
+          },
+          "note": {
+            "en": "the next hour matters most",
+            "pl": "najważniejsza jest najbliższa godzina"
+          },
+          "noteAt": "bottom-right"
+        },
+        "contact": {
+          "fill": {
+            "en": "Tomek, then my therapist",
+            "pl": "Tomek, potem terapeutka"
+          }
+        }
+      }
+    },
+    "craving-card": {
+      "id": "craving-card",
+      "name": {
+        "en": "Craving card",
+        "pl": "Karta głodu"
+      },
+      "rationale": {
+        "en": "For a strong craving (e.g. 4 or more): a record of the moment, how the craving changed over twenty minutes, and what worked. Over time the cards show patterns.",
+        "pl": "Na silny głód (np. 4 i więcej): zapis chwili, jak głód zmieniał się przez dwadzieścia minut i co zadziałało. Z czasem karty pokazują wzorce."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "When a craving comes",
+                  "pl": "Kiedy pojawia się głód"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "when",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Date __________ · time _____",
+                  "pl": "Data __________ · godzina _____"
+                },
+                "variant": "body"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "where",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Where am I?",
+                  "pl": "Gdzie jestem?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "happened",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What has just happened?",
+                  "pl": "Co właśnie się wydarzyło?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "feel",
+                  "type": "numbered-list",
+                  "props": {
+                    "title": {
+                      "en": "What do I feel?",
+                      "pl": "Co czuję?"
+                    },
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "tension",
+                        "pl": "napięcie"
+                      },
+                      {
+                        "en": "anger",
+                        "pl": "złość"
+                      },
+                      {
+                        "en": "sadness",
+                        "pl": "smutek"
+                      },
+                      {
+                        "en": "loneliness",
+                        "pl": "samotność"
+                      },
+                      {
+                        "en": "fear",
+                        "pl": "lęk"
+                      },
+                      {
+                        "en": "frustration",
+                        "pl": "frustrację"
+                      },
+                      {
+                        "en": "boredom",
+                        "pl": "nudę"
+                      },
+                      {
+                        "en": "euphoria",
+                        "pl": "euforię"
+                      },
+                      {
+                        "en": "tiredness",
+                        "pl": "zmęczenie"
+                      },
+                      {
+                        "en": "other:",
+                        "pl": "inne:"
+                      }
+                    ],
+                    "count": 10,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "strength",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Craving\nat the start _____ /10\nafter 10 minutes _____ /10\nafter 20 minutes _____ /10",
+                      "pl": "Głód\nna początku _____ /10\npo 10 minutach _____ /10\npo 20 minutach _____ /10"
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 62
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "instead",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What did I do instead of using?",
+                  "pl": "Co {g:zrobiłem|zrobiłam} zamiast użycia?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "worked",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What worked?",
+                  "pl": "Co zadziałało?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "learned",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What did I learn about myself?",
+                  "pl": "Czego {g:dowiedziałem|dowiedziałam} się o sobie?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Two cards for a strong craving (for example 4 or more). Note when and where it came and what had just happened, tick what you feel, and write the craving at the start and after 10 and 20 minutes. Then what you did instead, what worked and what you learned.",
+        "pl": "Dwie karty na silny głód (na przykład 4 i więcej). Zapisz, kiedy i gdzie się pojawił i co się właśnie wydarzyło, zaznacz, co czujesz, i wpisz siłę głodu na początku oraz po 10 i 20 minutach. Potem co {g:zrobiłeś|zrobiłaś} zamiast tego, co zadziałało i czego się {g:dowiedziałeś|dowiedziałaś}."
+      },
+      "sampleContent": {
+        "when": {
+          "fill": [
+            "14.10",
+            "18:40"
+          ]
+        },
+        "where": {
+          "fill": {
+            "en": "at home, after work",
+            "pl": "w domu, po pracy"
           }
         },
-        "strategy": {
+        "happened": {
           "fill": {
-            "en": "Leave, walk for 20 minutes, cold water,\ncall Tomek, then a meeting.",
-            "pl": "Wyjść, 20 minut spaceru, zimna woda,\ntelefon do Tomka, potem mityng."
+            "en": "an argument on the phone",
+            "pl": "kłótnia przez telefon"
           }
         },
-        "places": {
+        "feel": {
           "fill": {
-            "en": "Thursday group, parish hall 18:30\nOnline meeting 21:00",
-            "pl": "Grupa czwartkowa, salka 18:30\nMityng online 21:00"
+            "done": [
+              0,
+              1
+            ]
+          }
+        },
+        "strength": {
+          "fill": [
+            "8",
+            "6",
+            "3"
+          ],
+          "note": {
+            "en": "write it down every 10 minutes",
+            "pl": "zapisuj co 10 minut"
+          },
+          "noteAt": "bottom-right"
+        },
+        "instead": {
+          "fill": {
+            "en": "went out for a walk, called Tomek",
+            "pl": "wyszedłem na spacer, telefon do Tomka"
+          }
+        },
+        "worked": {
+          "fill": {
+            "en": "leaving the flat straight away",
+            "pl": "wyjście z mieszkania od razu"
+          }
+        },
+        "learned": {
+          "fill": {
+            "en": "phone arguments are my trigger",
+            "pl": "kłótnie przez telefon to mój wyzwalacz"
           }
         }
       }
@@ -4783,16 +6431,34 @@
           "page": "sos"
         },
         {
+          "page": "craving-thresholds"
+        },
+        {
+          "page": "emergency-list"
+        },
+        {
           "page": "warning-signs-left"
         },
         {
           "page": "warning-signs-right"
         },
         {
+          "page": "relapse-chain"
+        },
+        {
+          "page": "after-slip"
+        },
+        {
           "page": "gains-losses"
         },
         {
           "page": "support-network"
+        },
+        {
+          "page": "craving-card"
+        },
+        {
+          "page": "craving-card"
         }
       ]
     }

@@ -37,9 +37,14 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
     key: 'crisis',
     pages: [
       ['sos'],
+      ['craving-thresholds'],
+      ['emergency-list'],
       ['warning-signs-left', 'warning-signs-right'],
+      ['relapse-chain'],
+      ['after-slip'],
       ['gains-losses'],
       ['support-network'],
+      ['craving-card'],
     ],
   },
 ];

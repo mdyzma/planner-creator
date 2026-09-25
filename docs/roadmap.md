@@ -96,11 +96,21 @@ Later:
 
 The pages S1 calls the most valuable; standalone pages, easy to add.
 
-- SOS on three pages, with SOBER and the craving wave.
-- "Mój łańcuch nawrotu".
-- "Plan po potknięciu", without the language of failure (no "days lost").
-- "Karta głodu", a few copies in the crisis section.
-- Warning signs with tick boxes and a threshold; the new support network table.
+Done. The crisis section, S1–S11, alternating sides with no blank pages:
+
+- S1 "Mój plan na trudny moment": stop (what is happening, ticks) with the SOBER pause, three
+  contacts, change the situation (ticks), safe places (A4). Replaces the five-step SOS page.
+- S2 "Jak reaguję na głód?": alarm thresholds 0–3 / 4–6 / 7–8 / 9–10 and "when I start
+  bargaining with myself".
+- S3 "Kiedy nie wiem, co zrobić": emergency list, three best strategies, "Głód jest falą" (where
+  in the body, how the strength changes, what helps to ride it out).
+- S4–S5 warning signs, now with an own threshold ("Gdy zauważę \_\_ z tych sygnałów") and three
+  steps.
+- S6 "Mój łańcuch nawrotu"; S7 "Jeśli doszło do potknięcia", without "days lost".
+- S8 gains and losses; S9 support network with "when I can call" and "when I feel like
+  isolating"; S10–S11 two "Kiedy pojawia się głód" craving cards.
+
+Not done: warning signs as tick boxes (the examples stay as prompts to cross out).
 
 ### v0.5.0 — Modules and presets
 
