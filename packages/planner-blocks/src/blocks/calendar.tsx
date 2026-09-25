@@ -263,6 +263,8 @@ export const dayHeaderBlock = defineBlock({
 /** Event markers for day strips (§8). Distinct shapes plus letters, so no colour is needed. */
 export const MARKERS = {
   aa: { shape: 'circle', letter: L('A', 'A'), label: L('AA meeting', 'Mityng AA') },
+  // Therapy groups and other group meetings (e.g. a relapse prevention group), apart from AA.
+  group: { shape: 'pentagon', letter: L('G', 'G'), label: L('Group', 'Grupa') },
   therapy: { shape: 'square', letter: L('T', 'T'), label: L('Therapy session', 'Sesja terapii') },
   doctor: { shape: 'diamond', letter: L('D', 'L'), label: L('Doctor', 'Lekarz') },
   exercise: { shape: 'triangle', letter: L('E', 'R'), label: L('Exercise', 'Ruch') },
@@ -288,6 +290,7 @@ const SHAPES: Record<string, string> = {
   triangle: 'M10 2 L18.5 17.5 H1.5 Z',
   'triangle-down': 'M1.5 2.5 H18.5 L10 18 Z',
   hexagon: 'M5.5 2.5 H14.5 L19 10 L14.5 17.5 H5.5 L1 10 Z',
+  pentagon: 'M10 1.5 L18.5 7.7 L15.3 17.8 H4.7 L1.5 7.7 Z',
 };
 
 export function MarkerIcon({

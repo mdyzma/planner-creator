@@ -663,6 +663,12 @@ const dayRight = a5(
           },
           { height: mmH(28) },
         ),
+        block(
+          'tomorrow',
+          'writing-area',
+          { title: L('Worth remembering tomorrow', 'Jutro warto pamiętać'), pattern: 'lines' },
+          { height: mmH(14) },
+        ),
       ],
       { gap: 4, label: L('Evening', 'Wieczór') },
     ),
@@ -672,6 +678,7 @@ const dayRight = a5(
     ['victory', 'size/height', { mm: 15 }],
     ['good-life', 'size/height', { mm: 15 }],
     ['gratitude', 'size/height', { mm: 24 }],
+    ['tomorrow', 'size/height', { mm: 13 }],
     // A5 is too narrow for the outer column: the check-out moves into the page as one line, with
     // a line for the trigger; the tick lists are left out.
     { op: 'add', path: '/outerRailWidth', value: 0 },

@@ -1186,8 +1186,8 @@
         ]
       },
       "guide": {
-        "en": "The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: meeting, therapy, doctor, exercise, recovery activity, or ! for a risky day.",
-        "pl": "Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka."
+        "en": "The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.",
+        "pl": "Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka."
       },
       "sampleContent": {
         "remember": {
@@ -1372,11 +1372,11 @@
         "thu": {
           "fill": {
             "markers": [
-              "aa"
+              "group"
             ],
             "text": {
-              "en": "group 18:30",
-              "pl": "grupa 18:30"
+              "en": "therapy group 18:30",
+              "pl": "grupa Nawroty 18:30"
             }
           }
         },
@@ -1631,8 +1631,8 @@
                   {
                     "badge": "A",
                     "label": {
-                      "en": "Angry / stressed",
-                      "pl": "Złość / stres"
+                      "en": "Angry / tense",
+                      "pl": "Złość / napięcie"
                     }
                   },
                   {
@@ -2225,6 +2225,25 @@
                 }
               }
             }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tomorrow",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Worth remembering tomorrow",
+                  "pl": "Jutro warto pamiętać"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 14
+                }
+              }
+            }
           }
         ],
         "label": {
@@ -2260,6 +2279,13 @@
             "path": "/body/children/4/block/size/height",
             "value": {
               "mm": 24
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/5/block/size/height",
+            "value": {
+              "mm": 13
             }
           },
           {
@@ -2320,8 +2346,8 @@
         ]
       },
       "guide": {
-        "en": "The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, and end with three things you are grateful for.",
-        "pl": "Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, a na koniec trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}."
+        "en": "The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, then three things you are grateful for, and one thing worth remembering tomorrow.",
+        "pl": "Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, potem trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}, i jedną rzecz, o której warto jutro pamiętać."
       },
       "sampleContent": {
         "threat": {
@@ -2435,6 +2461,12 @@
             "pl": "nie tylko: czy nie piłem?"
           },
           "noteAt": "bottom-right"
+        },
+        "tomorrow": {
+          "fill": {
+            "en": "talk to the boss calmly",
+            "pl": "spokojna rozmowa z szefem"
+          }
         }
       }
     },
@@ -2562,8 +2594,8 @@
                           {
                             "badge": "A",
                             "label": {
-                              "en": "Angry / stressed",
-                              "pl": "Złość / stres"
+                              "en": "Angry / tense",
+                              "pl": "Złość / napięcie"
                             }
                           },
                           {

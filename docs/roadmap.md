@@ -82,13 +82,13 @@ Done:
   two lines of three (A5), and one line "Dziś chronię swoją trzeźwość przez:".
 - The header is one line (weekday, date, sobriety day) with the quote beside it (A4) or under it
   (A5); "Plan dnia" stays where it is.
+- Evening: "Jutro warto pamiętać" at the bottom of the page.
+- Weekly markers: "Mityng AA" stays, and "Grupa" is added (therapy groups such as "Nawroty").
+- HALT label "Złość / napięcie" (EN "Angry / tense").
 
-Still to do:
+Later:
 
-- Evening: "Jutro warto pamiętać".
-- Weekly markers: keep "Mityng AA" and add "Grupa" (therapy groups such as "Nawroty").
-- HALT label "Złość / napięcie".
-- Later, if room is needed: the rest of S2's "Moje 24 godziny" and "important / pleasant"
+- If room is needed: the rest of S2's "Moje 24 godziny" and "important / pleasant"
   (e.g. by moving "Plan dnia" into the outer column). "Plan dnia" in A5 is tight (about 4 mm
   per hour) but kept as it is.
 

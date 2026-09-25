@@ -15,7 +15,7 @@ export interface BlockPreset {
 
 export const HALT_ROWS = [
   { badge: 'H', label: L('Hungry', 'Głód fizyczny') },
-  { badge: 'A', label: L('Angry / stressed', 'Złość / stres') },
+  { badge: 'A', label: L('Angry / tense', 'Złość / napięcie') },
   { badge: 'L', label: L('Lonely', 'Samotność / izolacja') },
   { badge: 'T', label: L('Tired', 'Zmęczenie / wyczerpanie') },
 ];

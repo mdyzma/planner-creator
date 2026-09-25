@@ -150,7 +150,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     },
   },
   'week-right': {
-    thu: { fill: { markers: ['aa'], text: L('group 18:30', 'grupa 18:30') } },
+    thu: { fill: { markers: ['group'], text: L('therapy group 18:30', 'grupa Nawroty 18:30') } },
     fri: {
       fill: {
         markers: ['risk'],
@@ -348,6 +348,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       note: L('not only: did I stay sober?', 'nie tylko: czy nie piłem?'),
       noteAt: 'bottom-right',
     },
+    tomorrow: { fill: L('talk to the boss calmly', 'spokojna rozmowa z szefem') },
   },
   situation: {
     'risky-thought': {
@@ -510,8 +511,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Prawa strona kontynuuje kalendarz (piątek–niedziela) i mieści fokus zdrowienia, to, o czym chcesz pamiętać, stałe mityngi i wizyty oraz nawyki i kamienie milowe, np. 30 dni trzeźwości.',
   ),
   'week-left': L(
-    'The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: meeting, therapy, doctor, exercise, recovery activity, or ! for a risky day.',
-    'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka.',
+    'The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.',
+    'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka.',
   ),
   'week-right': L(
     'Thursday to Sunday and the marker legend. The outer column is for the week ahead: copy your if–then plan from last week\'s "My week", and note the days or situations to watch out for.',
@@ -526,8 +527,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu.',
   ),
   'day-right': L(
-    'The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, and end with three things you are grateful for.',
-    'Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, a na koniec trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}.',
+    'The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, then three things you are grateful for, and one thing worth remembering tomorrow.',
+    'Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, potem trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}, i jedną rzecz, o której warto jutro pamiętać.',
   ),
   situation: L(
     'An optional page at the end of each week (switch it on in Structure). Take one situation from the week: first the thought that raised the risk and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.',
