@@ -14,6 +14,7 @@ import { LazyVisible } from '@/components/LazyVisible';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
 import { FILLER_PATTERN, blockRegistry, layoutProject, type RenderedPage } from '@/lib/pages';
+import { withExampleContent } from '@/lib/templates';
 import { useProject } from '@/lib/useProject';
 
 type ViewMode = 'spread' | 'single';
@@ -45,10 +46,11 @@ function Preview({
   const [view, setView] = useState<ViewMode>('spread');
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>(0.5);
   const [guides, setGuides] = useState(true);
+  const [samples, setSamples] = useState(false);
 
   const { pages, range, paginationWarnings, frameWarnings } = useMemo(
-    () => layoutProject(project),
-    [project],
+    () => layoutProject(samples ? withExampleContent(project) : project),
+    [project, samples],
   );
   const fillers = pages.filter((p) => p.page.filler).length;
   const plannerLocale = project.locale;
@@ -75,6 +77,7 @@ function Preview({
         grammaticalGender={project.i18nOptions.grammaticalGender}
         mode="preview"
         showGuides={guides}
+        samples={samples}
         printerSafeMargin={project.print.printerSafeMargin}
         pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
         label={t('pageLabel', { number: p.page.number, side: t(`side.${p.page.side}`) })}
@@ -141,6 +144,10 @@ function Preview({
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" checked={guides} onChange={(e) => setGuides(e.target.checked)} />
           {t('guides')}
+        </label>
+        <label className="flex items-center gap-2 text-sm">
+          <input type="checkbox" checked={samples} onChange={(e) => setSamples(e.target.checked)} />
+          {t('samples')}
         </label>
         <nav className="ml-auto flex items-center gap-4 text-sm">
           <Link href={`/editor?id=${project.id}`} className="underline">

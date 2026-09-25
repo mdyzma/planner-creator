@@ -1,8 +1,9 @@
 import { resolveText, typographyCss } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
-import { TYPE, quoteMarks, BlockTitle, WriteLine, column } from '../primitives';
+import { TYPE, quoteMarks, BlockTitle, WriteLine, column, sampleFill } from '../primitives';
 import { defineBlock } from '../registry';
+import { BlanksSample, withBlanks } from '../samples';
 
 const L = (en: string, pl: string) => ({ en, pl });
 
@@ -44,7 +45,7 @@ export const textBlock = defineBlock({
         ...typographyCss(block.style),
       }}
     >
-      {resolveText(ctx, props.text)}
+      {withBlanks(ctx, resolveText(ctx, props.text), sampleFill(ctx, block.id, BlanksSample))}
     </div>
   ),
 });

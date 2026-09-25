@@ -94,6 +94,7 @@ export function scanTranslations(
     const base = ['template', 'pageTemplates', id];
     add([...base, 'name'], 'page-template', id, 'name', page.name);
     add([...base, 'rationale'], 'page-template', id, 'rationale', page.rationale);
+    add([...base, 'guide'], 'page-template', id, 'guide', page.guide);
     scanLayout(page.body, [...base, 'body'], id);
     page.outerRail?.forEach((b, i) => scanBlock(b, [...base, 'outerRail', i], id));
     page.free?.forEach((b, i) => scanBlock(b, [...base, 'free', i], id));

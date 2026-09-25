@@ -3,7 +3,7 @@ import type { GrammaticalGender } from '@planner/i18n';
 import type { ContentItem, Locale, PageContext, PageTemplate, PatternSpec } from '@planner/schema';
 import type { CSSProperties } from 'react';
 import { Guides } from './Guides';
-import type { BlockRenderContext, BlockRenderer, RenderMode } from './LayoutView';
+import type { BlockRenderContext, BlockRenderer, BlockSample, RenderMode } from './LayoutView';
 import { LayoutView, placeholderBlock } from './LayoutView';
 import { Pattern } from './Pattern';
 import { PAPER, flexFor, mm } from './units';
@@ -32,6 +32,8 @@ export interface PageViewProps {
   contentFor?: (blockId: string) => ContentItem | undefined;
   /** Accessible name for the page region on screen. */
   label?: string;
+  /** Example mode: draw the template's sample handwriting (never in a normal export). */
+  samples?: boolean;
 }
 
 const at = (b: Box): CSSProperties => ({
@@ -62,6 +64,7 @@ export function PageView({
   range,
   contentFor = () => undefined,
   label,
+  samples = false,
 }: PageViewProps) {
   const ctx: BlockRenderContext = {
     locale,
@@ -71,6 +74,9 @@ export function PageView({
     vars,
     range,
     contentFor,
+    ...(samples && template?.sampleContent
+      ? { sample: (id: string) => template.sampleContent?.[id] as BlockSample | undefined }
+      : {}),
   };
   const { trim, bleed, body } = frame;
   const background = template ? template.background : fillerPattern;

@@ -15,6 +15,7 @@ Options:
   --profile <profile>   home-duplex | home-manual-duplex | home-a5-2up | home-a5-native | print-shop
                         (default: the planner's print setting)
   --section <keys>      print only these sections, comma-separated, e.g. month:2026-11,month:2026-12
+  --example             an example planner: grey handwritten examples and notes
   --web-url <url>       render from a running web app instead of apps/web/out
 `;
 
@@ -25,6 +26,7 @@ const { values, positionals } = parseArgs({
     profile: { type: 'string' },
     section: { type: 'string' },
     'web-url': { type: 'string' },
+    example: { type: 'boolean' },
     help: { type: 'boolean', short: 'h' },
   },
 });
@@ -59,6 +61,7 @@ try {
   const started = Date.now();
   const files = await exportPlanner(renderer, parsed.value, {
     profile,
+    samples: values.example,
     sections: values.section
       ?.split(',')
       .map((k) => k.trim())

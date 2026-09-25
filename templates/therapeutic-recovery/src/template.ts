@@ -2,6 +2,7 @@ import { HALT_ROWS, SOS_STEPS } from '@planner/blocks';
 import type { JsonPatchOp, PageTemplate, PlannerTemplate, SectionTemplate } from '@planner/schema';
 import { TEMPLATE_MIGRATIONS, defaultPrintSettings } from '@planner/schema';
 import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl';
+import { GUIDES, SAMPLES } from './samples';
 
 /**
  * Therapeutic Recovery Planner — 6 months (brief §5–§21), authored in TypeScript for type
@@ -829,7 +830,18 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
       volumes: 1,
     },
   },
-  pageTemplates: Object.fromEntries(pageTemplates.map((p) => [p.id, p])),
+  pageTemplates: Object.fromEntries(
+    pageTemplates.map((p) => [
+      p.id,
+      {
+        ...p,
+        ...(GUIDES[p.id] ? { guide: GUIDES[p.id] } : {}),
+        ...(SAMPLES[p.id]
+          ? { sampleContent: SAMPLES[p.id] as NonNullable<PageTemplate['sampleContent']> }
+          : {}),
+      },
+    ]),
+  ),
   sections,
   variables: [
     { name: 'patientName', label: L('Name', 'Imię'), type: 'text', personal: true },

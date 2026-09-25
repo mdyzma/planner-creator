@@ -76,6 +76,7 @@ function Export({
   /** Chosen top-level sections; `null` means all of them (the whole planner). */
   const [chosen, setChosen] = useState<ReadonlySet<string> | null>(null);
   const [reverseBacks, setReverseBacks] = useState(true);
+  const [samples, setSamples] = useState(false);
   const [service, setService] = useState<'checking' | 'ready' | 'offline'>('checking');
   const [job, setJob] = useState<Job>({ state: 'idle' });
 
@@ -125,10 +126,12 @@ function Export({
   const run = async () => {
     setJob({ state: 'running', done: 0, total: plan.parts.length });
     try {
-      const files = await exportPdf(project, { profile, sections, reverseBacks }, (done, total) =>
-        setJob({ state: 'running', done, total }),
+      const files = await exportPdf(
+        project,
+        { profile, sections, reverseBacks, samples },
+        (done, total) => setJob({ state: 'running', done, total }),
       );
-      const stem = fileStem(project.meta.name, fileLabel);
+      const stem = `${fileStem(project.meta.name, fileLabel)}${samples ? `-${t('exampleSuffix')}` : ''}`;
       for (const f of files) downloadBytes(`${stem}${f.suffix}.pdf`, f.bytes);
       setJob({ state: 'done', files, stem });
       await getProjectRepository().recordExport(project.id, 'pdf', plan.pageCount);
@@ -274,6 +277,20 @@ function Export({
             />
             {t('pageNumbers')}
           </label>
+          <label className="mt-3 flex gap-2">
+            <input
+              type="checkbox"
+              checked={samples}
+              onChange={(e) => setSamples(e.target.checked)}
+            />
+            <span>
+              {t('samples')}
+              <span className="block text-xs text-ink-muted">{t('samplesHint')}</span>
+            </span>
+          </label>
+          <Link href="/guide" className="mt-3 inline-block underline">
+            {t('guideLink')}
+          </Link>
         </section>
 
         <section className={`${box} lg:col-span-2`} aria-labelledby={`${ids}-check`}>
@@ -332,7 +349,10 @@ function Export({
                 <button type="button" className={secondary} onClick={() => void check()}>
                   {t('checkAgain')}
                 </button>
-                <Link href={`/print?id=${project.id}&ranges=${ranges}`} className={secondary}>
+                <Link
+                  href={`/print?id=${project.id}&ranges=${ranges}${samples ? '&samples=1' : ''}`}
+                  className={secondary}
+                >
                   {t('browserPrint')}
                 </Link>
               </div>

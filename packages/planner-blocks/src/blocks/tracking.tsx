@@ -1,7 +1,20 @@
 import { mm, resolveText } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
-import { BlockTitle, Mark, RULE, RULE_LIGHT, TYPE, column, fill } from '../primitives';
+import {
+  BlockTitle,
+  Hand,
+  HandRing,
+  Mark,
+  RULE,
+  RULE_LIGHT,
+  TYPE,
+  column,
+  fill,
+  handText,
+  sampleFill,
+} from '../primitives';
+import { RatingSample, TimeSample } from '../samples';
 import { defineBlock } from '../registry';
 
 const L = (en: string, pl: string) => ({ en, pl });
@@ -48,8 +61,10 @@ export const ratingMatrixBlock = defineBlock({
     },
     { key: 'noteColumn', kind: 'boolean', label: L('Note column', 'Kolumna na notatkę') },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const scale = SCALES[props.mode];
+    const sample = sampleFill(ctx, block.id, RatingSample);
+    const ring = (show: boolean) => (show ? <HandRing size={circle + 1.8} /> : null);
     const circle = props.mode === 'scale-0-10' ? 3.1 : 3.6;
     return (
       <div style={column}>
@@ -88,12 +103,22 @@ export const ratingMatrixBlock = defineBlock({
               </span>
               <span style={{ display: 'flex', gap: mm(1.2), alignItems: 'center', flex: 'none' }}>
                 {props.mode === 'checkbox' ? (
-                  <Mark shape="box" />
+                  <span style={{ position: 'relative', display: 'inline-flex' }}>
+                    <Mark shape="box" />
+                    {sample?.ticks?.[i] && (
+                      <Hand size={4.6} style={{ position: 'absolute', left: 0, top: mm(-1.2) }}>
+                        ✓
+                      </Hand>
+                    )}
+                  </span>
                 ) : (
                   scale.map((n) => (
-                    <Mark key={n} shape="circle" size={circle}>
-                      {n}
-                    </Mark>
+                    <span key={n} style={{ position: 'relative', display: 'inline-flex' }}>
+                      <Mark shape="circle" size={circle}>
+                        {n}
+                      </Mark>
+                      {ring(sample?.values?.[i] === n)}
+                    </span>
                   ))
                 )}
               </span>
@@ -109,6 +134,9 @@ export const ratingMatrixBlock = defineBlock({
                   }}
                 >
                   <span style={TYPE.caption}>{resolveText(ctx, props.noteLabel)}</span>
+                  <Hand size={4.2} style={{ marginLeft: mm(1) }}>
+                    {handText(ctx, sample?.notes?.[i])}
+                  </Hand>
                 </span>
               )}
             </div>
@@ -147,7 +175,8 @@ export const timeGridBlock = defineBlock({
       max: 3,
     },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
+    const sample = sampleFill(ctx, block.id, TimeSample);
     const slots: string[] = [];
     // Both ends are included (07:00 … 18:00); there is no 24:00 slot.
     for (let m = props.from * 60; m <= props.to * 60 && m < 24 * 60; m += props.stepMinutes) {
@@ -180,8 +209,13 @@ export const timeGridBlock = defineBlock({
                     style={{
                       ...fill,
                       borderBottom: i === props.linesPerSlot - 1 ? RULE : RULE_LIGHT,
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      paddingLeft: mm(1),
                     }}
-                  />
+                  >
+                    {i === 0 && <Hand size={4.2}>{handText(ctx, sample?.[time])}</Hand>}
+                  </div>
                 ))}
               </div>
             </div>

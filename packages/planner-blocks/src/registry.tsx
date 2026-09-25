@@ -1,5 +1,6 @@
 import type { BlockRenderContext, BlockRenderer } from '@planner/renderer';
 import { PAPER, boxCss, mm } from '@planner/renderer';
+import { HAND, NOTE_INK } from './primitives';
 import type { BlockInstance, LocalizedText } from '@planner/schema';
 import type { ReactNode } from 'react';
 import type { z } from 'zod';
@@ -102,9 +103,43 @@ export function createBlockRegistry(
         }}
       >
         <def.Render props={parsed.data} block={block} ctx={ctx} />
+        <SampleNote ctx={ctx} blockId={block.id} />
       </div>
     );
   };
 
   return { definitions, get: (type) => byType.get(type), render };
+}
+
+/** A short handwritten explanation in a corner of the block (example mode only). */
+function SampleNote({ ctx, blockId }: { ctx: BlockRenderContext; blockId: string }) {
+  const sample = ctx.sample?.(blockId);
+  const note = sample?.note?.[ctx.locale];
+  if (!note) return null;
+  const at = sample?.noteAt ?? 'top-right';
+  const [v, h] = at.split('-') as ['top' | 'bottom', 'left' | 'right'];
+  return (
+    <div
+      data-sample-note
+      aria-hidden="true"
+      style={{
+        ...HAND,
+        position: 'absolute',
+        [v]: mm(-0.5),
+        [h]: mm(1),
+        maxWidth: '58%',
+        whiteSpace: 'pre-line',
+        overflow: 'visible',
+        fontSize: mm(3.9),
+        lineHeight: 1.05,
+        color: NOTE_INK,
+        textAlign: h === 'right' ? 'right' : 'left',
+        transform: `rotate(${h === 'right' ? -1.5 : 1.5}deg)`,
+        pointerEvents: 'none',
+        zIndex: 2,
+      }}
+    >
+      {`→ ${note}`}
+    </div>
+  );
 }

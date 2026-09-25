@@ -9,6 +9,8 @@ export interface ExportOptions {
   /** Top-level sections to print, e.g. `['month:2026-11']`; all when absent. */
   sections?: string[];
   reverseBacks?: boolean;
+  /** Example planner: grey handwritten examples and notes on every page. */
+  samples?: boolean;
   date?: Date;
   onProgress?: (done: number, total: number) => void;
 }
@@ -27,7 +29,11 @@ export async function exportPlanner(
   let done = 0;
   const parts = await Promise.all(
     plan.parts.map(async (part) => {
-      const bytes = await renderer.render({ project, ...part });
+      const bytes = await renderer.render({
+        project,
+        ...part,
+        ...(options.samples ? { samples: true } : {}),
+      });
       options.onProgress?.(++done, plan.parts.length);
       return bytes;
     }),

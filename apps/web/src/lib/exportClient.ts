@@ -2,6 +2,7 @@ import type { ExportPart, OutputFile } from '@planner/pdf';
 import { assemble, mergePdfs, planExport } from '@planner/pdf';
 import type { PlannerProject, PrintProfile } from '@planner/schema';
 import { PAGE_FORMATS } from '@planner/schema';
+import { withExampleContent } from './templates';
 
 /** The export service on the user's own computer (apps/export-node). */
 export const LOCAL_EXPORT_SERVICE = 'http://127.0.0.1:8787';
@@ -43,13 +44,23 @@ export class ExportError extends Error {
   }
 }
 
-async function renderPart(project: PlannerProject, part: ExportPart): Promise<Uint8Array> {
+async function renderPart(
+  project: PlannerProject,
+  part: ExportPart,
+  samples: boolean,
+): Promise<Uint8Array> {
   let res: Response;
   try {
     res = await fetch(`${exportServiceUrl()}/api/export/pdf`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ project, from: part.from, to: part.to, padAfter: part.padAfter }),
+      body: JSON.stringify({
+        project,
+        from: part.from,
+        to: part.to,
+        padAfter: part.padAfter,
+        ...(samples ? { samples: true } : {}),
+      }),
     });
   } catch (e) {
     throw new ExportError('offline', e instanceof Error ? e.message : String(e));
@@ -68,6 +79,8 @@ export interface ExportRequest {
   /** Top-level sections to print (e.g. single months for the ring binder); all when absent. */
   sections?: string[];
   reverseBacks?: boolean;
+  /** An example planner: grey handwritten examples and explanatory notes on every page. */
+  samples?: boolean;
 }
 
 /**
@@ -80,13 +93,14 @@ export async function exportPdf(
   onProgress?: (done: number, total: number) => void,
 ): Promise<OutputFile[]> {
   const plan = planExport(project, request);
+  const source = request.samples ? withExampleContent(project) : project;
   const results: Uint8Array[] = new Array(plan.parts.length);
   let next = 0;
   let done = 0;
   const worker = async () => {
     while (next < plan.parts.length) {
       const i = next++;
-      results[i] = await renderPart(project, plan.parts[i]!);
+      results[i] = await renderPart(source, plan.parts[i]!, request.samples === true);
       onProgress?.(++done, plan.parts.length);
     }
   };

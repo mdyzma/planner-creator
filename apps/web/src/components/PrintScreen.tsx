@@ -12,6 +12,7 @@ import { Link } from '@/i18n/navigation';
 import type { ExportPayload } from '@/lib/exportPayload';
 import { EXPORT_READY_ATTRIBUTE, exportPayload } from '@/lib/exportPayload';
 import { FILLER_PATTERN, blockRegistry, layoutProject } from '@/lib/pages';
+import { withExampleContent } from '@/lib/templates';
 import { useProject } from '@/lib/useProject';
 
 /**
@@ -37,8 +38,15 @@ function ExportPrint({ payload }: { payload: ExportPayload }) {
       cancelled = true;
     };
   }, []);
-  const { project, from, to, padAfter } = payload;
-  return <PrintPages project={project} ranges={[{ from, to }]} padAfter={padAfter} />;
+  const { project, from, to, padAfter, samples } = payload;
+  return (
+    <PrintPages
+      project={project}
+      ranges={[{ from, to }]}
+      padAfter={padAfter}
+      samples={samples === true}
+    />
+  );
 }
 
 function BrowserPrint() {
@@ -71,6 +79,7 @@ function BrowserPrint() {
     .map(([a, b]) => ({ from: clamp(a!) - 1, to: clamp(b!) - 1 }))
     .filter((r) => r.to >= r.from);
   const total = ranges.reduce((n, r) => n + r.to - r.from + 1, 0);
+  const samples = params.get('samples') === '1';
 
   return (
     <>
@@ -94,7 +103,12 @@ function BrowserPrint() {
         </button>
       </div>
       <div className="print-stack">
-        <PrintPages project={project} ranges={ranges} padAfter={0} />
+        <PrintPages
+          project={samples ? withExampleContent(project) : project}
+          ranges={ranges}
+          padAfter={0}
+          samples={samples}
+        />
       </div>
     </>
   );
@@ -105,10 +119,13 @@ function PrintPages({
   project,
   ranges,
   padAfter,
+  samples = false,
 }: {
   project: PlannerProject;
   ranges: readonly { from: number; to: number }[];
   padAfter: number;
+  /** Example mode: grey handwritten examples and notes. */
+  samples?: boolean;
 }) {
   const layout = useMemo(() => layoutProject(project), [project]);
   const { width, height } = PAGE_FORMATS[project.format];
@@ -138,6 +155,7 @@ function PrintPages({
             grammaticalGender={project.i18nOptions.grammaticalGender}
             mode="print"
             pageNumber={project.print.pageNumbers && !p.page.filler ? p.page.number : undefined}
+            samples={samples}
           />
         ))}
         {pads.map((p) => (

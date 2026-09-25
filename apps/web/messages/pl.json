@@ -12,7 +12,8 @@
       "en": "English",
       "pl": "Polski"
     },
-    "privacy": "Prywatność"
+    "privacy": "Prywatność",
+    "guide": "Przewodnik: jak wypełniać planer"
   },
   "Dashboard": {
     "intro": "Twoje planery są zapisane tylko w tej przeglądarce. Wyeksportuj je do pliku JSON, aby mieć kopię zapasową.",
@@ -101,7 +102,8 @@
     "orphans": "Edytowane strony, które nie pasują do nowych dat: {count}.",
     "content": "Treści",
     "designer": "Projektant",
-    "export": "Eksport"
+    "export": "Eksport",
+    "samples": "Przykład wypełnienia"
   },
   "Print": {
     "back": "← Eksport",
@@ -475,7 +477,11 @@
     "selectAll": "Wszystko",
     "selectMonths": "Tylko miesiące",
     "selectNone": "Nic",
-    "nothingSelected": "Zaznacz przynajmniej jedną część do druku."
+    "nothingSelected": "Zaznacz przynajmniej jedną część do druku.",
+    "samples": "Przykład wypełnienia",
+    "samplesHint": "Szare, odręczne przykładowe wpisy i krótkie notatki na każdej stronie, żeby pokazać komuś, jak korzystać z planera. Wyłącz dla planera, w którym będziesz pisać.",
+    "exampleSuffix": "przyklad",
+    "guideLink": "Przewodnik z objaśnieniami (A4, do druku)"
   },
   "Privacy": {
     "title": "Prywatność",
@@ -508,6 +514,22 @@
     "contact": {
       "title": "Pytania",
       "body": "Kod źródłowy jest publiczny. W razie pytań otwórz zgłoszenie (issue) w <repo>repozytorium projektu</repo>."
+    }
+  },
+  "Guide": {
+    "title": "Jak wypełniać planer",
+    "format": "Format planera",
+    "printHint": "Drukuj lub zapisz jako PDF: A4, rzeczywisty rozmiar, bez nagłówków.",
+    "print": "Drukuj / Zapisz jako PDF",
+    "intro": "Ten przewodnik omawia każdy rodzaj strony w planerze: co wpisać w poszczególnych częściach i dlaczego to pomaga. Na ilustracjach są strony wypełnione przez przykładową osobę, Marka; wszystkie imiona, numery i wydarzenia są zmyślone.",
+    "legend": "<hand>Szare pismo odręczne</hand> to przykład tego, co możesz wpisać. <note>→ Jaśniejsze notatki ze strzałką</note> wyjaśniają, do czego służy dana część. Żadne z nich nie drukuje się w Twoim planerze.",
+    "chapter": {
+      "intro": "Zanim zaczniesz",
+      "month": "Każdy miesiąc",
+      "week": "Każdy tydzień",
+      "day": "Każdy dzień",
+      "monthEnd": "Koniec miesiąca",
+      "crisis": "Kryzys i zapobieganie nawrotom"
     }
   }
 }

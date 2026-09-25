@@ -1,7 +1,21 @@
 import { PAPER, mm, resolveText } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
-import { BlockTitle, RULE, TYPE, WriteLine, WritingSurface, column, fill } from '../primitives';
+import {
+  BlockTitle,
+  HAND_INK,
+  Hand,
+  HandLines,
+  RULE,
+  TYPE,
+  WriteLine,
+  WritingSurface,
+  column,
+  fill,
+  handText,
+  sampleFill,
+} from '../primitives';
+import { CategorySample, ContactSample, WheelSample } from '../samples';
 import { defineBlock } from '../registry';
 
 const L = (en: string, pl: string) => ({ en, pl });
@@ -49,7 +63,8 @@ export const radialScaleBlock = defineBlock({
     { key: 'segments', kind: 'localized-list', label: L('Areas', 'Obszary') },
     { key: 'max', kind: 'number', label: L('Scale maximum', 'Maksimum skali'), min: 3, max: 10 },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
+    const scores = sampleFill(ctx, block.id, WheelSample);
     // Wider than tall: labels beside the wheel need more room than those above and below.
     const width = 320;
     const height = 240;
@@ -68,6 +83,36 @@ export const radialScaleBlock = defineBlock({
         role="img"
         aria-label={resolveText(ctx, L('Wheel of Life', 'Koło Życia'))}
       >
+        {scores && (
+          <defs>
+            <pattern
+              id={`hand-hatch-${block.id}`}
+              width="3"
+              height="3"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(35)"
+            >
+              <line x1="0" y1="0" x2="0" y2="3" stroke={HAND_INK} strokeWidth="0.9" />
+            </pattern>
+          </defs>
+        )}
+        {scores?.map((score, i) => {
+          // Example scores: each area shaded from the centre out to its score, as if coloured in.
+          const r = (radius * Math.min(score, props.max)) / props.max;
+          if (i >= n || r <= 0) return null;
+          const [x1, y1] = at(angle(i), r);
+          const [x2, y2] = at(angle(i + 1), r);
+          return (
+            <path
+              key={`s${i}`}
+              d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} Z`}
+              fill={`url(#hand-hatch-${block.id})`}
+              stroke={HAND_INK}
+              strokeWidth={0.9}
+              opacity={0.75}
+            />
+          );
+        })}
         {Array.from({ length: props.max }, (_, i) => (
           <circle
             key={i}
@@ -165,8 +210,9 @@ export const categoryGridBlock = defineBlock({
       ],
     },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const rows = Math.ceil(props.cells.length / props.columns);
+    const sample = sampleFill(ctx, block.id, CategorySample);
     return (
       <div
         style={{
@@ -206,7 +252,14 @@ export const categoryGridBlock = defineBlock({
             )}
             <WritingSurface
               pattern={{ kind: props.pattern, pitch: props.pattern === 'lines' ? 7 : 5, ink: 0.5 }}
-            />
+            >
+              {sample?.[i] !== undefined && (
+                <HandLines
+                  text={handText(ctx, sample[i])}
+                  pitch={props.pattern === 'lines' ? 7 : 10}
+                />
+              )}
+            </WritingSurface>
           </section>
         ))}
       </div>
@@ -244,42 +297,46 @@ export const contactTableBlock = defineBlock({
     { key: 'roles', kind: 'localized-list', label: L('People', 'Osoby') },
     { key: 'fields', kind: 'localized-list', label: L('Fields', 'Pola') },
   ],
-  Render: ({ props, ctx }) => (
-    <div style={column}>
-      <BlockTitle>{resolveText(ctx, props.title)}</BlockTitle>
-      <div
-        style={{
-          ...fill,
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gridAutoRows: '1fr',
-          gap: mm(3),
-        }}
-      >
-        {props.roles.map((role, i) => (
-          <section
-            key={i}
-            style={{
-              ...column,
-              border: RULE,
-              borderRadius: mm(1.5),
-              padding: mm(2.5),
-              boxSizing: 'border-box',
-            }}
-          >
-            <div style={{ ...TYPE.subheading, flex: 'none' }}>{resolveText(ctx, role)}</div>
-            {props.fields.map((field, f) => (
-              <WriteLine key={f} height={6.5} style={{ flex: 1 }}>
-                <span style={{ ...TYPE.caption, width: mm(22), flex: 'none' }}>
-                  {resolveText(ctx, field)}
-                </span>
-              </WriteLine>
-            ))}
-          </section>
-        ))}
+  Render: ({ props, block, ctx }) => {
+    const sample = sampleFill(ctx, block.id, ContactSample);
+    return (
+      <div style={column}>
+        <BlockTitle>{resolveText(ctx, props.title)}</BlockTitle>
+        <div
+          style={{
+            ...fill,
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gridAutoRows: '1fr',
+            gap: mm(3),
+          }}
+        >
+          {props.roles.map((role, i) => (
+            <section
+              key={i}
+              style={{
+                ...column,
+                border: RULE,
+                borderRadius: mm(1.5),
+                padding: mm(2.5),
+                boxSizing: 'border-box',
+              }}
+            >
+              <div style={{ ...TYPE.subheading, flex: 'none' }}>{resolveText(ctx, role)}</div>
+              {props.fields.map((field, f) => (
+                <WriteLine key={f} height={6.5} style={{ flex: 1 }}>
+                  <span style={{ ...TYPE.caption, width: mm(22), flex: 'none' }}>
+                    {resolveText(ctx, field)}
+                  </span>
+                  <Hand size={4.2}>{handText(ctx, sample?.[i]?.[f])}</Hand>
+                </WriteLine>
+              ))}
+            </section>
+          ))}
+        </div>
       </div>
-    </div>
-  ),
+    );
+  },
 });
 
 /** Horizontal rule between sections of a page. */

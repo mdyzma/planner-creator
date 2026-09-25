@@ -11,6 +11,8 @@ export interface RenderRequest {
   from: number;
   to: number;
   padAfter: number;
+  /** Example mode: print the template's grey handwritten examples and notes. */
+  samples?: boolean;
 }
 
 /** A part never needs more than three pads (to reach a multiple of four pages for 2-up). */
@@ -18,13 +20,17 @@ export const MAX_PAD_AFTER = 3;
 
 export type RenderRequestResult =
   | { ok: true; request: RenderRequest }
-  | { ok: false; error: 'invalid project' | 'invalid page range'; issues?: unknown[] };
+  | {
+      ok: false;
+      error: 'invalid project' | 'invalid page range' | 'invalid options';
+      issues?: unknown[];
+    };
 
 const isInt = (v: unknown): v is number => typeof v === 'number' && Number.isInteger(v) && v >= 0;
 
 /** Validates an untrusted request body: the project against the schema, and the page range. */
 export function parseRenderRequest(body: unknown): RenderRequestResult {
-  const { project, from, to, padAfter } = (
+  const { project, from, to, padAfter, samples } = (
     typeof body === 'object' && body !== null ? body : {}
   ) as Record<string, unknown>;
   const parsed = parseProject(project);
@@ -32,7 +38,13 @@ export function parseRenderRequest(body: unknown): RenderRequestResult {
   if (!isInt(from) || !isInt(to) || to < from || !isInt(padAfter) || padAfter > MAX_PAD_AFTER) {
     return { ok: false, error: 'invalid page range' };
   }
-  return { ok: true, request: { project: parsed.value, from, to, padAfter } };
+  if (samples !== undefined && typeof samples !== 'boolean') {
+    return { ok: false, error: 'invalid options' };
+  }
+  return {
+    ok: true,
+    request: { project: parsed.value, from, to, padAfter, ...(samples ? { samples: true } : {}) },
+  };
 }
 
 /** The print route that renders a request, relative to the site root. */

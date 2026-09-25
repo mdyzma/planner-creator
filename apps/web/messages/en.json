@@ -12,7 +12,8 @@
       "en": "English",
       "pl": "Polski"
     },
-    "privacy": "Privacy"
+    "privacy": "Privacy",
+    "guide": "Guide: how to fill in the planner"
   },
   "Dashboard": {
     "intro": "Your planners are stored only in this browser. Export them as JSON to keep a backup.",
@@ -101,7 +102,8 @@
     "orphans": "Edited pages that no longer fit the new dates: {count}.",
     "content": "Content",
     "designer": "Designer",
-    "export": "Export"
+    "export": "Export",
+    "samples": "Example filling"
   },
   "Print": {
     "back": "← Export",
@@ -475,7 +477,11 @@
     "selectAll": "All",
     "selectMonths": "Months only",
     "selectNone": "None",
-    "nothingSelected": "Tick at least one part to print."
+    "nothingSelected": "Tick at least one part to print.",
+    "samples": "Example filling",
+    "samplesHint": "Grey handwritten example entries and short notes on every page, to show someone how to use the planner. Leave this off for the planner you will write in.",
+    "exampleSuffix": "example",
+    "guideLink": "Guide with explanations (A4, printable)"
   },
   "Privacy": {
     "title": "Privacy",
@@ -508,6 +514,22 @@
     "contact": {
       "title": "Questions",
       "body": "The source code is public. For questions, open an issue in the <repo>project repository</repo>."
+    }
+  },
+  "Guide": {
+    "title": "How to fill in the planner",
+    "format": "Planner format",
+    "printHint": "Print or save as PDF: A4, actual size, no headers.",
+    "print": "Print / Save as PDF",
+    "intro": "This guide walks through every kind of page in the planner: what to write in each part, and why it helps. The pictures show pages filled in by an example person, Marek; all names, numbers and events are made up.",
+    "legend": "<hand>Grey handwriting</hand> is an example of what you might write. <note>→ Lighter notes with an arrow</note> explain what a part is for. Neither is printed in your own planner.",
+    "chapter": {
+      "intro": "Before you start",
+      "month": "Each month",
+      "week": "Each week",
+      "day": "Each day",
+      "monthEnd": "End of the month",
+      "crisis": "Crisis and relapse prevention"
     }
   }
 }

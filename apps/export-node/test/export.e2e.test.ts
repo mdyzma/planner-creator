@@ -76,6 +76,15 @@ describe('PDF export in Chrome', () => {
     expect(sheets.getPageCount() % 2).toBe(0);
   });
 
+  it('prints the example planner with the handwriting font embedded', async () => {
+    const project = planner('A4');
+    const decode = (b: Uint8Array) => new TextDecoder('latin1').decode(b);
+    const plain = await renderer.render({ project, from: 4, to: 7, padAfter: 0 });
+    const example = await renderer.render({ project, from: 4, to: 7, padAfter: 0, samples: true });
+    expect(decode(plain)).not.toContain('Caveat');
+    expect(decode(example)).toContain('Caveat');
+  });
+
   it('keeps every block clear of the punched holes', async () => {
     for (const format of ['A4', 'A5'] as const) {
       const project = planner(format);

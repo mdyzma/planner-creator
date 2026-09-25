@@ -142,3 +142,23 @@ describe('cover', () => {
     expect(coverText('pl', '2026-10-01')).not.toContain('dzień po dniu');
   });
 });
+
+describe('examples and guide', () => {
+  it('has a guide text in both languages for every page', () => {
+    for (const page of Object.values(template.pageTemplates)) {
+      expect(page.guide?.en, page.id).toBeTruthy();
+      expect(page.guide?.pl, page.id).toBeTruthy();
+    }
+  });
+
+  it('only gives examples for blocks that exist, with notes in both languages', () => {
+    for (const page of Object.values(template.pageTemplates)) {
+      const ids = new Set(blocksOf(page).map((b) => b.id));
+      for (const [id, sample] of Object.entries(page.sampleContent ?? {})) {
+        expect(ids.has(id), `${page.id}: ${id}`).toBe(true);
+        const note = (sample as { note?: { en?: string; pl?: string } }).note;
+        if (note) expect(Boolean(note.en && note.pl), `${page.id}: ${id}`).toBe(true);
+      }
+    }
+  });
+});

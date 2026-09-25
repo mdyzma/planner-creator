@@ -1,7 +1,20 @@
 import { mm, resolveText } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
-import { BlockTitle, RULE, TYPE, WriteLine, WritingSurface, column, fill } from '../primitives';
+import {
+  BlockTitle,
+  Hand,
+  HandLines,
+  RULE,
+  TYPE,
+  WriteLine,
+  WritingSurface,
+  column,
+  fill,
+  handText,
+  sampleFill,
+} from '../primitives';
+import { ListSample, WritingSample } from '../samples';
 import { defineBlock } from '../registry';
 
 const L = (en: string, pl: string) => ({ en, pl });
@@ -55,8 +68,9 @@ export const writingAreaBlock = defineBlock({
       step: 0.05,
     },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const pitch = props.pitch || (props.pattern === 'lines' ? 7 : 5);
+    const sample = sampleFill(ctx, block.id, WritingSample);
     return (
       <div
         style={{
@@ -71,7 +85,15 @@ export const writingAreaBlock = defineBlock({
             {resolveText(ctx, props.hint)}
           </div>
         )}
-        <WritingSurface pattern={{ kind: props.pattern, pitch, ink: props.ink }} />
+        <WritingSurface pattern={{ kind: props.pattern, pitch, ink: props.ink }}>
+          {sample !== undefined && (
+            // On grids, one line of writing spans whole grid rows, at least 6 mm.
+            <HandLines
+              text={handText(ctx, sample)}
+              pitch={props.pattern === 'lines' ? pitch : pitch * Math.ceil(6 / pitch)}
+            />
+          )}
+        </WritingSurface>
       </div>
     );
   },
@@ -119,8 +141,10 @@ export const numberedListBlock = defineBlock({
     { key: 'items', kind: 'localized-list', label: L('Printed items', 'Wydrukowane pozycje') },
     { key: 'subLines', kind: 'localized-list', label: L('Sub-lines', 'Linie pomocnicze') },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const count = Math.max(props.count, props.items.length);
+    const sample = sampleFill(ctx, block.id, ListSample);
+    const handSize = Math.min(5.2, props.lineHeight * 0.7);
     const marker = (i: number) => {
       const box = { width: mm(5), flex: 'none', ...TYPE.subheading } as const;
       if (props.marker === 'number') return <span style={box}>{i + 1}.</span>;
@@ -134,9 +158,18 @@ export const numberedListBlock = defineBlock({
                 height: mm(3.2),
                 border: RULE,
                 borderRadius: mm(0.5),
-                display: 'inline-block',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'visible',
               }}
-            />
+            >
+              {sample?.done?.includes(i) && (
+                <Hand size={4.6} style={{ overflow: 'visible', marginTop: mm(-1) }}>
+                  ✓
+                </Hand>
+              )}
+            </span>
           </span>
         );
       }
@@ -168,6 +201,7 @@ export const numberedListBlock = defineBlock({
                 ) : (
                   <WriteLine height={props.lineHeight} style={{ flex: 1 }}>
                     {marker(i)}
+                    <Hand size={handSize}>{handText(ctx, sample?.items?.[i])}</Hand>
                   </WriteLine>
                 )}
                 {props.subLines.map((label, s) => (
@@ -178,6 +212,7 @@ export const numberedListBlock = defineBlock({
                     style={{ flex: 1, marginLeft: mm(6) }}
                   >
                     <span style={TYPE.caption}>{resolveText(ctx, label)}</span>
+                    <Hand size={handSize * 0.85}>{handText(ctx, sample?.sub?.[i]?.[s])}</Hand>
                   </WriteLine>
                 ))}
               </li>

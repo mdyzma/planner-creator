@@ -16,6 +16,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{t('appName')}</h1>
           <p className="mt-1 text-ink-muted">{d('intro')}</p>
+          <Link href="/guide" className="mt-2 inline-block text-sm underline">
+            {t('guide')}
+          </Link>
         </div>
         <LanguageSwitcher />
       </header>

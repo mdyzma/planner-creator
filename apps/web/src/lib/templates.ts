@@ -1,4 +1,4 @@
-import type { ContentLibrary, PlannerTemplate } from '@planner/schema';
+import type { ContentLibrary, PlannerProject, PlannerTemplate } from '@planner/schema';
 import { blankTemplate, parseContentLibrary, parseTemplate } from '@planner/schema';
 import quotesJson from '@planner/template-therapeutic-recovery/content/quotes.json';
 import therapeuticJson from '@planner/template-therapeutic-recovery/template.json';
@@ -34,3 +34,29 @@ export function firstOfNextMonth(today = new Date()): string {
 
 /** Rough spine thickness for home printing on 80–90 g/m² paper (≈ 0.11 mm per sheet). */
 export const spineMm = (sheets: number) => Math.round(sheets * 0.11);
+
+/**
+ * The project with example handwriting and guide texts for every page template that has none,
+ * taken from the bundled template of the same id. Planners created before examples existed keep
+ * their own copy of the template, so this lets them print an example version too.
+ */
+export function withExampleContent(project: PlannerProject): PlannerProject {
+  const bundled = BUNDLED_TEMPLATES.find((b) => b.template.id === project.template.id)?.template;
+  if (!bundled) return project;
+  const pageTemplates = Object.fromEntries(
+    Object.entries(project.template.pageTemplates).map(([id, page]) => {
+      const source = bundled.pageTemplates[id];
+      return [
+        id,
+        {
+          ...page,
+          ...(!page.sampleContent && source?.sampleContent
+            ? { sampleContent: source.sampleContent }
+            : {}),
+          ...(!page.guide && source?.guide ? { guide: source.guide } : {}),
+        },
+      ];
+    }),
+  );
+  return { ...project, template: { ...project.template, pageTemplates } };
+}

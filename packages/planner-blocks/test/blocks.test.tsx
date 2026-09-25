@@ -225,3 +225,57 @@ describe('therapeutic blocks', () => {
     expect(text(html)).toBe('1. Jestem gotowa');
   });
 });
+
+describe('example handwriting (guide and example exports)', () => {
+  const withSample = (sample: unknown) =>
+    ctx({ sample: (id) => (id === 'b1' ? (sample as never) : undefined) });
+
+  it('writes nothing unless example mode provides a sample', () => {
+    const plain = render('writing-area', { title: { pl: 'Refleksje' } });
+    expect(plain).not.toContain('planner-hand');
+    expect(plain).not.toContain('data-sample-note');
+  });
+
+  it('writes example lines and a note in handwriting', () => {
+    const html = render(
+      'writing-area',
+      { title: { pl: 'Refleksje' } },
+      withSample({
+        fill: { pl: 'Mityng pomógł.\nJutro spacer.', en: 'The meeting helped.' },
+        note: { pl: 'wolne miejsce', en: 'free space' },
+      }),
+    );
+    expect(text(html)).toContain('Mityng pomógł. Jutro spacer.');
+    expect(text(html)).toContain('→ wolne miejsce');
+    expect(html).toContain('--planner-hand');
+  });
+
+  it('rings the chosen HALT values and fills list items', () => {
+    const halt = render(
+      'rating-matrix',
+      { rows: HALT_ROWS, mode: 'scale-1-5' },
+      withSample({ fill: { values: [2, null, 5, 1] } }),
+    );
+    expect((halt.match(/<path d="M10 1.5 C15.5/g) ?? []).length).toBe(3);
+    const list = render(
+      'numbered-list',
+      { count: 3, marker: 'checkbox' },
+      withSample({ fill: { items: ['mityng', { pl: 'spacer' }], done: [0] } }),
+    );
+    expect(text(list)).toContain('✓ mityng');
+    expect(text(list)).toContain('spacer');
+  });
+
+  it('fills the printed blanks of a text', () => {
+    const html = render(
+      'day-header',
+      {},
+      ctx({ page: { date: '2026-10-01' }, sample: () => ({ fill: ['42'] }) }),
+    );
+    expect(text(html)).toContain('Dzień trzeźwości numer: 42');
+  });
+
+  it('ignores samples of the wrong shape', () => {
+    expect(render('time-grid', {}, withSample({ fill: 42 }))).not.toContain('planner-hand');
+  });
+});

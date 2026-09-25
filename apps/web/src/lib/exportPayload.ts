@@ -10,6 +10,8 @@ export interface ExportPayload {
   from: number;
   to: number;
   padAfter: number;
+  /** Example mode: grey handwritten examples and notes. */
+  samples?: boolean;
 }
 
 declare global {

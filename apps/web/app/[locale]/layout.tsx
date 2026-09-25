@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { Source_Sans_3 } from 'next/font/google';
+import { Caveat, Source_Sans_3 } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { routing } from '@/i18n/routing';
@@ -19,6 +19,13 @@ interface Props {
 const plannerFont = Source_Sans_3({
   subsets: ['latin', 'latin-ext'],
   variable: '--planner-font',
+  display: 'swap',
+});
+
+/** Handwriting for example fills in the guide and example exports (grey, never on blank pages). */
+const handFont = Caveat({
+  subsets: ['latin', 'latin-ext'],
+  variable: '--planner-hand',
   display: 'swap',
 });
 
@@ -41,7 +48,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={plannerFont.variable}>
+    <html lang={locale} className={`${plannerFont.variable} ${handFont.variable}`}>
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

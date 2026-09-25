@@ -174,6 +174,19 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Write your name if you like; the planner is yours. The start date is printed from the date you chose when creating the planner.",
+        "pl": "Wpisz swoje imię, jeśli chcesz; planer należy do Ciebie. Data rozpoczęcia jest drukowana z daty wybranej przy tworzeniu planera."
+      },
+      "sampleContent": {
+        "owner": {
+          "fill": "Marek K.",
+          "note": {
+            "en": "your name, or leave it blank",
+            "pl": "Twoje imię, albo zostaw puste"
+          }
+        }
       }
     },
     "how-to": {
@@ -244,6 +257,22 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "A short description of the whole planner. Read it once at the start; the lines below are for your own reminders.",
+        "pl": "Krótki opis całego planera. Przeczytaj go raz na początku; linie poniżej są na Twoje własne przypomnienia."
+      },
+      "sampleContent": {
+        "notes": {
+          "fill": {
+            "en": "Morning: left page. Evening: right page.\nCrisis pages are at the back.",
+            "pl": "Rano: lewa strona. Wieczorem: prawa.\nStrony kryzysowe są na końcu."
+          },
+          "note": {
+            "en": "your own reminders",
+            "pl": "Twoje własne przypomnienia"
+          }
+        }
       }
     },
     "contract": {
@@ -369,6 +398,47 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Fill in the therapeutic contract together with your therapist during one of the first sessions. Write commitments you can really keep, then sign and date it.",
+        "pl": "Kontrakt terapeutyczny wypełnij razem z terapeutą na jednej z pierwszych sesji. Wpisz zobowiązania, które naprawdę możesz dotrzymać, potem podpisz i wpisz datę."
+      },
+      "sampleContent": {
+        "commitments": {
+          "fill": {
+            "items": [
+              {
+                "en": "attend therapy every Tuesday",
+                "pl": "chodzić na terapię we wtorki"
+              },
+              {
+                "en": "go to 3 meetings a week",
+                "pl": "chodzić na 3 mityngi w tygodniu"
+              },
+              {
+                "en": "call my sponsor before I drink",
+                "pl": "zadzwonić do sponsora, zanim wypiję"
+              },
+              {
+                "en": "fill in the planner every evening",
+                "pl": "wypełniać planer każdego wieczoru"
+              }
+            ]
+          },
+          "note": {
+            "en": "agree these with your therapist",
+            "pl": "ustal je z terapeutą"
+          }
+        },
+        "signature": {
+          "fill": "Marek K."
+        },
+        "therapist": {
+          "fill": "Anna Nowak"
+        },
+        "date": {
+          "fill": "1.10.2026"
+        }
       }
     },
     "safety-rules": {
@@ -458,6 +528,18 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Printed rules to come back to. Read them whenever a day feels risky; nothing needs to be written here.",
+        "pl": "Wydrukowane zasady, do których warto wracać. Przeczytaj je, gdy dzień wydaje się ryzykowny; tu nie trzeba nic wpisywać."
+      },
+      "sampleContent": {
+        "rules": {
+          "note": {
+            "en": "read them when a day feels risky",
+            "pl": "przeczytaj je, gdy dzień wydaje się ryzykowny"
+          }
+        }
       }
     },
     "month-divider": {
@@ -540,6 +622,22 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Each month begins with a divider page. Write one word you want to carry through the month.",
+        "pl": "Każdy miesiąc zaczyna się stroną przekładki. Wpisz jedno słowo, które chcesz nieść przez cały miesiąc."
+      },
+      "sampleContent": {
+        "intention": {
+          "fill": {
+            "en": "Patience",
+            "pl": "Cierpliwość"
+          },
+          "note": {
+            "en": "one word to carry through the month",
+            "pl": "jedno słowo na cały miesiąc"
+          }
+        }
       }
     },
     "month-open-left": {
@@ -651,6 +749,99 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The monthly spread. Put fixed appointments into the calendar first (therapy, meetings, the doctor). Then write the main intention and three or four goals; tick them off as you go.",
+        "pl": "Rozkładówka miesiąca. Najpierw wpisz do kalendarza stałe terminy (terapia, mityngi, lekarz). Potem główną intencję i trzy–cztery cele; odhaczaj je na bieżąco."
+      },
+      "sampleContent": {
+        "calendar": {
+          "fill": {
+            "3": {
+              "en": "walk",
+              "pl": "spacer"
+            },
+            "6": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "8": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "12": {
+              "en": "doctor 9:30",
+              "pl": "lekarz 9:30"
+            },
+            "13": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "15": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "18": {
+              "en": "family lunch",
+              "pl": "obiad u rodziny"
+            },
+            "20": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "22": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "27": {
+              "en": "mum's birthday",
+              "pl": "urodziny mamy"
+            },
+            "30": {
+              "en": "30 days!",
+              "pl": "30 dni!"
+            }
+          },
+          "note": {
+            "en": "fixed appointments first",
+            "pl": "najpierw stałe terminy"
+          }
+        },
+        "intention": {
+          "fill": {
+            "en": "Get through the month sober, one day at a time.",
+            "pl": "Przejść ten miesiąc trzeźwo, dzień po dniu."
+          },
+          "note": {
+            "en": "what matters most this month",
+            "pl": "co jest najważniejsze w tym miesiącu"
+          }
+        },
+        "goals": {
+          "fill": {
+            "items": [
+              {
+                "en": "12 meetings",
+                "pl": "12 mityngów"
+              },
+              {
+                "en": "sleep by 23:00",
+                "pl": "spać przed 23:00"
+              },
+              {
+                "en": "finish step 3 with my sponsor",
+                "pl": "przerobić 3. krok ze sponsorem"
+              }
+            ],
+            "done": [
+              2
+            ]
+          },
+          "note": {
+            "en": "3–4 goals are enough; tick them off",
+            "pl": "3–4 cele wystarczą; odhaczaj je"
+          }
+        }
       }
     },
     "month-open-right": {
@@ -781,6 +972,92 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The right-hand page continues the calendar (Friday to Sunday) and holds your recovery focus, what you want to remember, regular meetings and visits, and habits or milestones such as 30 days sober.",
+        "pl": "Prawa strona kontynuuje kalendarz (piątek–niedziela) i mieści fokus zdrowienia, to, o czym chcesz pamiętać, stałe mityngi i wizyty oraz nawyki i kamienie milowe, np. 30 dni trzeźwości."
+      },
+      "sampleContent": {
+        "calendar": {
+          "fill": {
+            "3": {
+              "en": "walk",
+              "pl": "spacer"
+            },
+            "6": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "8": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "12": {
+              "en": "doctor 9:30",
+              "pl": "lekarz 9:30"
+            },
+            "13": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "15": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "18": {
+              "en": "family lunch",
+              "pl": "obiad u rodziny"
+            },
+            "20": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            },
+            "22": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            },
+            "27": {
+              "en": "mum's birthday",
+              "pl": "urodziny mamy"
+            },
+            "30": {
+              "en": "30 days!",
+              "pl": "30 dni!"
+            }
+          }
+        },
+        "focus": {
+          "fill": {
+            "en": "Evenings without a screen, early nights",
+            "pl": "Wieczory bez ekranu, wcześnie spać"
+          },
+          "note": {
+            "en": "the area of recovery to work on",
+            "pl": "obszar zdrowienia do pracy"
+          }
+        },
+        "remember": {
+          "fill": {
+            "en": "It is fine to ask for help.\nTired + alone = call someone.",
+            "pl": "Proszenie o pomoc jest OK.\nZmęczony + sam = dzwonię."
+          }
+        },
+        "appointments": {
+          "fill": {
+            "en": "Tue 17:00 therapy\nThu 18:30 AA group\n12th doctor 9:30",
+            "pl": "wt 17:00 terapia\nczw 18:30 grupa AA\n12. lekarz 9:30"
+          },
+          "note": {
+            "en": "recurring and one-off",
+            "pl": "stałe i jednorazowe"
+          }
+        },
+        "habits": {
+          "fill": {
+            "en": "walk 20 min every day\n30 days sober on the 5th",
+            "pl": "spacer 20 min codziennie\n5-go: 30 dni trzeźwości"
+          }
+        }
       }
     },
     "week-left": {
@@ -897,6 +1174,82 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: meeting, therapy, doctor, exercise, recovery activity, or ! for a risky day.",
+        "pl": "Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka."
+      },
+      "sampleContent": {
+        "remember": {
+          "fill": {
+            "en": "Friday is payday: plan the evening.\nCall Tomek on Sunday.",
+            "pl": "W piątek wypłata: zaplanuj wieczór.\nW niedzielę zadzwoń do Tomka."
+          },
+          "note": {
+            "en": "what could catch you off guard this week?",
+            "pl": "co może Cię zaskoczyć w tym tygodniu?"
+          }
+        },
+        "mon": {
+          "fill": {
+            "markers": [
+              "therapy"
+            ],
+            "text": {
+              "en": "therapy 17:00",
+              "pl": "terapia 17:00"
+            }
+          },
+          "note": {
+            "en": "circle what happened that day",
+            "pl": "zakreśl, co się wydarzyło"
+          },
+          "noteAt": "bottom-right"
+        },
+        "tue": {
+          "fill": {
+            "markers": [
+              "exercise"
+            ],
+            "text": {
+              "en": "pool after work",
+              "pl": "basen po pracy"
+            }
+          }
+        },
+        "wed": {
+          "fill": {
+            "markers": [
+              "aa",
+              "recovery"
+            ],
+            "text": {
+              "en": "meeting, read step 3",
+              "pl": "mityng, czytanie 3. kroku"
+            }
+          }
+        },
+        "goals": {
+          "fill": {
+            "items": [
+              {
+                "en": "3 meetings",
+                "pl": "3 mityngi"
+              },
+              {
+                "en": "walk 4×",
+                "pl": "spacer 4×"
+              },
+              {
+                "en": "call Tomek",
+                "pl": "tel. Tomek"
+              }
+            ],
+            "done": [
+              0
+            ]
+          }
+        }
       }
     },
     "week-right": {
@@ -1000,6 +1353,73 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Thursday to Sunday, the marker legend, and two questions for the end of the week: your wins, however small, and what protected your calm.",
+        "pl": "Czwartek–niedziela, legenda znaczników i dwa pytania na koniec tygodnia: Twoje zwycięstwa, nawet małe, oraz co chroniło Twój spokój."
+      },
+      "sampleContent": {
+        "thu": {
+          "fill": {
+            "markers": [
+              "aa"
+            ],
+            "text": {
+              "en": "group 18:30",
+              "pl": "grupa 18:30"
+            }
+          }
+        },
+        "fri": {
+          "fill": {
+            "markers": [
+              "risk"
+            ],
+            "text": {
+              "en": "payday: cinema with my sister",
+              "pl": "wypłata: kino z siostrą"
+            }
+          },
+          "note": {
+            "en": "! marks a risky day: plan it",
+            "pl": "! to dzień ryzyka: zaplanuj go"
+          },
+          "noteAt": "bottom-right"
+        },
+        "sat": {
+          "fill": {
+            "markers": [
+              "exercise"
+            ],
+            "text": {
+              "en": "bike ride",
+              "pl": "rower"
+            }
+          }
+        },
+        "sun": {
+          "fill": {
+            "markers": [
+              "recovery"
+            ],
+            "text": {
+              "en": "call Tomek, plan the week",
+              "pl": "tel. do Tomka, plan tygodnia"
+            }
+          }
+        },
+        "wins": {
+          "fill": {
+            "en": "said no at the\noffice party\n5 meetings",
+            "pl": "odmówiłem na\nimprezie w pracy\n5 mityngów"
+          }
+        },
+        "helped": {
+          "fill": {
+            "en": "walks,\ncalling Tomek",
+            "pl": "spacery,\ntelefon do Tomka"
+          }
+        }
       }
     },
     "day-left": {
@@ -1242,6 +1662,152 @@
             "value": 1
           }
         ]
+      },
+      "guide": {
+        "en": "The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, check HALT: how hungry, angry, lonely and tired you are, from 1 to 5; a 4 or 5 is a signal to act now.",
+        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa sprawdź HALT: jak bardzo jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna} i {g:zmęczony|zmęczona}, w skali 1–5; 4 lub 5 to sygnał, by działać od razu."
+      },
+      "sampleContent": {
+        "date": {
+          "fill": [
+            "42"
+          ],
+          "note": {
+            "en": "count from your sobriety date",
+            "pl": "licz od daty trzeźwości"
+          }
+        },
+        "commitment": {
+          "fill": {
+            "en": "going to the 18:00 meeting and calling\nmy sponsor before work.",
+            "pl": "pójście na mityng o 18:00 i telefon\ndo sponsora przed pracą."
+          },
+          "note": {
+            "en": "one concrete action for today",
+            "pl": "jedno konkretne działanie na dziś"
+          },
+          "noteAt": "bottom-right"
+        },
+        "priorities": {
+          "fill": {
+            "items": [
+              {
+                "en": "meeting at 18:00",
+                "pl": "mityng o 18:00"
+              },
+              {
+                "en": "finish the report",
+                "pl": "skończyć raport"
+              },
+              {
+                "en": "20-minute walk",
+                "pl": "spacer 20 minut"
+              }
+            ],
+            "sub": [
+              [
+                {
+                  "en": "leave work at 17:15",
+                  "pl": "wyjść z pracy 17:15"
+                },
+                {
+                  "en": "ask Tomek to come",
+                  "pl": "poprosić Tomka"
+                }
+              ],
+              [
+                {
+                  "en": "two blocks before lunch",
+                  "pl": "dwa bloki przed obiadem"
+                },
+                {
+                  "en": "ask for more time",
+                  "pl": "poprosić o czas"
+                }
+              ],
+              [
+                {
+                  "en": "after dinner",
+                  "pl": "po kolacji"
+                },
+                {
+                  "en": "walk round the block",
+                  "pl": "chociaż dookoła bloku"
+                }
+              ]
+            ],
+            "done": [
+              0,
+              2
+            ]
+          },
+          "note": {
+            "en": "at most three; how, and what if it gets hard",
+            "pl": "najwyżej trzy; jak, i co gdy będzie trudno"
+          },
+          "noteAt": "bottom-right"
+        },
+        "schedule": {
+          "fill": {
+            "07:00": {
+              "en": "get up, coffee, read the quote",
+              "pl": "pobudka, kawa, sentencja"
+            },
+            "08:00": {
+              "en": "call Tomek",
+              "pl": "telefon do Tomka"
+            },
+            "09:00": {
+              "en": "work: report",
+              "pl": "praca: raport"
+            },
+            "13:00": {
+              "en": "lunch with Ola",
+              "pl": "obiad z Olą"
+            },
+            "17:00": {
+              "en": "leave work",
+              "pl": "wyjście z pracy"
+            },
+            "18:00": {
+              "en": "meeting",
+              "pl": "mityng"
+            }
+          },
+          "note": {
+            "en": "fixed points only",
+            "pl": "tylko stałe punkty"
+          }
+        },
+        "halt": {
+          "fill": {
+            "values": [
+              2,
+              4,
+              1,
+              3
+            ],
+            "notes": [
+              {
+                "en": "ate late",
+                "pl": "późny obiad"
+              },
+              {
+                "en": "argument at work",
+                "pl": "kłótnia w pracy"
+              },
+              "",
+              {
+                "en": "short night",
+                "pl": "krótka noc"
+              }
+            ]
+          },
+          "note": {
+            "en": "check in at midday; 4–5 = act now",
+            "pl": "sprawdź w południe; 4–5 = działaj"
+          }
+        }
       }
     },
     "day-right": {
@@ -1324,6 +1890,54 @@
         "label": {
           "en": "Evening",
           "pl": "Wieczór"
+        }
+      },
+      "guide": {
+        "en": "The evening page. Answer honestly what threatened your sobriety today and how you dealt with it; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow, and end with three things you are grateful for.",
+        "pl": "Strona wieczorna. Odpowiedz szczerze, co dziś zagroziło Twojej trzeźwości i jak sobie z tym {g:poradziłeś|poradziłaś}; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro, a na koniec wpisz trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}."
+      },
+      "sampleContent": {
+        "threat": {
+          "fill": {
+            "en": "Anger after the argument, drove past the shop.\nCalled Tomek from the car park.",
+            "pl": "Złość po kłótni, przejechałem obok sklepu.\nZadzwoniłem do Tomka z parkingu."
+          },
+          "note": {
+            "en": "be honest; it helps to see patterns",
+            "pl": "szczerze; tak widać wzorce"
+          }
+        },
+        "reflection": {
+          "fill": {
+            "en": "The meeting helped. I was calmer after\nthe walk. Tomorrow: talk to the boss calmly.",
+            "pl": "Mityng pomógł. Po spacerze byłem spokojniejszy.\nJutro: spokojna rozmowa z szefem."
+          },
+          "note": {
+            "en": "free space: feelings, thoughts, plans",
+            "pl": "wolne miejsce: uczucia, myśli, plany"
+          }
+        },
+        "gratitude": {
+          "fill": {
+            "items": [
+              {
+                "en": "Tomek picked up straight away",
+                "pl": "Tomek od razu odebrał"
+              },
+              {
+                "en": "a warm dinner",
+                "pl": "ciepła kolacja"
+              },
+              {
+                "en": "42 days",
+                "pl": "42 dni"
+              }
+            ]
+          },
+          "note": {
+            "en": "small things are enough",
+            "pl": "drobne rzeczy wystarczą"
+          }
         }
       }
     },
@@ -1416,6 +2030,34 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below.",
+        "pl": "Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz."
+      },
+      "sampleContent": {
+        "wheel": {
+          "fill": [
+            6,
+            5,
+            8,
+            4,
+            5,
+            7,
+            6,
+            3
+          ],
+          "note": {
+            "en": "shade each area up to its score",
+            "pl": "zamaluj każdy obszar do swojej oceny"
+          }
+        },
+        "notice": {
+          "fill": {
+            "en": "Sobriety is strong; rest and relationships need time.\nNext month: one free evening a week.",
+            "pl": "Trzeźwość mocna; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu."
+          }
+        }
       }
     },
     "monthly-review": {
@@ -1566,6 +2208,52 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Six questions for looking back at the month, ideally before the next session with your therapist. A few honest words per question are enough.",
+        "pl": "Sześć pytań na podsumowanie miesiąca, najlepiej przed kolejną sesją z terapeutą. Wystarczy kilka szczerych słów na pytanie."
+      },
+      "sampleContent": {
+        "prompt-1": {
+          "fill": {
+            "en": "Meetings and walks with Tomek.",
+            "pl": "Mityngi i spacery z Tomkiem."
+          },
+          "note": {
+            "en": "a few words per question are enough",
+            "pl": "kilka słów na pytanie wystarczy"
+          }
+        },
+        "prompt-2": {
+          "fill": {
+            "en": "Paydays and tiredness after work.",
+            "pl": "Dni wypłaty i zmęczenie po pracy."
+          }
+        },
+        "prompt-3": {
+          "fill": {
+            "en": "Skipping dinner, irritability.",
+            "pl": "Pomijanie kolacji, drażliwość."
+          }
+        },
+        "prompt-4": {
+          "fill": {
+            "en": "I need a plan for Friday evenings.",
+            "pl": "Potrzebuję planu na piątkowe wieczory."
+          }
+        },
+        "prompt-5": {
+          "fill": {
+            "en": "Evening walks, the Thursday group.",
+            "pl": "Wieczorne spacery, czwartkowa grupa."
+          }
+        },
+        "prompt-6": {
+          "fill": {
+            "en": "Sleep and my relationship with Ola.",
+            "pl": "Sen i relacja z Olą."
+          }
+        }
       }
     },
     "notes": {
@@ -1595,6 +2283,22 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Dot-grid pages at the end of each month for anything else: notes from meetings, books, questions for the doctor.",
+        "pl": "Strony w kropki na końcu każdego miesiąca na wszystko inne: notatki z mityngów, książki, pytania do lekarza."
+      },
+      "sampleContent": {
+        "notes": {
+          "fill": {
+            "en": "Book to read: \"Twelve Steps and Twelve Traditions\"\nAsk the doctor about sleep.",
+            "pl": "Do przeczytania: „Dwanaście Kroków i Dwanaście Tradycji”\nZapytać lekarza o sen."
+          },
+          "note": {
+            "en": "anything that does not fit elsewhere",
+            "pl": "wszystko, co nie pasuje gdzie indziej"
+          }
+        }
       }
     },
     "warning-signs-left": {
@@ -1715,6 +2419,28 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Your personal early warning signs of relapse, in four areas: body, thoughts, emotions and behaviour. The printed examples are prompts; write your own signs in your own words.",
+        "pl": "Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Wydrukowane przykłady są podpowiedzią; wpisz własne sygnały, własnymi słowami."
+      },
+      "sampleContent": {
+        "grid": {
+          "fill": [
+            {
+              "en": "tight jaw\nbad sleep",
+              "pl": "zaciśnięta szczęka\nzły sen"
+            },
+            {
+              "en": "\"just one\"\n\"I have it under control\"",
+              "pl": "„tylko jeden”\n„mam to pod kontrolą”"
+            }
+          ],
+          "note": {
+            "en": "your own early signs, in your words",
+            "pl": "Twoje wczesne sygnały, Twoimi słowami"
+          }
+        }
       }
     },
     "warning-signs-right": {
@@ -1817,6 +2543,34 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "Emotions and behaviours, and the most important line: what you will do as soon as you notice three of these signs. Agree it with your therapist.",
+        "pl": "Emocje i zachowania oraz najważniejsza linia: co zrobisz, gdy zauważysz trzy z tych sygnałów. Uzgodnij to z terapeutą."
+      },
+      "sampleContent": {
+        "grid": {
+          "fill": [
+            {
+              "en": "irritation\nself-pity",
+              "pl": "rozdrażnienie\nużalanie się"
+            },
+            {
+              "en": "skipping meetings\nlate nights",
+              "pl": "opuszczanie mityngów\npóźne noce"
+            }
+          ]
+        },
+        "three-signs": {
+          "fill": {
+            "en": "I call Tomek and go to a meeting the same day.",
+            "pl": "Dzwonię do Tomka i idę na mityng tego samego dnia."
+          },
+          "note": {
+            "en": "agree this plan with your therapist",
+            "pl": "uzgodnij ten plan z terapeutą"
+          }
+        }
       }
     },
     "gains-losses": {
@@ -1898,6 +2652,37 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The decisional balance: honest gains and losses of drinking or using, and of sobriety. Both sides matter; the hard parts of sobriety are worth naming too.",
+        "pl": "Bilans decyzyjny: szczere zyski i straty z picia lub używania oraz z trzeźwości. Obie strony są ważne; trudności trzeźwości też warto nazwać."
+      },
+      "sampleContent": {
+        "quadrants": {
+          "fill": [
+            {
+              "en": "relief after work\nfeeling relaxed",
+              "pl": "ulga po pracy\nrozluźnienie"
+            },
+            {
+              "en": "debts, arguments\nhealth",
+              "pl": "długi, kłótnie\nzdrowie"
+            },
+            {
+              "en": "mornings without a hangover\ntrust at home",
+              "pl": "poranki bez kaca\nzaufanie w domu"
+            },
+            {
+              "en": "boredom in the evenings\nawkward parties",
+              "pl": "nuda wieczorami\ntrudne imprezy"
+            }
+          ],
+          "note": {
+            "en": "be honest about both sides",
+            "pl": "szczerze, po obu stronach"
+          },
+          "noteAt": "bottom-right"
+        }
       }
     },
     "support-network": {
@@ -1988,6 +2773,65 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The people you can call: sponsor, therapist, friends, family, doctor. Write numbers you actually use; the planner never prints emergency numbers for you.",
+        "pl": "Osoby, do których możesz zadzwonić: sponsor, terapeuta, przyjaciele, rodzina, lekarz. Wpisz numery, z których naprawdę korzystasz; planer nigdy nie drukuje za Ciebie numerów alarmowych."
+      },
+      "sampleContent": {
+        "contacts": {
+          "fill": [
+            [
+              "Tomek",
+              "600 100 200",
+              "",
+              {
+                "en": "any time",
+                "pl": "o każdej porze"
+              }
+            ],
+            [
+              "Anna Nowak",
+              "600 300 400",
+              "",
+              {
+                "en": "Tue 17:00",
+                "pl": "wt 17:00"
+              }
+            ],
+            [
+              "Piotr",
+              "600 500 600"
+            ],
+            [
+              {
+                "en": "sister Kasia",
+                "pl": "siostra Kasia"
+              },
+              "600 700 800"
+            ],
+            [
+              "dr Lis",
+              "600 900 100",
+              "",
+              {
+                "en": "clinic",
+                "pl": "przychodnia"
+              }
+            ],
+            [
+              {
+                "en": "Ola",
+                "pl": "Ola"
+              },
+              "600 200 300"
+            ]
+          ],
+          "note": {
+            "en": "fake numbers: write your own",
+            "pl": "numery przykładowe: wpisz swoje"
+          }
+        }
       }
     },
     "sos": {
@@ -2101,6 +2945,30 @@
             }
           }
         ]
+      },
+      "guide": {
+        "en": "The SOS plan, placed first in the crisis section so it is quick to find. Read the five steps aloud when a craving comes, and write your own emergency strategy and safe places.",
+        "pl": "Plan SOS, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Przeczytaj pięć kroków na głos, gdy pojawi się głód, i wpisz własną strategię awaryjną oraz bezpieczne miejsca."
+      },
+      "sampleContent": {
+        "steps": {
+          "note": {
+            "en": "read aloud when the craving comes",
+            "pl": "przeczytaj na głos, gdy przyjdzie głód"
+          }
+        },
+        "strategy": {
+          "fill": {
+            "en": "Leave, walk for 20 minutes, cold water,\ncall Tomek, then a meeting.",
+            "pl": "Wyjść, 20 minut spaceru, zimna woda,\ntelefon do Tomka, potem mityng."
+          }
+        },
+        "places": {
+          "fill": {
+            "en": "Thursday group, parish hall 18:30\nOnline meeting 21:00",
+            "pl": "Grupa czwartkowa, salka 18:30\nMityng online 21:00"
+          }
+        }
       }
     }
   },

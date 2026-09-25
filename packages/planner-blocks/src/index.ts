@@ -18,6 +18,7 @@ import { createBlockRegistry } from './registry';
 
 export * from './registry';
 export * from './presets';
+export * from './samples';
 export { MARKERS, MarkerIcon, type MarkerKey } from './blocks/calendar';
 
 /** Every block type that ships with the app. */

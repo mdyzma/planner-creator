@@ -36,7 +36,12 @@ export const PageTemplate = z.object({
   formatOverrides: z.partialRecord(FormatId, z.array(JsonPatchOp)).optional(),
   /** Designer guidance ("why this layout"); never printed. */
   rationale: LocalizedText.optional(),
-  /** Preview-only handwriting sample, keyed by block id; never exported. */
+  /** What to write on this page and why, for the printed guide; never printed on the page. */
+  guide: LocalizedText.optional(),
+  /**
+   * Example filling, keyed by block id: `{ fill, note }`, where `fill` is block-specific example
+   * handwriting and `note` a short handwritten explanation. Printed only in example mode.
+   */
   sampleContent: z.record(z.string(), z.json()).optional(),
 });
 export type PageTemplate = z.infer<typeof PageTemplate>;

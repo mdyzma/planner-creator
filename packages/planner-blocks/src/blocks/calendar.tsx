@@ -4,7 +4,19 @@ import { PAPER, inkColor, mm, resolveText } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import type { CSSProperties } from 'react';
 import { z } from 'zod';
-import { RULE, RULE_LIGHT, TYPE, WriteLine, column, fill } from '../primitives';
+import {
+  Hand,
+  HandRing,
+  RULE,
+  RULE_LIGHT,
+  TYPE,
+  WriteLine,
+  column,
+  fill,
+  handText,
+  sampleFill,
+} from '../primitives';
+import { BlanksSample, CalendarSample, DayStripSample, withBlanks } from '../samples';
 import { defineBlock } from '../registry';
 
 const L = (en: string, pl: string) => ({ en, pl });
@@ -77,8 +89,9 @@ export const calendarGridBlock = defineBlock({
       ],
     },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const [from, to] = props.columns;
+    const sample = sampleFill(ctx, block.id, CalendarSample);
     const month = ctx.page.date?.slice(0, 7);
     const first = month ? `${month}-01` : undefined;
     const gridStart = first ? addDays(first, -mondayIndex(first)) : undefined;
@@ -154,6 +167,13 @@ export const calendarGridBlock = defineBlock({
                       {Number(iso.slice(8))}
                     </span>
                   )}
+                  {inMonth && sample?.[String(Number(iso.slice(8)))] && (
+                    <div style={{ marginTop: mm(0.5) }}>
+                      <Hand size={3.6} style={{ whiteSpace: 'normal', lineHeight: 1.05 }}>
+                        {handText(ctx, sample[String(Number(iso.slice(8)))])}
+                      </Hand>
+                    </div>
+                  )}
                 </div>
               );
             }),
@@ -187,8 +207,9 @@ export const dayHeaderBlock = defineBlock({
     { key: 'showSobriety', kind: 'boolean', label: L('Sobriety counter', 'Licznik trzeźwości') },
     { key: 'sobrietyLabel', kind: 'localized-text', label: L('Counter text', 'Tekst licznika') },
   ],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const date = ctx.page.date;
+    const sample = sampleFill(ctx, block.id, BlanksSample);
     return (
       <div style={{ ...column, justifyContent: 'space-between' }}>
         <div>
@@ -203,7 +224,7 @@ export const dayHeaderBlock = defineBlock({
         </div>
         {props.showSobriety && (
           <div style={{ ...TYPE.caption, color: PAPER.ink }}>
-            {resolveText(ctx, props.sobrietyLabel)}
+            {withBlanks(ctx, resolveText(ctx, props.sobrietyLabel), sample)}
           </div>
         )}
       </div>
@@ -290,8 +311,10 @@ export const dayStripBlock = defineBlock({
   propsSchema: DayStripProps,
   defaults: { weekday: 0, markers: MARKER_KEYS, lines: 3 },
   inspector: [{ key: 'lines', kind: 'number', label: L('Lines', 'Linie'), min: 0, max: 6 }],
-  Render: ({ props, ctx }) => {
+  Render: ({ props, block, ctx }) => {
     const date = ctx.page.dates?.[props.weekday];
+    const sample = sampleFill(ctx, block.id, DayStripSample);
+    const lines = handText(ctx, sample?.text).split('\n');
     const outside = date !== undefined && !inRange(ctx, date);
     const name = date
       ? weekdayName(date, ctx.locale)
@@ -304,7 +327,10 @@ export const dayStripBlock = defineBlock({
           {outside && <span style={TYPE.caption}>—</span>}
           <span style={{ marginLeft: 'auto', display: 'flex', gap: mm(1.2) }}>
             {props.markers.map((m) => (
-              <MarkerIcon key={m} marker={m} locale={ctx.locale} />
+              <span key={m} style={{ position: 'relative', display: 'inline-flex' }}>
+                <MarkerIcon marker={m} locale={ctx.locale} />
+                {sample?.markers?.includes(m) && <HandRing size={5.4} />}
+              </span>
             ))}
           </span>
         </div>
@@ -312,8 +338,16 @@ export const dayStripBlock = defineBlock({
           {Array.from({ length: props.lines }, (_, i) => (
             <div
               key={i}
-              style={{ ...fill, borderBottom: i === props.lines - 1 ? 'none' : RULE_LIGHT }}
-            />
+              style={{
+                ...fill,
+                borderBottom: i === props.lines - 1 ? 'none' : RULE_LIGHT,
+                display: 'flex',
+                alignItems: 'flex-end',
+                paddingLeft: mm(1),
+              }}
+            >
+              <Hand size={4}>{lines[i]}</Hand>
+            </div>
           ))}
         </div>
       </div>

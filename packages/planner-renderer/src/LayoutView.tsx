@@ -24,6 +24,19 @@ export interface BlockRenderContext {
   range?: { start: string; end: string };
   /** Content item assigned to a block on this page (e.g. the day's quote). */
   contentFor: (blockId: string) => ContentItem | undefined;
+  /**
+   * Example filling for a block, in example mode only (the guide and "example" exports):
+   * `fill` is block-specific handwriting, `note` a short handwritten explanation.
+   */
+  sample?: (blockId: string) => BlockSample | undefined;
+}
+
+/** Example handwriting for one block (PageTemplate.sampleContent). */
+export interface BlockSample {
+  fill?: unknown;
+  note?: LocalizedText;
+  /** Corner for the note; top-right by default. */
+  noteAt?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 }
 
 export const emptyRenderContext = (
