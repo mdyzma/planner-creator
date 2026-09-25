@@ -16,12 +16,18 @@ const heading = (id: string, text: ReturnType<typeof L>, height = 12) =>
 const caption = (id: string, text: ReturnType<typeof L>, height = 8) =>
   block(id, 'text', { text, variant: 'caption' }, { height: mmH(height) });
 
-/** Adjustments for A5 (148 × 210 mm): fewer lines where space runs out (§5.3). */
+/**
+ * Adjustments for A5 (148 × 210 mm): fewer lines where space runs out (§5.3). A change is a block
+ * property or a raw patch operation on the page template; operations apply in order, and block
+ * pointers are taken from the unpatched body, so list block changes before insertions.
+ */
 function a5(
   template: PageTemplate,
-  changes: Array<[blockId: string, path: string, value: unknown]>,
+  changes: Array<[blockId: string, path: string, value: unknown] | JsonPatchOp>,
 ): PageTemplate {
-  const ops: JsonPatchOp[] = changes.map(([id, path, value]) => {
+  const ops: JsonPatchOp[] = changes.map((change) => {
+    if (!Array.isArray(change)) return change;
+    const [id, path, value] = change;
     const pointer = pointerToBlock(template.body, id);
     if (!pointer) throw new Error(`A5 override: no block "${id}" in ${template.id}`);
     // 'add' sets or replaces a member, so it also works for props left at the block defaults.
@@ -448,42 +454,285 @@ const dayLeft = a5(
   ],
 );
 
-const dayRight: PageTemplate = {
-  id: 'day-right',
-  name: L('Day: evening (right)', 'Dzień: wieczór (prawa)'),
-  spread: { group: 'day', position: 'right' },
+/** A line to write a number or word on; example fills write on it (see withBlanks). */
+const BLANK = '__________';
+
+/** Check-out numbers written on blanks; examples fill the blanks in order. */
+const CHECKOUT = L(
+  `Mood ${BLANK} /10\nTension ${BLANK} /10\nCraving ${BLANK} /10\nat ${BLANK}`,
+  `Nastrój ${BLANK} /10\nNapięcie ${BLANK} /10\nGłód ${BLANK} /10\no godz. ${BLANK}`,
+);
+
+/** Triggers to tick; loneliness, boredom and tiredness are already rows of HALT-B. */
+const TRIGGERS = [
+  L('none today', 'nie było'),
+  L('an emotion', 'emocja'),
+  L('a conflict', 'konflikt'),
+  L('a person', 'osoba'),
+  L('a place', 'miejsce'),
+  L('a memory', 'wspomnienie'),
+  L('stress', 'stres'),
+  L('success / euphoria', 'sukces / euforia'),
+  L('money', 'pieniądze'),
+  L('a social situation', 'sytuacja towarzyska'),
+  L('a thought of drinking', 'myśl o piciu / użyciu'),
+  L('other:', 'inne:'),
+];
+
+const PROTECTED = [
+  L('talking to someone', 'rozmowa z kimś'),
+  L('therapy / meeting', 'terapia / mityng'),
+  L('exercise', 'ruch'),
+  L('rest / sleep', 'odpoczynek / sen'),
+  L('family / friends', 'rodzina / przyjaciele'),
+  L('work / hobby', 'praca / hobby'),
+  L('meditation / prayer', 'medytacja / modlitwa'),
+  L('a change of scene', 'zmiana otoczenia'),
+  L('asking for help', 'prośba o pomoc'),
+  L('setting a boundary', 'postawiona granica'),
+  L('avoiding a risky situation', 'unikanie ryzyka'),
+  L('other:', 'inne:'),
+];
+
+const dayRight = a5(
+  {
+    id: 'day-right',
+    name: L('Day: evening (right)', 'Dzień: wieczór (prawa)'),
+    spread: { group: 'day', position: 'right' },
+    rationale: L(
+      'The evening check-out: a few numbers and ticks in the outer column, then what was hard, a dot grid for the reflection, a small victory, a step towards a good life, and gratitude.',
+      'Wieczorny check-out: kilka liczb i zaznaczeń w zewnętrznej kolumnie, potem co było trudne, kropki na refleksję, małe zwycięstwo, krok ku dobremu życiu i wdzięczność.',
+    ),
+    outerRailWidth: 36,
+    outerRail: [
+      railBlock(
+        'checkout-title',
+        'text',
+        { text: L('Check-out (0–10)', 'Check-out (0–10)'), variant: 'label' },
+        mmH(5),
+      ),
+      railBlock('checkout', 'text', { text: CHECKOUT, variant: 'body' }, mmH(26)),
+      railBlock(
+        'trigger',
+        'numbered-list',
+        {
+          title: L('Trigger today?', 'Czy pojawił się wyzwalacz?'),
+          marker: 'checkbox',
+          items: TRIGGERS,
+          count: TRIGGERS.length,
+          lineHeight: 5,
+        },
+        fr(1),
+      ),
+      railBlock(
+        'trigger-response',
+        'writing-area',
+        { title: L('What did I do?', 'Co {g:zrobiłem|zrobiłam}?'), pattern: 'lines' },
+        mmH(20),
+      ),
+      railBlock(
+        'protected',
+        'numbered-list',
+        {
+          title: L('What protected me today?', 'Co mnie dzisiaj chroniło?'),
+          marker: 'checkbox',
+          items: PROTECTED,
+          count: PROTECTED.length,
+          lineHeight: 5,
+        },
+        fr(1),
+      ),
+    ],
+    body: stack(
+      [
+        block(
+          'threat',
+          'writing-area',
+          {
+            title: L(
+              'What was hard today? What threatened my sobriety?',
+              'Co dzisiaj było trudne? Co zagroziło mojej trzeźwości?',
+            ),
+            pattern: 'lines',
+          },
+          { height: mmH(26) },
+        ),
+        block(
+          'reflection',
+          'writing-area',
+          { title: L('Reflections on the day', 'Refleksje z dnia'), pattern: 'dots', pitch: 5 },
+          { height: fr(1) },
+        ),
+        block(
+          'victory',
+          'writing-area',
+          {
+            title: L(
+              'My small victory: what did I do well today, even something small?',
+              'Moje małe zwycięstwo: co {g:zrobiłem|zrobiłam} dziś dobrze, nawet jeśli to drobiazg?',
+            ),
+            pattern: 'lines',
+          },
+          { height: mmH(19) },
+        ),
+        block(
+          'good-life',
+          'writing-area',
+          {
+            title: L(
+              'A good life: what did I do today for the life I want to live?',
+              'Dobre życie: co {g:zrobiłem|zrobiłam} dziś dla życia, które chcę prowadzić?',
+            ),
+            pattern: 'lines',
+          },
+          { height: mmH(19) },
+        ),
+        block(
+          'gratitude',
+          'numbered-list',
+          {
+            title: L('What am I grateful for today?', 'Za co jestem dziś {g:wdzięczny|wdzięczna}?'),
+            count: 3,
+          },
+          { height: mmH(28) },
+        ),
+      ],
+      { gap: 4, label: L('Evening', 'Wieczór') },
+    ),
+  },
+  [
+    ['threat', 'size/height', { mm: 19 }],
+    ['victory', 'size/height', { mm: 15 }],
+    ['good-life', 'size/height', { mm: 15 }],
+    ['gratitude', 'size/height', { mm: 24 }],
+    // A5 is too narrow for the outer column: the check-out moves into the page as one line, with
+    // a line for the trigger; the tick lists are left out.
+    { op: 'add', path: '/outerRailWidth', value: 0 },
+    { op: 'remove', path: '/outerRail' },
+    {
+      op: 'add',
+      path: '/body/children/1',
+      value: {
+        kind: 'block',
+        block: {
+          id: 'checkout-line',
+          type: 'text',
+          props: {
+            text: L(
+              `Check-out: mood ${BLANK} /10 · tension ${BLANK} /10 · craving ${BLANK} /10`,
+              `Check-out: nastrój ${BLANK} /10 · napięcie ${BLANK} /10 · głód ${BLANK} /10`,
+            ),
+            variant: 'caption',
+          },
+          size: { height: { mm: 6 } },
+        },
+      },
+    },
+    {
+      op: 'add',
+      path: '/body/children/2',
+      value: {
+        kind: 'block',
+        block: {
+          id: 'trigger-line',
+          type: 'writing-area',
+          props: {
+            title: L(
+              'Trigger today? What did I do? What protected me?',
+              'Wyzwalacz? Co {g:zrobiłem|zrobiłam}? Co mnie chroniło?',
+            ),
+            pattern: 'lines',
+          },
+          size: { height: { mm: 16 } },
+        },
+      },
+    },
+  ],
+);
+
+const situation: PageTemplate = {
+  id: 'situation',
+  name: L('Situation analysis', 'Analiza sytuacji'),
   rationale: L(
-    'The largest writing space in the planner: a 5 mm dot grid for the evening reflection, framed by two relapse-prevention questions.',
-    'Największa przestrzeń do pisania w planerze: kropki 5 mm na wieczorną refleksję, między dwoma pytaniami chroniącymi przed nawrotem.',
+    'Optional, once a week or after a hard day: a thought that raised the risk and an answer to it, then one situation step by step (what happened, thought, feeling, action, next time).',
+    'Opcjonalna, raz w tygodniu albo po trudnym dniu: myśl, która zwiększała ryzyko, i odpowiedź na nią, potem jedna sytuacja krok po kroku (wydarzenie, myśl, uczucie, działanie, następnym razem).',
   ),
   body: stack(
     [
-      block(
-        'threat',
-        'writing-area',
-        {
-          title: L('What threatened my sobriety today?', 'Co dzisiaj zagroziło mojej trzeźwości?'),
-          pattern: 'lines',
-        },
-        { height: mmH(32) },
+      heading('heading', L('Situation analysis', 'Analiza sytuacji')),
+      caption(
+        'how',
+        L(
+          'Week {{weekRange}}. One situation is enough; short answers are fine.',
+          'Tydzień {{weekRange}}. Wystarczy jedna sytuacja i krótkie odpowiedzi.',
+        ),
       ),
-      block(
-        'reflection',
-        'writing-area',
-        { title: L('Reflections on the day', 'Refleksje z dnia'), pattern: 'dots', pitch: 5 },
-        { height: fr(1) },
+      stack(
+        [
+          block(
+            'risky-thought',
+            'writing-area',
+            {
+              title: L(
+                'Did I notice a thought that raised the risk? What was it?',
+                'Czy {g:zauważyłem|zauważyłam} myśl, która zwiększała ryzyko? Jaka to była myśl?',
+              ),
+              pattern: 'lines',
+            },
+            { height: fr(1) },
+          ),
+          block(
+            'thought-answer',
+            'writing-area',
+            {
+              title: L('What can I say back to this thought?', 'Co mogę odpowiedzieć tej myśli?'),
+              pattern: 'lines',
+            },
+            { height: fr(1) },
+          ),
+        ],
+        { height: fr(2), label: L('A thought', 'Myśl'), gap: 3 },
       ),
-      block(
-        'gratitude',
-        'numbered-list',
-        {
-          title: L('What am I grateful for today?', 'Za co jestem dziś {g:wdzięczny|wdzięczna}?'),
-          count: 3,
-        },
-        { height: mmH(32) },
+      stack(
+        [
+          block(
+            'happened',
+            'writing-area',
+            { title: L('What happened?', 'Co się wydarzyło?'), pattern: 'lines' },
+            { height: fr(1) },
+          ),
+          block(
+            'thought',
+            'writing-area',
+            { title: L('What did I think?', 'Co {g:pomyślałem|pomyślałam}?'), pattern: 'lines' },
+            { height: fr(1) },
+          ),
+          block(
+            'felt',
+            'writing-area',
+            { title: L('What did I feel?', 'Co {g:poczułem|poczułam}?'), pattern: 'lines' },
+            { height: fr(1) },
+          ),
+          block(
+            'did',
+            'writing-area',
+            { title: L('What did I do?', 'Co {g:zrobiłem|zrobiłam}?'), pattern: 'lines' },
+            { height: fr(1) },
+          ),
+          block(
+            'next-time',
+            'writing-area',
+            {
+              title: L('What could help me next time?', 'Co mogłoby mi pomóc następnym razem?'),
+              pattern: 'lines',
+            },
+            { height: fr(1) },
+          ),
+        ],
+        { height: fr(5), label: L('One situation', 'Jedna sytuacja'), gap: 3 },
       ),
     ],
-    { gap: 5, label: L('Evening', 'Wieczór') },
+    { gap: 5 },
   ),
 };
 
@@ -774,6 +1023,8 @@ const sections: SectionTemplate[] = [
             repeat: { over: 'daysOfWeek', group: 1 },
             children: [page('day-left'), page('day-right')],
           },
+          // Optional weekly page; switch it on in Structure.
+          { page: 'situation', enabled: false },
         ],
       },
       page('wheel-of-life'),
@@ -811,6 +1062,7 @@ const pageTemplates = [
   weekRight,
   dayLeft,
   dayRight,
+  situation,
   wheel,
   review,
   notes,

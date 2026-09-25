@@ -1843,12 +1843,199 @@
         "position": "right"
       },
       "rationale": {
-        "en": "The largest writing space in the planner: a 5 mm dot grid for the evening reflection, framed by two relapse-prevention questions.",
-        "pl": "Największa przestrzeń do pisania w planerze: kropki 5 mm na wieczorną refleksję, między dwoma pytaniami chroniącymi przed nawrotem."
+        "en": "The evening check-out: a few numbers and ticks in the outer column, then what was hard, a dot grid for the reflection, a small victory, a step towards a good life, and gratitude.",
+        "pl": "Wieczorny check-out: kilka liczb i zaznaczeń w zewnętrznej kolumnie, potem co było trudne, kropki na refleksję, małe zwycięstwo, krok ku dobremu życiu i wdzięczność."
       },
+      "outerRailWidth": 36,
+      "outerRail": [
+        {
+          "id": "checkout-title",
+          "type": "text",
+          "props": {
+            "text": {
+              "en": "Check-out (0–10)",
+              "pl": "Check-out (0–10)"
+            },
+            "variant": "label"
+          },
+          "size": {
+            "height": {
+              "mm": 5
+            }
+          }
+        },
+        {
+          "id": "checkout",
+          "type": "text",
+          "props": {
+            "text": {
+              "en": "Mood __________ /10\nTension __________ /10\nCraving __________ /10\nat __________",
+              "pl": "Nastrój __________ /10\nNapięcie __________ /10\nGłód __________ /10\no godz. __________"
+            },
+            "variant": "body"
+          },
+          "size": {
+            "height": {
+              "mm": 26
+            }
+          }
+        },
+        {
+          "id": "trigger",
+          "type": "numbered-list",
+          "props": {
+            "title": {
+              "en": "Trigger today?",
+              "pl": "Czy pojawił się wyzwalacz?"
+            },
+            "marker": "checkbox",
+            "items": [
+              {
+                "en": "none today",
+                "pl": "nie było"
+              },
+              {
+                "en": "an emotion",
+                "pl": "emocja"
+              },
+              {
+                "en": "a conflict",
+                "pl": "konflikt"
+              },
+              {
+                "en": "a person",
+                "pl": "osoba"
+              },
+              {
+                "en": "a place",
+                "pl": "miejsce"
+              },
+              {
+                "en": "a memory",
+                "pl": "wspomnienie"
+              },
+              {
+                "en": "stress",
+                "pl": "stres"
+              },
+              {
+                "en": "success / euphoria",
+                "pl": "sukces / euforia"
+              },
+              {
+                "en": "money",
+                "pl": "pieniądze"
+              },
+              {
+                "en": "a social situation",
+                "pl": "sytuacja towarzyska"
+              },
+              {
+                "en": "a thought of drinking",
+                "pl": "myśl o piciu / użyciu"
+              },
+              {
+                "en": "other:",
+                "pl": "inne:"
+              }
+            ],
+            "count": 12,
+            "lineHeight": 5
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        },
+        {
+          "id": "trigger-response",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "What did I do?",
+              "pl": "Co {g:zrobiłem|zrobiłam}?"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "mm": 20
+            }
+          }
+        },
+        {
+          "id": "protected",
+          "type": "numbered-list",
+          "props": {
+            "title": {
+              "en": "What protected me today?",
+              "pl": "Co mnie dzisiaj chroniło?"
+            },
+            "marker": "checkbox",
+            "items": [
+              {
+                "en": "talking to someone",
+                "pl": "rozmowa z kimś"
+              },
+              {
+                "en": "therapy / meeting",
+                "pl": "terapia / mityng"
+              },
+              {
+                "en": "exercise",
+                "pl": "ruch"
+              },
+              {
+                "en": "rest / sleep",
+                "pl": "odpoczynek / sen"
+              },
+              {
+                "en": "family / friends",
+                "pl": "rodzina / przyjaciele"
+              },
+              {
+                "en": "work / hobby",
+                "pl": "praca / hobby"
+              },
+              {
+                "en": "meditation / prayer",
+                "pl": "medytacja / modlitwa"
+              },
+              {
+                "en": "a change of scene",
+                "pl": "zmiana otoczenia"
+              },
+              {
+                "en": "asking for help",
+                "pl": "prośba o pomoc"
+              },
+              {
+                "en": "setting a boundary",
+                "pl": "postawiona granica"
+              },
+              {
+                "en": "avoiding a risky situation",
+                "pl": "unikanie ryzyka"
+              },
+              {
+                "en": "other:",
+                "pl": "inne:"
+              }
+            ],
+            "count": 12,
+            "lineHeight": 5
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        }
+      ],
       "body": {
         "kind": "stack",
-        "gap": 5,
+        "gap": 4,
         "children": [
           {
             "kind": "block",
@@ -1857,14 +2044,14 @@
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "What threatened my sobriety today?",
-                  "pl": "Co dzisiaj zagroziło mojej trzeźwości?"
+                  "en": "What was hard today? What threatened my sobriety?",
+                  "pl": "Co dzisiaj było trudne? Co zagroziło mojej trzeźwości?"
                 },
                 "pattern": "lines"
               },
               "size": {
                 "height": {
-                  "mm": 32
+                  "mm": 26
                 }
               }
             }
@@ -1892,6 +2079,44 @@
           {
             "kind": "block",
             "block": {
+              "id": "victory",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My small victory: what did I do well today, even something small?",
+                  "pl": "Moje małe zwycięstwo: co {g:zrobiłem|zrobiłam} dziś dobrze, nawet jeśli to drobiazg?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 19
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "good-life",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "A good life: what did I do today for the life I want to live?",
+                  "pl": "Dobre życie: co {g:zrobiłem|zrobiłam} dziś dla życia, które chcę prowadzić?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 19
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
               "id": "gratitude",
               "type": "numbered-list",
               "props": {
@@ -1903,7 +2128,7 @@
               },
               "size": {
                 "height": {
-                  "mm": 32
+                  "mm": 28
                 }
               }
             }
@@ -1914,9 +2139,96 @@
           "pl": "Wieczór"
         }
       },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/0/block/size/height",
+            "value": {
+              "mm": 19
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2/block/size/height",
+            "value": {
+              "mm": 15
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/3/block/size/height",
+            "value": {
+              "mm": 15
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/4/block/size/height",
+            "value": {
+              "mm": 24
+            }
+          },
+          {
+            "op": "add",
+            "path": "/outerRailWidth",
+            "value": 0
+          },
+          {
+            "op": "remove",
+            "path": "/outerRail"
+          },
+          {
+            "op": "add",
+            "path": "/body/children/1",
+            "value": {
+              "kind": "block",
+              "block": {
+                "id": "checkout-line",
+                "type": "text",
+                "props": {
+                  "text": {
+                    "en": "Check-out: mood __________ /10 · tension __________ /10 · craving __________ /10",
+                    "pl": "Check-out: nastrój __________ /10 · napięcie __________ /10 · głód __________ /10"
+                  },
+                  "variant": "caption"
+                },
+                "size": {
+                  "height": {
+                    "mm": 6
+                  }
+                }
+              }
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/2",
+            "value": {
+              "kind": "block",
+              "block": {
+                "id": "trigger-line",
+                "type": "writing-area",
+                "props": {
+                  "title": {
+                    "en": "Trigger today? What did I do? What protected me?",
+                    "pl": "Wyzwalacz? Co {g:zrobiłem|zrobiłam}? Co mnie chroniło?"
+                  },
+                  "pattern": "lines"
+                },
+                "size": {
+                  "height": {
+                    "mm": 16
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
       "guide": {
-        "en": "The evening page. Answer honestly what threatened your sobriety today and how you dealt with it; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow, and end with three things you are grateful for.",
-        "pl": "Strona wieczorna. Odpowiedz szczerze, co dziś zagroziło Twojej trzeźwości i jak sobie z tym {g:poradziłeś|poradziłaś}; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro, a na koniec wpisz trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}."
+        "en": "The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, and end with three things you are grateful for.",
+        "pl": "Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, a na koniec trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}."
       },
       "sampleContent": {
         "threat": {
@@ -1959,6 +2271,347 @@
           "note": {
             "en": "small things are enough",
             "pl": "drobne rzeczy wystarczą"
+          }
+        },
+        "checkout": {
+          "fill": [
+            "6",
+            "4",
+            "7",
+            "17:30"
+          ]
+        },
+        "checkout-line": {
+          "fill": [
+            "6",
+            "4",
+            "7"
+          ]
+        },
+        "trigger": {
+          "fill": {
+            "done": [
+              2
+            ]
+          },
+          "note": {
+            "en": "tick all that apply",
+            "pl": "zaznacz wszystkie"
+          },
+          "noteAt": "bottom-right"
+        },
+        "trigger-response": {
+          "fill": {
+            "en": "called Tomek,\nwent for a walk",
+            "pl": "telefon do Tomka,\nspacer"
+          }
+        },
+        "trigger-line": {
+          "fill": {
+            "en": "argument at work; called Tomek; the walk helped",
+            "pl": "kłótnia w pracy; telefon do Tomka; pomógł spacer"
+          }
+        },
+        "protected": {
+          "fill": {
+            "done": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "victory": {
+          "fill": {
+            "en": "I did not answer back in anger.",
+            "pl": "Nie odpowiedziałem ze złością."
+          },
+          "note": {
+            "en": "even something small",
+            "pl": "nawet drobiazg"
+          },
+          "noteAt": "bottom-right"
+        },
+        "good-life": {
+          "fill": {
+            "en": "played chess with my son",
+            "pl": "partia szachów z synem"
+          },
+          "note": {
+            "en": "not only: did I stay sober?",
+            "pl": "nie tylko: czy nie piłem?"
+          },
+          "noteAt": "bottom-right"
+        }
+      }
+    },
+    "situation": {
+      "id": "situation",
+      "name": {
+        "en": "Situation analysis",
+        "pl": "Analiza sytuacji"
+      },
+      "rationale": {
+        "en": "Optional, once a week or after a hard day: a thought that raised the risk and an answer to it, then one situation step by step (what happened, thought, feeling, action, next time).",
+        "pl": "Opcjonalna, raz w tygodniu albo po trudnym dniu: myśl, która zwiększała ryzyko, i odpowiedź na nią, potem jedna sytuacja krok po kroku (wydarzenie, myśl, uczucie, działanie, następnym razem)."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 5,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Situation analysis",
+                  "pl": "Analiza sytuacji"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Week {{weekRange}}. One situation is enough; short answers are fine.",
+                  "pl": "Tydzień {{weekRange}}. Wystarczy jedna sytuacja i krótkie odpowiedzi."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 3,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "risky-thought",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Did I notice a thought that raised the risk? What was it?",
+                      "pl": "Czy {g:zauważyłem|zauważyłam} myśl, która zwiększała ryzyko? Jaka to była myśl?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "thought-answer",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What can I say back to this thought?",
+                      "pl": "Co mogę odpowiedzieć tej myśli?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 2
+            },
+            "label": {
+              "en": "A thought",
+              "pl": "Myśl"
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 3,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "happened",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What happened?",
+                      "pl": "Co się wydarzyło?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "thought",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What did I think?",
+                      "pl": "Co {g:pomyślałem|pomyślałam}?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "felt",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What did I feel?",
+                      "pl": "Co {g:poczułem|poczułam}?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "did",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What did I do?",
+                      "pl": "Co {g:zrobiłem|zrobiłam}?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "next-time",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "What could help me next time?",
+                      "pl": "Co mogłoby mi pomóc następnym razem?"
+                    },
+                    "pattern": "lines"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 5
+            },
+            "label": {
+              "en": "One situation",
+              "pl": "Jedna sytuacja"
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "An optional page at the end of each week (switch it on in Structure). Take one situation from the week: first the thought that raised the risk and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.",
+        "pl": "Strona opcjonalna na koniec każdego tygodnia (włącz ją w Strukturze). Weź jedną sytuację z tygodnia: najpierw myśl, która zwiększała ryzyko, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem."
+      },
+      "sampleContent": {
+        "risky-thought": {
+          "fill": {
+            "en": "one beer after a day like this won't hurt",
+            "pl": "jedno piwo po takim dniu nie zaszkodzi"
+          },
+          "note": {
+            "en": "write it word for word",
+            "pl": "zapisz dosłownie"
+          },
+          "noteAt": "bottom-right"
+        },
+        "thought-answer": {
+          "fill": {
+            "en": "One is never one for me. I can rest without it.",
+            "pl": "Dla mnie jedno nigdy nie jest jedno. Odpocznę bez tego."
+          }
+        },
+        "happened": {
+          "fill": {
+            "en": "argument with the boss on Wednesday",
+            "pl": "kłótnia z szefem w środę"
+          }
+        },
+        "thought": {
+          "fill": {
+            "en": "he never listens to me",
+            "pl": "on mnie nigdy nie słucha"
+          }
+        },
+        "felt": {
+          "fill": {
+            "en": "anger 8/10, then shame",
+            "pl": "złość 8/10, potem wstyd"
+          }
+        },
+        "did": {
+          "fill": {
+            "en": "left the room, called Tomek",
+            "pl": "wyszedłem z pokoju, telefon do Tomka"
+          }
+        },
+        "next-time": {
+          "fill": {
+            "en": "ask for a break before I answer",
+            "pl": "poprosić o przerwę, zanim odpowiem"
+          },
+          "note": {
+            "en": "one small step",
+            "pl": "jeden mały krok"
           }
         }
       }
@@ -3075,6 +3728,10 @@
                   "page": "day-right"
                 }
               ]
+            },
+            {
+              "page": "situation",
+              "enabled": false
             }
           ]
         },

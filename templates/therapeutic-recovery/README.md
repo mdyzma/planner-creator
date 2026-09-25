@@ -52,7 +52,7 @@ The app's **Content** screen does the same per planner: edit, import/export CSV,
 | Section | Pages |
 |---|---|
 | Introduction (whole sheets) | cover · how to use · therapeutic contract · safety rules |
-| Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals and wins in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, 24-hour commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: relapse question, dot-grid reflection, gratitude) · Wheel of Life · monthly review · notes |
+| Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals and wins in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, 24-hour commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: check-out and tick lists for triggers and protection in the outer column (A4), what was hard, dot-grid reflection, small victory, good life, gratitude) · optional weekly situation analysis (off by default) · Wheel of Life · monthly review · notes |
 | Crisis and relapse prevention (whole sheets) | SOS plan · warning signs (body, thoughts, emotions, behaviours) · gains and losses · support network |
 
 A5 uses the same pages with fewer lines where space runs out (`formatOverrides.A5`): one schedule

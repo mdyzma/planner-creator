@@ -153,7 +153,12 @@ describe('examples and guide', () => {
 
   it('only gives examples for blocks that exist, with notes in both languages', () => {
     for (const page of Object.values(template.pageTemplates)) {
-      const ids = new Set(blocksOf(page).map((b) => b.id));
+      // Blocks of any format count: A5 adds some of its own (e.g. the evening check-out line).
+      const ids = new Set(
+        (['A4', 'A5'] as const).flatMap((f) =>
+          blocksOf(resolveTemplateForFormat(page, f).template).map((b) => b.id),
+        ),
+      );
       for (const [id, sample] of Object.entries(page.sampleContent ?? {})) {
         expect(ids.has(id), `${page.id}: ${id}`).toBe(true);
         const note = (sample as { note?: { en?: string; pl?: string } }).note;

@@ -266,6 +266,58 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       },
       note: L('small things are enough', 'drobne rzeczy wystarczą'),
     },
+    checkout: { fill: ['6', '4', '7', '17:30'] },
+    'checkout-line': { fill: ['6', '4', '7'] },
+    trigger: {
+      fill: { done: [2] },
+      note: L('tick all that apply', 'zaznacz wszystkie'),
+      noteAt: 'bottom-right',
+    },
+    'trigger-response': {
+      fill: L('called Tomek,\nwent for a walk', 'telefon do Tomka,\nspacer'),
+    },
+    'trigger-line': {
+      fill: L(
+        'argument at work; called Tomek; the walk helped',
+        'kłótnia w pracy; telefon do Tomka; pomógł spacer',
+      ),
+    },
+    protected: { fill: { done: [0, 1, 2] } },
+    victory: {
+      fill: L('I did not answer back in anger.', 'Nie odpowiedziałem ze złością.'),
+      note: L('even something small', 'nawet drobiazg'),
+      // The printed titles are long, so the notes go under the lines.
+      noteAt: 'bottom-right',
+    },
+    'good-life': {
+      fill: L('played chess with my son', 'partia szachów z synem'),
+      note: L('not only: did I stay sober?', 'nie tylko: czy nie piłem?'),
+      noteAt: 'bottom-right',
+    },
+  },
+  situation: {
+    'risky-thought': {
+      fill: L(
+        "one beer after a day like this won't hurt",
+        'jedno piwo po takim dniu nie zaszkodzi',
+      ),
+      note: L('write it word for word', 'zapisz dosłownie'),
+      noteAt: 'bottom-right',
+    },
+    'thought-answer': {
+      fill: L(
+        'One is never one for me. I can rest without it.',
+        'Dla mnie jedno nigdy nie jest jedno. Odpocznę bez tego.',
+      ),
+    },
+    happened: { fill: L('argument with the boss on Wednesday', 'kłótnia z szefem w środę') },
+    thought: { fill: L('he never listens to me', 'on mnie nigdy nie słucha') },
+    felt: { fill: L('anger 8/10, then shame', 'złość 8/10, potem wstyd') },
+    did: { fill: L('left the room, called Tomek', 'wyszedłem z pokoju, telefon do Tomka') },
+    'next-time': {
+      fill: L('ask for a break before I answer', 'poprosić o przerwę, zanim odpowiem'),
+      note: L('one small step', 'jeden mały krok'),
+    },
   },
   'wheel-of-life': {
     wheel: {
@@ -416,8 +468,12 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu.',
   ),
   'day-right': L(
-    'The evening page. Answer honestly what threatened your sobriety today and how you dealt with it; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow, and end with three things you are grateful for.',
-    'Strona wieczorna. Odpowiedz szczerze, co dziś zagroziło Twojej trzeźwości i jak sobie z tym {g:poradziłeś|poradziłaś}; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro, a na koniec wpisz trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}.',
+    'The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, and end with three things you are grateful for.',
+    'Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, a na koniec trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}.',
+  ),
+  situation: L(
+    'An optional page at the end of each week (switch it on in Structure). Take one situation from the week: first the thought that raised the risk and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.',
+    'Strona opcjonalna na koniec każdego tygodnia (włącz ją w Strukturze). Weź jedną sytuację z tygodnia: najpierw myśl, która zwiększała ryzyko, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem.',
   ),
   'wheel-of-life': L(
     'At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below.',

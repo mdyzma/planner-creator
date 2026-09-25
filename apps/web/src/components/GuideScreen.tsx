@@ -2,7 +2,7 @@
 
 import { applyGender, localize } from '@planner/i18n';
 import { PageView } from '@planner/renderer';
-import type { FormatId, Locale, PlannerProject } from '@planner/schema';
+import type { FormatId, Locale, PageRef, PlannerProject, SectionTemplate } from '@planner/schema';
 import { FORMAT_IDS } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
@@ -25,7 +25,7 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
   { key: 'intro', pages: [['cover'], ['how-to'], ['contract'], ['safety-rules']] },
   { key: 'month', pages: [['month-divider'], ['month-open-left', 'month-open-right']] },
   { key: 'week', pages: [['week-left', 'week-right']] },
-  { key: 'day', pages: [['day-left', 'day-right']] },
+  { key: 'day', pages: [['day-left', 'day-right'], ['situation']] },
   { key: 'monthEnd', pages: [['wheel-of-life'], ['monthly-review'], ['notes']] },
   {
     key: 'crisis',
@@ -41,8 +41,23 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
 /** Usable width of an A4 guide page (210 mm minus 15 mm margins). */
 const CONTENT_WIDTH = 180;
 
+/** Optional pages are switched on in the example planner, so the guide explains them too. */
+const withOptionalPages = (
+  entries: Array<SectionTemplate | PageRef>,
+): Array<SectionTemplate | PageRef> =>
+  entries.map((e) =>
+    'page' in e ? { ...e, enabled: true } : { ...e, children: withOptionalPages(e.children) },
+  );
+
 function exampleProject(locale: Locale, format: FormatId): PlannerProject {
-  const bundle = BUNDLED_TEMPLATES[0]!;
+  const bundled = BUNDLED_TEMPLATES[0]!;
+  const bundle = {
+    ...bundled,
+    template: {
+      ...bundled.template,
+      sections: withOptionalPages(bundled.template.sections) as SectionTemplate[],
+    },
+  };
   const { project } = createGeneratedProject({
     bundle,
     id: 'guide-example',
