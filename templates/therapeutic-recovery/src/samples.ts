@@ -229,12 +229,13 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     },
     halt: {
       fill: {
-        values: [2, 4, 1, 3],
+        values: [2, 4, 1, 3, 2],
         notes: [
           L('ate late', 'późny obiad'),
           L('argument at work', 'kłótnia w pracy'),
           '',
           L('short night', 'krótka noc'),
+          L('nothing planned', 'nic zaplanowanego'),
         ],
       },
       note: L('check in at midday; 4–5 = act now', 'sprawdź w południe; 4–5 = działaj'),
@@ -411,8 +412,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Czwartek–niedziela, legenda znaczników i dwa pytania na koniec tygodnia: Twoje zwycięstwa, nawet małe, oraz co chroniło Twój spokój.',
   ),
   'day-left': L(
-    'The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, check HALT: how hungry, angry, lonely and tired you are, from 1 to 5; a 4 or 5 is a signal to act now.',
-    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa sprawdź HALT: jak bardzo jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna} i {g:zmęczony|zmęczona}, w skali 1–5; 4 lub 5 to sygnał, by działać od razu.',
+    'The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, check HALT-B: how hungry, angry, lonely, tired and bored you are, from 1 to 5; a 4 or 5 is a signal to act now.',
+    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa sprawdź HALT-B: jak bardzo jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna}, {g:zmęczony|zmęczona} i {g:znudzony|znudzona}, w skali 1–5; 4 lub 5 to sygnał, by działać od razu.',
   ),
   'day-right': L(
     'The evening page. Answer honestly what threatened your sobriety today and how you dealt with it; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow, and end with three things you are grateful for.',

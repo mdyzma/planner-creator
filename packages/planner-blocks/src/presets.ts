@@ -20,6 +20,12 @@ export const HALT_ROWS = [
   { badge: 'T', label: L('Tired', 'Zmęczenie / wyczerpanie') },
 ];
 
+/** HALT-B: HALT plus boredom, a common relapse trigger when the day has no structure. */
+export const HALT_B_ROWS = [
+  ...HALT_ROWS,
+  { badge: 'B', label: L('Bored / without purpose', 'Nuda / brak celu') },
+];
+
 export const SOS_STEPS = [
   L('Stop and recognise what is happening.', 'Zatrzymaj się i nazwij, co się dzieje.'),
   L('Do not stay alone with the craving.', 'Nie zostawaj w samotności z głodem.'),
@@ -44,7 +50,19 @@ export const BUILT_IN_PRESETS: BlockPreset[] = [
       rows: HALT_ROWS,
       mode: 'scale-1-5',
       noteColumn: true,
-      noteLabel: L('What helped?', 'Co pomogło?'),
+      noteLabel: L('Reason:', 'Powód:'),
+    },
+  },
+  {
+    id: 'halt-b-tracker',
+    label: L('HALT-B tracker', 'Skala HALT-B'),
+    type: 'rating-matrix',
+    props: {
+      title: L('HALT-B check', 'Skala HALT-B'),
+      rows: HALT_B_ROWS,
+      mode: 'scale-1-5',
+      noteColumn: true,
+      noteLabel: L('Reason:', 'Powód:'),
     },
   },
   {
