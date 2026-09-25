@@ -221,12 +221,14 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
   const uiLocale = useLocale();
   const ids = useId();
   const [templateId, setTemplateId] = useState(BUNDLED_TEMPLATES[0]!.template.id);
-  const [name, setName] = useState(() => t('defaultName'));
   const [format, setFormat] = useState<FormatId>('A4');
   const [locale, setLocale] = useState<Locale>('pl');
   const [startDate, setStartDate] = useState(firstOfNextMonth);
   const [undated, setUndated] = useState(false);
   const [months, setMonths] = useState(6);
+  // The suggested name follows the chosen length ("1-Month…") until the user types their own.
+  const [customName, setCustomName] = useState<string | null>(null);
+  const name = customName ?? t('defaultName', { count: months });
 
   const bundle = BUNDLED_TEMPLATES.find((b) => b.template.id === templateId)!;
   const dated = !undated && /^\d{4}-\d{2}-\d{2}$/.test(startDate);
@@ -296,7 +298,7 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
           <input
             className={field}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setCustomName(e.target.value)}
             required
           />
         </label>

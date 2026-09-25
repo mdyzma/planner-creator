@@ -20,7 +20,7 @@
     "name": "Nazwa",
     "format": "Format",
     "plannerLanguage": "Język planera",
-    "defaultName": "6-miesięczny planer zdrowienia",
+    "defaultName": "{count}-miesięczny planer zdrowienia",
     "untitled": "Planer bez nazwy",
     "yourPlanners": "Twoje planery",
     "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",
@@ -211,7 +211,8 @@
       "edit": "Zmień {field}",
       "lock": "Zablokuj blok",
       "unlock": "Odblokuj blok",
-      "resetPage": "Przywróć stronę"
+      "resetPage": "Przywróć stronę",
+      "rename": "Zmień nazwę planera"
     },
     "redo": "Ponów",
     "undoWhat": "Cofnij: {what}",
@@ -397,7 +398,8 @@
       "right": "Tylko prawych stronach",
       "custom": "Własna reguła"
     },
-    "export": "Eksport"
+    "export": "Eksport",
+    "plannerName": "Nazwa planera (także nazwa plików)"
   },
   "Export": {
     "title": "Eksport",

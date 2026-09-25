@@ -6,7 +6,7 @@ import { localize } from '@planner/i18n';
 import type { FormatId, Locale } from '@planner/schema';
 import { FORMAT_IDS, LOCALES } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { Link } from '@/i18n/navigation';
 import { useEditor } from '@/lib/editorStore';
@@ -45,7 +45,9 @@ export function Toolbar() {
       <Link href="/" className="underline">
         {common('planners')}
       </Link>
-      <h1 className="font-medium">{project.meta.name}</h1>
+      <h1 className="font-medium">
+        <PlannerName />
+      </h1>
       <div className="flex gap-1">
         <button
           type="button"
@@ -172,5 +174,33 @@ export function Toolbar() {
         <LanguageSwitcher />
       </nav>
     </header>
+  );
+}
+
+/** The planner's name, editable in place; it also names exported PDF and JSON files. */
+function PlannerName() {
+  const t = useTranslations('Editor');
+  const saved = useEditor((s) => s.project!.meta.name);
+  const apply = useEditor((s) => s.apply);
+  const [text, setText] = useState(saved);
+  useEffect(() => setText(saved), [saved]);
+
+  return (
+    <input
+      aria-label={t('plannerName')}
+      title={t('plannerName')}
+      className="w-72 max-w-full rounded border border-transparent bg-transparent px-1.5 py-0.5 font-medium hover:border-line focus:border-line"
+      value={text}
+      maxLength={200}
+      onChange={(e) => {
+        setText(e.target.value);
+        const name = e.target.value.trim();
+        if (name) {
+          apply(t('undo.rename'), (p) => ({ ...p, meta: { ...p.meta, name } }), 'rename');
+        }
+      }}
+      onBlur={() => setText(saved)}
+      onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+    />
   );
 }

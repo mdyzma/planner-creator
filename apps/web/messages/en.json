@@ -20,7 +20,7 @@
     "name": "Name",
     "format": "Format",
     "plannerLanguage": "Planner language",
-    "defaultName": "6-Month Recovery Planner",
+    "defaultName": "{count}-Month Recovery Planner",
     "untitled": "Untitled planner",
     "yourPlanners": "Your planners",
     "empty": "No planners yet. Create one above.",
@@ -211,7 +211,8 @@
       "edit": "Change {field}",
       "lock": "Lock block",
       "unlock": "Unlock block",
-      "resetPage": "Reset page changes"
+      "resetPage": "Reset page changes",
+      "rename": "Rename planner"
     },
     "redo": "Redo",
     "undoWhat": "Undo: {what}",
@@ -397,7 +398,8 @@
       "right": "Right-hand pages only",
       "custom": "Custom rule"
     },
-    "export": "Export"
+    "export": "Export",
+    "plannerName": "Planner name (also used for file names)"
   },
   "Export": {
     "title": "Export",
