@@ -1,15 +1,150 @@
 import { HALT_B_ROWS } from '@planner/blocks';
+import { moduleOff, moduleOn } from '@planner/core';
 import type {
+  BlockInstance,
+  BlockVariant,
+  Condition,
   JsonPatchOp,
   LayoutNode,
   Length,
+  ModuleDefinition,
   PageTemplate,
   PlannerTemplate,
+  PresetDefinition,
   SectionTemplate,
 } from '@planner/schema';
 import { TEMPLATE_MIGRATIONS, defaultPrintSettings } from '@planner/schema';
 import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl';
 import { GUIDES, SAMPLES } from './samples';
+
+// ---------------------------------------------------------------------------------------------
+// Modules and presets (ADR-0010)
+
+const RECOVERY = 'recovery';
+const HALT = 'halt';
+const CBT = 'cbt';
+
+const MODULES: ModuleDefinition[] = [
+  {
+    id: RECOVERY,
+    name: L('Recovery and sobriety', 'Zdrowienie i trzeźwość'),
+    description: L(
+      'Sobriety day counter, craving, triggers, AA and group meetings, the contract and safety rules, and the crisis and relapse prevention section.',
+      'Licznik dni trzeźwości, głód, wyzwalacze, mityngi AA i grupy, kontrakt i zasady bezpieczeństwa oraz sekcja kryzysowa i zapobiegania nawrotom.',
+    ),
+    default: true,
+  },
+  {
+    id: HALT,
+    name: L('HALT-B check', 'Skala HALT-B'),
+    description: L(
+      'A daily check of hunger, anger, loneliness, tiredness and boredom, and its summary in "My week".',
+      'Codzienna ocena głodu fizycznego, złości, samotności, zmęczenia i nudy oraz jej podsumowanie w „Moim tygodniu”.',
+    ),
+    default: true,
+  },
+  {
+    id: CBT,
+    name: L('Situation analysis (CBT)', 'Analiza sytuacji (CBT)'),
+    description: L(
+      'A weekly page for one situation: the thought, the feeling, what I did, and what could help next time.',
+      'Cotygodniowa strona na jedną sytuację: myśl, uczucie, działanie i to, co mogłoby pomóc następnym razem.',
+    ),
+    default: false,
+  },
+];
+
+const PRESETS: PresetDefinition[] = [
+  {
+    id: 'recovery-edition',
+    name: L('Recovery Edition', 'Recovery Edition'),
+    description: L(
+      'For recovery from addiction: sobriety, craving, HALT-B and the crisis section.',
+      'Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa.',
+    ),
+    modules: { [RECOVERY]: true, [HALT]: true, [CBT]: false },
+  },
+  {
+    id: 'balance',
+    name: L('Balance', 'Balance'),
+    description: L(
+      'Everyday life, balance and a good life, without addiction and therapy wording.',
+      'Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii.',
+    ),
+    modules: { [RECOVERY]: false, [HALT]: true, [CBT]: false },
+  },
+];
+
+/** The recovery module is off: the planner uses neutral, everyday wording. */
+const BALANCE = moduleOff(RECOVERY);
+/** The same, in A5, for blocks whose A5 layout differs. */
+const BALANCE_A5: Condition = { and: [BALANCE, { '==': [{ var: 'format' }, 'A5'] }] };
+
+type Tagged = LayoutNode | BlockInstance;
+const retag = <T extends Tagged>(node: T, fn: (b: BlockInstance) => BlockInstance): T =>
+  ('kind' in node
+    ? node.kind === 'block'
+      ? { ...node, block: fn(node.block) }
+      : node
+    : fn(node)) as T;
+
+/** Prints only while all these modules are on. */
+const needs = <T extends Tagged>(node: T, ...modules: string[]): T =>
+  retag(node, (b) => ({
+    ...b,
+    visibility: modules.length === 1 ? moduleOn(modules[0]!) : { and: modules.map(moduleOn) },
+  }));
+
+/** Other props while a condition holds; the first matching variant wins, so list A5 first. */
+const varies = <T extends Tagged>(node: T, ...variants: BlockVariant[]): T =>
+  retag(node, (b) => ({ ...b, variants }));
+
+/** Neutral "what helped" choices for planners without the recovery module. */
+const HELPED_BALANCE = [
+  L('talking to someone', 'rozmowa z kimś'),
+  L('exercise', 'ruch'),
+  L('rest / sleep', 'odpoczynek / sen'),
+  L('a proper meal', 'dobry posiłek'),
+  L('family / friends', 'rodzina / przyjaciele'),
+  L('work / hobby', 'praca / hobby'),
+  L('meditation / prayer', 'medytacja / modlitwa'),
+  L('time outdoors', 'czas na zewnątrz'),
+  L('time for myself', 'czas dla siebie'),
+  L('asking for help', 'prośba o pomoc'),
+  L('setting a boundary', 'postawiona granica'),
+  L('other:', 'inne:'),
+];
+
+/** What weighed on me: the everyday counterpart of the trigger list. */
+const STRAIN_BALANCE = [
+  L('nothing in particular', 'nic szczególnego'),
+  L('work / duties', 'praca / obowiązki'),
+  L('relationships', 'relacje'),
+  L('a conflict', 'konflikt'),
+  L('money', 'pieniądze'),
+  L('health', 'zdrowie'),
+  L('tiredness / little sleep', 'zmęczenie / mało snu'),
+  L('rush', 'pośpiech'),
+  L('loneliness', 'samotność'),
+  L('boredom', 'nuda'),
+  L('worries', 'zmartwienia'),
+  L('other:', 'inne:'),
+];
+
+/** Weekly day markers without AA, groups, therapy, recovery actions and high-risk days. */
+const MARKERS_BALANCE = ['doctor', 'exercise', 'custom'];
+
+/** Wheel of Life areas without the recovery module. */
+const WHEEL_BALANCE = [
+  L('Physical health and sleep', 'Zdrowie fizyczne i sen'),
+  L('Emotions and inner calm', 'Emocje i spokój'),
+  L('Meaning and spirituality', 'Sens i duchowość'),
+  L('Relationships and intimacy', 'Relacje i bliskość'),
+  L('Finances', 'Finanse'),
+  L('Work', 'Praca'),
+  L('Personal growth', 'Rozwój'),
+  L('Rest and recreation', 'Odpoczynek'),
+];
 
 /**
  * "Day by Day" ("Dzień po Dniu"), the 6-month therapeutic recovery planner (brief §5–§21),
@@ -37,14 +172,30 @@ const CHECKIN: Array<[en: string, pl: string, unit: string]> = [
  * The check-in as lines of `perLine` fields. Each field is held together by non-breaking spaces,
  * so a text block aligned to `spread` spaces the fields out evenly across the line.
  */
-const checkin = (perLine: number[]) => {
+const checkin = (perLine: number[], craving = true) => {
   const text = (lang: 0 | 1) => {
-    const fields = CHECKIN.map((f) => [f[lang], NUM, f[2]].join(' '));
+    const fields = CHECKIN.filter((f) => craving || f[0] !== 'Craving').map((f) =>
+      [f[lang], NUM, f[2]].join(' '),
+    );
     let at = 0;
     return perLine.map((n) => fields.slice(at, (at += n)).join(' · ')).join('\n');
   };
   return L(text(0), text(1));
 };
+
+/** A day of the weekly spread; without the recovery module its markers leave out AA and groups. */
+const dayStrip = (id: string, weekday: number) =>
+  varies(block(id, 'day-strip', { weekday }), {
+    when: BALANCE,
+    props: { markers: MARKERS_BALANCE },
+  });
+
+/** The daily date line; without the recovery module it has no sobriety day counter. */
+const dateHeader = (size: { width?: Length; height?: Length }) =>
+  varies(block('date', 'day-header', { inline: true }, size), {
+    when: BALANCE,
+    props: { showSobriety: false },
+  });
 
 /** The day's quote in slightly smaller type, so it fits beside the date. */
 const quoteBlock = (size: { width?: Length; height?: Length }): LayoutNode => {
@@ -130,22 +281,70 @@ const cover: PageTemplate = {
   ),
 };
 
+/** The "How to use" text for the modules in use: recovery wording, and the HALT sentence. */
+function howToText(recovery: boolean, halt: boolean) {
+  const en = [
+    'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension' +
+      (recovery ? ', craving' : '') +
+      ' and sleep), ' +
+      (recovery
+        ? 'one action that protects your sobriety today'
+        : 'one way you will take care of yourself today') +
+      ', up to three priorities and a plan for the day.' +
+      (halt ? ' During the day, check {{haltName}}: are you {{haltFeelings}}?' : '') +
+      ' In the evening, use the right page to look back: ' +
+      (recovery ? 'what threatened your sobriety' : 'what was hard') +
+      ', what you felt, and what you are grateful for.',
+    'Each week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.',
+    ...(recovery
+      ? [
+          'The crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.',
+        ]
+      : []),
+    'Write by hand. There are no wrong answers, and nothing here is a test.',
+  ];
+  const pl = [
+    'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie' +
+      (recovery ? ', głód' : '') +
+      ' i sen), ' +
+      (recovery
+        ? 'jedno działanie, którym chronisz dziś trzeźwość'
+        : 'jeden sposób, w jaki dziś o siebie zadbasz') +
+      ', najwyżej trzy priorytety i plan dnia.' +
+      (halt ? ' W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}?' : '') +
+      ' Wieczorem na prawej stronie spójrz wstecz: ' +
+      (recovery ? 'co zagroziło Twojej trzeźwości' : 'co było trudne') +
+      ', co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.',
+    'Każdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.',
+    ...(recovery
+      ? [
+          'Sekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.',
+        ]
+      : []),
+    'Pisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
+  ];
+  return L(en.join('\n\n'), pl.join('\n\n'));
+}
+
 const howTo: PageTemplate = {
   id: 'how-to',
   name: L('How to use this planner', 'Jak korzystać z planera'),
   body: stack([
     heading('heading', L('How to use this planner', 'Jak korzystać z planera')),
-    block(
-      'body',
-      'text',
-      {
-        variant: 'body',
-        text: L(
-          'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.',
-          'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
-        ),
-      },
-      { height: fr(3) },
+    // Worded for the modules in use; the first matching variant wins.
+    varies(
+      block(
+        'body',
+        'text',
+        {
+          variant: 'body',
+          text: howToText(true, true),
+        },
+        { height: fr(3) },
+      ),
+      { when: { and: [BALANCE, moduleOff(HALT)] }, props: { text: howToText(false, false) } },
+      { when: BALANCE, props: { text: howToText(false, true) } },
+      { when: moduleOff(HALT), props: { text: howToText(true, false) } },
     ),
     block(
       'notes',
@@ -222,7 +421,7 @@ const safetyRules: PageTemplate = {
             'I avoid places and people linked to my drinking or using.',
             'Unikam miejsc i osób związanych z piciem lub używaniem.',
           ),
-          L('I eat, sleep and rest regularly (HALT).', 'Regularnie jem, śpię i odpoczywam (HALT).'),
+          L('I eat, sleep and rest regularly.', 'Regularnie jem, śpię i odpoczywam.'),
           L(
             'I go to my meetings and therapy even when I do not feel like it.',
             'Chodzę na mityngi i terapię, nawet gdy nie mam ochoty.',
@@ -299,11 +498,14 @@ const monthOpenRight = a5(
     name: L('Month opening (right)', 'Otwarcie miesiąca (prawa)'),
     spread: { group: 'month-open', position: 'right' },
     body: stack([
-      block(
-        'focus',
-        'writing-area',
-        { title: L('Recovery focus', 'Fokus zdrowienia'), pattern: 'lines', pitch: 6 },
-        { height: mmH(12) },
+      varies(
+        block(
+          'focus',
+          'writing-area',
+          { title: L('Recovery focus', 'Fokus zdrowienia'), pattern: 'lines', pitch: 6 },
+          { height: mmH(12) },
+        ),
+        { when: BALANCE, props: { title: L('Focus of the month', 'Fokus miesiąca') } },
       ),
       block('calendar', 'calendar-grid', { columns: [4, 7] }, { height: mmH(110) }),
       block(
@@ -318,10 +520,16 @@ const monthOpenRight = a5(
       ),
       row(
         [
-          block('appointments', 'writing-area', {
-            title: L('Meetings, therapy and appointments', 'Mityngi, terapia i wizyty'),
-            pattern: 'lines',
-          }),
+          varies(
+            block('appointments', 'writing-area', {
+              title: L('Meetings, therapy and appointments', 'Mityngi, terapia i wizyty'),
+              pattern: 'lines',
+            }),
+            {
+              when: BALANCE,
+              props: { title: L('Important dates and appointments', 'Ważne terminy i wizyty') },
+            },
+          ),
           block('habits', 'writing-area', {
             title: L('Habits and milestones', 'Nawyki i kamienie milowe'),
             pattern: 'lines',
@@ -375,9 +583,9 @@ const weekLeft: PageTemplate = {
       },
       { height: mmH(28) },
     ),
-    block('mon', 'day-strip', { weekday: 0 }),
-    block('tue', 'day-strip', { weekday: 1 }),
-    block('wed', 'day-strip', { weekday: 2 }),
+    dayStrip('mon', 0),
+    dayStrip('tue', 1),
+    dayStrip('wed', 2),
   ]),
 };
 
@@ -408,11 +616,14 @@ const weekRight: PageTemplate = {
     ),
   ],
   body: stack([
-    block('thu', 'day-strip', { weekday: 3 }),
-    block('fri', 'day-strip', { weekday: 4 }),
-    block('sat', 'day-strip', { weekday: 5 }),
-    block('sun', 'day-strip', { weekday: 6 }),
-    block('legend', 'marker-legend', {}, { height: 'auto' }),
+    dayStrip('thu', 3),
+    dayStrip('fri', 4),
+    dayStrip('sat', 5),
+    dayStrip('sun', 6),
+    varies(block('legend', 'marker-legend', {}, { height: 'auto' }), {
+      when: BALANCE,
+      props: { markers: MARKERS_BALANCE },
+    }),
   ]),
 };
 
@@ -428,30 +639,38 @@ const dayLeft = a5(
     body: stack(
       [
         // Weekday, date and the sobriety day on one line, the quote beside it in smaller type.
-        row(
-          [
-            block('date', 'day-header', { inline: true }, { width: fr(3) }),
-            quoteBlock({ width: fr(2) }),
-          ],
-          { height: mmH(9) },
-        ),
+        row([dateHeader({ width: fr(3) }), quoteBlock({ width: fr(2) })], { height: mmH(9) }),
         stack(
           [
             // A quick check-in (0–10, like the evening check-out), then the one action for today.
-            block(
-              'checkin',
-              'text',
-              { text: checkin([CHECKIN.length]), variant: 'body', align: 'spread' },
-              { height: 'auto' },
+            // Without the recovery module: no craving, and a neutral commitment.
+            varies(
+              block(
+                'checkin',
+                'text',
+                { text: checkin([CHECKIN.length]), variant: 'body', align: 'spread' },
+                { height: 'auto' },
+              ),
+              { when: BALANCE_A5, props: { text: checkin([3, 2], false) } },
+              { when: BALANCE, props: { text: checkin([CHECKIN.length - 1], false) } },
             ),
-            block(
-              'commitment',
-              'writing-area',
+            varies(
+              block(
+                'commitment',
+                'writing-area',
+                {
+                  title: L(
+                    'Today I protect my sobriety by:',
+                    'Dziś chronię swoją trzeźwość przez:',
+                  ),
+                  pattern: 'lines',
+                },
+                { height: fr(1) },
+              ),
               {
-                title: L('Today I protect my sobriety by:', 'Dziś chronię swoją trzeźwość przez:'),
-                pattern: 'lines',
+                when: BALANCE,
+                props: { title: L('Today I take care of myself by:', 'Dziś dbam o siebie przez:') },
               },
-              { height: fr(1) },
             ),
           ],
           { height: mmH(28), label: L('Morning', 'Poranek') },
@@ -479,22 +698,26 @@ const dayLeft = a5(
           ],
           { height: fr(1), label: L('Day', 'Dzień') },
         ),
-        block(
-          'halt',
-          'rating-matrix',
-          {
-            title: L(
-              '{{haltName}} check (1 = not at all, 5 = very)',
-              'Skala {{haltName}} (1 = wcale, 5 = bardzo)',
-            ),
-            // Switch to classic HALT in the designer; the title and instructions follow.
-            variant: 'halt-b',
-            rows: HALT_B_ROWS,
-            mode: 'scale-1-5',
-            noteColumn: true,
-            noteLabel: L('Reason:', 'Powód:'),
-          },
-          { height: mmH(53) },
+        // The HALT-B module; without it the priorities and the plan of the day take the space.
+        needs(
+          block(
+            'halt',
+            'rating-matrix',
+            {
+              title: L(
+                '{{haltName}} check (1 = not at all, 5 = very)',
+                'Skala {{haltName}} (1 = wcale, 5 = bardzo)',
+              ),
+              // Switch to classic HALT in the designer; the title and instructions follow.
+              variant: 'halt-b',
+              rows: HALT_B_ROWS,
+              mode: 'scale-1-5',
+              noteColumn: true,
+              noteLabel: L('Reason:', 'Powód:'),
+            },
+            { height: mmH(53) },
+          ),
+          HALT,
         ),
       ],
       { gap: 4 },
@@ -511,13 +734,10 @@ const dayLeft = a5(
     {
       op: 'replace',
       path: '/body/children/0',
-      value: stack(
-        [
-          block('date', 'day-header', { inline: true }, { height: mmH(9) }),
-          quoteBlock({ height: fr(1) }),
-        ],
-        { height: mmH(16), gap: 0 },
-      ) as JsonPatchOp['value'],
+      value: stack([dateHeader({ height: mmH(9) }), quoteBlock({ height: fr(1) })], {
+        height: mmH(16),
+        gap: 0,
+      }) as JsonPatchOp['value'],
     },
     // The morning section (the body's second child) grows by the check-in's second line.
     { op: 'add', path: '/body/children/1/height', value: { mm: 33 } },
@@ -528,6 +748,16 @@ const dayLeft = a5(
 const CHECKOUT = L(
   `Mood ${BLANK} /10\nTension ${BLANK} /10\nCraving ${BLANK} /10\nat ${BLANK}`,
   `Nastrój ${BLANK} /10\nNapięcie ${BLANK} /10\nGłód ${BLANK} /10\no godz. ${BLANK}`,
+);
+
+/** The evening check-out without the recovery module: no craving, and energy instead. */
+const CHECKOUT_BALANCE = L(
+  `Mood ${BLANK} /10
+Tension ${BLANK} /10
+Energy ${BLANK} /10`,
+  `Nastrój ${BLANK} /10
+Napięcie ${BLANK} /10
+Energia ${BLANK} /10`,
 );
 
 /** Triggers to tick; loneliness, boredom and tiredness are already rows of HALT-B. */
@@ -578,18 +808,31 @@ const dayRight = a5(
         { text: L('Check-out (0–10)', 'Check-out (0–10)'), variant: 'label' },
         mmH(5),
       ),
-      railBlock('checkout', 'text', { text: CHECKOUT, variant: 'body' }, mmH(26)),
-      railBlock(
-        'trigger',
-        'numbered-list',
+      varies(railBlock('checkout', 'text', { text: CHECKOUT, variant: 'body' }, mmH(26)), {
+        when: BALANCE,
+        props: { text: CHECKOUT_BALANCE },
+      }),
+      varies(
+        railBlock(
+          'trigger',
+          'numbered-list',
+          {
+            title: L('Trigger today?', 'Czy pojawił się wyzwalacz?'),
+            marker: 'checkbox',
+            items: TRIGGERS,
+            count: TRIGGERS.length,
+            lineHeight: 5,
+          },
+          fr(1),
+        ),
         {
-          title: L('Trigger today?', 'Czy pojawił się wyzwalacz?'),
-          marker: 'checkbox',
-          items: TRIGGERS,
-          count: TRIGGERS.length,
-          lineHeight: 5,
+          when: BALANCE,
+          props: {
+            title: L('What weighed on me today?', 'Co mnie dziś obciążało?'),
+            items: STRAIN_BALANCE,
+            count: STRAIN_BALANCE.length,
+          },
         },
-        fr(1),
       ),
       railBlock(
         'trigger-response',
@@ -597,32 +840,45 @@ const dayRight = a5(
         { title: L('What did I do?', 'Co {g:zrobiłem|zrobiłam}?'), pattern: 'lines' },
         mmH(20),
       ),
-      railBlock(
-        'protected',
-        'numbered-list',
+      varies(
+        railBlock(
+          'protected',
+          'numbered-list',
+          {
+            title: L('What protected me today?', 'Co mnie dzisiaj chroniło?'),
+            marker: 'checkbox',
+            items: PROTECTED,
+            count: PROTECTED.length,
+            lineHeight: 5,
+          },
+          fr(1),
+        ),
         {
-          title: L('What protected me today?', 'Co mnie dzisiaj chroniło?'),
-          marker: 'checkbox',
-          items: PROTECTED,
-          count: PROTECTED.length,
-          lineHeight: 5,
+          when: BALANCE,
+          props: {
+            title: L('What helped me today?', 'Co mi dziś pomogło?'),
+            items: HELPED_BALANCE,
+            count: HELPED_BALANCE.length,
+          },
         },
-        fr(1),
       ),
     ],
     body: stack(
       [
-        block(
-          'threat',
-          'writing-area',
-          {
-            title: L(
-              'What was hard today? What threatened my sobriety?',
-              'Co dzisiaj było trudne? Co zagroziło mojej trzeźwości?',
-            ),
-            pattern: 'lines',
-          },
-          { height: mmH(26) },
+        varies(
+          block(
+            'threat',
+            'writing-area',
+            {
+              title: L(
+                'What was hard today? What threatened my sobriety?',
+                'Co dzisiaj było trudne? Co zagroziło mojej trzeźwości?',
+              ),
+              pattern: 'lines',
+            },
+            { height: mmH(26) },
+          ),
+          { when: BALANCE, props: { title: L('What was hard today?', 'Co dzisiaj było trudne?') } },
         ),
         block(
           'reflection',
@@ -699,6 +955,17 @@ const dayRight = a5(
             variant: 'caption',
           },
           size: { height: { mm: 6 } },
+          variants: [
+            {
+              when: BALANCE,
+              props: {
+                text: L(
+                  `Check-out: mood ${BLANK} /10 · tension ${BLANK} /10 · energy ${BLANK} /10`,
+                  `Check-out: nastrój ${BLANK} /10 · napięcie ${BLANK} /10 · energia ${BLANK} /10`,
+                ),
+              },
+            },
+          ],
         },
       },
     },
@@ -718,6 +985,9 @@ const dayRight = a5(
             pattern: 'lines',
           },
           size: { height: { mm: 16 } },
+          variants: [
+            { when: BALANCE, props: { title: L('What helped me today?', 'Co mi dziś pomogło?') } },
+          ],
         },
       },
     },
@@ -733,6 +1003,12 @@ const WEEK_TRIGGERS = TRIGGERS.slice(1);
 const weekNumbers = L(
   `Mood, on average ${BLANK} /10\nTension, on average ${BLANK} /10\nStrongest craving ${BLANK} /10\nDays with craving ≥ 5 ${BLANK} /7\nDays with support ${BLANK} /7\nDays with exercise ${BLANK} /7\nDays with therapy / a meeting ${BLANK} /7`,
   `Nastrój, średnio ${BLANK} /10\nNapięcie, średnio ${BLANK} /10\nNajsilniejszy głód ${BLANK} /10\nDni z głodem ≥ 5 ${BLANK} /7\nDni ze wsparciem ${BLANK} /7\nDni z ruchem ${BLANK} /7\nDni z terapią / mityngiem ${BLANK} /7`,
+);
+
+/** The week in numbers without the recovery module: no craving, and days of rest instead. */
+const weekNumbersBalance = L(
+  `Mood, on average ${BLANK} /10\nTension, on average ${BLANK} /10\nDays with support ${BLANK} /7\nDays with exercise ${BLANK} /7\nDays with rest ${BLANK} /7`,
+  `Nastrój, średnio ${BLANK} /10\nNapięcie, średnio ${BLANK} /10\nDni ze wsparciem ${BLANK} /7\nDni z ruchem ${BLANK} /7\nDni z odpoczynkiem ${BLANK} /7`,
 );
 
 const ifThen = (height: Length) =>
@@ -759,24 +1035,44 @@ const reviewHeader = [
 const weekReviewA5: LayoutNode = stack(
   [
     ...reviewHeader,
-    block(
-      'numbers-a5',
-      'text',
+    varies(
+      block(
+        'numbers-a5',
+        'text',
+        {
+          text: L(
+            `Mood ${BLANK} /10 · tension ${BLANK} /10\nStrongest craving ${BLANK} /10 · days with craving ≥ 5 ${BLANK} /7`,
+            `Nastrój ${BLANK} /10 · napięcie ${BLANK} /10\nNajsilniejszy głód ${BLANK} /10 · dni z głodem ≥ 5 ${BLANK} /7`,
+          ),
+          variant: 'body',
+        },
+        { height: mmH(12) },
+      ),
       {
-        text: L(
-          `Mood ${BLANK} /10 · tension ${BLANK} /10\nStrongest craving ${BLANK} /10 · days with craving ≥ 5 ${BLANK} /7`,
-          `Nastrój ${BLANK} /10 · napięcie ${BLANK} /10\nNajsilniejszy głód ${BLANK} /10 · dni z głodem ≥ 5 ${BLANK} /7`,
-        ),
-        variant: 'body',
+        when: BALANCE,
+        props: {
+          text: L(
+            `Mood ${BLANK} /10 · tension ${BLANK} /10\nDays with exercise ${BLANK} /7 · days with rest ${BLANK} /7`,
+            `Nastrój ${BLANK} /10 · napięcie ${BLANK} /10\nDni z ruchem ${BLANK} /7 · dni z odpoczynkiem ${BLANK} /7`,
+          ),
+        },
       },
-      { height: mmH(12) },
     ),
-    writeLines(
-      'halt-quick',
-      L('Most often high in {{haltName}}:', 'Najczęściej wysoko w {{haltName}}:'),
-      fr(1),
+    needs(
+      writeLines(
+        'halt-quick',
+        L('Most often high in {{haltName}}:', 'Najczęściej wysoko w {{haltName}}:'),
+        fr(1),
+      ),
+      HALT,
     ),
-    writeLines('trigger-quick', L('Most common trigger:', 'Najczęstszy wyzwalacz:'), fr(1)),
+    varies(
+      writeLines('trigger-quick', L('Most common trigger:', 'Najczęstszy wyzwalacz:'), fr(1)),
+      {
+        when: BALANCE,
+        props: { title: L('What weighed on me most:', 'Co mnie najbardziej obciążało:') },
+      },
+    ),
     writeLines('helped-quick', L('What helped most:', 'Co pomogło najbardziej:'), fr(1)),
     writeLines('win-quick', L('My biggest win:', 'Moje największe zwycięstwo:'), fr(1)),
     writeLines('pattern', L('A pattern I notice:', 'Wzorzec, który zauważam:'), fr(1)),
@@ -809,36 +1105,59 @@ const weekReview = a5(
                   { text: L('The week in numbers', 'Tydzień w liczbach'), variant: 'label' },
                   { height: mmH(5) },
                 ),
-                block(
-                  'numbers',
-                  'text',
-                  { text: weekNumbers, variant: 'body' },
-                  { height: mmH(40) },
+                varies(
+                  block(
+                    'numbers',
+                    'text',
+                    { text: weekNumbers, variant: 'body' },
+                    { height: mmH(40) },
+                  ),
+                  { when: BALANCE, props: { text: weekNumbersBalance } },
                 ),
-                block(
-                  'halt',
-                  'rating-matrix',
-                  {
-                    title: L('{{haltName}}: most often at 4–5', '{{haltName}}: najczęściej 4–5'),
-                    variant: 'auto',
-                    rows: HALT_B_ROWS,
-                    mode: 'checkbox',
-                    noteColumn: false,
-                  },
-                  { height: mmH(42) },
+                needs(
+                  block(
+                    'halt',
+                    'rating-matrix',
+                    {
+                      title: L('{{haltName}}: most often at 4–5', '{{haltName}}: najczęściej 4–5'),
+                      variant: 'auto',
+                      rows: HALT_B_ROWS,
+                      mode: 'checkbox',
+                      noteColumn: false,
+                    },
+                    { height: mmH(42) },
+                  ),
+                  HALT,
                 ),
-                writeLines('halt-reason', L('Most common reason:', 'Najczęstszy powód:'), mmH(13)),
-                block(
-                  'triggers',
-                  'numbered-list',
+                needs(
+                  writeLines(
+                    'halt-reason',
+                    L('Most common reason:', 'Najczęstszy powód:'),
+                    mmH(13),
+                  ),
+                  HALT,
+                ),
+                varies(
+                  block(
+                    'triggers',
+                    'numbered-list',
+                    {
+                      title: L('Triggers this week', 'Wyzwalacze tygodnia'),
+                      marker: 'checkbox',
+                      items: WEEK_TRIGGERS,
+                      count: WEEK_TRIGGERS.length,
+                      lineHeight: 5,
+                    },
+                    { height: fr(1) },
+                  ),
                   {
-                    title: L('Triggers this week', 'Wyzwalacze tygodnia'),
-                    marker: 'checkbox',
-                    items: WEEK_TRIGGERS,
-                    count: WEEK_TRIGGERS.length,
-                    lineHeight: 5,
+                    when: BALANCE,
+                    props: {
+                      title: L('What weighed on me this week', 'Co mnie obciążało w tym tygodniu'),
+                      items: STRAIN_BALANCE.slice(1),
+                      count: STRAIN_BALANCE.length - 1,
+                    },
                   },
-                  { height: fr(1) },
                 ),
                 writeLines(
                   'hardest',
@@ -862,17 +1181,27 @@ const weekReview = a5(
             ),
             stack(
               [
-                block(
-                  'protected',
-                  'numbered-list',
+                varies(
+                  block(
+                    'protected',
+                    'numbered-list',
+                    {
+                      title: L('What protected me most', 'Co mnie najbardziej chroniło'),
+                      marker: 'checkbox',
+                      items: PROTECTED,
+                      count: PROTECTED.length,
+                      lineHeight: 5,
+                    },
+                    { height: fr(1) },
+                  ),
                   {
-                    title: L('What protected me most', 'Co mnie najbardziej chroniło'),
-                    marker: 'checkbox',
-                    items: PROTECTED,
-                    count: PROTECTED.length,
-                    lineHeight: 5,
+                    when: BALANCE,
+                    props: {
+                      title: L('What helped me most', 'Co mi najbardziej pomagało'),
+                      items: HELPED_BALANCE,
+                      count: HELPED_BALANCE.length,
+                    },
                   },
-                  { height: fr(1) },
                 ),
                 writeLines(
                   'most-effective',
@@ -937,17 +1266,28 @@ const situation: PageTemplate = {
       ),
       stack(
         [
-          block(
-            'risky-thought',
-            'writing-area',
+          varies(
+            block(
+              'risky-thought',
+              'writing-area',
+              {
+                title: L(
+                  'Did I notice a thought that raised the risk? What was it?',
+                  'Czy {g:zauważyłem|zauważyłam} myśl, która zwiększała ryzyko? Jaka to była myśl?',
+                ),
+                pattern: 'lines',
+              },
+              { height: fr(1) },
+            ),
             {
-              title: L(
-                'Did I notice a thought that raised the risk? What was it?',
-                'Czy {g:zauważyłem|zauważyłam} myśl, która zwiększała ryzyko? Jaka to była myśl?',
-              ),
-              pattern: 'lines',
+              when: BALANCE,
+              props: {
+                title: L(
+                  'Did I notice a thought that did not help me? What was it?',
+                  'Czy {g:zauważyłem|zauważyłam} myśl, która mi nie pomagała? Jaka to była myśl?',
+                ),
+              },
             },
-            { height: fr(1) },
           ),
           block(
             'thought-answer',
@@ -1021,7 +1361,11 @@ const wheel: PageTemplate = {
         'Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10).',
       ),
     ),
-    block('wheel', 'radial-scale', {}, { height: fr(1) }),
+    // Without the recovery module, "Sobriety and 12 Steps" becomes "Meaning and spirituality".
+    varies(block('wheel', 'radial-scale', {}, { height: fr(1) }), {
+      when: BALANCE,
+      props: { segments: WHEEL_BALANCE },
+    }),
     block(
       'notice',
       'writing-area',
@@ -1040,6 +1384,13 @@ const REVIEW_PROMPTS = [
   L('What needs more attention?', 'Co wymaga więcej uwagi?'),
 ];
 
+/** Review prompts reworded without the recovery module, by position. */
+const REVIEW_BALANCE: Array<ReturnType<typeof L> | undefined> = [
+  undefined,
+  undefined,
+  L('What did not serve me?', 'Co mi nie służyło?'),
+];
+
 const review: PageTemplate = {
   id: 'monthly-review',
   name: L('Monthly review', 'Podsumowanie miesiąca'),
@@ -1047,7 +1398,10 @@ const review: PageTemplate = {
   body: stack([
     heading('heading', L('Monthly review', 'Podsumowanie miesiąca')),
     ...REVIEW_PROMPTS.map((title, i) =>
-      block(`prompt-${i + 1}`, 'writing-area', { title, pattern: 'lines' }, { height: fr(1) }),
+      varies(
+        block(`prompt-${i + 1}`, 'writing-area', { title, pattern: 'lines' }, { height: fr(1) }),
+        ...(REVIEW_BALANCE[i] ? [{ when: BALANCE, props: { title: REVIEW_BALANCE[i] } }] : []),
+      ),
     ),
   ]),
 };
@@ -1709,7 +2063,13 @@ const sections: SectionTemplate[] = [
     sheetAligned: true,
     // Front matter: i (the cover, not printed), ii, iii, iv; the first month starts at 1.
     numbering: { style: 'roman' },
-    children: [page('cover'), page('how-to'), page('contract'), page('safety-rules')],
+    // The contract and safety rules belong to the recovery module.
+    children: [
+      page('cover'),
+      page('how-to'),
+      { page: 'contract', when: moduleOn(RECOVERY) },
+      { page: 'safety-rules', when: moduleOn(RECOVERY) },
+    ],
   },
   {
     id: 'month',
@@ -1733,10 +2093,10 @@ const sections: SectionTemplate[] = [
             repeat: { over: 'daysOfWeek', group: 1 },
             children: [page('day-left'), page('day-right')],
           },
-          // The end of the week as one spread: "My week", then the optional situation analysis
-          // (switch it on in Structure).
+          // The end of the week as one spread: "My week", then the situation analysis when the
+          // CBT module is on.
           page('week-review'),
-          { page: 'situation', enabled: false },
+          { page: 'situation', when: moduleOn(CBT) },
         ],
       },
       page('wheel-of-life'),
@@ -1748,6 +2108,7 @@ const sections: SectionTemplate[] = [
   {
     id: 'crisis',
     title: L('Crisis and relapse prevention', 'Kryzys i zapobieganie nawrotom'),
+    when: moduleOn(RECOVERY),
     sheetAligned: true,
     // Its own sequence, S1, S2…: "the plan for a hard moment is S1" is easy to find in a hurry.
     numbering: { style: 'arabic', prefix: 'S', restart: true },
@@ -1835,6 +2196,8 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
     ]),
   ),
   sections,
+  modules: MODULES,
+  presets: PRESETS,
   variables: [
     { name: 'patientName', label: L('Name', 'Imię'), type: 'text', personal: true },
     {

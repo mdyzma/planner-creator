@@ -54,19 +54,24 @@ export const textBlock = defineBlock({
         used += blankCount(part);
         return node;
       };
+      // Every line gets as many slots as the longest, so fields line up in columns; the extra
+      // slots of a shorter line stay empty.
+      const lines = text.split('\n').map((line) => line.split(SEPARATOR));
+      const slots = Math.max(...lines.map((parts) => parts.length));
       return (
         <div style={{ ...TYPE[props.variant], ...typographyCss(block.style) }}>
-          {text.split('\n').map((line, l) => (
+          {lines.map((parts, l) => (
             <div
               key={l}
               style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}
             >
-              {line
-                .split(SEPARATOR)
-                .flatMap((part, f) => [
-                  ...(f > 0 ? [<span key={`s${f}`}>·</span>] : []),
+              {Array.from({ length: slots }, (_, f) => {
+                const part = parts[f] ?? '';
+                return [
+                  ...(f > 0 ? [<span key={`s${f}`}>{part ? '·' : ''}</span>] : []),
                   field(part, `f${f}`),
-                ])}
+                ];
+              })}
             </div>
           ))}
         </div>

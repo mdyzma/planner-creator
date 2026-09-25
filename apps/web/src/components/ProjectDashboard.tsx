@@ -7,6 +7,7 @@ import { FORMAT_IDS, LOCALES } from '@planner/schema';
 import type { ProjectSummary } from '@planner/storage';
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from 'react';
+import { ModulePicker } from '@/components/ModulePicker';
 import { Link, useRouter } from '@/i18n/navigation';
 import { createGeneratedProject } from '@/lib/newProject';
 import { getProjectRepository, requestPersistentStorage } from '@/lib/repository';
@@ -228,6 +229,8 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
   const [months, setMonths] = useState(6);
   // The suggested name follows the chosen length ("1-Month…") until the user types their own.
   const [customName, setCustomName] = useState<string | null>(null);
+  // Modules switched on or off; empty means the template's defaults (its first edition).
+  const [modules, setModules] = useState<Record<string, boolean>>({});
   const name = customName ?? t('defaultName', { count: months });
 
   const bundle = BUNDLED_TEMPLATES.find((b) => b.template.id === templateId)!;
@@ -245,8 +248,9 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
         now: new Date(0).toISOString(),
         startDate: dated ? startDate : undefined,
         durationMonths: months,
+        modules,
       }).result,
-    [bundle, name, t, format, locale, dated, startDate, months],
+    [bundle, name, t, format, locale, dated, startDate, months, modules],
   );
 
   const submit = (e: FormEvent) => {
@@ -260,6 +264,7 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
       now: new Date().toISOString(),
       startDate: dated ? startDate : undefined,
       durationMonths: months,
+      modules,
     });
     onCreate(project);
   };
@@ -284,7 +289,10 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
           <select
             className={field}
             value={templateId}
-            onChange={(e) => setTemplateId(e.target.value)}
+            onChange={(e) => {
+              setTemplateId(e.target.value);
+              setModules({});
+            }}
           >
             {BUNDLED_TEMPLATES.map((b) => (
               <option key={b.template.id} value={b.template.id}>
@@ -293,6 +301,12 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
             ))}
           </select>
         </label>
+        <ModulePicker
+          template={bundle.template}
+          modules={modules}
+          onChange={setModules}
+          fieldClass={field}
+        />
         <label className="flex min-w-64 flex-1 flex-col gap-1 text-sm">
           {t('name')}
           <input

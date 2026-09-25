@@ -14,6 +14,8 @@ export interface NewPlannerInput {
   /** Absent for an undated planner. */
   startDate?: string;
   durationMonths: number;
+  /** Modules switched on or off (ADR-0010); the rest take the template's defaults. */
+  modules?: Record<string, boolean>;
 }
 
 /** Creates a project from a bundled template and generates its pages (M4). */
@@ -34,6 +36,7 @@ export function createGeneratedProject(input: NewPlannerInput): {
       locale: input.locale,
       startDate: input.startDate,
       durationMonths: input.durationMonths,
+      ...(input.modules ? { modules: input.modules } : {}),
     },
   };
   const result = generate({

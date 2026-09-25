@@ -27,6 +27,14 @@ export const SpreadSplit = z.object({
   right: z.tuple([z.number().int().min(0), z.number().int().min(1)]),
 });
 
+/** Props (merged over the block's) and style used while `when` holds. */
+export const BlockVariant = z.object({
+  when: Condition,
+  props: z.json().optional(),
+  style: BlockStyle.optional(),
+});
+export type BlockVariant = z.infer<typeof BlockVariant>;
+
 export const BlockInstance = z.object({
   id: Id,
   /** Key in the block registry. Core code never switches on this value. */
@@ -40,6 +48,11 @@ export const BlockInstance = z.object({
   frame: BlockFrame.optional(),
   spreadSplit: SpreadSplit.optional(),
   visibility: Condition.optional(),
+  /**
+   * Alternative props or style when a condition holds, e.g. neutral wording when the recovery
+   * module is off (ADR-0010). The first matching variant applies, over the block's own props.
+   */
+  variants: z.array(BlockVariant).max(10).optional(),
   locked: z.boolean().optional(),
   keepTogether: z.boolean().optional(),
 });

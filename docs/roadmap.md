@@ -116,11 +116,19 @@ Not done: warning signs as tick boxes (the examples stay as prompts to cross out
 
 Before the front matter, because new content has to be split into Core and Recovery.
 
-- Modules as named groups of pages and blocks; built on what exists: page `enabled` flags in the
-  structure recipe and block visibility conditions over `{ page, config, vars }`.
-- A choice of preset and modules when creating a planner: "Recovery Edition" and "Balance"
-  (without the sobriety counter, HALT, triggers and crisis section).
-- Recovery wording only where the Recovery module is on.
+Done ([ADR-0010](adr/0010-modules-presets-and-block-variants.md)):
+
+- Modules `recovery`, `halt` and `cbt`; presets "Recovery Edition" (recovery + HALT-B) and
+  "Balance" (HALT-B only). Pages and sections by `when`, blocks by `visibility`, wording by block
+  variants; the designer edits the variant that prints.
+- Edition and modules in the new-planner form and in the preview's planner settings (regenerates,
+  keeps edits).
+- Balance: no sobriety counter, craving, AA / group / therapy markers, contract, safety rules or
+  crisis section; neutral wording ("Dziś dbam o siebie przez:", "Co mnie dziś obciążało?", "Co
+  mi dziś pomogło?", "Fokus miesiąca", "Sens i duchowość" on the Wheel of Life). About 14 pages
+  shorter. A test renders every Balance page and fails on recovery or therapy words.
+
+Not yet: a Balance quote library, a Balance guide booklet, editing variants directly.
 
 ### v0.6.0 — "Na dobry początek" (front matter)
 

@@ -1,8 +1,21 @@
-# Therapeutic Recovery Planner — 6 Months
+# Dzień po Dniu / Day by Day
 
-The first planner template: a bilingual (English/Polish) six-month recovery planner, printed blank
-and filled in by hand. Design background: [system design](../../docs/architecture/system-design.md)
+The first planner template: a bilingual (English/Polish) planner for 1–12 months, printed blank and
+filled in by hand. Two editions: **Recovery Edition** (recovery from addiction) and **Balance**
+(everyday life, without addiction and therapy wording); see Modules below. Design background: [system design](../../docs/architecture/system-design.md)
 §5.3 (daily spread), §6 (blocks), §12 (structure).
+
+## Modules
+
+The template declares modules and presets ([ADR-0010](../../docs/adr/0010-modules-presets-and-block-variants.md)); a planner chooses them when it is made, or later in the preview.
+
+| Module | Default | What it controls |
+|---|---|---|
+| `recovery` | on | sobriety day counter, craving in the check-ins, triggers, AA and group markers, contract and safety rules, the crisis section, recovery wording (Balance wording is in block variants) |
+| `halt` | on | HALT-B on the day page and in "My week", and its sentence on the how-to page |
+| `cbt` | off | the weekly situation analysis page |
+
+Presets: **Recovery Edition** = recovery + halt; **Balance** = halt. In `src/template.ts`, `needs(block, module)` hides a block without a module and `varies(block, { when, props })` rewords it; `BALANCE` is the condition "recovery module off".
 
 ## Files
 
@@ -52,8 +65,8 @@ The app's **Content** screen does the same per planner: edit, import/export CSV,
 | Section | Pages |
 |---|---|
 | Introduction (whole sheets) | cover · how to use · therapeutic contract · safety rules |
-| Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals, an if–then plan and what to watch out for in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, 24-hour commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: check-out and tick lists for triggers and protection in the outer column (A4), what was hard, dot-grid reflection, small victory, good life, gratitude) · end of each week: "My week" review spread with the optional situation analysis (off by default) · Wheel of Life · monthly review · notes |
-| Crisis and relapse prevention (whole sheets) | plan for a hard moment (stop, SOBER, contacts, change the situation) · alarm thresholds for craving · emergency list and the craving wave · warning signs with a threshold · relapse chain · plan after a slip · gains and losses · support network · two craving cards |
+| Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals, an if–then plan and what to watch out for in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, morning check-in and one-line commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: check-out and tick lists for triggers and protection in the outer column (A4), what was hard, dot-grid reflection, small victory, good life, gratitude) · end of each week: "My week" review spread with the situation analysis (CBT module) · Wheel of Life · monthly review · notes |
+| Crisis and relapse prevention (whole sheets, recovery module) | plan for a hard moment (stop, SOBER, contacts, change the situation) · alarm thresholds for craving · emergency list and the craving wave · warning signs with a threshold · relapse chain · plan after a slip · gains and losses · support network · two craving cards |
 
 A5 uses the same pages with fewer lines where space runs out (`formatOverrides.A5`): one schedule
 line per hour, one sub-line per priority, a shorter HALT table and calendar.

@@ -44,6 +44,10 @@
     "template": "Szablon",
     "startDate": "Data rozpoczęcia",
     "undated": "Bez dat (daty wpisywane ręcznie)",
+    "edition": "Wariant",
+    "customEdition": "Własny",
+    "modules": "Moduły: {on} z {total}",
+    "modulesLegend": "Moduły planera",
     "length": "Długość",
     "months": "{count, plural, one {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}",
     "budget": "Około {pages, plural, one {# strona} few {# strony} many {# stron} other {# strony}} · arkusze: {sheets} · grzbiet około {spine} mm",
@@ -348,6 +352,7 @@
     "origin": {
       "page": "ta strona",
       "format": "format",
+      "variant": "moduł",
       "template": "szablon",
       "reset": "Przywróć",
       "resetHint": "Wróć do wartości z niższego poziomu"

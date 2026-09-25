@@ -23,6 +23,8 @@ export interface PageRef {
   startOn?: 'left' | 'right' | 'any';
   /** `false` leaves the page out of generated planners (the designer's structure switch). */
   enabled?: boolean;
+  /** Included only while this holds, e.g. while a module is on (ADR-0010). */
+  when?: Condition;
 }
 
 export interface SectionTemplate {
@@ -44,6 +46,7 @@ const PageRefSchema = z.object({
   page: Id,
   startOn: StartOn.optional(),
   enabled: z.boolean().optional(),
+  when: Condition.optional(),
 });
 
 export const SectionTemplate: z.ZodType<SectionTemplate> = z.lazy(() =>
@@ -72,6 +75,30 @@ export const VariableDefinition = z.object({
 });
 export type VariableDefinition = z.infer<typeof VariableDefinition>;
 
+/**
+ * A part of the planner that can be switched on or off when the planner is made (ADR-0010):
+ * pages and sections test it with `when`, blocks with `visibility` and `variants`, as
+ * `{ var: "config.modules.<id>" }`.
+ */
+export const ModuleDefinition = z.object({
+  id: Id,
+  name: LocalizedText,
+  description: LocalizedText,
+  /** On unless the planner switches it off. */
+  default: z.boolean(),
+});
+export type ModuleDefinition = z.infer<typeof ModuleDefinition>;
+
+/** A named set of modules offered when a planner is made, e.g. "Recovery Edition". */
+export const PresetDefinition = z.object({
+  id: Id,
+  name: LocalizedText,
+  description: LocalizedText,
+  /** Every module of the template, on or off. */
+  modules: z.record(Id, z.boolean()),
+});
+export type PresetDefinition = z.infer<typeof PresetDefinition>;
+
 export const ThemeTokens = z.record(z.string().max(100), z.string().max(200));
 
 export const PlannerTemplate = z.object({
@@ -89,6 +116,8 @@ export const PlannerTemplate = z.object({
   }),
   pageTemplates: z.record(Id, PageTemplate),
   sections: z.array(SectionTemplate),
+  modules: z.array(ModuleDefinition).max(30).optional(),
+  presets: z.array(PresetDefinition).max(20).optional(),
   variables: z.array(VariableDefinition),
   contentLibraryRefs: z.array(Id),
 });

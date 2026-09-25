@@ -23,5 +23,10 @@ export const GenerationConfig = z.object({
   quoteCadence: z.enum(['daily', 'weekly', 'none']),
   volumes: z.union([z.literal(1), z.literal(2), z.literal(6)]),
   variables: z.record(z.string().max(100), VariableValue),
+  /**
+   * Modules switched on or off (ADR-0010), by module id. A module not listed takes the
+   * template's default, so planners made before modules existed are unchanged.
+   */
+  modules: z.record(z.string().max(100), z.boolean()).optional(),
 });
 export type GenerationConfig = z.infer<typeof GenerationConfig>;

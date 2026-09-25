@@ -1,6 +1,7 @@
-import type { BlockPatch, FormatId, PageTemplate, Side } from '@planner/schema';
+import type { BlockInstance, BlockPatch, FormatId, PageTemplate, Side } from '@planner/schema';
 import { mapBlocks } from './blocks';
 import { evaluateCondition } from './condition';
+import { activeVariant } from './modules';
 import type { PatchWarning } from './patch';
 import { resolveTemplateForFormat } from './patch';
 
@@ -26,7 +27,8 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
 
 /**
  * The page template as it prints on one page (§4.4). Precedence, low → high: block defaults
- * (merged by the block registry) → template block → format adjustment → side variant → the
+ * (merged by the block registry) → template block → format adjustment → the block's first
+ * matching variant (e.g. wording for a module that is off; ADR-0010) → side variant → the
  * page's own override.
  */
 export function resolvePageTemplate(
@@ -36,12 +38,16 @@ export function resolvePageTemplate(
   const { template: formatted, warnings } = resolveTemplateForFormat(source, format);
   const hidden: string[] = [];
 
-  const template = mapBlocks(formatted, (block) => {
-    const patch = overrides?.[block.id];
-    if (patch?.hidden || (block.visibility && !evaluateCondition(block.visibility, scope ?? {}))) {
-      hidden.push(block.id);
+  const template = mapBlocks(formatted, (source) => {
+    const patch = overrides?.[source.id];
+    if (
+      patch?.hidden ||
+      (source.visibility && !evaluateCondition(source.visibility, scope ?? {}))
+    ) {
+      hidden.push(source.id);
       return null;
     }
+    const block = withVariant(source, scope ?? {});
     const sideStyle = block.sideVariants?.[side];
     if (!sideStyle && !patch) return block;
 
@@ -59,4 +65,23 @@ export function resolvePageTemplate(
   });
 
   return { template, hidden, warnings };
+}
+
+/** The block with its first matching variant applied (props merged, style merged). */
+function withVariant<B extends BlockInstance>(
+  block: B,
+  scope: Readonly<Record<string, unknown>>,
+): B {
+  const found = activeVariant(block, scope);
+  if (!found) return block;
+  const { variant } = found;
+  const props =
+    variant.props !== undefined && isRecord(variant.props) && isRecord(block.props)
+      ? { ...block.props, ...variant.props }
+      : (variant.props ?? block.props);
+  return {
+    ...block,
+    props: props as B['props'],
+    ...(variant.style ? { style: { ...block.style, ...variant.style } } : {}),
+  };
 }

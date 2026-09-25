@@ -57,7 +57,7 @@ export function Origin({
 }) {
   const t = useTranslations('Editor.origin');
   if (origin === 'default') return null;
-  const marker = { page: '◆', format: '▲', template: '●' }[origin];
+  const marker = { page: '◆', variant: '■', format: '▲', template: '●' }[origin];
   return (
     <span className="ml-auto flex items-center gap-1 text-xs text-ink-muted">
       <span aria-hidden="true">{marker}</span>

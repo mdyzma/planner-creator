@@ -2,6 +2,7 @@ import { createDefaultRegistry, haltVariables } from '@planner/blocks';
 import type { PageFrame, PatchWarning, PhysicalPage } from '@planner/core';
 import type { PageLabel } from '@planner/core';
 import {
+  conditionConfig,
   listBlocks,
   padToForProfile,
   pageLabels,
@@ -10,7 +11,13 @@ import {
   resolvePageTemplate,
 } from '@planner/core';
 import { pageVariables, plannerEndDate } from '@planner/i18n';
-import type { ContentItem, PageTemplate, PatternSpec, PlannerProject } from '@planner/schema';
+import type {
+  Condition,
+  ContentItem,
+  PageTemplate,
+  PatternSpec,
+  PlannerProject,
+} from '@planner/schema';
 import { withNumbering } from './templates';
 
 /** All built-in block types; the renderer calls this for every block on every page. */
@@ -29,6 +36,10 @@ export interface RenderedPage {
   contentFor: (blockId: string) => ContentItem | undefined;
 }
 
+/** A rule that reads the page or its variables differs per page; module and format rules do not. */
+const perPage = (c: Condition | undefined) =>
+  c !== undefined && /"(page|vars)[."]/.test(JSON.stringify(c));
+
 /** Filler pages print as the notes page: a 5 mm dot grid (§8.4). */
 export const FILLER_PATTERN: PatternSpec = { kind: 'dots', pitch: 5, ink: 0.45 };
 
@@ -45,6 +56,8 @@ export function layoutProject(input: PlannerProject) {
   });
   const labels = pageLabels(pages, project.document.root, templates);
   const haltVars = haltVariables(templates, project.locale);
+  // Modules resolved to on/off (ADR-0010), for every visibility rule and variant.
+  const config = conditionConfig(project.template, project.generation);
 
   const items = new Map<string, ContentItem>();
   for (const library of project.content) for (const item of library.items) items.set(item.id, item);
@@ -60,7 +73,9 @@ export function layoutProject(input: PlannerProject) {
     if (!hasRules.has(source.id)) {
       hasRules.set(
         source.id,
-        listBlocks(source).some((e) => e.block.visibility),
+        listBlocks(source).some(
+          (e) => perPage(e.block.visibility) || e.block.variants?.some((v) => perPage(v.when)),
+        ),
       );
     }
     const personal = Object.keys(instance.overrides ?? {}).length > 0 || hasRules.get(source.id);
@@ -70,7 +85,8 @@ export function layoutProject(input: PlannerProject) {
       overrides: instance.overrides,
       scope: {
         page: { side: page.side, number: page.number, ...instance.context },
-        config: project.generation,
+        config,
+        format: project.format,
         vars,
       },
     };

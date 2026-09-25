@@ -1,17 +1,18 @@
-import { findBlock } from '@planner/core';
+import { activeVariant, conditionConfig, findBlock } from '@planner/core';
 import type { PageInstance, PlannerProject, SectionNode } from '@planner/schema';
 import { isPageInstance } from '@planner/schema';
 import type { BlockRef } from './commands';
 
 /** Where a block's value comes from, lowest to highest precedence (§4.4). */
-export type ValueOrigin = 'default' | 'template' | 'format' | 'page';
+export type ValueOrigin = 'default' | 'template' | 'format' | 'variant' | 'page';
 
 const hasKey = (obj: unknown, key: string) =>
   typeof obj === 'object' && obj !== null && !Array.isArray(obj) && key in obj;
 
 /**
  * Which level sets a block's property (`props`), style value (`style`) or size (`size`) on a page:
- * the page's own change, the format adjustment (e.g. A5), the template, or the block default.
+ * the page's own change, the variant of a module choice (ADR-0010), the format adjustment (e.g.
+ * A5), the template, or the block default.
  */
 export function valueOrigin(
   project: PlannerProject,
@@ -24,6 +25,13 @@ export function valueOrigin(
   const template = project.template.pageTemplates[ref.templateId];
   const entry = template && findBlock(template, ref.blockId);
   if (!entry) return 'default';
+  if (group !== 'size') {
+    const scope = {
+      config: conditionConfig(project.template, project.generation),
+      format: project.format,
+    };
+    if (hasKey(activeVariant(entry.block, scope)?.variant[group], key)) return 'variant';
+  }
   const path = `${entry.pointer}/${group}/${key}`;
   if (template.formatOverrides?.[project.format]?.some((op) => op.path === path)) return 'format';
   return hasKey(entry.block[group], key) ? 'template' : 'default';

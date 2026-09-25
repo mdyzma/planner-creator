@@ -8,3 +8,4 @@ export * from './template-edit';
 export * from './resolve';
 export * from './sections';
 export * from './labels';
+export * from './modules';

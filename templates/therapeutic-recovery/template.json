@@ -255,15 +255,77 @@
               "props": {
                 "variant": "body",
                 "text": {
-                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
                 }
               },
               "size": {
                 "height": {
                   "fr": 3
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "and": [
+                      {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      {
+                        "==": [
+                          {
+                            "var": "config.modules.halt"
+                          },
+                          false
+                        ]
+                      }
+                    ]
+                  },
+                  "props": {
+                    "text": {
+                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, up to three priorities and a plan for the day. In the evening, use the right page to look back: what was hard, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. Wieczorem na prawej stronie spójrz wstecz: co było trudne, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                    }
+                  }
+                },
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "text": {
+                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what was hard, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co było trudne, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                    }
+                  }
+                },
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.halt"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "text": {
+                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                    }
+                  }
+                }
+              ]
             }
           },
           {
@@ -521,8 +583,8 @@
                     "pl": "Unikam miejsc i osób związanych z piciem lub używaniem."
                   },
                   {
-                    "en": "I eat, sleep and rest regularly (HALT).",
-                    "pl": "Regularnie jem, śpię i odpoczywam (HALT)."
+                    "en": "I eat, sleep and rest regularly.",
+                    "pl": "Regularnie jem, śpię i odpoczywam."
                   },
                   {
                     "en": "I go to my meetings and therapy even when I do not feel like it.",
@@ -885,7 +947,25 @@
                 "height": {
                   "mm": 12
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "title": {
+                      "en": "Focus of the month",
+                      "pl": "Fokus miesiąca"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
@@ -941,7 +1021,25 @@
                       "pl": "Mityngi, terapia i wizyty"
                     },
                     "pattern": "lines"
-                  }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "title": {
+                          "en": "Important dates and appointments",
+                          "pl": "Ważne terminy i wizyty"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -1160,7 +1258,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 0
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1170,7 +1287,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 1
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1180,7 +1316,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 2
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]
@@ -1318,7 +1473,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 3
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1328,7 +1502,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 4
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1338,7 +1531,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 5
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1348,7 +1560,26 @@
               "type": "day-strip",
               "props": {
                 "weekday": 6
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -1359,7 +1590,26 @@
               "props": {},
               "size": {
                 "height": "auto"
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "markers": [
+                      "doctor",
+                      "exercise",
+                      "custom"
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]
@@ -1466,7 +1716,22 @@
                     "width": {
                       "fr": 3
                     }
-                  }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "showSobriety": false
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -1509,7 +1774,53 @@
                   },
                   "size": {
                     "height": "auto"
-                  }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "and": [
+                          {
+                            "==": [
+                              {
+                                "var": "config.modules.recovery"
+                              },
+                              false
+                            ]
+                          },
+                          {
+                            "==": [
+                              {
+                                "var": "format"
+                              },
+                              "A5"
+                            ]
+                          }
+                        ]
+                      },
+                      "props": {
+                        "text": {
+                          "en": "Mood _____ /10 · Energy _____ /10 · Tension _____ /10\nSleep _____ h · quality _____ /5",
+                          "pl": "Nastrój _____ /10 · Energia _____ /10 · Napięcie _____ /10\nSen _____ h · jakość _____ /5"
+                        }
+                      }
+                    },
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "text": {
+                          "en": "Mood _____ /10 · Energy _____ /10 · Tension _____ /10 · Sleep _____ h · quality _____ /5",
+                          "pl": "Nastrój _____ /10 · Energia _____ /10 · Napięcie _____ /10 · Sen _____ h · jakość _____ /5"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -1528,7 +1839,25 @@
                     "height": {
                       "fr": 1
                     }
-                  }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "title": {
+                          "en": "Today I take care of myself by:",
+                          "pl": "Dziś dbam o siebie przez:"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ],
@@ -1668,6 +1997,14 @@
                 "height": {
                   "mm": 53
                 }
+              },
+              "visibility": {
+                "!=": [
+                  {
+                    "var": "config.modules.halt"
+                  },
+                  false
+                ]
               }
             }
           }
@@ -1724,7 +2061,22 @@
                       "height": {
                         "mm": 9
                       }
-                    }
+                    },
+                    "variants": [
+                      {
+                        "when": {
+                          "==": [
+                            {
+                              "var": "config.modules.recovery"
+                            },
+                            false
+                          ]
+                        },
+                        "props": {
+                          "showSobriety": false
+                        }
+                      }
+                    ]
                   }
                 },
                 {
@@ -1971,7 +2323,25 @@
             "height": {
               "mm": 26
             }
-          }
+          },
+          "variants": [
+            {
+              "when": {
+                "==": [
+                  {
+                    "var": "config.modules.recovery"
+                  },
+                  false
+                ]
+              },
+              "props": {
+                "text": {
+                  "en": "Mood __________ /10\nTension __________ /10\nEnergy __________ /10",
+                  "pl": "Nastrój __________ /10\nNapięcie __________ /10\nEnergia __________ /10"
+                }
+              }
+            }
+          ]
         },
         {
           "id": "trigger",
@@ -2039,7 +2409,76 @@
             "height": {
               "fr": 1
             }
-          }
+          },
+          "variants": [
+            {
+              "when": {
+                "==": [
+                  {
+                    "var": "config.modules.recovery"
+                  },
+                  false
+                ]
+              },
+              "props": {
+                "title": {
+                  "en": "What weighed on me today?",
+                  "pl": "Co mnie dziś obciążało?"
+                },
+                "items": [
+                  {
+                    "en": "nothing in particular",
+                    "pl": "nic szczególnego"
+                  },
+                  {
+                    "en": "work / duties",
+                    "pl": "praca / obowiązki"
+                  },
+                  {
+                    "en": "relationships",
+                    "pl": "relacje"
+                  },
+                  {
+                    "en": "a conflict",
+                    "pl": "konflikt"
+                  },
+                  {
+                    "en": "money",
+                    "pl": "pieniądze"
+                  },
+                  {
+                    "en": "health",
+                    "pl": "zdrowie"
+                  },
+                  {
+                    "en": "tiredness / little sleep",
+                    "pl": "zmęczenie / mało snu"
+                  },
+                  {
+                    "en": "rush",
+                    "pl": "pośpiech"
+                  },
+                  {
+                    "en": "loneliness",
+                    "pl": "samotność"
+                  },
+                  {
+                    "en": "boredom",
+                    "pl": "nuda"
+                  },
+                  {
+                    "en": "worries",
+                    "pl": "zmartwienia"
+                  },
+                  {
+                    "en": "other:",
+                    "pl": "inne:"
+                  }
+                ],
+                "count": 12
+              }
+            }
+          ]
         },
         {
           "id": "trigger-response",
@@ -2123,7 +2562,76 @@
             "height": {
               "fr": 1
             }
-          }
+          },
+          "variants": [
+            {
+              "when": {
+                "==": [
+                  {
+                    "var": "config.modules.recovery"
+                  },
+                  false
+                ]
+              },
+              "props": {
+                "title": {
+                  "en": "What helped me today?",
+                  "pl": "Co mi dziś pomogło?"
+                },
+                "items": [
+                  {
+                    "en": "talking to someone",
+                    "pl": "rozmowa z kimś"
+                  },
+                  {
+                    "en": "exercise",
+                    "pl": "ruch"
+                  },
+                  {
+                    "en": "rest / sleep",
+                    "pl": "odpoczynek / sen"
+                  },
+                  {
+                    "en": "a proper meal",
+                    "pl": "dobry posiłek"
+                  },
+                  {
+                    "en": "family / friends",
+                    "pl": "rodzina / przyjaciele"
+                  },
+                  {
+                    "en": "work / hobby",
+                    "pl": "praca / hobby"
+                  },
+                  {
+                    "en": "meditation / prayer",
+                    "pl": "medytacja / modlitwa"
+                  },
+                  {
+                    "en": "time outdoors",
+                    "pl": "czas na zewnątrz"
+                  },
+                  {
+                    "en": "time for myself",
+                    "pl": "czas dla siebie"
+                  },
+                  {
+                    "en": "asking for help",
+                    "pl": "prośba o pomoc"
+                  },
+                  {
+                    "en": "setting a boundary",
+                    "pl": "postawiona granica"
+                  },
+                  {
+                    "en": "other:",
+                    "pl": "inne:"
+                  }
+                ],
+                "count": 12
+              }
+            }
+          ]
         }
       ],
       "body": {
@@ -2146,7 +2654,25 @@
                 "height": {
                   "mm": 26
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "title": {
+                      "en": "What was hard today?",
+                      "pl": "Co dzisiaj było trudne?"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
@@ -2316,7 +2842,25 @@
                   "height": {
                     "mm": 6
                   }
-                }
+                },
+                "variants": [
+                  {
+                    "when": {
+                      "==": [
+                        {
+                          "var": "config.modules.recovery"
+                        },
+                        false
+                      ]
+                    },
+                    "props": {
+                      "text": {
+                        "en": "Check-out: mood __________ /10 · tension __________ /10 · energy __________ /10",
+                        "pl": "Check-out: nastrój __________ /10 · napięcie __________ /10 · energia __________ /10"
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -2339,7 +2883,25 @@
                   "height": {
                     "mm": 16
                   }
-                }
+                },
+                "variants": [
+                  {
+                    "when": {
+                      "==": [
+                        {
+                          "var": "config.modules.recovery"
+                        },
+                        false
+                      ]
+                    },
+                    "props": {
+                      "title": {
+                        "en": "What helped me today?",
+                        "pl": "Co mi dziś pomogło?"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -2569,7 +3131,25 @@
                         "height": {
                           "mm": 40
                         }
-                      }
+                      },
+                      "variants": [
+                        {
+                          "when": {
+                            "==": [
+                              {
+                                "var": "config.modules.recovery"
+                              },
+                              false
+                            ]
+                          },
+                          "props": {
+                            "text": {
+                              "en": "Mood, on average __________ /10\nTension, on average __________ /10\nDays with support __________ /7\nDays with exercise __________ /7\nDays with rest __________ /7",
+                              "pl": "Nastrój, średnio __________ /10\nNapięcie, średnio __________ /10\nDni ze wsparciem __________ /7\nDni z ruchem __________ /7\nDni z odpoczynkiem __________ /7"
+                            }
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -2627,6 +3207,14 @@
                         "height": {
                           "mm": 42
                         }
+                      },
+                      "visibility": {
+                        "!=": [
+                          {
+                            "var": "config.modules.halt"
+                          },
+                          false
+                        ]
                       }
                     }
                   },
@@ -2646,6 +3234,14 @@
                         "height": {
                           "mm": 13
                         }
+                      },
+                      "visibility": {
+                        "!=": [
+                          {
+                            "var": "config.modules.halt"
+                          },
+                          false
+                        ]
                       }
                     }
                   },
@@ -2713,7 +3309,72 @@
                         "height": {
                           "fr": 1
                         }
-                      }
+                      },
+                      "variants": [
+                        {
+                          "when": {
+                            "==": [
+                              {
+                                "var": "config.modules.recovery"
+                              },
+                              false
+                            ]
+                          },
+                          "props": {
+                            "title": {
+                              "en": "What weighed on me this week",
+                              "pl": "Co mnie obciążało w tym tygodniu"
+                            },
+                            "items": [
+                              {
+                                "en": "work / duties",
+                                "pl": "praca / obowiązki"
+                              },
+                              {
+                                "en": "relationships",
+                                "pl": "relacje"
+                              },
+                              {
+                                "en": "a conflict",
+                                "pl": "konflikt"
+                              },
+                              {
+                                "en": "money",
+                                "pl": "pieniądze"
+                              },
+                              {
+                                "en": "health",
+                                "pl": "zdrowie"
+                              },
+                              {
+                                "en": "tiredness / little sleep",
+                                "pl": "zmęczenie / mało snu"
+                              },
+                              {
+                                "en": "rush",
+                                "pl": "pośpiech"
+                              },
+                              {
+                                "en": "loneliness",
+                                "pl": "samotność"
+                              },
+                              {
+                                "en": "boredom",
+                                "pl": "nuda"
+                              },
+                              {
+                                "en": "worries",
+                                "pl": "zmartwienia"
+                              },
+                              {
+                                "en": "other:",
+                                "pl": "inne:"
+                              }
+                            ],
+                            "count": 11
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -2828,7 +3489,76 @@
                         "height": {
                           "fr": 1
                         }
-                      }
+                      },
+                      "variants": [
+                        {
+                          "when": {
+                            "==": [
+                              {
+                                "var": "config.modules.recovery"
+                              },
+                              false
+                            ]
+                          },
+                          "props": {
+                            "title": {
+                              "en": "What helped me most",
+                              "pl": "Co mi najbardziej pomagało"
+                            },
+                            "items": [
+                              {
+                                "en": "talking to someone",
+                                "pl": "rozmowa z kimś"
+                              },
+                              {
+                                "en": "exercise",
+                                "pl": "ruch"
+                              },
+                              {
+                                "en": "rest / sleep",
+                                "pl": "odpoczynek / sen"
+                              },
+                              {
+                                "en": "a proper meal",
+                                "pl": "dobry posiłek"
+                              },
+                              {
+                                "en": "family / friends",
+                                "pl": "rodzina / przyjaciele"
+                              },
+                              {
+                                "en": "work / hobby",
+                                "pl": "praca / hobby"
+                              },
+                              {
+                                "en": "meditation / prayer",
+                                "pl": "medytacja / modlitwa"
+                              },
+                              {
+                                "en": "time outdoors",
+                                "pl": "czas na zewnątrz"
+                              },
+                              {
+                                "en": "time for myself",
+                                "pl": "czas dla siebie"
+                              },
+                              {
+                                "en": "asking for help",
+                                "pl": "prośba o pomoc"
+                              },
+                              {
+                                "en": "setting a boundary",
+                                "pl": "postawiona granica"
+                              },
+                              {
+                                "en": "other:",
+                                "pl": "inne:"
+                              }
+                            ],
+                            "count": 12
+                          }
+                        }
+                      ]
                     }
                   },
                   {
@@ -3036,7 +3766,25 @@
                       "height": {
                         "mm": 12
                       }
-                    }
+                    },
+                    "variants": [
+                      {
+                        "when": {
+                          "==": [
+                            {
+                              "var": "config.modules.recovery"
+                            },
+                            false
+                          ]
+                        },
+                        "props": {
+                          "text": {
+                            "en": "Mood __________ /10 · tension __________ /10\nDays with exercise __________ /7 · days with rest __________ /7",
+                            "pl": "Nastrój __________ /10 · napięcie __________ /10\nDni z ruchem __________ /7 · dni z odpoczynkiem __________ /7"
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 {
@@ -3055,6 +3803,14 @@
                       "height": {
                         "fr": 1
                       }
+                    },
+                    "visibility": {
+                      "!=": [
+                        {
+                          "var": "config.modules.halt"
+                        },
+                        false
+                      ]
                     }
                   }
                 },
@@ -3074,7 +3830,25 @@
                       "height": {
                         "fr": 1
                       }
-                    }
+                    },
+                    "variants": [
+                      {
+                        "when": {
+                          "==": [
+                            {
+                              "var": "config.modules.recovery"
+                            },
+                            false
+                          ]
+                        },
+                        "props": {
+                          "title": {
+                            "en": "What weighed on me most:",
+                            "pl": "Co mnie najbardziej obciążało:"
+                          }
+                        }
+                      }
+                    ]
                   }
                 },
                 {
@@ -3431,7 +4205,25 @@
                     "height": {
                       "fr": 1
                     }
-                  }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "title": {
+                          "en": "Did I notice a thought that did not help me? What was it?",
+                          "pl": "Czy {g:zauważyłem|zauważyłam} myśl, która mi nie pomagała? Jaka to była myśl?"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -3696,7 +4488,55 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "segments": [
+                      {
+                        "en": "Physical health and sleep",
+                        "pl": "Zdrowie fizyczne i sen"
+                      },
+                      {
+                        "en": "Emotions and inner calm",
+                        "pl": "Emocje i spokój"
+                      },
+                      {
+                        "en": "Meaning and spirituality",
+                        "pl": "Sens i duchowość"
+                      },
+                      {
+                        "en": "Relationships and intimacy",
+                        "pl": "Relacje i bliskość"
+                      },
+                      {
+                        "en": "Finances",
+                        "pl": "Finanse"
+                      },
+                      {
+                        "en": "Work",
+                        "pl": "Praca"
+                      },
+                      {
+                        "en": "Personal growth",
+                        "pl": "Rozwój"
+                      },
+                      {
+                        "en": "Rest and recreation",
+                        "pl": "Odpoczynek"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
@@ -3798,7 +4638,8 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": []
             }
           },
           {
@@ -3817,7 +4658,8 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": []
             }
           },
           {
@@ -3836,7 +4678,25 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "title": {
+                      "en": "What did not serve me?",
+                      "pl": "Co mi nie służyło?"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
@@ -3855,7 +4715,8 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": []
             }
           },
           {
@@ -3874,7 +4735,8 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": []
             }
           },
           {
@@ -3893,7 +4755,8 @@
                 "height": {
                   "fr": 1
                 }
-              }
+              },
+              "variants": []
             }
           }
         ]
@@ -6329,10 +7192,26 @@
           "page": "how-to"
         },
         {
-          "page": "contract"
+          "page": "contract",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          }
         },
         {
-          "page": "safety-rules"
+          "page": "safety-rules",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          }
         }
       ]
     },
@@ -6396,7 +7275,14 @@
             },
             {
               "page": "situation",
-              "enabled": false
+              "when": {
+                "!=": [
+                  {
+                    "var": "config.modules.cbt"
+                  },
+                  false
+                ]
+              }
             }
           ]
         },
@@ -6419,6 +7305,14 @@
       "title": {
         "en": "Crisis and relapse prevention",
         "pl": "Kryzys i zapobieganie nawrotom"
+      },
+      "when": {
+        "!=": [
+          {
+            "var": "config.modules.recovery"
+          },
+          false
+        ]
       },
       "sheetAligned": true,
       "numbering": {
@@ -6461,6 +7355,78 @@
           "page": "craving-card"
         }
       ]
+    }
+  ],
+  "modules": [
+    {
+      "id": "recovery",
+      "name": {
+        "en": "Recovery and sobriety",
+        "pl": "Zdrowienie i trzeźwość"
+      },
+      "description": {
+        "en": "Sobriety day counter, craving, triggers, AA and group meetings, the contract and safety rules, and the crisis and relapse prevention section.",
+        "pl": "Licznik dni trzeźwości, głód, wyzwalacze, mityngi AA i grupy, kontrakt i zasady bezpieczeństwa oraz sekcja kryzysowa i zapobiegania nawrotom."
+      },
+      "default": true
+    },
+    {
+      "id": "halt",
+      "name": {
+        "en": "HALT-B check",
+        "pl": "Skala HALT-B"
+      },
+      "description": {
+        "en": "A daily check of hunger, anger, loneliness, tiredness and boredom, and its summary in \"My week\".",
+        "pl": "Codzienna ocena głodu fizycznego, złości, samotności, zmęczenia i nudy oraz jej podsumowanie w „Moim tygodniu”."
+      },
+      "default": true
+    },
+    {
+      "id": "cbt",
+      "name": {
+        "en": "Situation analysis (CBT)",
+        "pl": "Analiza sytuacji (CBT)"
+      },
+      "description": {
+        "en": "A weekly page for one situation: the thought, the feeling, what I did, and what could help next time.",
+        "pl": "Cotygodniowa strona na jedną sytuację: myśl, uczucie, działanie i to, co mogłoby pomóc następnym razem."
+      },
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "id": "recovery-edition",
+      "name": {
+        "en": "Recovery Edition",
+        "pl": "Recovery Edition"
+      },
+      "description": {
+        "en": "For recovery from addiction: sobriety, craving, HALT-B and the crisis section.",
+        "pl": "Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa."
+      },
+      "modules": {
+        "recovery": true,
+        "halt": true,
+        "cbt": false
+      }
+    },
+    {
+      "id": "balance",
+      "name": {
+        "en": "Balance",
+        "pl": "Balance"
+      },
+      "description": {
+        "en": "Everyday life, balance and a good life, without addiction and therapy wording.",
+        "pl": "Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii."
+      },
+      "modules": {
+        "recovery": false,
+        "halt": true,
+        "cbt": false
+      }
     }
   ],
   "variables": [

@@ -1,4 +1,6 @@
 import {
+  activeVariant,
+  conditionConfig,
   findBlock,
   insertBlock as insertIntoTemplate,
   moveBlock as moveInTemplate,
@@ -154,6 +156,29 @@ function setFormatOp(
   return { ...template, formatOverrides: { ...template.formatOverrides, [project.format]: ops } };
 }
 
+/**
+ * The block variant that prints in this planner and sets `group/key` (ADR-0010), e.g. the neutral
+ * wording while the recovery module is off. Editing that value changes the variant, so the
+ * designer edits what it shows.
+ */
+function variantSetting(
+  project: PlannerProject,
+  template: PageTemplate,
+  blockId: string,
+  group: 'props' | 'style',
+  key: string,
+): number {
+  const block = findBlock(template, blockId)?.block;
+  if (!block?.variants) return -1;
+  const scope = {
+    config: conditionConfig(project.template, project.generation),
+    format: project.format,
+  };
+  const found = activeVariant(block, scope);
+  const values = found?.variant[group];
+  return found && isRecord(values) && key in values ? found.index : -1;
+}
+
 // ---------------------------------------------------------------------------------------------
 // Block values
 
@@ -177,6 +202,17 @@ export function setBlockValue(
     }));
   }
   return withTemplate(project, ref.templateId, (template) => {
+    const variant = variantSetting(project, template, ref.blockId, group, key);
+    if (variant >= 0) {
+      return updateBlock(template, ref.blockId, (block) => ({
+        ...block,
+        variants: block.variants!.map((v, i) =>
+          i === variant
+            ? { ...v, [group]: setKey(v[group] as Record<string, unknown>, key, value) }
+            : v,
+        ),
+      }));
+    }
     const op = formatOpIndex(project, template, ref.blockId, `${group}/${key}`);
     if (op >= 0) return setFormatOp(project, template, op, value);
     return updateBlock(template, ref.blockId, (block) => {

@@ -230,3 +230,34 @@ describe('history', () => {
     expect(h.past[0]!.value).toBe(50);
   });
 });
+
+describe('module variants', () => {
+  const COMMITMENT = { templateId: 'day-left', blockId: 'commitment' };
+  const TEMPLATE = { kind: 'template' } as const;
+  const balance = (): PlannerProject => {
+    const p = planner();
+    return { ...p, generation: { ...p.generation, modules: { recovery: false } } };
+  };
+  const commitment = (p: PlannerProject) =>
+    findBlock(p.template.pageTemplates['day-left']!, 'commitment')!.block;
+
+  it('edits the wording that prints: the variant in use, not the hidden one', () => {
+    const p = balance();
+    expect(valueOrigin(p, COMMITMENT, 'props', 'title')).toBe('variant');
+    const title = { en: 'My way today:', pl: 'Mój sposób na dziś:' };
+    const edited = setBlockValue(p, COMMITMENT, 'props', 'title', title, TEMPLATE);
+    const block = commitment(edited);
+    expect((block.variants![0]!.props as Record<string, unknown>).title).toEqual(title);
+    expect((block.props as Record<string, unknown>).title).toEqual(
+      (commitment(p).props as Record<string, unknown>).title,
+    );
+  });
+
+  it('edits the block itself in a planner with the module on', () => {
+    const p = planner();
+    expect(valueOrigin(p, COMMITMENT, 'props', 'title')).toBe('template');
+    const title = { en: 'Today:', pl: 'Dziś:' };
+    const block = commitment(setBlockValue(p, COMMITMENT, 'props', 'title', title, TEMPLATE));
+    expect((block.props as Record<string, unknown>).title).toEqual(title);
+  });
+});

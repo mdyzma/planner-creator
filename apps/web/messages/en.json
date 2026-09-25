@@ -44,6 +44,10 @@
     "template": "Template",
     "startDate": "Start date",
     "undated": "Undated (dates written by hand)",
+    "edition": "Edition",
+    "customEdition": "Custom",
+    "modules": "Modules: {on} of {total}",
+    "modulesLegend": "Planner modules",
     "length": "Length",
     "months": "{count, plural, one {# month} other {# months}}",
     "budget": "About {pages, plural, one {# page} other {# pages}} · {sheets} sheets · spine about {spine} mm",
@@ -348,6 +352,7 @@
     "origin": {
       "page": "this page",
       "format": "format",
+      "variant": "module",
       "template": "template",
       "reset": "Reset",
       "resetHint": "Go back to the value from the level below"

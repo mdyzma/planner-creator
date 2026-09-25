@@ -2,7 +2,7 @@
 
 import { applyGender, localize } from '@planner/i18n';
 import { PageView } from '@planner/renderer';
-import type { FormatId, Locale, PageRef, PlannerProject, SectionTemplate } from '@planner/schema';
+import type { FormatId, Locale, PlannerProject, PlannerTemplate } from '@planner/schema';
 import { FORMAT_IDS } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
 import type { ReactNode } from 'react';
@@ -52,25 +52,15 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
 /** Usable width of an A4 guide page (210 mm minus 15 mm margins). */
 const CONTENT_WIDTH = 180;
 
-/** Optional pages are switched on in the example planner, so the guide explains them too. */
-const withOptionalPages = (
-  entries: Array<SectionTemplate | PageRef>,
-): Array<SectionTemplate | PageRef> =>
-  entries.map((e) =>
-    'page' in e ? { ...e, enabled: true } : { ...e, children: withOptionalPages(e.children) },
-  );
+/** Every module of the template switched on, so the guide explains the optional pages too. */
+const allModules = (template: PlannerTemplate) =>
+  Object.fromEntries((template.modules ?? []).map((m) => [m.id, true]));
 
 function exampleProject(locale: Locale, format: FormatId): PlannerProject {
-  const bundled = BUNDLED_TEMPLATES[0]!;
-  const bundle = {
-    ...bundled,
-    template: {
-      ...bundled.template,
-      sections: withOptionalPages(bundled.template.sections) as SectionTemplate[],
-    },
-  };
+  const bundle = BUNDLED_TEMPLATES[0]!;
   const { project } = createGeneratedProject({
     bundle,
+    modules: allModules(bundle.template),
     id: 'guide-example',
     name: 'Guide',
     format,

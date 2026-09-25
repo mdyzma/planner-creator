@@ -1,4 +1,4 @@
-import { evaluateCondition, padToForProfile, paginate } from '@planner/core';
+import { conditionConfig, evaluateCondition, padToForProfile, paginate } from '@planner/core';
 import { formatDate, localize } from '@planner/i18n';
 import type {
   ContentLibrary,
@@ -88,7 +88,8 @@ export function generate(input: GenerateInput): GenerateResult {
     }
   }
 
-  const conditionScope = { config };
+  // Modules resolved to on/off, so `{ var: "config.modules.recovery" }` always has a value.
+  const conditionScope = { config: conditionConfig(template, config) };
 
   const iterations = (
     section: SectionTemplate,
@@ -164,6 +165,7 @@ export function generate(input: GenerateInput): GenerateResult {
           seen.set(child.page, n);
           // Counted before skipping, so switching one page off keeps the other pages' keys.
           if (child.enabled === false) continue;
+          if (child.when && !evaluateCondition(child.when, conditionScope)) continue;
           const instance: PageInstance = {
             key: `${key}/${child.page}${n > 1 ? `#${n}` : ''}`,
             templateId: child.page,

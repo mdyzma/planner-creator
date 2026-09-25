@@ -12,6 +12,7 @@ import { useId, useMemo, useState, type ReactNode } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { LazyVisible } from '@/components/LazyVisible';
 import { ProjectStatus } from '@/components/ProjectStatus';
+import { ModulePicker } from '@/components/ModulePicker';
 import { Link } from '@/i18n/navigation';
 import {
   FILLER_PATTERN,
@@ -282,11 +283,13 @@ function DatesBar({
   const ids = useId();
   const [startDate, setStartDate] = useState(project.generation.startDate ?? '');
   const [months, setMonths] = useState(project.generation.durationMonths);
+  const [modules, setModules] = useState(project.generation.modules);
   const [message, setMessage] = useState<string | null>(null);
 
   const changed =
     (startDate || undefined) !== project.generation.startDate ||
-    months !== project.generation.durationMonths;
+    months !== project.generation.durationMonths ||
+    JSON.stringify(modules ?? {}) !== JSON.stringify(project.generation.modules ?? {});
 
   const apply = () => {
     const result = regenerate({
@@ -295,6 +298,7 @@ function DatesBar({
         ...project.generation,
         startDate: startDate || undefined,
         durationMonths: months,
+        ...(modules ? { modules } : {}),
       },
     });
     onChange(result.project);
@@ -335,6 +339,13 @@ function DatesBar({
           ))}
         </select>
       </label>
+      <ModulePicker
+        template={project.template}
+        modules={modules}
+        onChange={setModules}
+        fieldClass={field}
+        labelClass="flex items-center gap-2"
+      />
       <button
         type="button"
         disabled={!changed}
