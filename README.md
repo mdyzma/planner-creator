@@ -9,6 +9,7 @@ printer, filled in by hand and ring-bound.
 
 - Design: [docs/architecture/system-design.md](docs/architecture/system-design.md)
 - Decisions: [docs/adr/](docs/adr/)
+- Roadmap: [docs/roadmap.md](docs/roadmap.md)
 - Deployment: [docs/operations/cloudflare.md](docs/operations/cloudflare.md)
 
 ## Requirements
