@@ -1,7 +1,7 @@
 import { createDefaultRegistry } from '@planner/blocks';
-import { resolveTemplateForFormat } from '@planner/core';
-import { scanTranslations } from '@planner/i18n';
-import { emptyRenderContext } from '@planner/renderer';
+import { resolveFrame, resolveTemplateForFormat } from '@planner/core';
+import { pageVariables, scanTranslations } from '@planner/i18n';
+import { PageView, emptyRenderContext } from '@planner/renderer';
 import type { BlockInstance, LayoutNode, PageTemplate, SectionTemplate } from '@planner/schema';
 import {
   FORMAT_IDS,
@@ -104,5 +104,41 @@ describe('bundled quotes', () => {
       (i) => i.severity === 'error',
     );
     expect(errors).toEqual([]);
+  });
+});
+
+describe('cover', () => {
+  const registry = createDefaultRegistry();
+  const coverText = (locale: 'en' | 'pl', startDate?: string) => {
+    const p = createProject({
+      id: 'c',
+      name: 'c',
+      format: 'A4',
+      locale,
+      now: '2026-09-25T00:00:00.000Z',
+      template,
+    });
+    const project = { ...p, generation: { ...p.generation, startDate } };
+    const html = renderToStaticMarkup(
+      <PageView
+        frame={resolveFrame('A4', p.print, 'right')}
+        template={template.pageTemplates.cover}
+        locale={locale}
+        mode="print"
+        renderBlock={registry.render}
+        vars={pageVariables(project, {}, locale)}
+      />,
+    );
+    return html
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  };
+
+  it('prints the start date chosen in the creator, and a line when undated', () => {
+    expect(coverText('pl', '2026-10-01')).toMatch(/Zaczynam dnia .*1 października 2026/);
+    expect(coverText('en', '2026-10-01')).toMatch(/I start on .*October 1, 2026/);
+    expect(coverText('pl')).toContain('Zaczynam dnia __________');
+    expect(coverText('pl', '2026-10-01')).not.toContain('dzień po dniu');
   });
 });

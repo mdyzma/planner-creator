@@ -103,25 +103,6 @@
           {
             "kind": "block",
             "block": {
-              "id": "subtitle",
-              "type": "text",
-              "props": {
-                "text": {
-                  "en": "Six months, one day at a time",
-                  "pl": "Sześć miesięcy, dzień po dniu"
-                },
-                "variant": "subheading"
-              },
-              "size": {
-                "height": {
-                  "mm": 10
-                }
-              }
-            }
-          },
-          {
-            "kind": "block",
-            "block": {
               "id": "gap",
               "type": "spacer",
               "props": {},
@@ -153,23 +134,30 @@
             }
           },
           {
-            "kind": "block",
-            "block": {
-              "id": "start",
-              "type": "writing-area",
-              "props": {
-                "title": {
-                  "en": "I start on",
-                  "pl": "Zaczynam dnia"
-                },
-                "pattern": "lines",
-                "pitch": 8
-              },
-              "size": {
-                "height": {
-                  "mm": 16
+            "kind": "stack",
+            "gap": 1.5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "start",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "{{plannerStartDate}}",
+                      "pl": "{{plannerStartDate}}"
+                    },
+                    "variant": "subheading"
+                  }
                 }
               }
+            ],
+            "height": {
+              "mm": 16
+            },
+            "label": {
+              "en": "I start on",
+              "pl": "Zaczynam dnia"
             }
           },
           {

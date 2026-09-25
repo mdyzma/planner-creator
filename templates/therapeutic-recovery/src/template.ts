@@ -39,15 +39,6 @@ const cover: PageTemplate = {
     [
       block('top', 'spacer', {}, { height: fr(2) }),
       heading('title', L('Therapeutic Recovery Planner', 'Planer terapeutyczny zdrowienia'), 16),
-      block(
-        'subtitle',
-        'text',
-        {
-          text: L('Six months, one day at a time', 'Sześć miesięcy, dzień po dniu'),
-          variant: 'subheading',
-        },
-        { height: mmH(10) },
-      ),
       block('gap', 'spacer', {}, { height: fr(1) }),
       block(
         'owner',
@@ -55,11 +46,15 @@ const cover: PageTemplate = {
         { title: L('This planner belongs to', 'Ten planer należy do'), pattern: 'lines', pitch: 8 },
         { height: mmH(16) },
       ),
-      block(
-        'start',
-        'writing-area',
-        { title: L('I start on', 'Zaczynam dnia'), pattern: 'lines', pitch: 8 },
-        { height: mmH(16) },
+      // The start date chosen in the creator; an undated planner prints a line to write on.
+      stack(
+        [
+          block('start', 'text', {
+            text: L('{{plannerStartDate}}', '{{plannerStartDate}}'),
+            variant: 'subheading',
+          }),
+        ],
+        { label: L('I start on', 'Zaczynam dnia'), height: mmH(16), gap: 1.5 },
       ),
       block('bottom', 'spacer', {}, { height: fr(1) }),
     ],
