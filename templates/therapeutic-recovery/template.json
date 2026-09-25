@@ -201,6 +201,25 @@
                 }
               }
             }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "motto",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "I do not have to change my whole life today.\nIt is enough to live this day with awareness.",
+                  "pl": "Nie muszę zmieniać całego życia dzisiaj.\nWystarczy, że świadomie przeżyję ten dzień."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
           }
         ]
       },
@@ -255,8 +274,8 @@
               "props": {
                 "variant": "body",
                 "text": {
-                  "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                  "en": "IN THE MORNING, stop for a few minutes. Check how you feel, what you need today, what really matters and what to watch out for. The left page has a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, at most three priorities and a plan for the day. Do not plan a perfect day; plan a day you can live through.\n\nDURING THE DAY, notice your needs, tension, craving, tiredness and contact with people. Check {{haltName}}: are you {{haltFeelings}}? If the day does not go to plan, change the plan, not yourself.\n\nIN THE EVENING, look at the day with curiosity, not judgement, on the right page: what was hard and what threatened your sobriety, what helped, a small victory, what you are grateful for, and what to take into tomorrow.\n\nEach week opens with a spread for the week’s focus and goals, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. This is not a test; it is a tool for getting to know yourself.",
+                  "pl": "RANO zatrzymaj się na kilka minut. Sprawdź, jak się czujesz, czego dziś potrzebujesz, co jest naprawdę ważne i na co warto uważać. Na lewej stronie jest szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. Nie planuj idealnego dnia; zaplanuj dzień możliwy do przeżycia.\n\nW CIĄGU DNIA zauważaj swoje potrzeby, napięcie, głód, zmęczenie i kontakt z ludźmi. Sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Jeśli dzień nie idzie zgodnie z planem, zmień plan, nie siebie.\n\nWIECZOREM na prawej stronie spójrz na dzień z ciekawością, nie z oceną: co było trudne i co zagroziło Twojej trzeźwości, co pomogło, małe zwycięstwo, za co jesteś {g:wdzięczny|wdzięczna} i co chcesz zabrać w jutro.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. To nie jest sprawdzian; to narzędzie do poznawania siebie."
                 }
               },
               "size": {
@@ -288,8 +307,8 @@
                   },
                   "props": {
                     "text": {
-                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, up to three priorities and a plan for the day. In the evening, use the right page to look back: what was hard, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. Wieczorem na prawej stronie spójrz wstecz: co było trudne, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                      "en": "IN THE MORNING, stop for a few minutes. Check how you feel, what you need today, what really matters and what to watch out for. The left page has a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, at most three priorities and a plan for the day. Do not plan a perfect day; plan a day you can live through.\n\nDURING THE DAY, notice your needs, tension, tiredness and contact with people. If the day does not go to plan, change the plan, not yourself.\n\nIN THE EVENING, look at the day with curiosity, not judgement, on the right page: what was hard, what helped, a small victory, what you are grateful for, and what to take into tomorrow.\n\nEach week opens with a spread for the week’s focus and goals, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. This is not a test; it is a tool for getting to know yourself.",
+                      "pl": "RANO zatrzymaj się na kilka minut. Sprawdź, jak się czujesz, czego dziś potrzebujesz, co jest naprawdę ważne i na co warto uważać. Na lewej stronie jest szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. Nie planuj idealnego dnia; zaplanuj dzień możliwy do przeżycia.\n\nW CIĄGU DNIA zauważaj swoje potrzeby, napięcie, zmęczenie i kontakt z ludźmi. Jeśli dzień nie idzie zgodnie z planem, zmień plan, nie siebie.\n\nWIECZOREM na prawej stronie spójrz na dzień z ciekawością, nie z oceną: co było trudne, co pomogło, małe zwycięstwo, za co jesteś {g:wdzięczny|wdzięczna} i co chcesz zabrać w jutro.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. To nie jest sprawdzian; to narzędzie do poznawania siebie."
                     }
                   }
                 },
@@ -304,8 +323,8 @@
                   },
                   "props": {
                     "text": {
-                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what was hard, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co było trudne, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                      "en": "IN THE MORNING, stop for a few minutes. Check how you feel, what you need today, what really matters and what to watch out for. The left page has a quick check-in (mood, energy, tension and sleep), one way you will take care of yourself today, at most three priorities and a plan for the day. Do not plan a perfect day; plan a day you can live through.\n\nDURING THE DAY, notice your needs, tension, tiredness and contact with people. Check {{haltName}}: are you {{haltFeelings}}? If the day does not go to plan, change the plan, not yourself.\n\nIN THE EVENING, look at the day with curiosity, not judgement, on the right page: what was hard, what helped, a small victory, what you are grateful for, and what to take into tomorrow.\n\nEach week opens with a spread for the week’s focus and goals, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nWrite by hand. This is not a test; it is a tool for getting to know yourself.",
+                      "pl": "RANO zatrzymaj się na kilka minut. Sprawdź, jak się czujesz, czego dziś potrzebujesz, co jest naprawdę ważne i na co warto uważać. Na lewej stronie jest szybki check-in (nastrój, energia, napięcie i sen), jeden sposób, w jaki dziś o siebie zadbasz, najwyżej trzy priorytety i plan dnia. Nie planuj idealnego dnia; zaplanuj dzień możliwy do przeżycia.\n\nW CIĄGU DNIA zauważaj swoje potrzeby, napięcie, zmęczenie i kontakt z ludźmi. Sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Jeśli dzień nie idzie zgodnie z planem, zmień plan, nie siebie.\n\nWIECZOREM na prawej stronie spójrz na dzień z ciekawością, nie z oceną: co było trudne, co pomogło, małe zwycięstwo, za co jesteś {g:wdzięczny|wdzięczna} i co chcesz zabrać w jutro.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nPisz odręcznie. To nie jest sprawdzian; to narzędzie do poznawania siebie."
                     }
                   }
                 },
@@ -320,8 +339,8 @@
                   },
                   "props": {
                     "text": {
-                      "en": "Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, up to three priorities and a plan for the day. In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                      "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                      "en": "IN THE MORNING, stop for a few minutes. Check how you feel, what you need today, what really matters and what to watch out for. The left page has a quick check-in (mood, energy, tension, craving and sleep), one action that protects your sobriety today, at most three priorities and a plan for the day. Do not plan a perfect day; plan a day you can live through.\n\nDURING THE DAY, notice your needs, tension, craving, tiredness and contact with people. If the day does not go to plan, change the plan, not yourself.\n\nIN THE EVENING, look at the day with curiosity, not judgement, on the right page: what was hard and what threatened your sobriety, what helped, a small victory, what you are grateful for, and what to take into tomorrow.\n\nEach week opens with a spread for the week’s focus and goals, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.\n\nWrite by hand. This is not a test; it is a tool for getting to know yourself.",
+                      "pl": "RANO zatrzymaj się na kilka minut. Sprawdź, jak się czujesz, czego dziś potrzebujesz, co jest naprawdę ważne i na co warto uważać. Na lewej stronie jest szybki check-in (nastrój, energia, napięcie, głód i sen), jedno działanie, którym chronisz dziś trzeźwość, najwyżej trzy priorytety i plan dnia. Nie planuj idealnego dnia; zaplanuj dzień możliwy do przeżycia.\n\nW CIĄGU DNIA zauważaj swoje potrzeby, napięcie, głód, zmęczenie i kontakt z ludźmi. Jeśli dzień nie idzie zgodnie z planem, zmień plan, nie siebie.\n\nWIECZOREM na prawej stronie spójrz na dzień z ciekawością, nie z oceną: co było trudne i co zagroziło Twojej trzeźwości, co pomogło, małe zwycięstwo, za co jesteś {g:wdzięczny|wdzięczna} i co chcesz zabrać w jutro.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. To nie jest sprawdzian; to narzędzie do poznawania siebie."
                     }
                   }
                 }
@@ -349,6 +368,24 @@
           }
         ]
       },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/2/block/size/height",
+            "value": {
+              "mm": 34
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/1/block/size/height",
+            "value": {
+              "fr": 1
+            }
+          }
+        ]
+      },
       "guide": {
         "en": "A short description of the whole planner. Read it once at the start; the lines below are for your own reminders.",
         "pl": "Krótki opis całego planera. Przeczytaj go raz na początku; linie poniżej są na Twoje własne przypomnienia."
@@ -363,6 +400,1329 @@
             "en": "your own reminders",
             "pl": "Twoje własne przypomnienia"
           }
+        }
+      }
+    },
+    "agreement": {
+      "id": "agreement",
+      "name": {
+        "en": "My agreement with myself",
+        "pl": "Moja umowa ze sobą"
+      },
+      "rationale": {
+        "en": "A commitment without clinical language: what to take care of, do more and less of, and one promise, signed by the owner.",
+        "pl": "Zobowiązanie bez języka klinicznego: o co dbać, czego robić więcej i mniej oraz jedna obietnica, podpisana przez właściciela."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My agreement with myself",
+                  "pl": "Moja umowa ze sobą"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "This planner is here to help me live more consciously, not perfectly.",
+                  "pl": "Ten planer ma mi pomagać żyć bardziej świadomie, a nie żyć idealnie."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "care",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "In the coming months I want to take better care of:",
+                  "pl": "Przez najbliższy okres chcę bardziej dbać o:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "more",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to do more often:",
+                  "pl": "Chcę częściej:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "less",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to do less often:",
+                  "pl": "Chcę rzadziej:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "learn",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to learn:",
+                  "pl": "Chcę nauczyć się:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "remember",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When it gets hard, I want to remember that:",
+                  "pl": "Kiedy będzie trudno, chcę pamiętać, że:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "dont-have-to",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I do not have to:",
+                  "pl": "Nie muszę:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "ask-for-help",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I can ask for help when:",
+                  "pl": "Mogę prosić o pomoc, gdy:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "promise",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "One thing I promise myself:",
+                  "pl": "Jedna rzecz, którą obiecuję sobie:"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 22
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "signature",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "I sign this agreement with myself. Signature ____________________ · date __________",
+                  "pl": "Podpisuję tę umowę ze sobą. Podpis ____________________ · data __________"
+                },
+                "variant": "body"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "therapist",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Agreed with my therapist: ____________________",
+                  "pl": "Uzgodnione z terapeutą / terapeutką: ____________________"
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 7
+                }
+              },
+              "visibility": {
+                "!=": [
+                  {
+                    "var": "config.modules.recovery"
+                  },
+                  false
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "The first page of \"A good start\": a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.",
+        "pl": "Pierwsza strona „Na dobry początek”: zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis."
+      },
+      "sampleContent": {
+        "care": {
+          "fill": {
+            "en": "sleep and time with my son",
+            "pl": "sen i czas z synem"
+          }
+        },
+        "more": {
+          "fill": {
+            "en": "walk and call people",
+            "pl": "spacerować i dzwonić do ludzi"
+          }
+        },
+        "less": {
+          "fill": {
+            "en": "scroll in the evening",
+            "pl": "scrollować wieczorem"
+          }
+        },
+        "learn": {
+          "fill": {
+            "en": "to say no calmly",
+            "pl": "spokojnie mówić „nie”"
+          }
+        },
+        "remember": {
+          "fill": {
+            "en": "a bad day is not a bad life",
+            "pl": "zły dzień to nie złe życie"
+          },
+          "note": {
+            "en": "your own words",
+            "pl": "własnymi słowami"
+          },
+          "noteAt": "bottom-right"
+        },
+        "dont-have-to": {
+          "fill": {
+            "en": "do everything today",
+            "pl": "zrobić wszystkiego dzisiaj"
+          }
+        },
+        "ask-for-help": {
+          "fill": {
+            "en": "I start isolating",
+            "pl": "zaczynam się izolować"
+          }
+        },
+        "promise": {
+          "fill": {
+            "en": "I will be kind to myself",
+            "pl": "będę dla siebie życzliwy"
+          }
+        }
+      }
+    },
+    "good-life": {
+      "id": "good-life",
+      "name": {
+        "en": "My vision of a good life",
+        "pl": "Moja wizja dobrego życia"
+      },
+      "rationale": {
+        "en": "A direction rather than a list of goals: how I want to feel, treat myself and others, and what to have more and less of.",
+        "pl": "Kierunek zamiast listy celów: jak chcę się czuć, traktować siebie i innych oraz czego chcę mieć więcej i mniej."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "A good life means to me…",
+                  "pl": "Dobre życie oznacza dla mnie…"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "feel",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "How do I want to feel day to day?",
+                  "pl": "Jak chcę czuć się na co dzień?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "myself",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "How do I want to treat myself?",
+                  "pl": "Jak chcę traktować siebie?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "others",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "How do I want to treat others?",
+                  "pl": "Jak chcę traktować innych?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "more-time",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What do I want more time for?",
+                  "pl": "Na co chcę mieć więcej czasu?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "less",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What do I want less of?",
+                  "pl": "Czego chcę mieć mniej?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "in-a-year",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What would I like to say about my life a year from now?",
+                  "pl": "Co {g:chciałbym|chciałabym} powiedzieć o swoim życiu za rok?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "build",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "I do not only ask: “What do I want to avoid?”\nI also ask: “What do I want to build?”",
+                  "pl": "Nie pytam tylko: „Czego chcę uniknąć?”\nPytam również: „Co chcę zbudować?”"
+                },
+                "variant": "subheading",
+                "align": "center"
+              },
+              "size": {
+                "height": {
+                  "mm": 14
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "A direction rather than a list of goals. Answer in a few words how you want to feel, treat yourself and others, and what you want more and less of. The last question looks a year ahead.",
+        "pl": "Kierunek zamiast listy celów. Odpowiedz kilkoma słowami, jak chcesz się czuć, traktować siebie i innych oraz czego chcesz mieć więcej i mniej. Ostatnie pytanie patrzy rok do przodu."
+      },
+      "sampleContent": {
+        "feel": {
+          "fill": {
+            "en": "calm, rested, useful",
+            "pl": "spokojnie, wypoczęty, potrzebny"
+          }
+        },
+        "others": {
+          "fill": {
+            "en": "with patience, without shouting",
+            "pl": "cierpliwie, bez krzyku"
+          }
+        },
+        "more-time": {
+          "fill": {
+            "en": "my son, the bike, books",
+            "pl": "syn, rower, książki"
+          }
+        }
+      }
+    },
+    "more-less": {
+      "id": "more-less",
+      "name": {
+        "en": "More / less",
+        "pl": "Więcej / mniej"
+      },
+      "rationale": {
+        "en": "A quick look at everyday life in two columns; it later feeds the monthly and weekly goals.",
+        "pl": "Szybkie spojrzenie na codzienność w dwóch kolumnach; później zasila cele miesiąca i tygodnia."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "In my life I want…",
+                  "pl": "W moim życiu chcę…"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "For example, more: calm · movement · closeness · rest · curiosity · presence. Less: rush · tension · isolation · chaos · putting things off · acting on autopilot.",
+                  "pl": "Na przykład więcej: spokoju · ruchu · bliskości · odpoczynku · ciekawości · obecności. Mniej: pośpiechu · napięcia · izolacji · chaosu · odkładania · działania automatycznego."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 8,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "more",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "More",
+                      "pl": "Więcej"
+                    },
+                    "pattern": "lines",
+                    "pitch": 9
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "less",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "Less",
+                      "pl": "Mniej"
+                    },
+                    "pattern": "lines",
+                    "pitch": 9
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "fr": 1
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Two columns for everyday life: what you want more of and less of. The examples under the heading are only prompts; write your own. Come back to this page when you set monthly and weekly goals.",
+        "pl": "Dwie kolumny o codzienności: czego chcesz więcej, a czego mniej. Przykłady pod nagłówkiem są tylko podpowiedzią; wpisz własne. Wracaj do tej strony, gdy ustalasz cele miesiąca i tygodnia."
+      },
+      "sampleContent": {
+        "more": {
+          "fill": {
+            "en": "calm\nwalks\ntime with Kuba",
+            "pl": "spokoju\nspacerów\nczasu z Kubą"
+          },
+          "note": {
+            "en": "a word or two is enough",
+            "pl": "wystarczy słowo lub dwa"
+          },
+          "noteAt": "bottom-right"
+        },
+        "less": {
+          "fill": {
+            "en": "rush\nscreens at night\ncoffee",
+            "pl": "pośpiechu\nekranu w nocy\nkawy"
+          }
+        }
+      }
+    },
+    "values": {
+      "id": "values",
+      "name": {
+        "en": "My values",
+        "pl": "Moje wartości"
+      },
+      "rationale": {
+        "en": "Goals end; values are a direction. Ticking, then choosing five, and naming how they show in daily life.",
+        "pl": "Cele się kończą, wartości są kierunkiem. Zaznaczenie, wybór pięciu i nazwanie, jak widać je w codziennym życiu."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "What really matters to me?",
+                  "pl": "Co jest dla mnie naprawdę ważne?"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Tick at most ten.",
+                  "pl": "Zaznacz najwyżej dziesięć."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "values-1",
+                  "type": "numbered-list",
+                  "props": {
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "family",
+                        "pl": "rodzina"
+                      },
+                      {
+                        "en": "health",
+                        "pl": "zdrowie"
+                      },
+                      {
+                        "en": "closeness",
+                        "pl": "bliskość"
+                      },
+                      {
+                        "en": "friendship",
+                        "pl": "przyjaźń"
+                      },
+                      {
+                        "en": "honesty",
+                        "pl": "uczciwość"
+                      },
+                      {
+                        "en": "security",
+                        "pl": "bezpieczeństwo"
+                      },
+                      {
+                        "en": "growth",
+                        "pl": "rozwój"
+                      }
+                    ],
+                    "count": 7,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "values-2",
+                  "type": "numbered-list",
+                  "props": {
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "knowledge",
+                        "pl": "wiedza"
+                      },
+                      {
+                        "en": "freedom",
+                        "pl": "wolność"
+                      },
+                      {
+                        "en": "calm",
+                        "pl": "spokój"
+                      },
+                      {
+                        "en": "responsibility",
+                        "pl": "odpowiedzialność"
+                      },
+                      {
+                        "en": "curiosity",
+                        "pl": "ciekawość"
+                      },
+                      {
+                        "en": "courage",
+                        "pl": "odwaga"
+                      },
+                      {
+                        "en": "kindness",
+                        "pl": "życzliwość"
+                      }
+                    ],
+                    "count": 7,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "values-3",
+                  "type": "numbered-list",
+                  "props": {
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "independence",
+                        "pl": "niezależność"
+                      },
+                      {
+                        "en": "creativity",
+                        "pl": "twórczość"
+                      },
+                      {
+                        "en": "balance",
+                        "pl": "równowaga"
+                      },
+                      {
+                        "en": "helping others",
+                        "pl": "pomoc innym"
+                      },
+                      {
+                        "en": "presence",
+                        "pl": "obecność"
+                      },
+                      {
+                        "en": "fun",
+                        "pl": "zabawa"
+                      },
+                      {
+                        "en": "other:",
+                        "pl": "inne:"
+                      }
+                    ],
+                    "count": 7,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 48
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "top-five",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "My five most important values",
+                  "pl": "Moje pięć najważniejszych wartości"
+                },
+                "count": 5
+              },
+              "size": {
+                "height": {
+                  "mm": 50
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "living",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "How will I know in daily life that I really live by them?",
+                  "pl": "Po czym poznam w codziennym życiu, że naprawdę nimi żyję?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Tick at most ten values that matter to you, then choose the five most important. The last question makes them concrete: how would you see in daily life that you live by them?",
+        "pl": "Zaznacz najwyżej dziesięć wartości, które są dla Ciebie ważne, potem wybierz pięć najważniejszych. Ostatnie pytanie czyni je konkretnymi: po czym w codziennym życiu widać, że nimi żyjesz?"
+      },
+      "sampleContent": {
+        "values-1": {
+          "fill": {
+            "done": [
+              0,
+              1,
+              4
+            ]
+          }
+        },
+        "values-2": {
+          "fill": {
+            "done": [
+              2,
+              6
+            ]
+          }
+        },
+        "values-3": {
+          "fill": {
+            "done": [
+              2,
+              5
+            ]
+          }
+        },
+        "top-five": {
+          "fill": {
+            "items": [
+              {
+                "en": "family",
+                "pl": "rodzina"
+              },
+              {
+                "en": "health",
+                "pl": "zdrowie"
+              },
+              {
+                "en": "honesty",
+                "pl": "uczciwość"
+              },
+              {
+                "en": "calm",
+                "pl": "spokój"
+              },
+              {
+                "en": "presence",
+                "pl": "obecność"
+              }
+            ]
+          }
+        },
+        "living": {
+          "fill": {
+            "en": "I put the phone away at dinner",
+            "pl": "odkładam telefon przy kolacji"
+          },
+          "note": {
+            "en": "something you can see",
+            "pl": "coś, co widać"
+          },
+          "noteAt": "bottom-right"
+        }
+      }
+    },
+    "strengths": {
+      "id": "strengths",
+      "name": {
+        "en": "My strengths",
+        "pl": "Moje mocne strony"
+      },
+      "rationale": {
+        "en": "Starting from what already works rather than what needs fixing: skills, pride, what others value, what carried me through before.",
+        "pl": "Punkt wyjścia to to, co już działa, a nie to, co trzeba poprawić: umiejętności, duma, to, co cenią inni, i co pomagało wcześniej."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "What can I already draw on?",
+                  "pl": "Z czego już mogę korzystać?"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "can-do",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What can I already do?",
+                  "pl": "Co już potrafię?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "carried",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What helped me through hard times before?",
+                  "pl": "Co pomagało mi przechodzić przez trudne sytuacje?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "proud",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What am I proud of?",
+                  "pl": "Z czego jestem {g:dumny|dumna}?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "valued",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What do others value in me?",
+                  "pl": "Co inni we mnie cenią?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "still-can",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When it is hard, I can still…",
+                  "pl": "Kiedy jest trudno, nadal potrafię…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Start from what already works: what you can do, what carried you through hard times, what you are proud of and what others value in you. Short answers are enough.",
+        "pl": "Zacznij od tego, co już działa: co potrafisz, co pomagało Ci w trudnych chwilach, z czego jesteś {g:dumny|dumna} i co inni w Tobie cenią. Wystarczą krótkie odpowiedzi."
+      },
+      "sampleContent": {
+        "can-do": {
+          "fill": {
+            "en": "fix things, cook, listen",
+            "pl": "naprawiać, gotować, słuchać"
+          }
+        },
+        "proud": {
+          "fill": {
+            "en": "42 days, and my son",
+            "pl": "42 dni i mój syn"
+          }
+        },
+        "still-can": {
+          "fill": {
+            "en": "pick up the phone",
+            "pl": "podnieść słuchawkę"
+          }
+        }
+      }
+    },
+    "recharge": {
+      "id": "recharge",
+      "name": {
+        "en": "What restores me",
+        "pl": "Co mnie regeneruje"
+      },
+      "rationale": {
+        "en": "A ready personal list, so a hard day does not start from zero: what helps with five minutes, half an hour, an evening, and in particular states.",
+        "pl": "Gotowa osobista lista, żeby trudny dzień nie zaczynał się od zera: co pomaga, gdy mam pięć minut, pół godziny, wieczór, i w konkretnych stanach."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My personal list for recharging",
+                  "pl": "Moja osobista lista regeneracji"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "five-minutes",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I have 5 minutes:",
+                  "pl": "Gdy mam 5 minut:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "half-hour",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I have 30 minutes:",
+                  "pl": "Gdy mam 30 minut:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "evening",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I have a free evening:",
+                  "pl": "Gdy mam wolny wieczór:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tense",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I am tense:",
+                  "pl": "Gdy jestem {g:spięty|spięta}:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "lonely",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I feel lonely:",
+                  "pl": "Gdy czuję samotność:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tired",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I am tired:",
+                  "pl": "Gdy jestem {g:zmęczony|zmęczona}:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "movement",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I need to move:",
+                  "pl": "Gdy potrzebuję ruchu:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "quiet",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "When I need quiet:",
+                  "pl": "Gdy potrzebuję ciszy:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Your own list for recharging, so a hard day does not start from zero: what helps when you have five minutes, half an hour or an evening, and when you are tense, lonely or tired.",
+        "pl": "Twoja lista regeneracji, żeby trudny dzień nie zaczynał się od zera: co pomaga, gdy masz pięć minut, pół godziny albo wieczór, i gdy jesteś {g:spięty|spięta}, {g:samotny|samotna} lub {g:zmęczony|zmęczona}."
+      },
+      "sampleContent": {
+        "five-minutes": {
+          "fill": {
+            "en": "cold water, ten breaths",
+            "pl": "zimna woda, dziesięć oddechów"
+          }
+        },
+        "half-hour": {
+          "fill": {
+            "en": "a walk by the river",
+            "pl": "spacer nad rzeką"
+          }
+        },
+        "evening": {
+          "fill": {
+            "en": "a film with Kuba",
+            "pl": "film z Kubą"
+          }
+        },
+        "tense": {
+          "fill": {
+            "en": "go outside, shake it off",
+            "pl": "wyjść na zewnątrz, rozruszać się"
+          },
+          "note": {
+            "en": "what really works for you",
+            "pl": "to, co naprawdę działa"
+          },
+          "noteAt": "bottom-right"
         }
       }
     },
@@ -7192,6 +8552,72 @@
           "page": "how-to"
         },
         {
+          "page": "agreement",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "good-life",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "more-less",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "values",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "strengths",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "recharge",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.start"
+              },
+              false
+            ]
+          }
+        },
+        {
           "page": "contract",
           "when": {
             "!=": [
@@ -7359,6 +8785,18 @@
   ],
   "modules": [
     {
+      "id": "start",
+      "name": {
+        "en": "A good start",
+        "pl": "Na dobry początek"
+      },
+      "description": {
+        "en": "Six pages at the front: an agreement with yourself, your vision of a good life, more and less, values, strengths, and what restores you.",
+        "pl": "Sześć stron na początku: umowa ze sobą, wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje."
+      },
+      "default": true
+    },
+    {
       "id": "recovery",
       "name": {
         "en": "Recovery and sobriety",
@@ -7407,6 +8845,7 @@
         "pl": "Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa."
       },
       "modules": {
+        "start": true,
         "recovery": true,
         "halt": true,
         "cbt": false
@@ -7423,6 +8862,7 @@
         "pl": "Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii."
       },
       "modules": {
+        "start": true,
         "recovery": false,
         "halt": true,
         "cbt": false

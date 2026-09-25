@@ -11,11 +11,12 @@ The template declares modules and presets ([ADR-0010](../../docs/adr/0010-module
 
 | Module | Default | What it controls |
 |---|---|---|
+| `start` | on | "Na dobry początek": six front matter pages (agreement, good life, more / less, values, strengths, recharge) |
 | `recovery` | on | sobriety day counter, craving in the check-ins, triggers, AA and group markers, contract and safety rules, the crisis section, recovery wording (Balance wording is in block variants) |
 | `halt` | on | HALT-B on the day page and in "My week", and its sentence on the how-to page |
 | `cbt` | off | the weekly situation analysis page |
 
-Presets: **Recovery Edition** = recovery + halt; **Balance** = halt. In `src/template.ts`, `needs(block, module)` hides a block without a module and `varies(block, { when, props })` rewords it; `BALANCE` is the condition "recovery module off".
+Presets: **Recovery Edition** = start + recovery + halt; **Balance** = start + halt. In `src/template.ts`, `needs(block, module)` hides a block without a module and `varies(block, { when, props })` rewords it; `BALANCE` is the condition "recovery module off".
 
 ## Files
 
@@ -64,7 +65,7 @@ The app's **Content** screen does the same per planner: edit, import/export CSV,
 
 | Section | Pages |
 |---|---|
-| Introduction (whole sheets) | cover · how to use · therapeutic contract · safety rules |
+| Introduction (whole sheets, roman numbers) | cover · how to use · "A good start" (start module): agreement with myself · vision of a good life · more / less · values · strengths · what restores me · therapeutic contract and safety rules (recovery module) |
 | Each month (whole sheets, starts on a right-hand page) | month divider · month opening spread (calendar split Mon–Thu / Fri–Sun, intention, goals, focus, appointments) · per week: weekly spread (goals, an if–then plan and what to watch out for in the outer column, Mon–Sun strips with event markers) · per day: daily spread (left: date, sobriety day, quote, morning check-in and one-line commitment, three priorities, 06:00–22:00 schedule, HALT-B; right: check-out and tick lists for triggers and protection in the outer column (A4), what was hard, dot-grid reflection, small victory, good life, gratitude) · end of each week: "My week" review spread with the situation analysis (CBT module) · Wheel of Life · monthly review · notes |
 | Crisis and relapse prevention (whole sheets, recovery module) | plan for a hard moment (stop, SOBER, contacts, change the situation) · alarm thresholds for craving · emergency list and the craving wave · warning signs with a threshold · relapse chain · plan after a slip · gains and losses · support network · two craving cards |
 

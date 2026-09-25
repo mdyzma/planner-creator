@@ -22,7 +22,21 @@ import { BUNDLED_TEMPLATES } from '@/lib/templates';
 
 /** Guide chapters: page templates shown together (a spread is two templates side by side). */
 const CHAPTERS: { key: string; pages: string[][] }[] = [
-  { key: 'intro', pages: [['cover'], ['how-to'], ['contract'], ['safety-rules']] },
+  {
+    key: 'intro',
+    pages: [
+      ['cover'],
+      ['how-to'],
+      ['agreement'],
+      ['good-life'],
+      ['more-less'],
+      ['values'],
+      ['strengths'],
+      ['recharge'],
+      ['contract'],
+      ['safety-rules'],
+    ],
+  },
   { key: 'month', pages: [['month-divider'], ['month-open-left', 'month-open-right']] },
   { key: 'week', pages: [['week-left', 'week-right']] },
   {

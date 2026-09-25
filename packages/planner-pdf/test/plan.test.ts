@@ -85,7 +85,7 @@ describe('planExport', () => {
     const at = (key: string) => plan.sections.find((s) => s.key === key)!;
     const text = (i: number) => plan.allLabels[i]!.text;
     const intro = at('root/intro');
-    expect([intro.from, intro.to].map(text)).toEqual(['i', 'iv']);
+    expect([intro.from, intro.to].map(text)).toEqual(['i', 'x']);
     expect(plan.allLabels[0]!.printed).toBe(false); // the cover
     expect(text(at('month:2026-10').from)).toBe('1');
     expect(text(at('month:2026-11').from)).toBe(String(Number(text(at('month:2026-10').to)) + 1));

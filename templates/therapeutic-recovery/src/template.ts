@@ -23,8 +23,18 @@ import { GUIDES, SAMPLES } from './samples';
 const RECOVERY = 'recovery';
 const HALT = 'halt';
 const CBT = 'cbt';
+const START = 'start';
 
 const MODULES: ModuleDefinition[] = [
+  {
+    id: START,
+    name: L('A good start', 'Na dobry początek'),
+    description: L(
+      'Six pages at the front: an agreement with yourself, your vision of a good life, more and less, values, strengths, and what restores you.',
+      'Sześć stron na początku: umowa ze sobą, wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje.',
+    ),
+    default: true,
+  },
   {
     id: RECOVERY,
     name: L('Recovery and sobriety', 'Zdrowienie i trzeźwość'),
@@ -62,7 +72,7 @@ const PRESETS: PresetDefinition[] = [
       'For recovery from addiction: sobriety, craving, HALT-B and the crisis section.',
       'Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa.',
     ),
-    modules: { [RECOVERY]: true, [HALT]: true, [CBT]: false },
+    modules: { [START]: true, [RECOVERY]: true, [HALT]: true, [CBT]: false },
   },
   {
     id: 'balance',
@@ -71,7 +81,7 @@ const PRESETS: PresetDefinition[] = [
       'Everyday life, balance and a good life, without addiction and therapy wording.',
       'Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii.',
     ),
-    modules: { [RECOVERY]: false, [HALT]: true, [CBT]: false },
+    modules: { [START]: true, [RECOVERY]: false, [HALT]: true, [CBT]: false },
   },
 ];
 
@@ -190,6 +200,20 @@ const dayStrip = (id: string, weekday: number) =>
     props: { markers: MARKERS_BALANCE },
   });
 
+/** A list of printed choices to tick. */
+const ticks = (
+  id: string,
+  title: ReturnType<typeof L> | undefined,
+  items: ReturnType<typeof L>[],
+  height: Length,
+) =>
+  block(
+    id,
+    'numbered-list',
+    { ...(title ? { title } : {}), marker: 'checkbox', items, count: items.length, lineHeight: 5 },
+    { height },
+  );
+
 /** The daily date line; without the recovery module it has no sobriety day counter. */
 const dateHeader = (size: { width?: Length; height?: Length }) =>
   varies(block('date', 'day-header', { inline: true }, size), {
@@ -276,6 +300,18 @@ const cover: PageTemplate = {
         { label: L('I start on', 'Zaczynam dnia'), height: mmH(16), gap: 1.5 },
       ),
       block('bottom', 'spacer', {}, { height: fr(1) }),
+      block(
+        'motto',
+        'text',
+        {
+          text: L(
+            'I do not have to change my whole life today.\nIt is enough to live this day with awareness.',
+            'Nie muszę zmieniać całego życia dzisiaj.\nWystarczy, że świadomie przeżyję ten dzień.',
+          ),
+          variant: 'caption',
+        },
+        { height: mmH(12) },
+      ),
     ],
     { gap: 6 },
   ),
@@ -284,75 +320,356 @@ const cover: PageTemplate = {
 /** The "How to use" text for the modules in use: recovery wording, and the HALT sentence. */
 function howToText(recovery: boolean, halt: boolean) {
   const en = [
-    'Each day has two facing pages. In the morning, use the left page: a quick check-in (mood, energy, tension' +
+    'IN THE MORNING, stop for a few minutes. Check how you feel, what you need today, what really matters and what to watch out for. The left page has a quick check-in (mood, energy, tension' +
       (recovery ? ', craving' : '') +
       ' and sleep), ' +
       (recovery
         ? 'one action that protects your sobriety today'
         : 'one way you will take care of yourself today') +
-      ', up to three priorities and a plan for the day.' +
-      (halt ? ' During the day, check {{haltName}}: are you {{haltFeelings}}?' : '') +
-      ' In the evening, use the right page to look back: ' +
-      (recovery ? 'what threatened your sobriety' : 'what was hard') +
-      ', what you felt, and what you are grateful for.',
-    'Each week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.',
+      ', at most three priorities and a plan for the day. Do not plan a perfect day; plan a day you can live through.',
+    'DURING THE DAY, notice your needs, tension' +
+      (recovery ? ', craving' : '') +
+      ', tiredness and contact with people.' +
+      (halt ? ' Check {{haltName}}: are you {{haltFeelings}}?' : '') +
+      ' If the day does not go to plan, change the plan, not yourself.',
+    'IN THE EVENING, look at the day with curiosity, not judgement, on the right page: ' +
+      (recovery ? 'what was hard and what threatened your sobriety' : 'what was hard') +
+      ', what helped, a small victory, what you are grateful for, and what to take into tomorrow.',
+    'Each week opens with a spread for the week’s focus and goals, and ends with “My week”, a short review. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.',
     ...(recovery
       ? [
           'The crisis section at the back opens with your plan for a hard moment, then how you respond to craving, what to do when nothing comes to mind, your warning signs and relapse chain, a plan for after a slip, your balance of gains and losses, your support network and two craving cards. Fill it in early, and keep it within reach.',
         ]
       : []),
-    'Write by hand. There are no wrong answers, and nothing here is a test.',
+    'Write by hand. This is not a test; it is a tool for getting to know yourself.',
   ];
   const pl = [
-    'Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: szybki check-in (nastrój, energia, napięcie' +
+    'RANO zatrzymaj się na kilka minut. Sprawdź, jak się czujesz, czego dziś potrzebujesz, co jest naprawdę ważne i na co warto uważać. Na lewej stronie jest szybki check-in (nastrój, energia, napięcie' +
       (recovery ? ', głód' : '') +
       ' i sen), ' +
       (recovery
         ? 'jedno działanie, którym chronisz dziś trzeźwość'
         : 'jeden sposób, w jaki dziś o siebie zadbasz') +
-      ', najwyżej trzy priorytety i plan dnia.' +
-      (halt ? ' W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}?' : '') +
-      ' Wieczorem na prawej stronie spójrz wstecz: ' +
-      (recovery ? 'co zagroziło Twojej trzeźwości' : 'co było trudne') +
-      ', co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.',
-    'Każdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.',
+      ', najwyżej trzy priorytety i plan dnia. Nie planuj idealnego dnia; zaplanuj dzień możliwy do przeżycia.',
+    'W CIĄGU DNIA zauważaj swoje potrzeby, napięcie' +
+      (recovery ? ', głód' : '') +
+      ', zmęczenie i kontakt z ludźmi.' +
+      (halt ? ' Sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}?' : '') +
+      ' Jeśli dzień nie idzie zgodnie z planem, zmień plan, nie siebie.',
+    'WIECZOREM na prawej stronie spójrz na dzień z ciekawością, nie z oceną: ' +
+      (recovery ? 'co było trudne i co zagroziło Twojej trzeźwości' : 'co było trudne') +
+      ', co pomogło, małe zwycięstwo, za co jesteś {g:wdzięczny|wdzięczna} i co chcesz zabrać w jutro.',
+    'Każdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, a kończy „Moim tygodniem”, krótkim podsumowaniem. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.',
     ...(recovery
       ? [
           'Sekcja kryzysowa na końcu zaczyna się od planu na trudny moment, potem jest to, jak reagujesz na głód, co robić, gdy nic nie przychodzi do głowy, sygnały ostrzegawcze i łańcuch nawrotu, plan po potknięciu, bilans zysków i strat, sieć wsparcia oraz dwie karty głodu. Wypełnij ją wcześnie i trzymaj pod ręką.',
         ]
       : []),
-    'Pisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem.',
+    'Pisz odręcznie. To nie jest sprawdzian; to narzędzie do poznawania siebie.',
   ];
   return L(en.join('\n\n'), pl.join('\n\n'));
 }
 
-const howTo: PageTemplate = {
-  id: 'how-to',
-  name: L('How to use this planner', 'Jak korzystać z planera'),
-  body: stack([
-    heading('heading', L('How to use this planner', 'Jak korzystać z planera')),
-    // Worded for the modules in use; the first matching variant wins.
-    varies(
+const howTo = a5(
+  {
+    id: 'how-to',
+    name: L('How to use this planner', 'Jak korzystać z planera'),
+    body: stack([
+      heading('heading', L('How to use this planner', 'Jak korzystać z planera')),
+      // Worded for the modules in use; the first matching variant wins.
+      varies(
+        block(
+          'body',
+          'text',
+          {
+            variant: 'body',
+            text: howToText(true, true),
+          },
+          { height: fr(3) },
+        ),
+        { when: { and: [BALANCE, moduleOff(HALT)] }, props: { text: howToText(false, false) } },
+        { when: BALANCE, props: { text: howToText(false, true) } },
+        { when: moduleOff(HALT), props: { text: howToText(true, false) } },
+      ),
       block(
-        'body',
+        'notes',
+        'writing-area',
+        { title: L('My notes', 'Moje notatki'), pattern: 'dots' },
+        { height: fr(2) },
+      ),
+    ]),
+    // A5: the text needs most of the page; the notes get what is left.
+  },
+  [
+    ['notes', 'size/height', { mm: 34 }],
+    ['body', 'size/height', { fr: 1 }],
+  ],
+);
+
+// ---------------------------------------------------------------------------------------------
+// A good start (front matter shared by both editions; the "start" module)
+
+/** Lines to write on under a question, in the front matter. */
+const prompt = (id: string, title: ReturnType<typeof L>, height: Length = fr(1)) =>
+  block(id, 'writing-area', { title, pattern: 'lines' }, { height });
+
+const agreement: PageTemplate = {
+  id: 'agreement',
+  name: L('My agreement with myself', 'Moja umowa ze sobą'),
+  rationale: L(
+    'A commitment without clinical language: what to take care of, do more and less of, and one promise, signed by the owner.',
+    'Zobowiązanie bez języka klinicznego: o co dbać, czego robić więcej i mniej oraz jedna obietnica, podpisana przez właściciela.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('My agreement with myself', 'Moja umowa ze sobą')),
+      caption(
+        'how',
+        L(
+          'This planner is here to help me live more consciously, not perfectly.',
+          'Ten planer ma mi pomagać żyć bardziej świadomie, a nie żyć idealnie.',
+        ),
+      ),
+      prompt(
+        'care',
+        L(
+          'In the coming months I want to take better care of:',
+          'Przez najbliższy okres chcę bardziej dbać o:',
+        ),
+      ),
+      prompt('more', L('I want to do more often:', 'Chcę częściej:')),
+      prompt('less', L('I want to do less often:', 'Chcę rzadziej:')),
+      prompt('learn', L('I want to learn:', 'Chcę nauczyć się:')),
+      prompt(
+        'remember',
+        L('When it gets hard, I want to remember that:', 'Kiedy będzie trudno, chcę pamiętać, że:'),
+      ),
+      prompt('dont-have-to', L('I do not have to:', 'Nie muszę:')),
+      prompt('ask-for-help', L('I can ask for help when:', 'Mogę prosić o pomoc, gdy:')),
+      block(
+        'promise',
+        'writing-area',
+        {
+          title: L('One thing I promise myself:', 'Jedna rzecz, którą obiecuję sobie:'),
+          pattern: 'lines',
+          framed: true,
+        },
+        { height: mmH(22) },
+      ),
+      block(
+        'signature',
         'text',
         {
+          text: L(
+            `I sign this agreement with myself. Signature ${BLANK}${BLANK} · date ${BLANK}`,
+            `Podpisuję tę umowę ze sobą. Podpis ${BLANK}${BLANK} · data ${BLANK}`,
+          ),
           variant: 'body',
-          text: howToText(true, true),
         },
-        { height: fr(3) },
+        { height: mmH(8) },
       ),
-      { when: { and: [BALANCE, moduleOff(HALT)] }, props: { text: howToText(false, false) } },
-      { when: BALANCE, props: { text: howToText(false, true) } },
-      { when: moduleOff(HALT), props: { text: howToText(true, false) } },
-    ),
-    block(
-      'notes',
-      'writing-area',
-      { title: L('My notes', 'Moje notatki'), pattern: 'dots' },
-      { height: fr(2) },
-    ),
-  ]),
+      needs(
+        block(
+          'therapist',
+          'text',
+          {
+            text: L(
+              `Agreed with my therapist: ${BLANK}${BLANK}`,
+              `Uzgodnione z terapeutą / terapeutką: ${BLANK}${BLANK}`,
+            ),
+            variant: 'caption',
+          },
+          { height: mmH(7) },
+        ),
+        RECOVERY,
+      ),
+    ],
+    { gap: 3 },
+  ),
+};
+
+const goodLife: PageTemplate = {
+  id: 'good-life',
+  name: L('My vision of a good life', 'Moja wizja dobrego życia'),
+  rationale: L(
+    'A direction rather than a list of goals: how I want to feel, treat myself and others, and what to have more and less of.',
+    'Kierunek zamiast listy celów: jak chcę się czuć, traktować siebie i innych oraz czego chcę mieć więcej i mniej.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('A good life means to me…', 'Dobre życie oznacza dla mnie…')),
+      prompt('feel', L('How do I want to feel day to day?', 'Jak chcę czuć się na co dzień?')),
+      prompt('myself', L('How do I want to treat myself?', 'Jak chcę traktować siebie?')),
+      prompt('others', L('How do I want to treat others?', 'Jak chcę traktować innych?')),
+      prompt('more-time', L('What do I want more time for?', 'Na co chcę mieć więcej czasu?')),
+      prompt('less', L('What do I want less of?', 'Czego chcę mieć mniej?')),
+      prompt(
+        'in-a-year',
+        L(
+          'What would I like to say about my life a year from now?',
+          'Co {g:chciałbym|chciałabym} powiedzieć o swoim życiu za rok?',
+        ),
+      ),
+      block(
+        'build',
+        'text',
+        {
+          text: L(
+            'I do not only ask: “What do I want to avoid?”\nI also ask: “What do I want to build?”',
+            'Nie pytam tylko: „Czego chcę uniknąć?”\nPytam również: „Co chcę zbudować?”',
+          ),
+          variant: 'subheading',
+          align: 'center',
+        },
+        { height: mmH(14) },
+      ),
+    ],
+    { gap: 3 },
+  ),
+};
+
+/** Ruled lines under a column heading ("MORE" / "LESS"). */
+const column = (id: string, title: ReturnType<typeof L>) =>
+  block(id, 'writing-area', { title, pattern: 'lines', pitch: 9 }, { height: fr(1) });
+
+const moreLess: PageTemplate = {
+  id: 'more-less',
+  name: L('More / less', 'Więcej / mniej'),
+  rationale: L(
+    'A quick look at everyday life in two columns; it later feeds the monthly and weekly goals.',
+    'Szybkie spojrzenie na codzienność w dwóch kolumnach; później zasila cele miesiąca i tygodnia.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('In my life I want…', 'W moim życiu chcę…')),
+      caption(
+        'how',
+        L(
+          'For example, more: calm · movement · closeness · rest · curiosity · presence. Less: rush · tension · isolation · chaos · putting things off · acting on autopilot.',
+          'Na przykład więcej: spokoju · ruchu · bliskości · odpoczynku · ciekawości · obecności. Mniej: pośpiechu · napięcia · izolacji · chaosu · odkładania · działania automatycznego.',
+        ),
+        12,
+      ),
+      row([column('more', L('More', 'Więcej')), column('less', L('Less', 'Mniej'))], {
+        height: fr(1),
+        gap: 8,
+      }),
+    ],
+    { gap: 4 },
+  ),
+};
+
+const VALUE_WORDS = [
+  L('family', 'rodzina'),
+  L('health', 'zdrowie'),
+  L('closeness', 'bliskość'),
+  L('friendship', 'przyjaźń'),
+  L('honesty', 'uczciwość'),
+  L('security', 'bezpieczeństwo'),
+  L('growth', 'rozwój'),
+  L('knowledge', 'wiedza'),
+  L('freedom', 'wolność'),
+  L('calm', 'spokój'),
+  L('responsibility', 'odpowiedzialność'),
+  L('curiosity', 'ciekawość'),
+  L('courage', 'odwaga'),
+  L('kindness', 'życzliwość'),
+  L('independence', 'niezależność'),
+  L('creativity', 'twórczość'),
+  L('balance', 'równowaga'),
+  L('helping others', 'pomoc innym'),
+  L('presence', 'obecność'),
+  L('fun', 'zabawa'),
+  L('other:', 'inne:'),
+];
+
+const values: PageTemplate = {
+  id: 'values',
+  name: L('My values', 'Moje wartości'),
+  rationale: L(
+    'Goals end; values are a direction. Ticking, then choosing five, and naming how they show in daily life.',
+    'Cele się kończą, wartości są kierunkiem. Zaznaczenie, wybór pięciu i nazwanie, jak widać je w codziennym życiu.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('What really matters to me?', 'Co jest dla mnie naprawdę ważne?')),
+      caption('how', L('Tick at most ten.', 'Zaznacz najwyżej dziesięć.')),
+      row(
+        [
+          ticks('values-1', undefined, VALUE_WORDS.slice(0, 7), fr(1)),
+          ticks('values-2', undefined, VALUE_WORDS.slice(7, 14), fr(1)),
+          ticks('values-3', undefined, VALUE_WORDS.slice(14), fr(1)),
+        ],
+        { height: mmH(48) },
+      ),
+      block(
+        'top-five',
+        'numbered-list',
+        {
+          title: L('My five most important values', 'Moje pięć najważniejszych wartości'),
+          count: 5,
+        },
+        { height: mmH(50) },
+      ),
+      prompt(
+        'living',
+        L(
+          'How will I know in daily life that I really live by them?',
+          'Po czym poznam w codziennym życiu, że naprawdę nimi żyję?',
+        ),
+      ),
+    ],
+    { gap: 4 },
+  ),
+};
+
+const strengths: PageTemplate = {
+  id: 'strengths',
+  name: L('My strengths', 'Moje mocne strony'),
+  rationale: L(
+    'Starting from what already works rather than what needs fixing: skills, pride, what others value, what carried me through before.',
+    'Punkt wyjścia to to, co już działa, a nie to, co trzeba poprawić: umiejętności, duma, to, co cenią inni, i co pomagało wcześniej.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('What can I already draw on?', 'Z czego już mogę korzystać?')),
+      prompt('can-do', L('What can I already do?', 'Co już potrafię?')),
+      prompt(
+        'carried',
+        L(
+          'What helped me through hard times before?',
+          'Co pomagało mi przechodzić przez trudne sytuacje?',
+        ),
+      ),
+      prompt('proud', L('What am I proud of?', 'Z czego jestem {g:dumny|dumna}?')),
+      prompt('valued', L('What do others value in me?', 'Co inni we mnie cenią?')),
+      prompt('still-can', L('When it is hard, I can still…', 'Kiedy jest trudno, nadal potrafię…')),
+    ],
+    { gap: 3 },
+  ),
+};
+
+const recharge: PageTemplate = {
+  id: 'recharge',
+  name: L('What restores me', 'Co mnie regeneruje'),
+  rationale: L(
+    'A ready personal list, so a hard day does not start from zero: what helps with five minutes, half an hour, an evening, and in particular states.',
+    'Gotowa osobista lista, żeby trudny dzień nie zaczynał się od zera: co pomaga, gdy mam pięć minut, pół godziny, wieczór, i w konkretnych stanach.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('My personal list for recharging', 'Moja osobista lista regeneracji')),
+      prompt('five-minutes', L('When I have 5 minutes:', 'Gdy mam 5 minut:')),
+      prompt('half-hour', L('When I have 30 minutes:', 'Gdy mam 30 minut:')),
+      prompt('evening', L('When I have a free evening:', 'Gdy mam wolny wieczór:')),
+      prompt('tense', L('When I am tense:', 'Gdy jestem {g:spięty|spięta}:')),
+      prompt('lonely', L('When I feel lonely:', 'Gdy czuję samotność:')),
+      prompt('tired', L('When I am tired:', 'Gdy jestem {g:zmęczony|zmęczona}:')),
+      prompt('movement', L('When I need to move:', 'Gdy potrzebuję ruchu:')),
+      prompt('quiet', L('When I need quiet:', 'Gdy potrzebuję ciszy:')),
+    ],
+    { gap: 3 },
+  ),
 };
 
 const contract: PageTemplate = {
@@ -1586,20 +1903,6 @@ const supportNetwork: PageTemplate = {
   ]),
 };
 
-/** A list of printed choices to tick. */
-const ticks = (
-  id: string,
-  title: ReturnType<typeof L> | undefined,
-  items: ReturnType<typeof L>[],
-  height: Length,
-) =>
-  block(
-    id,
-    'numbered-list',
-    { ...(title ? { title } : {}), marker: 'checkbox', items, count: items.length, lineHeight: 5 },
-    { height },
-  );
-
 const sos: PageTemplate = {
   id: 'sos',
   name: L('My plan for a hard moment', 'Mój plan na trudny moment'),
@@ -2061,12 +2364,18 @@ const sections: SectionTemplate[] = [
     title: L('Introduction', 'Wprowadzenie'),
     startOn: 'right',
     sheetAligned: true,
-    // Front matter: i (the cover, not printed), ii, iii, iv; the first month starts at 1.
+    // Front matter in roman numerals (the cover, i, is not printed); the first month starts at 1.
     numbering: { style: 'roman' },
-    // The contract and safety rules belong to the recovery module.
+    // "A good start" (the start module), then the contract and safety rules (recovery module).
     children: [
       page('cover'),
       page('how-to'),
+      { page: 'agreement', when: moduleOn(START) },
+      { page: 'good-life', when: moduleOn(START) },
+      { page: 'more-less', when: moduleOn(START) },
+      { page: 'values', when: moduleOn(START) },
+      { page: 'strengths', when: moduleOn(START) },
+      { page: 'recharge', when: moduleOn(START) },
       { page: 'contract', when: moduleOn(RECOVERY) },
       { page: 'safety-rules', when: moduleOn(RECOVERY) },
     ],
@@ -2133,6 +2442,12 @@ const sections: SectionTemplate[] = [
 const pageTemplates = [
   cover,
   howTo,
+  agreement,
+  goodLife,
+  moreLess,
+  values,
+  strengths,
+  recharge,
   contract,
   safetyRules,
   monthDivider,

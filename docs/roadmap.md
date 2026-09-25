@@ -132,8 +132,21 @@ Not yet: a Balance quote library, a Balance guide booklet, editing variants dire
 
 ### v0.6.0 — "Na dobry początek" (front matter)
 
-- Seven front matter pages; new blocks: "Więcej / mniej" (two columns) and values to circle.
-- The therapeutic contract moves to the Recovery module; the cover gets its line.
+Done:
+
+- A new module `start` ("Na dobry początek"), on in both editions, with six pages after "Jak
+  korzystać": "Moja umowa ze sobą" (with "Uzgodnione z terapeutą" only in the recovery module),
+  "Dobre życie oznacza dla mnie…", "W moim życiu chcę…" (more / less), "Co jest dla mnie
+  naprawdę ważne?" (21 values to tick, top five, how I live them), "Z czego już mogę
+  korzystać?" (strengths) and "Moja osobista lista regeneracji".
+- "Jak korzystać" rewritten along S2: morning, during the day, evening; "To nie jest
+  sprawdzian; to narzędzie do poznawania siebie."
+- The cover gets "Nie muszę zmieniać całego życia dzisiaj. Wystarczy, że świadomie przeżyję ten
+  dzień."
+- The contract and safety rules stay in the recovery module. No new blocks were needed: ruled
+  columns and tick lists do the job.
+- The introduction is now i–x (Recovery Edition) or i–viii (Balance); six months are about 542
+  pages.
 
 ### v0.7.0 — Month 2.0
 

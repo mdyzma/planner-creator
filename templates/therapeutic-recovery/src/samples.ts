@@ -41,6 +41,69 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       note: L('your own reminders', 'Twoje własne przypomnienia'),
     },
   },
+  agreement: {
+    care: { fill: L('sleep and time with my son', 'sen i czas z synem') },
+    more: { fill: L('walk and call people', 'spacerować i dzwonić do ludzi') },
+    less: { fill: L('scroll in the evening', 'scrollować wieczorem') },
+    learn: { fill: L('to say no calmly', 'spokojnie mówić „nie”') },
+    remember: {
+      fill: L('a bad day is not a bad life', 'zły dzień to nie złe życie'),
+      note: L('your own words', 'własnymi słowami'),
+      noteAt: 'bottom-right',
+    },
+    'dont-have-to': { fill: L('do everything today', 'zrobić wszystkiego dzisiaj') },
+    'ask-for-help': { fill: L('I start isolating', 'zaczynam się izolować') },
+    promise: { fill: L('I will be kind to myself', 'będę dla siebie życzliwy') },
+  },
+  'good-life': {
+    feel: { fill: L('calm, rested, useful', 'spokojnie, wypoczęty, potrzebny') },
+    others: { fill: L('with patience, without shouting', 'cierpliwie, bez krzyku') },
+    'more-time': { fill: L('my son, the bike, books', 'syn, rower, książki') },
+  },
+  'more-less': {
+    more: {
+      fill: L('calm\nwalks\ntime with Kuba', 'spokoju\nspacerów\nczasu z Kubą'),
+      note: L('a word or two is enough', 'wystarczy słowo lub dwa'),
+      noteAt: 'bottom-right',
+    },
+    less: { fill: L('rush\nscreens at night\ncoffee', 'pośpiechu\nekranu w nocy\nkawy') },
+  },
+  values: {
+    'values-1': { fill: { done: [0, 1, 4] } },
+    'values-2': { fill: { done: [2, 6] } },
+    'values-3': { fill: { done: [2, 5] } },
+    'top-five': {
+      fill: {
+        items: [
+          L('family', 'rodzina'),
+          L('health', 'zdrowie'),
+          L('honesty', 'uczciwość'),
+          L('calm', 'spokój'),
+          L('presence', 'obecność'),
+        ],
+      },
+    },
+    living: {
+      fill: L('I put the phone away at dinner', 'odkładam telefon przy kolacji'),
+      note: L('something you can see', 'coś, co widać'),
+      noteAt: 'bottom-right',
+    },
+  },
+  strengths: {
+    'can-do': { fill: L('fix things, cook, listen', 'naprawiać, gotować, słuchać') },
+    proud: { fill: L('42 days, and my son', '42 dni i mój syn') },
+    'still-can': { fill: L('pick up the phone', 'podnieść słuchawkę') },
+  },
+  recharge: {
+    'five-minutes': { fill: L('cold water, ten breaths', 'zimna woda, dziesięć oddechów') },
+    'half-hour': { fill: L('a walk by the river', 'spacer nad rzeką') },
+    evening: { fill: L('a film with Kuba', 'film z Kubą') },
+    tense: {
+      fill: L('go outside, shake it off', 'wyjść na zewnątrz, rozruszać się'),
+      note: L('what really works for you', 'to, co naprawdę działa'),
+      noteAt: 'bottom-right',
+    },
+  },
   contract: {
     commitments: {
       fill: {
@@ -573,6 +636,30 @@ export const GUIDES: Record<string, LocalizedText> = {
   'how-to': L(
     'A short description of the whole planner. Read it once at the start; the lines below are for your own reminders.',
     'Krótki opis całego planera. Przeczytaj go raz na początku; linie poniżej są na Twoje własne przypomnienia.',
+  ),
+  agreement: L(
+    'The first page of "A good start": a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.',
+    'Pierwsza strona „Na dobry początek”: zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis.',
+  ),
+  'good-life': L(
+    'A direction rather than a list of goals. Answer in a few words how you want to feel, treat yourself and others, and what you want more and less of. The last question looks a year ahead.',
+    'Kierunek zamiast listy celów. Odpowiedz kilkoma słowami, jak chcesz się czuć, traktować siebie i innych oraz czego chcesz mieć więcej i mniej. Ostatnie pytanie patrzy rok do przodu.',
+  ),
+  'more-less': L(
+    'Two columns for everyday life: what you want more of and less of. The examples under the heading are only prompts; write your own. Come back to this page when you set monthly and weekly goals.',
+    'Dwie kolumny o codzienności: czego chcesz więcej, a czego mniej. Przykłady pod nagłówkiem są tylko podpowiedzią; wpisz własne. Wracaj do tej strony, gdy ustalasz cele miesiąca i tygodnia.',
+  ),
+  values: L(
+    'Tick at most ten values that matter to you, then choose the five most important. The last question makes them concrete: how would you see in daily life that you live by them?',
+    'Zaznacz najwyżej dziesięć wartości, które są dla Ciebie ważne, potem wybierz pięć najważniejszych. Ostatnie pytanie czyni je konkretnymi: po czym w codziennym życiu widać, że nimi żyjesz?',
+  ),
+  strengths: L(
+    'Start from what already works: what you can do, what carried you through hard times, what you are proud of and what others value in you. Short answers are enough.',
+    'Zacznij od tego, co już działa: co potrafisz, co pomagało Ci w trudnych chwilach, z czego jesteś {g:dumny|dumna} i co inni w Tobie cenią. Wystarczą krótkie odpowiedzi.',
+  ),
+  recharge: L(
+    'Your own list for recharging, so a hard day does not start from zero: what helps when you have five minutes, half an hour or an evening, and when you are tense, lonely or tired.',
+    'Twoja lista regeneracji, żeby trudny dzień nie zaczynał się od zera: co pomaga, gdy masz pięć minut, pół godziny albo wieczór, i gdy jesteś {g:spięty|spięta}, {g:samotny|samotna} lub {g:zmęczony|zmęczona}.',
   ),
   contract: L(
     'Fill in the therapeutic contract together with your therapist during one of the first sessions. Write commitments you can really keep, then sign and date it.',
