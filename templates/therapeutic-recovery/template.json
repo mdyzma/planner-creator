@@ -826,6 +826,12 @@
             "height": {
               "fr": 1
             }
+          },
+          "style": {
+            "borderWidthPt": 0.3,
+            "borderToken": "line",
+            "radius": 1.5,
+            "padding": 2.5
           }
         }
       ],

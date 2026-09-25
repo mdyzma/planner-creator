@@ -292,12 +292,16 @@ const weekLeft: PageTemplate = {
   ),
   outerRailWidth: 34,
   outerRail: [
-    railBlock(
-      'goals',
-      'numbered-list',
-      { title: L('Goals this week (3–4)', 'Cele tygodnia (3–4)'), count: 4, marker: 'checkbox' },
-      fr(1),
-    ),
+    {
+      ...railBlock(
+        'goals',
+        'numbered-list',
+        { title: L('Goals this week (3–4)', 'Cele tygodnia (3–4)'), count: 4, marker: 'checkbox' },
+        fr(1),
+      ),
+      // A light frame sets the goals apart from the days, like the "This week remember" box.
+      style: { borderWidthPt: 0.3, borderToken: 'line', radius: 1.5, padding: 2.5 },
+    },
   ],
   body: stack([
     block(
