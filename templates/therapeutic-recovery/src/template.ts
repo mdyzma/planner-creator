@@ -1,5 +1,12 @@
 import { HALT_B_ROWS, SOS_STEPS } from '@planner/blocks';
-import type { JsonPatchOp, PageTemplate, PlannerTemplate, SectionTemplate } from '@planner/schema';
+import type {
+  JsonPatchOp,
+  LayoutNode,
+  Length,
+  PageTemplate,
+  PlannerTemplate,
+  SectionTemplate,
+} from '@planner/schema';
 import { TEMPLATE_MIGRATIONS, defaultPrintSettings } from '@planner/schema';
 import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl';
 import { GUIDES, SAMPLES } from './samples';
@@ -343,17 +350,24 @@ const weekRight: PageTemplate = {
   name: L('Week (right)', 'Tydzień (prawa)'),
   spread: { group: 'week', position: 'right' },
   outerRailWidth: 34,
+  // The week ahead; looking back happens on "My week" at the end of the week.
   outerRail: [
     railBlock(
-      'wins',
+      'if-then',
       'writing-area',
-      { title: L('Wins this week', 'Zwycięstwa tygodnia'), pattern: 'lines' },
+      {
+        title: L('My if–then plan this week', 'Mój plan jeśli–to na ten tydzień'),
+        pattern: 'lines',
+      },
       fr(1),
     ),
     railBlock(
-      'helped',
+      'watch',
       'writing-area',
-      { title: L('What protected my calm', 'Co chroniło mój spokój'), pattern: 'lines' },
+      {
+        title: L('What to watch out for this week', 'Na co uważam w tym tygodniu'),
+        pattern: 'lines',
+      },
       fr(1),
     ),
   ],
@@ -650,9 +664,203 @@ const dayRight = a5(
   ],
 );
 
+const writeLines = (id: string, title: ReturnType<typeof L>, height: Length) =>
+  block(id, 'writing-area', { title, pattern: 'lines' }, { height });
+
+/** The review's own tick lists are the evening lists, so a week's ticks can simply be counted. */
+const WEEK_TRIGGERS = TRIGGERS.slice(1);
+
+const weekNumbers = L(
+  `Mood, on average ${BLANK} /10\nTension, on average ${BLANK} /10\nStrongest craving ${BLANK} /10\nDays with craving ≥ 5 ${BLANK} /7\nDays with support ${BLANK} /7\nDays with exercise ${BLANK} /7\nDays with therapy / a meeting ${BLANK} /7`,
+  `Nastrój, średnio ${BLANK} /10\nNapięcie, średnio ${BLANK} /10\nNajsilniejszy głód ${BLANK} /10\nDni z głodem ≥ 5 ${BLANK} /7\nDni ze wsparciem ${BLANK} /7\nDni z ruchem ${BLANK} /7\nDni z terapią / mityngiem ${BLANK} /7`,
+);
+
+const ifThen = (height: Length) =>
+  writeLines('if-then', L('If …, then I will …', 'Jeśli …, to zrobię …'), height);
+
+const oneSentence = writeLines(
+  'one-sentence',
+  L('One sentence about this week', 'Jedno zdanie o tym tygodniu'),
+  mmH(19),
+);
+
+const reviewHeader = [
+  heading('heading', L('My week', 'Mój tydzień')),
+  caption(
+    'how',
+    L(
+      'Week {{weekRange}}. Look back over your evening pages and sum up; two or three minutes are enough.',
+      'Tydzień {{weekRange}}. Przejrzyj strony wieczorne i podsumuj; wystarczą dwie–trzy minuty.',
+    ),
+  ),
+];
+
+/** A5: the quick version, with lines to write on instead of tick lists. */
+const weekReviewA5: LayoutNode = stack(
+  [
+    ...reviewHeader,
+    block(
+      'numbers-a5',
+      'text',
+      {
+        text: L(
+          `Mood ${BLANK} /10 · tension ${BLANK} /10\nStrongest craving ${BLANK} /10 · days with craving ≥ 5 ${BLANK} /7`,
+          `Nastrój ${BLANK} /10 · napięcie ${BLANK} /10\nNajsilniejszy głód ${BLANK} /10 · dni z głodem ≥ 5 ${BLANK} /7`,
+        ),
+        variant: 'body',
+      },
+      { height: mmH(12) },
+    ),
+    writeLines(
+      'halt-quick',
+      L('Most often high in {{haltName}}:', 'Najczęściej wysoko w {{haltName}}:'),
+      fr(1),
+    ),
+    writeLines('trigger-quick', L('Most common trigger:', 'Najczęstszy wyzwalacz:'), fr(1)),
+    writeLines('helped-quick', L('What helped most:', 'Co pomogło najbardziej:'), fr(1)),
+    writeLines('win-quick', L('My biggest win:', 'Moje największe zwycięstwo:'), fr(1)),
+    writeLines('pattern', L('A pattern I notice:', 'Wzorzec, który zauważam:'), fr(1)),
+    writeLines('continue', L('Next week I want to:', 'W przyszłym tygodniu chcę:'), fr(1)),
+    ifThen(fr(1)),
+    oneSentence,
+  ],
+  { gap: 3 },
+);
+
+const weekReview = a5(
+  {
+    id: 'week-review',
+    name: L('My week', 'Mój tydzień'),
+    spread: { group: 'week-end', position: 'left' },
+    rationale: L(
+      'The end of the week in two or three minutes: it adds up what the evening pages already hold (numbers, HALT, triggers, what protected me), then wins, a pattern and a plan for next week.',
+      'Koniec tygodnia w dwie–trzy minuty: zbiera to, co już jest na stronach wieczornych (liczby, HALT, wyzwalacze, co mnie chroniło), potem zwycięstwa, wzorzec i plan na kolejny tydzień.',
+    ),
+    body: stack(
+      [
+        ...reviewHeader,
+        row(
+          [
+            stack(
+              [
+                block(
+                  'numbers-title',
+                  'text',
+                  { text: L('The week in numbers', 'Tydzień w liczbach'), variant: 'label' },
+                  { height: mmH(5) },
+                ),
+                block(
+                  'numbers',
+                  'text',
+                  { text: weekNumbers, variant: 'body' },
+                  { height: mmH(40) },
+                ),
+                block(
+                  'halt',
+                  'rating-matrix',
+                  {
+                    title: L('{{haltName}}: most often at 4–5', '{{haltName}}: najczęściej 4–5'),
+                    variant: 'auto',
+                    rows: HALT_B_ROWS,
+                    mode: 'checkbox',
+                    noteColumn: false,
+                  },
+                  { height: mmH(42) },
+                ),
+                writeLines('halt-reason', L('Most common reason:', 'Najczęstszy powód:'), mmH(13)),
+                block(
+                  'triggers',
+                  'numbered-list',
+                  {
+                    title: L('Triggers this week', 'Wyzwalacze tygodnia'),
+                    marker: 'checkbox',
+                    items: WEEK_TRIGGERS,
+                    count: WEEK_TRIGGERS.length,
+                    lineHeight: 5,
+                  },
+                  { height: fr(1) },
+                ),
+                writeLines(
+                  'hardest',
+                  L('The hardest moment of the week:', 'Najtrudniejszy moment tygodnia:'),
+                  mmH(13),
+                ),
+                block(
+                  'time-of-day',
+                  'text',
+                  {
+                    text: L(
+                      'Most often (circle): morning · day · afternoon · evening · night',
+                      'Najczęstsza pora (zakreśl): rano · dzień · popołudnie · wieczór · noc',
+                    ),
+                    variant: 'caption',
+                  },
+                  { height: mmH(6) },
+                ),
+              ],
+              { gap: 3 },
+            ),
+            stack(
+              [
+                block(
+                  'protected',
+                  'numbered-list',
+                  {
+                    title: L('What protected me most', 'Co mnie najbardziej chroniło'),
+                    marker: 'checkbox',
+                    items: PROTECTED,
+                    count: PROTECTED.length,
+                    lineHeight: 5,
+                  },
+                  { height: fr(1) },
+                ),
+                writeLines(
+                  'most-effective',
+                  L('The most effective thing:', 'Najskuteczniejsza rzecz:'),
+                  mmH(13),
+                ),
+                block(
+                  'wins',
+                  'numbered-list',
+                  { title: L('My 3 wins this week', 'Moje 3 zwycięstwa tygodnia'), count: 3 },
+                  { height: mmH(30) },
+                ),
+                writeLines(
+                  'pattern',
+                  L('I noticed that…', '{g:Zauważyłem|Zauważyłam}, że…'),
+                  mmH(20),
+                ),
+                writeLines(
+                  'continue',
+                  L('Next week I want to keep:', 'W przyszłym tygodniu chcę kontynuować:'),
+                  mmH(13),
+                ),
+                writeLines(
+                  'differently',
+                  L('One thing I will do differently:', 'Jedna rzecz, którą zrobię inaczej:'),
+                  mmH(13),
+                ),
+                ifThen(mmH(13)),
+              ],
+              { gap: 3 },
+            ),
+          ],
+          { gap: 6, height: fr(1) },
+        ),
+        oneSentence,
+      ],
+      { gap: 4 },
+    ),
+  },
+  [{ op: 'add', path: '/body', value: weekReviewA5 as JsonPatchOp['value'] }],
+);
+
 const situation: PageTemplate = {
   id: 'situation',
   name: L('Situation analysis', 'Analiza sytuacji'),
+  // With "My week" on the left, the end of the week is one spread; without it, a filler page
+  // comes first.
+  spread: { group: 'week-end', position: 'right' },
   rationale: L(
     'Optional, once a week or after a hard day: a thought that raised the risk and an answer to it, then one situation step by step (what happened, thought, feeling, action, next time).',
     'Opcjonalna, raz w tygodniu albo po trudnym dniu: myśl, która zwiększała ryzyko, i odpowiedź na nią, potem jedna sytuacja krok po kroku (wydarzenie, myśl, uczucie, działanie, następnym razem).',
@@ -1023,7 +1231,9 @@ const sections: SectionTemplate[] = [
             repeat: { over: 'daysOfWeek', group: 1 },
             children: [page('day-left'), page('day-right')],
           },
-          // Optional weekly page; switch it on in Structure.
+          // The end of the week as one spread: "My week", then the optional situation analysis
+          // (switch it on in Structure).
+          page('week-review'),
           { page: 'situation', enabled: false },
         ],
       },
@@ -1062,6 +1272,7 @@ const pageTemplates = [
   weekRight,
   dayLeft,
   dayRight,
+  weekReview,
   situation,
   wheel,
   review,

@@ -167,13 +167,63 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       },
     },
     // The outer column is narrow: short lines, no notes.
-    wins: {
+    'if-then': {
       fill: L(
-        'said no at the\noffice party\n5 meetings',
-        'odmówiłem na\nimprezie w pracy\n5 mityngów',
+        'If tense after\nwork, then call\nTomek first',
+        'Jeśli napięcie\npo pracy, to\ntelefon do Tomka',
       ),
     },
-    helped: { fill: L('walks,\ncalling Tomek', 'spacery,\ntelefon do Tomka') },
+    watch: { fill: L('Fri: payday\nSat: a birthday', 'pt.: wypłata\nsob.: urodziny') },
+  },
+  // Lines in the two columns are short: examples stay brief so nothing is cut off.
+  'week-review': {
+    numbers: {
+      fill: ['6', '4', '7', '2', '5', '4', '3'],
+      note: L('count from the evening pages', 'policz ze stron wieczornych'),
+      noteAt: 'bottom-right',
+    },
+    halt: { fill: { ticks: [false, true, false, true, false] } },
+    'halt-reason': { fill: L('arguments, short nights', 'kłótnie, krótkie noce') },
+    triggers: { fill: { done: [1, 5] } },
+    hardest: { fill: L('Friday evening, payday', 'piątek wieczór, wypłata') },
+    protected: { fill: { done: [0, 1, 2] } },
+    'most-effective': { fill: L('calling Tomek straight away', 'telefon do Tomka od razu') },
+    wins: {
+      fill: {
+        items: [
+          L('called before reacting', 'telefon przed reakcją'),
+          L('a meeting though I did not want to', 'mityng mimo niechęci'),
+          L('rest instead of overwork', 'odpoczynek zamiast pracy'),
+        ],
+      },
+    },
+    pattern: {
+      fill: L('less sleep, more craving', 'gdy śpię mniej, rośnie głód'),
+      note: L('this is where the notes pay off', 'tu notatki zaczynają pracować'),
+      noteAt: 'bottom-right',
+    },
+    continue: { fill: L('a walk every day', 'codzienny spacer') },
+    differently: { fill: L('bed by 23:00', 'spać przed 23:00') },
+    'if-then': {
+      fill: L(
+        'If tense after work, then call Tomek.',
+        'Jeśli napięcie po pracy, to telefon do Tomka.',
+      ),
+      note: L('copy it to next week', 'przepisz na kolejny tydzień'),
+      noteAt: 'bottom-right',
+    },
+    'one-sentence': {
+      fill: L(
+        'A hard week, and I got through it by asking for help.',
+        'Trudny tydzień, który przeszedłem, prosząc o pomoc.',
+      ),
+    },
+    // A5, the quick version
+    'numbers-a5': { fill: ['6', '4', '7', '2'] },
+    'halt-quick': { fill: L('A and T', 'A i T') },
+    'trigger-quick': { fill: L('conflict', 'konflikt') },
+    'helped-quick': { fill: L('calling Tomek', 'telefon do Tomka') },
+    'win-quick': { fill: L('called before reacting', 'telefon przed reakcją') },
   },
   'day-left': {
     date: {
@@ -460,8 +510,12 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka.',
   ),
   'week-right': L(
-    'Thursday to Sunday, the marker legend, and two questions for the end of the week: your wins, however small, and what protected your calm.',
-    'Czwartek–niedziela, legenda znaczników i dwa pytania na koniec tygodnia: Twoje zwycięstwa, nawet małe, oraz co chroniło Twój spokój.',
+    'Thursday to Sunday and the marker legend. The outer column is for the week ahead: copy your if–then plan from last week\'s "My week", and note the days or situations to watch out for.',
+    'Czwartek–niedziela i legenda znaczników. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać.',
+  ),
+  'week-review': L(
+    'The end of the week, in two or three minutes. Look back over your evening pages and add up: average mood and tension, the strongest craving, and on how many days you had support, exercise or a meeting. Tick which HALT feelings were most often high, the triggers that came up and what protected you most. Then three wins (not only "I did not drink"), one pattern you notice, what to keep and change, and an if–then plan to copy into next week.',
+    'Koniec tygodnia w dwie–trzy minuty. Przejrzyj strony wieczorne i podsumuj: średni nastrój i napięcie, najsilniejszy głód oraz ile dni miało wsparcie, ruch lub mityng. Zaznacz, które odczucia HALT były najczęściej wysoko, jakie wyzwalacze się pojawiły i co najbardziej Cię chroniło. Potem trzy zwycięstwa (nie tylko „nie piłem”), jeden wzorzec, który zauważasz, co zachować, co zmienić, i plan jeśli–to do przepisania na kolejny tydzień.',
   ),
   'day-left': L(
     'The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.',

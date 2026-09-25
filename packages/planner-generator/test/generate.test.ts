@@ -90,9 +90,9 @@ describe('generate: 6-month therapeutic planner from 2026-10-01', () => {
     expect(pages.find((p) => p.templateId === 'day-left')!.context.date).toBe('2026-10-01');
   });
 
-  it('counts about 480 printed pages, in whole duplex sheets, with spreads facing each other', () => {
-    expect(result.budget.total).toBeGreaterThanOrEqual(470);
-    expect(result.budget.total).toBeLessThanOrEqual(500);
+  it('counts about 530 printed pages, in whole duplex sheets, with spreads facing each other', () => {
+    expect(result.budget.total).toBeGreaterThanOrEqual(515);
+    expect(result.budget.total).toBeLessThanOrEqual(545);
     expect(result.budget.total % 2).toBe(0);
     expect(result.budget.sheets).toBe(result.budget.total / 2);
     const { pages: printed } = paginate(result.document.root, {

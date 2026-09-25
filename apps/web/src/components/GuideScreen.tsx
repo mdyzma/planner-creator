@@ -25,7 +25,13 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
   { key: 'intro', pages: [['cover'], ['how-to'], ['contract'], ['safety-rules']] },
   { key: 'month', pages: [['month-divider'], ['month-open-left', 'month-open-right']] },
   { key: 'week', pages: [['week-left', 'week-right']] },
-  { key: 'day', pages: [['day-left', 'day-right'], ['situation']] },
+  {
+    key: 'day',
+    pages: [
+      ['day-left', 'day-right'],
+      ['week-review', 'situation'],
+    ],
+  },
   { key: 'monthEnd', pages: [['wheel-of-life'], ['monthly-review'], ['notes']] },
   {
     key: 'crisis',

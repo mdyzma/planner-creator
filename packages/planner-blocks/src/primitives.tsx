@@ -138,6 +138,10 @@ export const HAND: CSSProperties = {
   lineHeight: 1,
   whiteSpace: 'nowrap',
   overflow: 'hidden',
+  // Handwriting overhangs its box (tall letters, the last stroke): room for it inside the clip,
+  // taken back by the margin so the layout does not move.
+  padding: '0.2em 0.2em 0.15em 0',
+  margin: '-0.2em -0.2em -0.15em 0',
 };
 
 /** The block's example fill, if example mode is on and it matches the block's sample shape. */

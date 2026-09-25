@@ -29,8 +29,11 @@ const RatingProps = z.object({
   mode: z.enum(['checkbox', 'scale-1-5', 'scale-0-10']),
   noteColumn: z.boolean(),
   noteLabel: LocalizedText.optional(),
-  /** A HALT check prints that check's rows (and fills `{{haltName}}` in the title); custom prints `rows`. */
-  variant: z.enum(['custom', 'halt', 'halt-b']),
+  /**
+   * A HALT check prints that check's rows (and fills `{{haltName}}` in the title); `auto` follows
+   * the planner's HALT block (e.g. a weekly review matching the day page); custom prints `rows`.
+   */
+  variant: z.enum(['custom', 'halt', 'halt-b', 'auto']),
 });
 
 const SCALES = {
@@ -63,6 +66,7 @@ export const ratingMatrixBlock = defineBlock({
       options: [
         { value: 'halt-b', label: L('HALT-B (with boredom)', 'HALT-B (z nudą)') },
         { value: 'halt', label: L('HALT (classic)', 'HALT (klasyczny)') },
+        { value: 'auto', label: L('Same as the day page', 'Jak na stronie dnia') },
         { value: 'custom', label: L('Custom rows', 'Własne wiersze') },
       ],
     },
@@ -84,7 +88,13 @@ export const ratingMatrixBlock = defineBlock({
     const sample = sampleFill(ctx, block.id, RatingSample);
     const ring = (show: boolean) => (show ? <HandRing size={circle + 1.8} /> : null);
     const circle = props.mode === 'scale-0-10' ? 3.1 : 3.6;
-    const halt = props.variant === 'custom' ? undefined : HALT_VARIANTS[props.variant];
+    const variant =
+      props.variant === 'auto'
+        ? ctx.vars.haltName === HALT_VARIANTS.halt.name
+          ? 'halt'
+          : 'halt-b'
+        : props.variant;
+    const halt = variant === 'custom' ? undefined : HALT_VARIANTS[variant];
     const rows = halt?.rows ?? props.rows;
     const titleCtx = halt ? { ...ctx, vars: { ...ctx.vars, haltName: halt.name } } : ctx;
     return (

@@ -1275,12 +1275,12 @@
       "outerRailWidth": 34,
       "outerRail": [
         {
-          "id": "wins",
+          "id": "if-then",
           "type": "writing-area",
           "props": {
             "title": {
-              "en": "Wins this week",
-              "pl": "Zwycięstwa tygodnia"
+              "en": "My if–then plan this week",
+              "pl": "Mój plan jeśli–to na ten tydzień"
             },
             "pattern": "lines"
           },
@@ -1291,12 +1291,12 @@
           }
         },
         {
-          "id": "helped",
+          "id": "watch",
           "type": "writing-area",
           "props": {
             "title": {
-              "en": "What protected my calm",
-              "pl": "Co chroniło mój spokój"
+              "en": "What to watch out for this week",
+              "pl": "Na co uważam w tym tygodniu"
             },
             "pattern": "lines"
           },
@@ -1365,8 +1365,8 @@
         ]
       },
       "guide": {
-        "en": "Thursday to Sunday, the marker legend, and two questions for the end of the week: your wins, however small, and what protected your calm.",
-        "pl": "Czwartek–niedziela, legenda znaczników i dwa pytania na koniec tygodnia: Twoje zwycięstwa, nawet małe, oraz co chroniło Twój spokój."
+        "en": "Thursday to Sunday and the marker legend. The outer column is for the week ahead: copy your if–then plan from last week's \"My week\", and note the days or situations to watch out for.",
+        "pl": "Czwartek–niedziela i legenda znaczników. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać."
       },
       "sampleContent": {
         "thu": {
@@ -1418,16 +1418,16 @@
             }
           }
         },
-        "wins": {
+        "if-then": {
           "fill": {
-            "en": "said no at the\noffice party\n5 meetings",
-            "pl": "odmówiłem na\nimprezie w pracy\n5 mityngów"
+            "en": "If tense after\nwork, then call\nTomek first",
+            "pl": "Jeśli napięcie\npo pracy, to\ntelefon do Tomka"
           }
         },
-        "helped": {
+        "watch": {
           "fill": {
-            "en": "walks,\ncalling Tomek",
-            "pl": "spacery,\ntelefon do Tomka"
+            "en": "Fri: payday\nSat: a birthday",
+            "pl": "pt.: wypłata\nsob.: urodziny"
           }
         }
       }
@@ -2345,11 +2345,900 @@
         }
       }
     },
+    "week-review": {
+      "id": "week-review",
+      "name": {
+        "en": "My week",
+        "pl": "Mój tydzień"
+      },
+      "spread": {
+        "group": "week-end",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "The end of the week in two or three minutes: it adds up what the evening pages already hold (numbers, HALT, triggers, what protected me), then wins, a pattern and a plan for next week.",
+        "pl": "Koniec tygodnia w dwie–trzy minuty: zbiera to, co już jest na stronach wieczornych (liczby, HALT, wyzwalacze, co mnie chroniło), potem zwycięstwa, wzorzec i plan na kolejny tydzień."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My week",
+                  "pl": "Mój tydzień"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Week {{weekRange}}. Look back over your evening pages and sum up; two or three minutes are enough.",
+                  "pl": "Tydzień {{weekRange}}. Przejrzyj strony wieczorne i podsumuj; wystarczą dwie–trzy minuty."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 6,
+            "children": [
+              {
+                "kind": "stack",
+                "gap": 3,
+                "children": [
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "numbers-title",
+                      "type": "text",
+                      "props": {
+                        "text": {
+                          "en": "The week in numbers",
+                          "pl": "Tydzień w liczbach"
+                        },
+                        "variant": "label"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 5
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "numbers",
+                      "type": "text",
+                      "props": {
+                        "text": {
+                          "en": "Mood, on average __________ /10\nTension, on average __________ /10\nStrongest craving __________ /10\nDays with craving ≥ 5 __________ /7\nDays with support __________ /7\nDays with exercise __________ /7\nDays with therapy / a meeting __________ /7",
+                          "pl": "Nastrój, średnio __________ /10\nNapięcie, średnio __________ /10\nNajsilniejszy głód __________ /10\nDni z głodem ≥ 5 __________ /7\nDni ze wsparciem __________ /7\nDni z ruchem __________ /7\nDni z terapią / mityngiem __________ /7"
+                        },
+                        "variant": "body"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 40
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "halt",
+                      "type": "rating-matrix",
+                      "props": {
+                        "title": {
+                          "en": "{{haltName}}: most often at 4–5",
+                          "pl": "{{haltName}}: najczęściej 4–5"
+                        },
+                        "variant": "auto",
+                        "rows": [
+                          {
+                            "badge": "H",
+                            "label": {
+                              "en": "Hungry",
+                              "pl": "Głód fizyczny"
+                            }
+                          },
+                          {
+                            "badge": "A",
+                            "label": {
+                              "en": "Angry / stressed",
+                              "pl": "Złość / stres"
+                            }
+                          },
+                          {
+                            "badge": "L",
+                            "label": {
+                              "en": "Lonely",
+                              "pl": "Samotność / izolacja"
+                            }
+                          },
+                          {
+                            "badge": "T",
+                            "label": {
+                              "en": "Tired",
+                              "pl": "Zmęczenie / wyczerpanie"
+                            }
+                          },
+                          {
+                            "badge": "B",
+                            "label": {
+                              "en": "Bored / without purpose",
+                              "pl": "Nuda / brak celu"
+                            }
+                          }
+                        ],
+                        "mode": "checkbox",
+                        "noteColumn": false
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 42
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "halt-reason",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "Most common reason:",
+                          "pl": "Najczęstszy powód:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "triggers",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "Triggers this week",
+                          "pl": "Wyzwalacze tygodnia"
+                        },
+                        "marker": "checkbox",
+                        "items": [
+                          {
+                            "en": "an emotion",
+                            "pl": "emocja"
+                          },
+                          {
+                            "en": "a conflict",
+                            "pl": "konflikt"
+                          },
+                          {
+                            "en": "a person",
+                            "pl": "osoba"
+                          },
+                          {
+                            "en": "a place",
+                            "pl": "miejsce"
+                          },
+                          {
+                            "en": "a memory",
+                            "pl": "wspomnienie"
+                          },
+                          {
+                            "en": "stress",
+                            "pl": "stres"
+                          },
+                          {
+                            "en": "success / euphoria",
+                            "pl": "sukces / euforia"
+                          },
+                          {
+                            "en": "money",
+                            "pl": "pieniądze"
+                          },
+                          {
+                            "en": "a social situation",
+                            "pl": "sytuacja towarzyska"
+                          },
+                          {
+                            "en": "a thought of drinking",
+                            "pl": "myśl o piciu / użyciu"
+                          },
+                          {
+                            "en": "other:",
+                            "pl": "inne:"
+                          }
+                        ],
+                        "count": 11,
+                        "lineHeight": 5
+                      },
+                      "size": {
+                        "height": {
+                          "fr": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "hardest",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "The hardest moment of the week:",
+                          "pl": "Najtrudniejszy moment tygodnia:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "time-of-day",
+                      "type": "text",
+                      "props": {
+                        "text": {
+                          "en": "Most often (circle): morning · day · afternoon · evening · night",
+                          "pl": "Najczęstsza pora (zakreśl): rano · dzień · popołudnie · wieczór · noc"
+                        },
+                        "variant": "caption"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 6
+                        }
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "stack",
+                "gap": 3,
+                "children": [
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "protected",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "What protected me most",
+                          "pl": "Co mnie najbardziej chroniło"
+                        },
+                        "marker": "checkbox",
+                        "items": [
+                          {
+                            "en": "talking to someone",
+                            "pl": "rozmowa z kimś"
+                          },
+                          {
+                            "en": "therapy / meeting",
+                            "pl": "terapia / mityng"
+                          },
+                          {
+                            "en": "exercise",
+                            "pl": "ruch"
+                          },
+                          {
+                            "en": "rest / sleep",
+                            "pl": "odpoczynek / sen"
+                          },
+                          {
+                            "en": "family / friends",
+                            "pl": "rodzina / przyjaciele"
+                          },
+                          {
+                            "en": "work / hobby",
+                            "pl": "praca / hobby"
+                          },
+                          {
+                            "en": "meditation / prayer",
+                            "pl": "medytacja / modlitwa"
+                          },
+                          {
+                            "en": "a change of scene",
+                            "pl": "zmiana otoczenia"
+                          },
+                          {
+                            "en": "asking for help",
+                            "pl": "prośba o pomoc"
+                          },
+                          {
+                            "en": "setting a boundary",
+                            "pl": "postawiona granica"
+                          },
+                          {
+                            "en": "avoiding a risky situation",
+                            "pl": "unikanie ryzyka"
+                          },
+                          {
+                            "en": "other:",
+                            "pl": "inne:"
+                          }
+                        ],
+                        "count": 12,
+                        "lineHeight": 5
+                      },
+                      "size": {
+                        "height": {
+                          "fr": 1
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "most-effective",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "The most effective thing:",
+                          "pl": "Najskuteczniejsza rzecz:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "wins",
+                      "type": "numbered-list",
+                      "props": {
+                        "title": {
+                          "en": "My 3 wins this week",
+                          "pl": "Moje 3 zwycięstwa tygodnia"
+                        },
+                        "count": 3
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 30
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "pattern",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "I noticed that…",
+                          "pl": "{g:Zauważyłem|Zauważyłam}, że…"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 20
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "continue",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "Next week I want to keep:",
+                          "pl": "W przyszłym tygodniu chcę kontynuować:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "differently",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "One thing I will do differently:",
+                          "pl": "Jedna rzecz, którą zrobię inaczej:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "if-then",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "If …, then I will …",
+                          "pl": "Jeśli …, to zrobię …"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ],
+            "height": {
+              "fr": 1
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "one-sentence",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "One sentence about this week",
+                  "pl": "Jedno zdanie o tym tygodniu"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 19
+                }
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body",
+            "value": {
+              "kind": "stack",
+              "gap": 3,
+              "children": [
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "heading",
+                    "type": "text",
+                    "props": {
+                      "text": {
+                        "en": "My week",
+                        "pl": "Mój tydzień"
+                      },
+                      "variant": "heading"
+                    },
+                    "size": {
+                      "height": {
+                        "mm": 12
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "how",
+                    "type": "text",
+                    "props": {
+                      "text": {
+                        "en": "Week {{weekRange}}. Look back over your evening pages and sum up; two or three minutes are enough.",
+                        "pl": "Tydzień {{weekRange}}. Przejrzyj strony wieczorne i podsumuj; wystarczą dwie–trzy minuty."
+                      },
+                      "variant": "caption"
+                    },
+                    "size": {
+                      "height": {
+                        "mm": 8
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "numbers-a5",
+                    "type": "text",
+                    "props": {
+                      "text": {
+                        "en": "Mood __________ /10 · tension __________ /10\nStrongest craving __________ /10 · days with craving ≥ 5 __________ /7",
+                        "pl": "Nastrój __________ /10 · napięcie __________ /10\nNajsilniejszy głód __________ /10 · dni z głodem ≥ 5 __________ /7"
+                      },
+                      "variant": "body"
+                    },
+                    "size": {
+                      "height": {
+                        "mm": 12
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "halt-quick",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "Most often high in {{haltName}}:",
+                        "pl": "Najczęściej wysoko w {{haltName}}:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "trigger-quick",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "Most common trigger:",
+                        "pl": "Najczęstszy wyzwalacz:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "helped-quick",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "What helped most:",
+                        "pl": "Co pomogło najbardziej:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "win-quick",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "My biggest win:",
+                        "pl": "Moje największe zwycięstwo:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "pattern",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "A pattern I notice:",
+                        "pl": "Wzorzec, który zauważam:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "continue",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "Next week I want to:",
+                        "pl": "W przyszłym tygodniu chcę:"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "if-then",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "If …, then I will …",
+                        "pl": "Jeśli …, to zrobię …"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
+                    "id": "one-sentence",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "One sentence about this week",
+                        "pl": "Jedno zdanie o tym tygodniu"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "mm": 19
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "The end of the week, in two or three minutes. Look back over your evening pages and add up: average mood and tension, the strongest craving, and on how many days you had support, exercise or a meeting. Tick which HALT feelings were most often high, the triggers that came up and what protected you most. Then three wins (not only \"I did not drink\"), one pattern you notice, what to keep and change, and an if–then plan to copy into next week.",
+        "pl": "Koniec tygodnia w dwie–trzy minuty. Przejrzyj strony wieczorne i podsumuj: średni nastrój i napięcie, najsilniejszy głód oraz ile dni miało wsparcie, ruch lub mityng. Zaznacz, które odczucia HALT były najczęściej wysoko, jakie wyzwalacze się pojawiły i co najbardziej Cię chroniło. Potem trzy zwycięstwa (nie tylko „nie piłem”), jeden wzorzec, który zauważasz, co zachować, co zmienić, i plan jeśli–to do przepisania na kolejny tydzień."
+      },
+      "sampleContent": {
+        "numbers": {
+          "fill": [
+            "6",
+            "4",
+            "7",
+            "2",
+            "5",
+            "4",
+            "3"
+          ],
+          "note": {
+            "en": "count from the evening pages",
+            "pl": "policz ze stron wieczornych"
+          },
+          "noteAt": "bottom-right"
+        },
+        "halt": {
+          "fill": {
+            "ticks": [
+              false,
+              true,
+              false,
+              true,
+              false
+            ]
+          }
+        },
+        "halt-reason": {
+          "fill": {
+            "en": "arguments, short nights",
+            "pl": "kłótnie, krótkie noce"
+          }
+        },
+        "triggers": {
+          "fill": {
+            "done": [
+              1,
+              5
+            ]
+          }
+        },
+        "hardest": {
+          "fill": {
+            "en": "Friday evening, payday",
+            "pl": "piątek wieczór, wypłata"
+          }
+        },
+        "protected": {
+          "fill": {
+            "done": [
+              0,
+              1,
+              2
+            ]
+          }
+        },
+        "most-effective": {
+          "fill": {
+            "en": "calling Tomek straight away",
+            "pl": "telefon do Tomka od razu"
+          }
+        },
+        "wins": {
+          "fill": {
+            "items": [
+              {
+                "en": "called before reacting",
+                "pl": "telefon przed reakcją"
+              },
+              {
+                "en": "a meeting though I did not want to",
+                "pl": "mityng mimo niechęci"
+              },
+              {
+                "en": "rest instead of overwork",
+                "pl": "odpoczynek zamiast pracy"
+              }
+            ]
+          }
+        },
+        "pattern": {
+          "fill": {
+            "en": "less sleep, more craving",
+            "pl": "gdy śpię mniej, rośnie głód"
+          },
+          "note": {
+            "en": "this is where the notes pay off",
+            "pl": "tu notatki zaczynają pracować"
+          },
+          "noteAt": "bottom-right"
+        },
+        "continue": {
+          "fill": {
+            "en": "a walk every day",
+            "pl": "codzienny spacer"
+          }
+        },
+        "differently": {
+          "fill": {
+            "en": "bed by 23:00",
+            "pl": "spać przed 23:00"
+          }
+        },
+        "if-then": {
+          "fill": {
+            "en": "If tense after work, then call Tomek.",
+            "pl": "Jeśli napięcie po pracy, to telefon do Tomka."
+          },
+          "note": {
+            "en": "copy it to next week",
+            "pl": "przepisz na kolejny tydzień"
+          },
+          "noteAt": "bottom-right"
+        },
+        "one-sentence": {
+          "fill": {
+            "en": "A hard week, and I got through it by asking for help.",
+            "pl": "Trudny tydzień, który przeszedłem, prosząc o pomoc."
+          }
+        },
+        "numbers-a5": {
+          "fill": [
+            "6",
+            "4",
+            "7",
+            "2"
+          ]
+        },
+        "halt-quick": {
+          "fill": {
+            "en": "A and T",
+            "pl": "A i T"
+          }
+        },
+        "trigger-quick": {
+          "fill": {
+            "en": "conflict",
+            "pl": "konflikt"
+          }
+        },
+        "helped-quick": {
+          "fill": {
+            "en": "calling Tomek",
+            "pl": "telefon do Tomka"
+          }
+        },
+        "win-quick": {
+          "fill": {
+            "en": "called before reacting",
+            "pl": "telefon przed reakcją"
+          }
+        }
+      }
+    },
     "situation": {
       "id": "situation",
       "name": {
         "en": "Situation analysis",
         "pl": "Analiza sytuacji"
+      },
+      "spread": {
+        "group": "week-end",
+        "position": "right"
       },
       "rationale": {
         "en": "Optional, once a week or after a hard day: a thought that raised the risk and an answer to it, then one situation step by step (what happened, thought, feeling, action, next time).",
@@ -3728,6 +4617,9 @@
                   "page": "day-right"
                 }
               ]
+            },
+            {
+              "page": "week-review"
             },
             {
               "page": "situation",
