@@ -73,7 +73,8 @@ function Export({
       ? (project.print.profile as OfferedProfile)
       : profiles[0]!,
   );
-  const [scope, setScope] = useState<string>('all');
+  /** Chosen top-level sections; `null` means all of them (the whole planner). */
+  const [chosen, setChosen] = useState<ReadonlySet<string> | null>(null);
   const [reverseBacks, setReverseBacks] = useState(true);
   const [service, setService] = useState<'checking' | 'ready' | 'offline'>('checking');
   const [job, setJob] = useState<Job>({ state: 'idle' });
@@ -86,28 +87,48 @@ function Export({
     void check();
   }, [check]);
 
-  const plan = useMemo(
-    () => planExport(project, { profile, section: scope === 'all' ? undefined : scope }),
-    [project, profile, scope],
+  // Sections that fill whole sheets can be printed on their own (all of them in this template).
+  const offered = useMemo(
+    () => planExport(project, { profile: 'home-duplex' }).sections.filter((s) => s.wholeSheets),
+    [project],
   );
+  const selected = chosen ?? new Set(offered.map((s) => s.key));
+  const everything = offered.every((s) => selected.has(s.key));
+  const sections = everything
+    ? undefined
+    : offered.filter((s) => selected.has(s.key)).map((s) => s.key);
+  const sectionsKey = sections?.join(',');
+  const plan = useMemo(
+    () => planExport(project, { profile, sections: sectionsKey?.split(',').filter(Boolean) }),
+    [project, profile, sectionsKey],
+  );
+  const toggle = (key: string, on: boolean) => {
+    const next = new Set(selected);
+    if (on) next.add(key);
+    else next.delete(key);
+    setChosen(next);
+  };
+  const monthsOnly = () =>
+    setChosen(new Set(offered.filter((s) => s.key.startsWith('month:')).map((s) => s.key)));
+
   const missing = useMemo(
     () => scanTranslations(project).missingByLocale[project.locale],
     [project],
   );
   const personal = Object.values(project.generation.variables).some((v) => v.personal);
-  const range = plan.parts.length
-    ? { from: plan.parts[0]!.from + 1, to: plan.parts.at(-1)!.to + 1 }
-    : { from: 1, to: 1 };
-  const section = scope === 'all' ? undefined : scope;
+  // Browser printing gets the same page ranges (1-based), e.g. "5-86,87-174".
+  const ranges = plan.parts.map((p) => `${p.from + 1}-${p.to + 1}`).join(',');
+  const fileLabel =
+    sections && (sections.length === 1 ? sections[0] : `${sections[0]} ${sections.at(-1)}`);
   const sheets = profile === 'home-a5-2up' ? plan.pageCount / 4 : Math.ceil(plan.pageCount / 2);
 
   const run = async () => {
     setJob({ state: 'running', done: 0, total: plan.parts.length });
     try {
-      const files = await exportPdf(project, { profile, section, reverseBacks }, (done, total) =>
+      const files = await exportPdf(project, { profile, sections, reverseBacks }, (done, total) =>
         setJob({ state: 'running', done, total }),
       );
-      const stem = fileStem(project.meta.name, section);
+      const stem = fileStem(project.meta.name, fileLabel);
       for (const f of files) downloadBytes(`${stem}${f.suffix}.pdf`, f.bytes);
       setJob({ state: 'done', files, stem });
       await getProjectRepository().recordExport(project.id, 'pdf', plan.pageCount);
@@ -155,6 +176,7 @@ function Export({
   const heading = 'mb-3 text-base font-medium';
   const button = 'rounded bg-accent px-4 py-2 font-medium text-accent-ink disabled:opacity-40';
   const secondary = 'rounded border border-line px-3 py-1.5 hover:bg-bg';
+  const chip = 'rounded border border-line px-2 py-0.5 text-xs hover:bg-bg';
 
   return (
     <div className="min-h-screen">
@@ -181,33 +203,32 @@ function Export({
           <h2 id={`${ids}-what`} className={heading}>
             {t('what')}
           </h2>
+          <div className="mb-2 flex flex-wrap gap-1.5">
+            <button type="button" className={chip} onClick={() => setChosen(null)}>
+              {t('selectAll')}
+            </button>
+            <button type="button" className={chip} onClick={monthsOnly}>
+              {t('selectMonths')}
+            </button>
+            <button type="button" className={chip} onClick={() => setChosen(new Set())}>
+              {t('selectNone')}
+            </button>
+          </div>
           <fieldset className="flex flex-col gap-1.5">
             <legend className="sr-only">{t('what')}</legend>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name={`${ids}-scope`}
-                checked={scope === 'all'}
-                onChange={() => setScope('all')}
-              />
-              {t('wholePlanner')}
-            </label>
-            {plan.sections
-              .filter((s) => s.wholeSheets)
-              .map((s) => (
-                <label key={s.key} className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name={`${ids}-scope`}
-                    checked={scope === s.key}
-                    onChange={() => setScope(s.key)}
-                  />
-                  {localize(s.title, project.locale) || s.key}
-                  <span className="text-xs text-ink-muted">
-                    {t('pageRange', { from: s.from + 1, to: s.to + 1 })}
-                  </span>
-                </label>
-              ))}
+            {offered.map((s) => (
+              <label key={s.key} className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={selected.has(s.key)}
+                  onChange={(e) => toggle(s.key, e.target.checked)}
+                />
+                {localize(s.title, project.locale) || s.key}
+                <span className="text-xs text-ink-muted">
+                  {t('pageRange', { from: s.from + 1, to: s.to + 1 })}
+                </span>
+              </label>
+            ))}
           </fieldset>
           <p className="mt-3 text-xs text-ink-muted">{t('ringHint')}</p>
         </section>
@@ -311,10 +332,7 @@ function Export({
                 <button type="button" className={secondary} onClick={() => void check()}>
                   {t('checkAgain')}
                 </button>
-                <Link
-                  href={`/print?id=${project.id}&from=${range.from}&to=${range.to}`}
-                  className={secondary}
-                >
+                <Link href={`/print?id=${project.id}&ranges=${ranges}`} className={secondary}>
                   {t('browserPrint')}
                 </Link>
               </div>
@@ -325,13 +343,14 @@ function Export({
               <button
                 type="button"
                 className={button}
-                disabled={service !== 'ready' || job.state === 'running'}
+                disabled={service !== 'ready' || job.state === 'running' || plan.parts.length === 0}
                 onClick={() => void run()}
               >
                 {t('createPdf')}
               </button>
               <span role="status" aria-live="polite" className="text-ink-muted">
                 {service === 'checking' && t('checking')}
+                {service === 'ready' && plan.parts.length === 0 && t('nothingSelected')}
                 {job.state === 'running' && t('progress', { done: job.done, total: job.total })}
                 {job.state === 'done' && t('done')}
               </span>

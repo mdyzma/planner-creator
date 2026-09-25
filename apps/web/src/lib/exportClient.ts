@@ -65,8 +65,8 @@ async function renderPart(project: PlannerProject, part: ExportPart): Promise<Ui
 
 export interface ExportRequest {
   profile: PrintProfile;
-  /** Print one top-level section only (e.g. a month for the ring binder). */
-  section?: string;
+  /** Top-level sections to print (e.g. single months for the ring binder); all when absent. */
+  sections?: string[];
   reverseBacks?: boolean;
 }
 

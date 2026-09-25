@@ -15,9 +15,9 @@ import { FILLER_PATTERN, blockRegistry, layoutProject } from '@/lib/pages';
 import { useProject } from '@/lib/useProject';
 
 /**
- * Pages in print mode, sized with @page. In the browser it prints the planner (or the page range
- * in `?from=&to=`, 1-based); the export service loads the same route with the project injected
- * and turns it into PDF (§8.3).
+ * Pages in print mode, sized with @page. In the browser it prints the planner, or the page ranges
+ * in `?ranges=5-86,175-246` (or `?from=&to=`, 1-based); the export service loads the same route
+ * with the project injected and turns it into PDF (§8.3).
  */
 export function PrintScreen() {
   // Decided after hydration: the static HTML never contains an injected project.
@@ -37,7 +37,8 @@ function ExportPrint({ payload }: { payload: ExportPayload }) {
       cancelled = true;
     };
   }, []);
-  return <PrintPages {...payload} />;
+  const { project, from, to, padAfter } = payload;
+  return <PrintPages project={project} ranges={[{ from, to }]} padAfter={padAfter} />;
 }
 
 function BrowserPrint() {
@@ -57,8 +58,19 @@ function BrowserPrint() {
     );
   }
 
-  const from = Math.max(1, Number(params.get('from')) || 1);
-  const to = Math.min(count, Number(params.get('to')) || count);
+  const clamp = (n: number) => Math.min(count, Math.max(1, n));
+  const ranges = (
+    params.get('ranges')
+      ? params
+          .get('ranges')!
+          .split(',')
+          .map((r) => r.split('-').map(Number))
+      : [[Number(params.get('from')) || 1, Number(params.get('to')) || count]]
+  )
+    .filter(([a, b]) => Number.isFinite(a) && Number.isFinite(b))
+    .map(([a, b]) => ({ from: clamp(a!) - 1, to: clamp(b!) - 1 }))
+    .filter((r) => r.to >= r.from);
+  const total = ranges.reduce((n, r) => n + r.to - r.from + 1, 0);
 
   return (
     <>
@@ -68,7 +80,7 @@ function BrowserPrint() {
         </Link>
         <span>
           {t.rich('instructions', {
-            pages: to - from + 1,
+            pages: total,
             format: project.format,
             b: (chunks) => <strong>{chunks}</strong>,
           })}
@@ -82,30 +94,29 @@ function BrowserPrint() {
         </button>
       </div>
       <div className="print-stack">
-        <PrintPages project={project} from={from - 1} to={to - 1} padAfter={0} />
+        <PrintPages project={project} ranges={ranges} padAfter={0} />
       </div>
     </>
   );
 }
 
-/** Printed pages `from`…`to` (0-based) and `padAfter` blank notes pages. */
+/** Printed pages in the given ranges (0-based, inclusive), then `padAfter` blank notes pages. */
 function PrintPages({
   project,
-  from,
-  to,
+  ranges,
   padAfter,
 }: {
   project: PlannerProject;
-  from: number;
-  to: number;
+  ranges: readonly { from: number; to: number }[];
   padAfter: number;
 }) {
   const layout = useMemo(() => layoutProject(project), [project]);
   const { width, height } = PAGE_FORMATS[project.format];
   const bleed = project.print.bleed;
-  const pages = layout.pages.slice(from, to + 1);
+  const pages = ranges.flatMap((r) => layout.pages.slice(r.from, r.to + 1));
+  const last = ranges.at(-1)?.to ?? -1;
   const pads = Array.from({ length: padAfter }, (_, i) => {
-    const side = sideOfIndex(to + 1 + i);
+    const side = sideOfIndex(last + 1 + i);
     return { key: `pad-${i}`, frame: resolveFrame(project.format, project.print, side) };
   });
 

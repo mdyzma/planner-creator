@@ -6,8 +6,8 @@ import type { Renderer } from './render';
 
 export interface ExportOptions {
   profile?: PrintProfile;
-  /** Top-level section key to print on its own, e.g. `month:2026-11`. */
-  section?: string;
+  /** Top-level sections to print, e.g. `['month:2026-11']`; all when absent. */
+  sections?: string[];
   reverseBacks?: boolean;
   date?: Date;
   onProgress?: (done: number, total: number) => void;
@@ -23,7 +23,7 @@ export async function exportPlanner(
   options: ExportOptions = {},
 ): Promise<OutputFile[]> {
   const profile = options.profile ?? project.print.profile;
-  const plan = planExport(project, { profile, section: options.section });
+  const plan = planExport(project, { profile, sections: options.sections });
   let done = 0;
   const parts = await Promise.all(
     plan.parts.map(async (part) => {

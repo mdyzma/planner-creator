@@ -406,9 +406,8 @@
     "designer": "Designer",
     "preview": "Preview",
     "what": "What to print",
-    "wholePlanner": "The whole planner",
     "pageRange": "pages {from}–{to}",
-    "ringHint": "Every month fills whole sheets, so for a ring binder you can print one month at a time and add it when you need it.",
+    "ringHint": "Every part fills whole sheets, so for a ring binder you can print one month at a time and leave out the introduction and crisis pages once you have them.",
     "how": "How you print",
     "profile": {
       "home-duplex": {
@@ -472,7 +471,11 @@
     "saveTemplate": "Save template as JSON",
     "jsonHint": "The planner file is a full backup, including your name and dates, to import later on the dashboard. The template file holds the layout and content libraries only, for sharing or version control.",
     "templateName": "Template: {name}",
-    "hostedUnavailable": "PDF export is not available at the moment. Try again in a few minutes, or print from the browser."
+    "hostedUnavailable": "PDF export is not available at the moment. Try again in a few minutes, or print from the browser.",
+    "selectAll": "All",
+    "selectMonths": "Months only",
+    "selectNone": "None",
+    "nothingSelected": "Tick at least one part to print."
   },
   "Privacy": {
     "title": "Privacy",

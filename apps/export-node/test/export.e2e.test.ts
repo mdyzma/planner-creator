@@ -69,7 +69,7 @@ describe('PDF export in Chrome', () => {
 
     const [twoUp] = await exportPlanner(renderer, project, {
       profile: 'home-a5-2up',
-      section: 'month:2026-10',
+      sections: ['month:2026-10'],
     });
     const sheets = await PDFDocument.load(twoUp!.bytes);
     expect(sizes(sheets)).toEqual(new Set(['841.89x595.28']));

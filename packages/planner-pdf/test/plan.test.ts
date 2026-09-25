@@ -55,11 +55,27 @@ describe('planExport', () => {
 
   it('pads a single month to whole A4 sheets for 2-up printing', () => {
     const project = planner('A5');
-    const plan = planExport(project, { profile: 'home-a5-2up', section: 'month:2026-11' });
+    const plan = planExport(project, { profile: 'home-a5-2up', sections: ['month:2026-11'] });
     expect(plan.parts).toHaveLength(1);
     expect(plan.pageCount % 4).toBe(0);
     const part = plan.parts[0]!;
     expect(part.to - part.from + 1 + part.padAfter).toBe(plan.pageCount);
-    expect(() => planExport(project, { profile: 'home-duplex', section: 'nope' })).toThrow();
+    expect(() => planExport(project, { profile: 'home-duplex', sections: ['nope'] })).toThrow();
+  });
+
+  it('prints any choice of sections in planner order, e.g. months without intro and crisis', () => {
+    const project = planner('A4');
+    const all = planExport(project, { profile: 'home-duplex' });
+    const plan = planExport(project, {
+      profile: 'home-duplex',
+      sections: ['month:2026-12', 'month:2026-10'],
+    });
+    expect(plan.parts.map((p) => p.key)).toEqual(['month:2026-10', 'month:2026-12']);
+    const months = all.sections.filter((s) => s.key.startsWith('month:'));
+    const expected = months
+      .filter((s) => s.key === 'month:2026-10' || s.key === 'month:2026-12')
+      .reduce((n, s) => n + s.to - s.from + 1, 0);
+    expect(plan.pageCount).toBe(expected);
+    expect(plan.pageCount % 2).toBe(0);
   });
 });

@@ -406,9 +406,8 @@
     "designer": "Projektant",
     "preview": "Podgląd",
     "what": "Co wydrukować",
-    "wholePlanner": "Cały planer",
     "pageRange": "strony {from}–{to}",
-    "ringHint": "Każdy miesiąc zajmuje pełne kartki, więc do segregatora możesz drukować po jednym miesiącu i dokładać go, gdy będzie potrzebny.",
+    "ringHint": "Każda część zajmuje pełne kartki, więc do segregatora możesz drukować po jednym miesiącu i pomijać wprowadzenie i sekcję kryzysową, gdy już je masz.",
     "how": "Jak drukujesz",
     "profile": {
       "home-duplex": {
@@ -472,7 +471,11 @@
     "saveTemplate": "Zapisz szablon jako JSON",
     "jsonHint": "Plik planera to pełna kopia zapasowa, razem z imieniem i datami, do późniejszego importu na pulpicie. Plik szablonu zawiera tylko układ i biblioteki treści, do udostępniania lub kontroli wersji.",
     "templateName": "Szablon: {name}",
-    "hostedUnavailable": "Eksport do PDF jest teraz niedostępny. Spróbuj ponownie za kilka minut albo wydrukuj z przeglądarki."
+    "hostedUnavailable": "Eksport do PDF jest teraz niedostępny. Spróbuj ponownie za kilka minut albo wydrukuj z przeglądarki.",
+    "selectAll": "Wszystko",
+    "selectMonths": "Tylko miesiące",
+    "selectNone": "Nic",
+    "nothingSelected": "Zaznacz przynajmniej jedną część do druku."
   },
   "Privacy": {
     "title": "Prywatność",

@@ -14,7 +14,7 @@ Options:
   --out <file.pdf>      output file (default: next to the JSON)
   --profile <profile>   home-duplex | home-manual-duplex | home-a5-2up | home-a5-native | print-shop
                         (default: the planner's print setting)
-  --section <key>       print one section only, e.g. month:2026-11
+  --section <keys>      print only these sections, comma-separated, e.g. month:2026-11,month:2026-12
   --web-url <url>       render from a running web app instead of apps/web/out
 `;
 
@@ -59,7 +59,10 @@ try {
   const started = Date.now();
   const files = await exportPlanner(renderer, parsed.value, {
     profile,
-    section: values.section,
+    sections: values.section
+      ?.split(',')
+      .map((k) => k.trim())
+      .filter(Boolean),
     onProgress: (done, total) => process.stdout.write(`\rRendering ${done}/${total}`),
   });
   process.stdout.write('\n');

@@ -25,13 +25,14 @@ const padFor = (count: number, profile: PrintProfile) => {
 };
 
 /**
- * What to render for an export (§8.3): the whole planner as one part per top-level section, or
- * one section on its own (ring binding: print a month at a time). Parts are rendered separately,
- * a few at a time, and merged in order.
+ * What to render for an export (§8.3): the whole planner, or any choice of top-level sections
+ * (ring binding: a month at a time, without the introduction or crisis pages). One part per
+ * section, rendered separately and merged in planner order; the end is padded once so the file
+ * fills whole sheets for the print profile.
  */
 export function planExport(
   project: PlannerProject,
-  options: { profile: PrintProfile; section?: string },
+  options: { profile: PrintProfile; sections?: readonly string[] },
 ): ExportPlan {
   const { pages } = paginate(project.document.root, {
     templates: project.template.pageTemplates,
@@ -39,25 +40,23 @@ export function planExport(
   });
   const sections = sectionRanges(pages, project.document.root);
 
-  if (options.section) {
-    const range = sections.find((s) => s.key === options.section);
-    if (!range) throw new Error(`No section “${options.section}” in this planner.`);
-    const count = range.to - range.from + 1;
-    const padAfter = padFor(count, options.profile);
-    return {
-      parts: [{ key: range.key, from: range.from, to: range.to, padAfter }],
-      pageCount: count + padAfter,
-      sections,
-    };
+  const wanted = options.sections ? new Set(options.sections) : undefined;
+  if (wanted) {
+    for (const key of wanted) {
+      if (!sections.some((s) => s.key === key)) {
+        throw new Error(`No section “${key}” in this planner.`);
+      }
+    }
   }
-
-  const parts: ExportPart[] = sections.map((s) => ({
+  const chosen = wanted ? sections.filter((s) => wanted.has(s.key)) : sections;
+  const parts: ExportPart[] = chosen.map((s) => ({
     key: s.key,
     from: s.from,
     to: s.to,
     padAfter: 0,
   }));
-  const padAfter = padFor(pages.length, options.profile);
+  const count = parts.reduce((n, p) => n + p.to - p.from + 1, 0);
+  const padAfter = padFor(count, options.profile);
   if (parts.length > 0) parts[parts.length - 1]!.padAfter = padAfter;
-  return { parts, pageCount: pages.length + padAfter, sections };
+  return { parts, pageCount: count + padAfter, sections };
 }
