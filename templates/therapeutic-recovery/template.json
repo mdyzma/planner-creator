@@ -1510,7 +1510,7 @@
               }
             ],
             "height": {
-              "mm": 34
+              "mm": 27
             },
             "label": {
               "en": "Morning",
@@ -1684,8 +1684,8 @@
         },
         "commitment": {
           "fill": {
-            "en": "going to the 18:00 meeting and calling\nmy sponsor before work.",
-            "pl": "pójście na mityng o 18:00 i telefon\ndo sponsora przed pracą."
+            "en": "the 18:00 meeting and a call to my sponsor",
+            "pl": "mityng o 18:00 i telefon do sponsora"
           },
           "note": {
             "en": "one concrete action for today",
@@ -1734,12 +1734,12 @@
                 {
                   "en": "after dinner",
                   "pl": "po kolacji"
-                },
-                {
-                  "en": "walk round the block",
-                  "pl": "chociaż dookoła bloku"
                 }
               ]
+            ],
+            "subFor": [
+              "How:",
+              "If it gets hard:"
             ],
             "done": [
               0,
@@ -1755,8 +1755,8 @@
         "schedule": {
           "fill": {
             "07:00": {
-              "en": "get up, coffee, read the quote",
-              "pl": "pobudka, kawa, sentencja"
+              "en": "get up, coffee",
+              "pl": "pobudka, kawa"
             },
             "08:00": {
               "en": "call Tomek",
@@ -1779,8 +1779,8 @@
               "pl": "mityng"
             },
             "21:00": {
-              "en": "evening page, then rest",
-              "pl": "strona wieczorna, potem odpoczynek"
+              "en": "evening page",
+              "pl": "strona wieczorna"
             }
           },
           "note": {

@@ -18,10 +18,15 @@ export type SampleText = z.infer<typeof SampleText>;
 /** writing-area, category cells: lines separated by "\n". */
 export const WritingSample = SampleText;
 
-/** numbered-list: entries per item, entries under the sub-lines, ticked items (0-based). */
+/**
+ * numbered-list: entries per item, entries under the sub-lines, ticked items (0-based).
+ * `subFor` names the sub-line each `sub` column belongs to (its English label), so the entries stay
+ * under the right line when a format prints fewer sub-lines; without it they go by position.
+ */
 export const ListSample = z.object({
   items: z.array(SampleText).optional(),
   sub: z.array(z.array(SampleText)).optional(),
+  subFor: z.array(z.string()).optional(),
   done: z.array(z.number().int()).optional(),
 });
 

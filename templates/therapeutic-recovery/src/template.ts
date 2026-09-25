@@ -395,7 +395,7 @@ const dayLeft = a5(
               { height: fr(1) },
             ),
           ],
-          { height: mmH(34), label: L('Morning', 'Poranek') },
+          { height: mmH(27), label: L('Morning', 'Poranek') },
         ),
         stack(
           [

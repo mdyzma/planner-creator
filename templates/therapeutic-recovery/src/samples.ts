@@ -181,10 +181,8 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       note: L('count from your sobriety date', 'licz od daty trzeźwości'),
     },
     commitment: {
-      fill: L(
-        'going to the 18:00 meeting and calling\nmy sponsor before work.',
-        'pójście na mityng o 18:00 i telefon\ndo sponsora przed pracą.',
-      ),
+      // One line: the A5 page has room for only one.
+      fill: L('the 18:00 meeting and a call to my sponsor', 'mityng o 18:00 i telefon do sponsora'),
       note: L('one concrete action for today', 'jedno konkretne działanie na dziś'),
       noteAt: 'bottom-right',
     },
@@ -204,8 +202,10 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
             L('two blocks before lunch', 'dwa bloki przed obiadem'),
             L('ask for more time', 'poprosić o czas'),
           ],
-          [L('after dinner', 'po kolacji'), L('walk round the block', 'chociaż dookoła bloku')],
+          // No answer for the last line: the note sits there.
+          [L('after dinner', 'po kolacji')],
         ],
+        subFor: ['How:', 'If it gets hard:'],
         done: [0, 2],
       },
       note: L(
@@ -217,13 +217,13 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     },
     schedule: {
       fill: {
-        '07:00': L('get up, coffee, read the quote', 'pobudka, kawa, sentencja'),
+        '07:00': L('get up, coffee', 'pobudka, kawa'),
         '08:00': L('call Tomek', 'telefon do Tomka'),
         '09:00': L('work: report', 'praca: raport'),
         '13:00': L('lunch with Ola', 'obiad z Olą'),
         '17:00': L('leave work', 'wyjście z pracy'),
         '18:00': L('meeting', 'mityng'),
-        '21:00': L('evening page, then rest', 'strona wieczorna, potem odpoczynek'),
+        '21:00': L('evening page', 'strona wieczorna'),
       },
       note: L('fixed points only', 'tylko stałe punkty'),
     },

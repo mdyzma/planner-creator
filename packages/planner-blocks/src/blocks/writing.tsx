@@ -212,7 +212,14 @@ export const numberedListBlock = defineBlock({
                     style={{ flex: 1, marginLeft: mm(6) }}
                   >
                     <span style={TYPE.caption}>{resolveText(ctx, label)}</span>
-                    <Hand size={handSize * 0.85}>{handText(ctx, sample?.sub?.[i]?.[s])}</Hand>
+                    <Hand size={handSize * 0.85}>
+                      {handText(
+                        ctx,
+                        sample?.sub?.[i]?.[
+                          sample.subFor ? sample.subFor.indexOf(label.en ?? '') : s
+                        ],
+                      )}
+                    </Hand>
                   </WriteLine>
                 ))}
               </li>

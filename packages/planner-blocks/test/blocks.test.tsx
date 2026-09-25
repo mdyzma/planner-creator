@@ -272,6 +272,18 @@ describe('example handwriting (guide and example exports)', () => {
     expect(text(list)).toContain('spacer');
   });
 
+  it('keeps sub-line entries under their own line when a format prints fewer sub-lines', () => {
+    const fill = {
+      items: ['mityng'],
+      sub: [['wyjść 17:15', 'poprosić Tomka']],
+      subFor: ['How:', 'If it gets hard:'],
+    };
+    const hard = { en: 'If it gets hard:', pl: 'Gdy będzie trudno:' };
+    const html = render('numbered-list', { count: 1, subLines: [hard] }, withSample({ fill }));
+    expect(text(html)).toContain('Gdy będzie trudno: poprosić Tomka');
+    expect(text(html)).not.toContain('wyjść 17:15');
+  });
+
   it('fills the printed blanks of a text', () => {
     const html = render(
       'day-header',
