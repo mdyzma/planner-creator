@@ -1,6 +1,6 @@
 import { addDays, formatDate, weekdayName, weekdayNames } from '@planner/i18n';
 import type { BlockRenderContext } from '@planner/renderer';
-import { PAPER, mm, resolveText } from '@planner/renderer';
+import { PAPER, inkColor, mm, resolveText } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import type { CSSProperties } from 'react';
 import { z } from 'zod';
@@ -21,13 +21,24 @@ const mondayIndex = (iso: string) => {
 const CalendarProps = z.object({
   /** Weekday columns shown, [from, to) with 0 = Monday: [0, 4] and [4, 7] split a spread. */
   columns: z.tuple([z.number().int().min(0).max(6), z.number().int().min(1).max(7)]),
-  rows: z.union([z.literal(5), z.literal(6), z.literal('auto')]),
+  // The designer's select stores '5' / '6' as text.
+  rows: z.union([
+    z.literal(5),
+    z.literal(6),
+    z.literal('auto'),
+    z.enum(['5', '6']).transform((v) => Number(v) as 5 | 6),
+  ]),
   showWeekdays: z.boolean(),
+  /** Days of the neighbouring months: greyed numbers in shaded cells, or left empty. */
+  otherMonthDays: z.enum(['none', 'previous', 'previous-and-next']),
 });
+
+/** Shading of cells that belong to another month: faint enough to write over. */
+const OTHER_MONTH_FILL = inkColor(0.07);
 
 /**
  * Month grid, Monday first (§7). Split across a spread by giving each page a column range. Days
- * of other months stay empty; days outside the planner show a light number.
+ * of neighbouring months are greyed (or left empty); days outside the planner show a light number.
  */
 export const calendarGridBlock = defineBlock({
   type: 'calendar-grid',
@@ -35,8 +46,26 @@ export const calendarGridBlock = defineBlock({
   label: L('Month calendar', 'Kalendarz miesiąca'),
   category: 'calendar',
   propsSchema: CalendarProps,
-  defaults: { columns: [0, 7], rows: 'auto', showWeekdays: true },
+  defaults: {
+    columns: [0, 7],
+    rows: 'auto',
+    showWeekdays: true,
+    otherMonthDays: 'previous-and-next',
+  },
   inspector: [
+    {
+      key: 'otherMonthDays',
+      kind: 'select',
+      label: L('Days of other months', 'Dni innych miesięcy'),
+      options: [
+        {
+          value: 'previous-and-next',
+          label: L('Previous and next month, greyed', 'Poprzedni i następny, wyszarzone'),
+        },
+        { value: 'previous', label: L('Previous month only', 'Tylko poprzedni miesiąc') },
+        { value: 'none', label: L('Empty', 'Puste') },
+      ],
+    },
     {
       key: 'rows',
       kind: 'select',
@@ -98,8 +127,22 @@ export const calendarGridBlock = defineBlock({
             Array.from({ length: to - from }, (_, c) => {
               const iso = gridStart ? addDays(gridStart, r * 7 + from + c) : undefined;
               const inMonth = iso && month && iso.startsWith(month);
+              const other =
+                iso && month && !inMonth
+                  ? props.otherMonthDays === 'previous-and-next' ||
+                    (props.otherMonthDays === 'previous' && iso < month)
+                  : false;
               return (
-                <div key={`${r}-${c}`} style={cell}>
+                <div
+                  key={`${r}-${c}`}
+                  data-other-month={other || undefined}
+                  style={other ? { ...cell, background: OTHER_MONTH_FILL } : cell}
+                >
+                  {other && (
+                    <span style={{ ...TYPE.caption, fontWeight: 400, color: PAPER.rule }}>
+                      {Number(iso!.slice(8))}
+                    </span>
+                  )}
                   {inMonth && (
                     <span
                       style={{

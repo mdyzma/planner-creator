@@ -118,7 +118,7 @@ describe('calendar blocks', () => {
   });
 
   it('lays out October 2026 Monday-first in five weeks', () => {
-    const html = render('calendar-grid', {}, october);
+    const html = render('calendar-grid', { otherMonthDays: 'none' }, october);
     expect(html).toContain('grid-template-rows:repeat(5, 1fr)');
     const days = [...html.matchAll(/>(\d{1,2})<\/span>/g)].map((m) => Number(m[1]));
     expect(days).toEqual(Array.from({ length: 31 }, (_, i) => i + 1));
@@ -126,8 +126,9 @@ describe('calendar blocks', () => {
   });
 
   it('splits the month across a spread: Mon–Thu on the left, Fri–Sun on the right', () => {
-    const left = render('calendar-grid', { columns: [0, 4] }, october);
-    const right = render('calendar-grid', { columns: [4, 7] }, october);
+    const none = { otherMonthDays: 'none' };
+    const left = render('calendar-grid', { columns: [0, 4], ...none }, october);
+    const right = render('calendar-grid', { columns: [4, 7], ...none }, october);
     expect(left).toContain('grid-template-columns:repeat(4, 1fr)');
     expect(right).toContain('grid-template-columns:repeat(3, 1fr)');
     const days = (html: string) =>
@@ -135,6 +136,27 @@ describe('calendar blocks', () => {
     expect(days(left)[0]).toBe(1); // Thursday 1 October is in the left half
     expect(days(right)[0]).toBe(2); // Friday 2 October starts the right half
     expect([...days(left), ...days(right)].sort((a, b) => a - b)).toHaveLength(31);
+  });
+
+  it('greys the days of the neighbouring months by default, or only the previous month', () => {
+    const greyed = (html: string) =>
+      [...html.matchAll(/data-other-month="true"[^>]*><span[^>]*>(\d{1,2})<\/span>/g)].map((m) =>
+        Number(m[1]),
+      );
+    // October 2026 starts on a Thursday: 28–30 September lead in; November fills the last week.
+    expect(greyed(render('calendar-grid', {}, october))).toEqual([28, 29, 30, 1]);
+    expect(greyed(render('calendar-grid', { otherMonthDays: 'previous' }, october))).toEqual([
+      28, 29, 30,
+    ]);
+    expect(render('calendar-grid', { otherMonthDays: 'none' }, october)).not.toContain(
+      'data-other-month',
+    );
+  });
+
+  it('accepts the week count as chosen in the designer', () => {
+    expect(render('calendar-grid', { rows: '6' }, october)).toContain(
+      'grid-template-rows:repeat(6, 1fr)',
+    );
   });
 
   it('uses six weeks when a month needs them', () => {
