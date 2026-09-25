@@ -182,14 +182,6 @@ const safetyRules: PageTemplate = {
       },
       { height: fr(1) },
     ),
-    caption(
-      'emergency',
-      L(
-        'If you are in danger or thinking about harming yourself, call your local emergency number or go to the nearest emergency department.',
-        'Jeśli grozi Ci niebezpieczeństwo lub myślisz o zrobieniu sobie krzywdy, zadzwoń pod lokalny numer alarmowy albo zgłoś się na najbliższy szpitalny oddział ratunkowy.',
-      ),
-      12,
-    ),
   ]),
 };
 

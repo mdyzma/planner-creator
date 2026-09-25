@@ -536,25 +536,6 @@
                 }
               }
             }
-          },
-          {
-            "kind": "block",
-            "block": {
-              "id": "emergency",
-              "type": "text",
-              "props": {
-                "text": {
-                  "en": "If you are in danger or thinking about harming yourself, call your local emergency number or go to the nearest emergency department.",
-                  "pl": "Jeśli grozi Ci niebezpieczeństwo lub myślisz o zrobieniu sobie krzywdy, zadzwoń pod lokalny numer alarmowy albo zgłoś się na najbliższy szpitalny oddział ratunkowy."
-                },
-                "variant": "caption"
-              },
-              "size": {
-                "height": {
-                  "mm": 12
-                }
-              }
-            }
           }
         ]
       },
