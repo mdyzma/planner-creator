@@ -7,8 +7,8 @@
     "pl": "Dzień po Dniu"
   },
   "description": {
-    "en": "A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT-B check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
-    "pl": "Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT-B i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom."
+    "en": "A six-month recovery planner: daily two-page spreads with a 24-hour commitment, priorities, HALT check and evening reflection; weekly and monthly spreads; Wheel of Life; and a crisis and relapse-prevention section.",
+    "pl": "Sześciomiesięczny planer zdrowienia: dwustronicowe rozkładówki dnia z zobowiązaniem na 24 godziny, priorytetami, skalą HALT i wieczorną refleksją; rozkładówki tygodni i miesięcy; Koło Życia oraz sekcja kryzysowa i zapobiegania nawrotom."
   },
   "supportedFormats": [
     "A4",
@@ -255,8 +255,8 @@
               "props": {
                 "variant": "body",
                 "text": {
-                  "en": "Each day has two facing pages. In the morning, use the left page: your 24-hour commitment, up to three priorities and a plan for the day. During the day, check HALT-B: are you hungry, angry, lonely, tired or bored? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
-                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: zobowiązanie na 24 godziny, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj HALT-B: czy jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna}, {g:zmęczony|zmęczona} lub {g:znudzony|znudzona}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
+                  "en": "Each day has two facing pages. In the morning, use the left page: your 24-hour commitment, up to three priorities and a plan for the day. During the day, check {{haltName}}: are you {{haltFeelings}}? In the evening, use the right page to look back: what threatened your sobriety, what you felt, and what you are grateful for.\n\nEach week opens with a spread for the week’s focus and goals, which sit near the outer edge of the page. Each month opens with a calendar and your intentions, and ends with the Wheel of Life and a short review.\n\nThe crisis section at the back holds your warning signs, your balance of gains and losses, your support network and your SOS plan. Fill it in early, and keep it within reach.\n\nWrite by hand. There are no wrong answers, and nothing here is a test.",
+                  "pl": "Każdy dzień zajmuje dwie strony. Rano skorzystaj z lewej strony: zobowiązanie na 24 godziny, najwyżej trzy priorytety i plan dnia. W ciągu dnia sprawdzaj {{haltName}}: czy jesteś {{haltFeelings}}? Wieczorem na prawej stronie spójrz wstecz: co zagroziło Twojej trzeźwości, co {g:czułeś|czułaś} i za co jesteś {g:wdzięczny|wdzięczna}.\n\nKażdy tydzień zaczyna się rozkładówką z myślą przewodnią i celami tygodnia, umieszczonymi przy zewnętrznej krawędzi strony. Każdy miesiąc otwiera kalendarz i Twoje intencje, a zamyka Koło Życia i krótkie podsumowanie.\n\nSekcja kryzysowa na końcu zawiera Twoje sygnały ostrzegawcze, bilans zysków i strat, sieć wsparcia oraz plan SOS. Wypełnij ją wcześnie i trzymaj pod ręką.\n\nPisz odręcznie. Nie ma złych odpowiedzi i nic tu nie jest sprawdzianem."
                 }
               },
               "size": {
@@ -1593,9 +1593,10 @@
               "type": "rating-matrix",
               "props": {
                 "title": {
-                  "en": "HALT-B check (1 = not at all, 5 = very)",
-                  "pl": "Skala HALT-B (1 = wcale, 5 = bardzo)"
+                  "en": "{{haltName}} check (1 = not at all, 5 = very)",
+                  "pl": "Skala {{haltName}} (1 = wcale, 5 = bardzo)"
                 },
+                "variant": "halt-b",
                 "rows": [
                   {
                     "badge": "H",
@@ -1676,8 +1677,8 @@
         ]
       },
       "guide": {
-        "en": "The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, check HALT-B: how hungry, angry, lonely, tired and bored you are, from 1 to 5; a 4 or 5 is a signal to act now.",
-        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa sprawdź HALT-B: jak bardzo jesteś {g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna}, {g:zmęczony|zmęczona} i {g:znudzony|znudzona}, w skali 1–5; 4 lub 5 to sygnał, by działać od razu."
+        "en": "The morning page. Write your sobriety day number and read the quote. Make a 24-hour commitment: one concrete action. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.",
+        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zapisz zobowiązanie na 24 godziny: jedno konkretne działanie. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu."
       },
       "sampleContent": {
         "date": {

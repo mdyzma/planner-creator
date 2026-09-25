@@ -1,4 +1,4 @@
-import type { LocalizedText } from '@planner/schema';
+import type { LayoutNode, Locale, LocalizedText } from '@planner/schema';
 
 const L = (en: string, pl: string) => ({ en, pl });
 
@@ -26,6 +26,67 @@ export const HALT_B_ROWS = [
   { badge: 'B', label: L('Bored / without purpose', 'Nuda / brak celu') },
 ];
 
+export type HaltVariant = 'halt' | 'halt-b';
+
+/**
+ * The HALT checks a rating table can be set to: its rows, its name, and the feelings it asks
+ * about, for text such as "check {{haltName}}: are you {{haltFeelings}}?".
+ */
+export const HALT_VARIANTS: Record<
+  HaltVariant,
+  { name: string; rows: typeof HALT_B_ROWS; feelings: LocalizedText }
+> = {
+  halt: {
+    name: 'HALT',
+    rows: HALT_ROWS,
+    feelings: L(
+      'hungry, angry, lonely or tired',
+      '{g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna} lub {g:zmęczony|zmęczona}',
+    ),
+  },
+  'halt-b': {
+    name: 'HALT-B',
+    rows: HALT_B_ROWS,
+    feelings: L(
+      'hungry, angry, lonely, tired or bored',
+      '{g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna}, {g:zmęczony|zmęczona} lub {g:znudzony|znudzona}',
+    ),
+  },
+};
+
+export const isHaltVariant = (v: unknown): v is HaltVariant =>
+  typeof v === 'string' && v in HALT_VARIANTS;
+
+/**
+ * `{{haltName}}` and `{{haltFeelings}}` for a planner: taken from the first rating table set to a
+ * HALT variant in its page templates, so the instructions match the printed rows. Empty when the
+ * planner has none (the variables then print as a line to write on).
+ */
+export function haltVariables(
+  pageTemplates: Record<string, { body: LayoutNode }>,
+  locale: Locale,
+): Record<string, string> {
+  const find = (node: LayoutNode): HaltVariant | undefined => {
+    if (node.kind === 'block') {
+      const variant = (node.block.props as { variant?: unknown } | undefined)?.variant;
+      return node.block.type === 'rating-matrix' && isHaltVariant(variant) ? variant : undefined;
+    }
+    for (const child of node.children) {
+      const found = find(child);
+      if (found) return found;
+    }
+    return undefined;
+  };
+  for (const page of Object.values(pageTemplates)) {
+    const variant = find(page.body);
+    if (variant) {
+      const { name, feelings } = HALT_VARIANTS[variant];
+      return { haltName: name, haltFeelings: feelings[locale] ?? feelings.en ?? '' };
+    }
+  }
+  return {};
+}
+
 export const SOS_STEPS = [
   L('Stop and recognise what is happening.', 'Zatrzymaj się i nazwij, co się dzieje.'),
   L('Do not stay alone with the craving.', 'Nie zostawaj w samotności z głodem.'),
@@ -47,6 +108,7 @@ export const BUILT_IN_PRESETS: BlockPreset[] = [
     type: 'rating-matrix',
     props: {
       title: L('HALT check', 'Skala HALT'),
+      variant: 'halt',
       rows: HALT_ROWS,
       mode: 'scale-1-5',
       noteColumn: true,
@@ -59,6 +121,7 @@ export const BUILT_IN_PRESETS: BlockPreset[] = [
     type: 'rating-matrix',
     props: {
       title: L('HALT-B check', 'Skala HALT-B'),
+      variant: 'halt-b',
       rows: HALT_B_ROWS,
       mode: 'scale-1-5',
       noteColumn: true,

@@ -3,7 +3,14 @@ import { emptyRenderContext } from '@planner/renderer';
 import type { BlockInstance, ContentItem } from '@planner/schema';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { BUILT_IN_BLOCKS, BUILT_IN_PRESETS, HALT_ROWS, createDefaultRegistry } from '../src';
+import {
+  BUILT_IN_BLOCKS,
+  BUILT_IN_PRESETS,
+  HALT_B_ROWS,
+  HALT_ROWS,
+  createDefaultRegistry,
+  haltVariables,
+} from '../src';
 
 const registry = createDefaultRegistry();
 const ctx = (overrides: Partial<BlockRenderContext> = {}): BlockRenderContext => ({
@@ -254,6 +261,34 @@ describe('example handwriting (guide and example exports)', () => {
     expect(text(html)).toContain('Mityng pomógł. Jutro spacer.');
     expect(text(html)).toContain('→ wolne miejsce');
     expect(html).toContain('--planner-hand');
+  });
+
+  it('prints the rows and name of the chosen HALT variant', () => {
+    const title = { pl: 'Skala {{haltName}}' };
+    const b = text(render('rating-matrix', { variant: 'halt-b', title }));
+    expect(b).toContain('Skala HALT-B');
+    expect(b).toContain('Nuda / brak celu');
+    const classic = text(render('rating-matrix', { variant: 'halt', title, rows: HALT_B_ROWS }));
+    expect(classic).toContain('Skala HALT ');
+    expect(classic).not.toContain('Nuda');
+    expect(text(render('rating-matrix', { rows: HALT_ROWS }))).toContain('Zmęczenie');
+  });
+
+  it('names the HALT variant of a planner for its instructions', () => {
+    const page = (variant: string) => ({
+      body: {
+        kind: 'block' as const,
+        block: { id: 'h', type: 'rating-matrix', props: { variant } },
+      },
+    });
+    expect(haltVariables({ a: page('halt') }, 'pl')).toEqual({
+      haltName: 'HALT',
+      haltFeelings: '{g:głodny|głodna}, {g:zły|zła}, {g:samotny|samotna} lub {g:zmęczony|zmęczona}',
+    });
+    expect(haltVariables({ a: page('halt-b') }, 'en').haltFeelings).toBe(
+      'hungry, angry, lonely, tired or bored',
+    );
+    expect(haltVariables({ a: page('custom') }, 'en')).toEqual({});
   });
 
   it('rings the chosen HALT values and fills list items', () => {

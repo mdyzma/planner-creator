@@ -14,6 +14,7 @@ import {
   handText,
   sampleFill,
 } from '../primitives';
+import { HALT_VARIANTS } from '../presets';
 import { RatingSample, TimeSample } from '../samples';
 import { defineBlock } from '../registry';
 
@@ -28,6 +29,8 @@ const RatingProps = z.object({
   mode: z.enum(['checkbox', 'scale-1-5', 'scale-0-10']),
   noteColumn: z.boolean(),
   noteLabel: LocalizedText.optional(),
+  /** A HALT check prints that check's rows (and fills `{{haltName}}` in the title); custom prints `rows`. */
+  variant: z.enum(['custom', 'halt', 'halt-b']),
 });
 
 const SCALES = {
@@ -46,8 +49,23 @@ export const ratingMatrixBlock = defineBlock({
   label: L('Rating table', 'Tabela ocen'),
   category: 'tracking',
   propsSchema: RatingProps,
-  defaults: { rows: [{ label: L('Item', 'Pozycja') }], mode: 'scale-1-5', noteColumn: false },
+  defaults: {
+    rows: [{ label: L('Item', 'Pozycja') }],
+    mode: 'scale-1-5',
+    noteColumn: false,
+    variant: 'custom',
+  },
   inspector: [
+    {
+      key: 'variant',
+      kind: 'select',
+      label: L('Variant', 'Wariant'),
+      options: [
+        { value: 'halt-b', label: L('HALT-B (with boredom)', 'HALT-B (z nudą)') },
+        { value: 'halt', label: L('HALT (classic)', 'HALT (klasyczny)') },
+        { value: 'custom', label: L('Custom rows', 'Własne wiersze') },
+      ],
+    },
     { key: 'title', kind: 'localized-text', label: L('Title', 'Tytuł') },
     {
       key: 'mode',
@@ -66,11 +84,14 @@ export const ratingMatrixBlock = defineBlock({
     const sample = sampleFill(ctx, block.id, RatingSample);
     const ring = (show: boolean) => (show ? <HandRing size={circle + 1.8} /> : null);
     const circle = props.mode === 'scale-0-10' ? 3.1 : 3.6;
+    const halt = props.variant === 'custom' ? undefined : HALT_VARIANTS[props.variant];
+    const rows = halt?.rows ?? props.rows;
+    const titleCtx = halt ? { ...ctx, vars: { ...ctx.vars, haltName: halt.name } } : ctx;
     return (
       <div style={column}>
-        <BlockTitle>{resolveText(ctx, props.title)}</BlockTitle>
+        <BlockTitle>{resolveText(titleCtx, props.title)}</BlockTitle>
         <div style={{ ...column, gap: mm(0.5) }}>
-          {props.rows.map((row, i) => (
+          {rows.map((row, i) => (
             <div
               key={i}
               style={{
@@ -78,7 +99,7 @@ export const ratingMatrixBlock = defineBlock({
                 display: 'flex',
                 alignItems: 'center',
                 gap: mm(2),
-                borderBottom: i < props.rows.length - 1 ? RULE_LIGHT : undefined,
+                borderBottom: i < rows.length - 1 ? RULE_LIGHT : undefined,
               }}
             >
               {row.badge && (

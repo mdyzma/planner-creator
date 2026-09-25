@@ -1,4 +1,4 @@
-import { createDefaultRegistry } from '@planner/blocks';
+import { createDefaultRegistry, haltVariables } from '@planner/blocks';
 import type { PageFrame, PatchWarning, PhysicalPage } from '@planner/core';
 import type { PageLabel } from '@planner/core';
 import {
@@ -44,6 +44,7 @@ export function layoutProject(input: PlannerProject) {
     padTo: padToForProfile(project.print.profile),
   });
   const labels = pageLabels(pages, project.document.root, templates);
+  const haltVars = haltVariables(templates, project.locale);
 
   const items = new Map<string, ContentItem>();
   for (const library of project.content) for (const item of library.items) items.set(item.id, item);
@@ -85,7 +86,10 @@ export function layoutProject(input: PlannerProject) {
 
   const rendered: RenderedPage[] = pages.map((page, i) => {
     const instance = page.instance;
-    const vars = pageVariables(project, instance?.context ?? {}, project.locale);
+    const vars = {
+      ...haltVars,
+      ...pageVariables(project, instance?.context ?? {}, project.locale),
+    };
     const resolved = resolveFor(page, vars);
     const template = resolved?.template;
     const assignments = instance?.contentAssignments ?? {};

@@ -249,6 +249,8 @@ const BUILT_IN_VARIABLES = [
   'weekNumber',
   'weekRange',
   'sobrietyDayNumber',
+  'haltName',
+  'haltFeelings',
 ];
 
 function VariablesTab() {
