@@ -474,8 +474,8 @@ const agreement: PageTemplate = {
           'Przez najbliższy okres chcę bardziej dbać o:',
         ),
       ),
-      prompt('more', L('I want to do more often:', 'Chcę częściej:')),
-      prompt('less', L('I want to do less often:', 'Chcę rzadziej:')),
+      prompt('more', L('More often, I want to:', 'Chcę częściej:')),
+      prompt('less', L('Less often, I want to:', 'Chcę rzadziej:')),
       prompt('learn', L('I want to learn:', 'Chcę nauczyć się:')),
       prompt(
         'remember',
@@ -1223,7 +1223,7 @@ const TRIGGERS = [
   L('success / euphoria', 'sukces / euforia'),
   L('money', 'pieniądze'),
   L('a social situation', 'sytuacja towarzyska'),
-  L('a thought of drinking', 'myśl o piciu / użyciu'),
+  L('a thought of drinking / using', 'myśl o piciu / użyciu'),
   L('other:', 'inne:'),
 ];
 
@@ -1633,7 +1633,7 @@ const weekReview = a5(
                   'text',
                   {
                     text: L(
-                      'Most often (circle): morning · day · afternoon · evening · night',
+                      'Most often (circle): morning · midday · afternoon · evening · night',
                       'Najczęstsza pora (zakreśl): rano · dzień · popołudnie · wieczór · noc',
                     ),
                     variant: 'caption',
@@ -1828,7 +1828,7 @@ const wheel = a5(
       caption(
         'how',
         L(
-          'Colour each area from the centre (1) out to how satisfied you feel (10).',
+          'Colour each area from the centre out to how satisfied you are, from 1 to 10.',
           'Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10).',
         ),
       ),
@@ -2068,7 +2068,7 @@ const warningLeft: PageTemplate = {
   name: L('Warning signs (left)', 'Sygnały ostrzegawcze (lewa)'),
   spread: { group: 'warning-signs', position: 'left' },
   rationale: L(
-    'Relapse starts long before the first drink or use. Four areas help the patient notice it early.',
+    'Relapse starts long before the first drink or use. Four areas help you notice it early.',
     'Nawrót zaczyna się długo przed sięgnięciem po substancję. Cztery obszary pomagają zauważyć go wcześnie.',
   ),
   body: stack([
@@ -2102,9 +2102,9 @@ const warningLeft: PageTemplate = {
           {
             title: L('Thoughts', 'Myśli'),
             examples: [
-              E('“One time will not hurt.”', '„Jeden raz nie zaszkodzi.”'),
-              E('“I can control it now.”', '„Teraz już nad tym panuję.”'),
-              E('“I do not need meetings anymore.”', '„Nie potrzebuję już mityngów.”'),
+              E('“Just one won’t hurt.”', '„Jeden raz nie zaszkodzi.”'),
+              E('“I’ve got it under control now.”', '„Teraz już nad tym panuję.”'),
+              E('“I don’t need meetings any more.”', '„Nie potrzebuję już mityngów.”'),
               E('“I deserve it.”', '„Należy mi się.”'),
             ],
           },
@@ -2146,7 +2146,7 @@ const warningRight: PageTemplate = {
               E('lying', 'kłamstwa'),
               E('abandoning routines', 'porzucanie codziennych rutyn'),
               E('irritability', 'drażliwość'),
-              E('romanticising using', 'idealizowanie picia / używania'),
+              E('romanticising drinking / using', 'idealizowanie picia / używania'),
             ],
           },
         ],
@@ -2174,7 +2174,7 @@ const gainsLosses: PageTemplate = {
   id: 'gains-losses',
   name: L('Gains and losses', 'Bilans zysków i strat'),
   rationale: L(
-    'Headings can be changed for programmes that use a different model; acknowledging what the substance gave helps find healthier replacements.',
+    'Headings can be changed for programmes that use a different model; acknowledging what the substance gave helps to find healthier replacements.',
     'Nagłówki można zmienić dla programów opartych na innym modelu; uznanie, co dawała substancja, pomaga znaleźć zdrowsze zamienniki.',
   ),
   body: stack([
@@ -2371,7 +2371,7 @@ const cravingThresholds: PageTemplate = {
   id: 'craving-thresholds',
   name: L('How I respond to craving', 'Jak reaguję na głód'),
   rationale: L(
-    'A personal alarm threshold: the stronger the craving, the less is decided alone. Written in a calm moment, used in a hard one.',
+    'A personal alarm threshold: the stronger the craving, the fewer decisions are made alone. Written in a calm moment, used in a hard one.',
     'Osobisty próg alarmowy: im silniejszy głód, tym mniej decyzji podejmuję sam. Pisany w spokojnej chwili, używany w trudnej.',
   ),
   body: stack(
@@ -2527,7 +2527,7 @@ const relapseChain: PageTemplate = {
   id: 'relapse-chain',
   name: L('My relapse chain', 'Mój łańcuch nawrotu'),
   rationale: L(
-    'Relapse usually starts long before using, as a chain of small changes. Knowing one’s own chain shows the earliest place to break it.',
+    'Relapse usually starts long before using, as a chain of small changes. Knowing your own chain shows the earliest place to break it.',
     'Nawrót zwykle zaczyna się długo przed użyciem, jako łańcuch drobnych zmian. Znajomość własnego łańcucha pokazuje, gdzie najwcześniej go przerwać.',
   ),
   body: stack(

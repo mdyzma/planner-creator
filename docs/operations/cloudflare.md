@@ -54,6 +54,9 @@ Mondays 05:17 UTC       → drift.yml:  the same pages rendered by Browser Run a
 
 ## Domain (when chosen)
 
+Step by step for a subdomain of a domain you already own (`planner.example.com`), including
+self-hosting on Proxmox behind a Cloudflare Tunnel: [deploy-subdomain.md](deploy-subdomain.md).
+
 1. **Buy** it in Cloudflare: Domain Registration → Register Domains (at-cost pricing; `.pl` is not
    sold there, so a `.pl` domain is bought elsewhere and added as a site with Cloudflare DNS).
 2. **Attach** it to the Worker: in `apps/worker/wrangler.jsonc` uncomment `routes` and set the name:

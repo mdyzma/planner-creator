@@ -1,6 +1,6 @@
 # Roadmap
 
-Where "Dzień po Dniu" stands after v0.6.0, measured against the two content reviews,
+Where "Dzień po Dniu" stands after v0.7.0, measured against the two content reviews,
 [improvement-session-1.md](improvement-session-1.md) (S1) and
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
 content specification), and what comes next. Releases bundle several steps; a tag and release
@@ -58,9 +58,9 @@ Loose ends:
 2. **Production deployment on Cloudflare:** needs `CLOUDFLARE_API_TOKEN`,
    `CLOUDFLARE_ACCOUNT_ID` and `PRODUCTION_URL` (see
    [operations/cloudflare.md](operations/cloudflare.md)); then the first deploy and smoke test.
-3. **Before 1.0:** a real print test of one month (calibration sheet, duplex, ring binder), a
-   proofreading pass of the English texts, and ideally a review of the recovery content by a
-   therapist.
+3. **Before 1.0:** ideally a review of the recovery content by a therapist (requested, awaiting
+   a response). Done (2026-09-26): a real print test of one month (it works well) and a
+   proofreading pass of the English texts (planner, quotes and interface).
 
 ### Optional, any time
 

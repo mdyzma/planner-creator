@@ -45,7 +45,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     care: { fill: L('sleep and time with my son', 'sen i czas z synem') },
     more: { fill: L('walk and call people', 'spacerować i dzwonić do ludzi') },
     less: { fill: L('scroll in the evening', 'scrollować wieczorem') },
-    learn: { fill: L('to say no calmly', 'spokojnie mówić „nie”') },
+    learn: { fill: L('how to say no calmly', 'spokojnie mówić „nie”') },
     remember: {
       fill: L('a bad day is not a bad life', 'zły dzień to nie złe życie'),
       note: L('your own words', 'własnymi słowami'),
@@ -540,7 +540,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
   notes: {
     notes: {
       fill: L(
-        'To read: "12 Steps and 12 Traditions"\nAsk the doctor about sleep.',
+        'To read: "Twelve Steps and Twelve Traditions"\nAsk the doctor about sleep.',
         'Przeczytać: „12 Kroków i 12 Tradycji”\nZapytać lekarza o sen.',
       ),
       note: L('anything that does not fit elsewhere', 'wszystko, co nie pasuje gdzie indziej'),
@@ -597,7 +597,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         ['dr Lis', '600 900 100', L('surgery hours', 'godziny przychodni')],
         [L('Ola', 'Ola'), '600 200 300'],
       ],
-      note: L('fake numbers: write your own', 'numery przykładowe: wpisz swoje'),
+      note: L('sample numbers: write your own', 'numery przykładowe: wpisz swoje'),
     },
     isolate: { fill: L('Tomek, even with a text message', 'Tomek, choćby SMS-em') },
   },
@@ -613,7 +613,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         ['Anna', '600 300 400'],
         [L('sister Kasia', 'siostra Kasia'), '600 700 800'],
       ],
-      note: L('fake numbers: write your own', 'numery przykładowe: wpisz swoje'),
+      note: L('sample numbers: write your own', 'numery przykładowe: wpisz swoje'),
     },
     change: { fill: { done: [0, 2, 4] } },
     places: {
@@ -1000,7 +1000,7 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Dwie kolumny o codzienności: czego chcesz więcej, a czego mniej. Przykłady pod nagłówkiem są tylko podpowiedzią; wpisz własne. Wracaj do tej strony, gdy ustalasz cele miesiąca i tygodnia.',
   ),
   values: L(
-    'Tick at most ten values that matter to you, then choose the five most important. The last question makes them concrete: how would you see in daily life that you live by them?',
+    'Tick at most ten values that matter to you, then choose the five most important. The last question makes them concrete: how would you know, day to day, that you live by them?',
     'Zaznacz najwyżej dziesięć wartości, które są dla Ciebie ważne, potem wybierz pięć najważniejszych. Ostatnie pytanie czyni je konkretnymi: po czym w codziennym życiu widać, że nimi żyjesz?',
   ),
   strengths: L(
@@ -1096,7 +1096,7 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Twój plan na trudny moment, na początku sekcji kryzysowej, żeby łatwo go znaleźć. Krok 1: zatrzymaj się i zaznacz, co się dzieje, potem zrób pauzę SOBER. Krok 2: trzy osoby, do których możesz zadzwonić. Krok 3: zaznacz, jak możesz zmienić sytuację. Wypełnij go w spokojny dzień.',
   ),
   'craving-thresholds': L(
-    'Your personal alarm threshold: what you do on your own at 0–3, whom you contact at 4–6, and when you do not decide or stay alone (7–10). The last line is for the moment you start bargaining with yourself.',
+    'Your personal alarm threshold: what you do on your own at 0–3, whom you contact at 4–6, and how, from 7 up, you avoid deciding or staying alone. The last line is for the moment you start bargaining with yourself.',
     'Twój osobisty próg alarmowy: co robisz {g:sam|sama} przy 0–3, z kim się kontaktujesz przy 4–6 i kiedy nie decydujesz ani nie zostajesz {g:sam|sama} (7–10). Ostatnia linia jest na chwilę, gdy zaczynasz negocjować ze sobą.',
   ),
   'emergency-list': L(

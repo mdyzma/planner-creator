@@ -111,7 +111,7 @@
   },
   "Print": {
     "back": "← Export",
-    "instructions": "{pages, plural, one {# page} other {# pages}} · {format}. In the print dialog choose <b>Actual size / 100 %</b>, no margins, and turn headers and footers off.",
+    "instructions": "{pages, plural, one {# page} other {# pages}} · {format}. In the print dialog choose <b>Actual size / 100%</b>, no margins, and turn headers and footers off.",
     "print": "Print / Save as PDF"
   },
   "Translations": {
@@ -452,7 +452,7 @@
     "missingTranslations": "{count, plural, one {# text is} other {# texts are}} not translated into the planner language yet.",
     "fixTranslations": "Translate",
     "personal": "Your personal details (such as your name) are printed where the planner uses them.",
-    "actualSize": "In the print dialog choose “Actual size” / 100 % and no scaling, or the margins and holes will not line up.",
+    "actualSize": "In the print dialog choose “Actual size” / 100% and no scaling, or the margins and holes will not line up.",
     "instructions": {
       "home-duplex": "Print on both sides, flipping on the long edge.",
       "home-manual-duplex": "Print file 1 (fronts). Put the printed stack back in the tray as the calibration sheet shows, then print file 2 (backs).",
@@ -464,7 +464,7 @@
     "calibrationDownload": "Download calibration sheet",
     "calibration": {
       "title": "Printer calibration",
-      "rulers": "Each ruler must measure exactly 100 mm. If not, turn off “Fit to page” and print at 100 %.",
+      "rulers": "Each ruler must measure exactly 100 mm. If not, turn off “Fit to page” and print at 100%.",
       "front": "Print this sheet on both sides. Hold it against the light: the crosses on the front and back should meet. A few millimetres off is normal; the binding margin allows for it.",
       "back": "Back side. The crosses should meet the ones on the front. If this side is upside down, choose the other flip edge in the print dialog."
     },

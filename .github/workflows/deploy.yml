@@ -71,13 +71,14 @@ jobs:
           echo "Deployed to $url" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Smoke test
-        if: steps.creds.outputs.ready == 'true' && steps.deploy.outputs.url != ''
+        if: steps.creds.outputs.ready == 'true' && (vars.PRODUCTION_URL != '' || steps.deploy.outputs.url != '')
         env:
-          URL: ${{ steps.deploy.outputs.url }}
+          # The real address once set (e.g. the custom domain), else the workers.dev one.
+          URL: ${{ vars.PRODUCTION_URL || steps.deploy.outputs.url }}
         run: |
           ok=false
           for attempt in 1 2 3 4 5; do
-            if curl -fsSL "$URL/en" | grep -q "Planner Designer"; then ok=true; break; fi
+            if curl -fsSL "$URL/en" | grep -q "<title>YAPCO"; then ok=true; break; fi
             sleep 5
           done
           [ "$ok" = true ] || { echo "::error::The site did not respond as expected"; exit 1; }
