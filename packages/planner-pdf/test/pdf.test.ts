@@ -3,7 +3,9 @@ import { PDFDocument, PDFName } from 'pdf-lib';
 import { describe, expect, it } from 'vitest';
 import {
   PT_PER_MM,
+  SIGNATURE_SHEETS,
   assemble,
+  booklet,
   calibrationPdf,
   cutAndStack,
   manualDuplex,
@@ -31,6 +33,60 @@ describe('cut-and-stack imposition', () => {
         expect(order).toEqual(Array.from({ length: n }, (_, i) => i + 1));
         expect(sheets).toHaveLength(Math.ceil(n / 4));
       }),
+    );
+  });
+});
+
+describe('booklet signatures', () => {
+  it('lays out a 16-page signature on 4 nested sheets', () => {
+    expect(booklet(16, 4).map(({ front, back }) => [front, back])).toEqual([
+      [
+        { left: 16, right: 1 },
+        { left: 2, right: 15 },
+      ],
+      [
+        { left: 14, right: 3 },
+        { left: 4, right: 13 },
+      ],
+      [
+        { left: 12, right: 5 },
+        { left: 6, right: 11 },
+      ],
+      [
+        { left: 10, right: 7 },
+        { left: 8, right: 9 },
+      ],
+    ]);
+  });
+
+  it('reads in order when each signature is folded and the signatures are stacked', () => {
+    fc.assert(
+      fc.property(
+        fc.integer({ min: 1, max: 600 }),
+        fc.constantFrom(...SIGNATURE_SHEETS),
+        (n, perSignature) => {
+          const sheets = booklet(n, perSignature);
+          const signatures = [...new Set(sheets.map((s) => s.signature))];
+          const order = signatures.flatMap((sig) => {
+            // Folded, the sheets nest: the first half of the pages runs down the front-right and
+            // back-left halves from the outside in, the second half back out on the other halves.
+            const nest = sheets.filter((s) => s.signature === sig);
+            return [
+              ...nest.flatMap((s) => [s.front.right, s.back.left]),
+              ...[...nest].reverse().flatMap((s) => [s.back.right, s.front.left]),
+            ];
+          });
+          expect(order.filter((p) => p !== null)).toEqual(
+            Array.from({ length: n }, (_, i) => i + 1),
+          );
+          expect(sheets).toHaveLength(Math.ceil(n / 4));
+          expect(
+            signatures.every(
+              (sig) => sheets.filter((s) => s.signature === sig).length <= perSignature,
+            ),
+          ).toBe(true);
+        },
+      ),
     );
   });
 });

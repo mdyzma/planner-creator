@@ -439,6 +439,10 @@
       "home-a5-native": {
         "name": "A5 paper",
         "hint": "For a printer with an A5 tray, both sides."
+      },
+      "home-booklet": {
+        "name": "A5 booklet on A4 paper",
+        "hint": "Folded bundles (signatures) of A4 sheets, two A5 pages on each side, to sew or staple. Pages come out in order when folded."
       }
     },
     "reverseBacks": "Backs in reverse order (most printers; check with the calibration sheet)",
@@ -453,7 +457,8 @@
       "home-duplex": "Print on both sides, flipping on the long edge.",
       "home-manual-duplex": "Print file 1 (fronts). Put the printed stack back in the tray as the calibration sheet shows, then print file 2 (backs).",
       "home-a5-2up": "Print on both sides, flipping on the short edge. Cut each stack of sheets down the middle (the marks at the top and bottom), then put the right-hand pile under the left-hand pile.",
-      "home-a5-native": "Print on both sides, flipping on the long edge."
+      "home-a5-native": "Print on both sides, flipping on the long edge.",
+      "home-booklet": "Print on both sides, flipping on the short edge. Take the sheets of each bundle together (the file lists them in order), fold them in half along the marks, and stack the bundles in order."
     },
     "calibrationHint": "Print the calibration sheet first: both rulers must be exactly 100 mm, and the crosses on the two sides should meet when you hold the sheet against the light.",
     "calibrationDownload": "Download calibration sheet",
@@ -493,7 +498,9 @@
     "samples": "Example filling",
     "samplesHint": "Grey handwritten example entries and short notes on every page, to show someone how to use the planner. Leave this off for the planner you will write in.",
     "exampleSuffix": "example",
-    "guideLink": "Guide with explanations (A4, printable)"
+    "guideLink": "Guide with explanations (A4, printable)",
+    "signatureSheets": "Sheets per bundle",
+    "signatureOption": "{sheets, plural, one {# sheet} other {# sheets}} = {pages} pages"
   },
   "Privacy": {
     "title": "Privacy",

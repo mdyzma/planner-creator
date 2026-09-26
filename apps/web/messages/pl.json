@@ -439,6 +439,10 @@
       "home-a5-native": {
         "name": "Papier A5",
         "hint": "Dla drukarki z podajnikiem A5, obustronnie."
+      },
+      "home-booklet": {
+        "name": "Broszura A5 z papieru A4",
+        "hint": "Składki z kartek A4, po dwie strony A5 na każdej stronie kartki, do zszycia lub spięcia. Po złożeniu strony są po kolei."
       }
     },
     "reverseBacks": "Tyły w odwrotnej kolejności (większość drukarek; sprawdź arkuszem kalibracyjnym)",
@@ -453,7 +457,8 @@
       "home-duplex": "Drukuj dwustronnie, z obracaniem wzdłuż dłuższej krawędzi.",
       "home-manual-duplex": "Wydrukuj plik 1 (przody). Włóż zadrukowany stos z powrotem tak, jak pokazuje arkusz kalibracyjny, i wydrukuj plik 2 (tyły).",
       "home-a5-2up": "Drukuj dwustronnie, z obracaniem wzdłuż krótszej krawędzi. Przetnij stos kartek na pół (znaczniki u góry i u dołu), a potem połóż prawy stos pod lewym.",
-      "home-a5-native": "Drukuj dwustronnie, z obracaniem wzdłuż dłuższej krawędzi."
+      "home-a5-native": "Drukuj dwustronnie, z obracaniem wzdłuż dłuższej krawędzi.",
+      "home-booklet": "Drukuj dwustronnie, z obracaniem wzdłuż krótszej krawędzi. Weź razem kartki jednej składki (w pliku są po kolei), złóż je na pół wzdłuż znaczników i ułóż składki po kolei."
     },
     "calibrationHint": "Najpierw wydrukuj arkusz kalibracyjny: obie linijki muszą mieć dokładnie 100 mm, a krzyżyki po obu stronach powinny się pokrywać pod światło.",
     "calibrationDownload": "Pobierz arkusz kalibracyjny",
@@ -493,7 +498,9 @@
     "samples": "Przykład wypełnienia",
     "samplesHint": "Szare, odręczne przykładowe wpisy i krótkie notatki na każdej stronie, żeby pokazać komuś, jak korzystać z planera. Wyłącz dla planera, w którym będziesz pisać.",
     "exampleSuffix": "przyklad",
-    "guideLink": "Przewodnik z objaśnieniami (A4, do druku)"
+    "guideLink": "Przewodnik z objaśnieniami (A4, do druku)",
+    "signatureSheets": "Kartek w składce",
+    "signatureOption": "{sheets, plural, one {# kartka} few {# kartki} many {# kartek} other {# kartki}} = {pages} stron"
   },
   "Privacy": {
     "title": "Prywatność",

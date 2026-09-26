@@ -12,7 +12,7 @@ const USAGE = `Exports a planner (a JSON file saved from the app) to PDF.
 
 Options:
   --out <file.pdf>      output file (default: next to the JSON)
-  --profile <profile>   home-duplex | home-manual-duplex | home-a5-2up | home-a5-native | print-shop
+  --profile <profile>   home-duplex | home-manual-duplex | home-a5-2up | home-booklet | home-a5-native | print-shop
                         (default: the planner's print setting)
   --section <keys>      print only these sections, comma-separated, e.g. month:2026-11,month:2026-12
   --example             an example planner: grey handwritten examples and notes

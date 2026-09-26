@@ -2,7 +2,7 @@ import type { PageLabel } from '@planner/core';
 import type { PrintProfile } from '@planner/schema';
 import type { PDFPage } from 'pdf-lib';
 import { Duplex, PDFDocument, PDFName, PDFString, PrintScaling, grayscale } from 'pdf-lib';
-import { cutAndStack, manualDuplex } from './impose';
+import { booklet, cutAndStack, manualDuplex } from './impose';
 
 /** Points per millimetre (PDF user space is 1/72 inch). */
 export const PT_PER_MM = 72 / 25.4;
@@ -24,6 +24,8 @@ export interface AssembleOptions {
   bleedMm?: number;
   /** Manual duplex: print the backs in reverse order (most home printers). */
   reverseBacks?: boolean;
+  /** Booklet: sheets folded together into one signature (default 4, i.e. 16 pages). */
+  signatureSheets?: number;
   /**
    * Printed label of each page (i, ii, 1, 2, S1…), written as the PDF's page labels so viewers
    * list pages by their printed numbers. Used for files in reading order only.
@@ -170,10 +172,52 @@ async function twoUp(source: PDFDocument): Promise<PDFDocument> {
 }
 
 /**
+ * Folded booklet signatures (A5 pages on A4 landscape sheets, see `booklet`), with a short fold
+ * mark at the top and bottom of the centre line on both sides.
+ */
+async function bookletSheets(
+  source: PDFDocument,
+  sheetsPerSignature: number,
+): Promise<PDFDocument> {
+  const out = await PDFDocument.create();
+  const embedded = await out.embedPages(source.getPages());
+  const { width: W, height: H } = A4_LANDSCAPE;
+  const half = W / 2;
+  const place = (sheet: PDFPage, n: number | null, x0: number) => {
+    if (n === null) return;
+    const page = embedded[n - 1]!;
+    sheet.drawPage(page, {
+      x: x0 + (half - page.width) / 2,
+      y: (H - page.height) / 2,
+      width: page.width,
+      height: page.height,
+    });
+  };
+  const foldMark = (sheet: PDFPage) => {
+    const len = 4 * PT_PER_MM;
+    const style = { thickness: 0.4, color: grayscale(0.5), dashArray: [2, 2] };
+    sheet.drawLine({ start: { x: half, y: 0 }, end: { x: half, y: len }, ...style });
+    sheet.drawLine({ start: { x: half, y: H }, end: { x: half, y: H - len }, ...style });
+  };
+  for (const { front, back } of booklet(source.getPageCount(), sheetsPerSignature)) {
+    const f = out.addPage([W, H]);
+    place(f, front.left, 0);
+    place(f, front.right, half);
+    foldMark(f);
+    const b = out.addPage([W, H]);
+    place(b, back.left, 0);
+    place(b, back.right, half);
+    foldMark(b);
+  }
+  return out;
+}
+
+/**
  * Turns the rendered pages (reading order) into the files to print for a print profile:
  * - `home-duplex`, `home-a5-native`, `print-shop`: one file in reading order, long-edge duplex;
  * - `home-manual-duplex`: a fronts file and a backs file;
- * - `home-a5-2up`: A4 landscape sheets, cut-and-stack, short-edge duplex.
+ * - `home-a5-2up`: A4 landscape sheets, cut-and-stack, short-edge duplex;
+ * - `home-booklet`: A4 landscape sheets in folded signatures, short-edge duplex.
  */
 export async function assemble(
   source: PDFDocument,
@@ -210,6 +254,13 @@ export async function assemble(
     case 'home-a5-2up':
       return [await save(await twoUp(source), '', Duplex.DuplexFlipShortEdge, options.title)];
     case 'home-booklet':
-      throw new Error('Booklet printing is not available yet.');
+      return [
+        await save(
+          await bookletSheets(source, options.signatureSheets ?? 4),
+          '',
+          Duplex.DuplexFlipShortEdge,
+          options.title,
+        ),
+      ];
   }
 }

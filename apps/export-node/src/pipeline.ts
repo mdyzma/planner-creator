@@ -9,6 +9,8 @@ export interface ExportOptions {
   /** Top-level sections to print, e.g. `['month:2026-11']`; all when absent. */
   sections?: string[];
   reverseBacks?: boolean;
+  /** Booklet: sheets per folded signature. */
+  signatureSheets?: number;
   /** Example planner: grey handwritten examples and notes on every page. */
   samples?: boolean;
   date?: Date;
@@ -48,6 +50,7 @@ export async function exportPlanner(
     title: project.meta.name,
     bleedMm: project.print.bleed,
     reverseBacks: options.reverseBacks,
+    signatureSheets: options.signatureSheets,
     pageLabels: plan.labels,
     date: options.date,
   });

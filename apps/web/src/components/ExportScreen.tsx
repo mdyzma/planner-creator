@@ -3,7 +3,7 @@
 import { effectiveModules, matchingPreset } from '@planner/core';
 import { scanTranslations, localize } from '@planner/i18n';
 import type { OutputFile } from '@planner/pdf';
-import { calibrationPdf, planExport } from '@planner/pdf';
+import { SIGNATURE_SHEETS, calibrationPdf, planExport } from '@planner/pdf';
 import type { Locale, PlannerProject, PrintProfile } from '@planner/schema';
 import { PAGE_FORMATS } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
@@ -27,15 +27,17 @@ import { withNumbering } from '@/lib/templates';
 import { projectToJson, templateToJson } from '@/lib/transfer';
 import { useProject } from '@/lib/useProject';
 
-/** Print profiles offered per format (§8.4). Booklet and print-shop come later. */
+/** Print profiles offered per format (§8.4). Print-shop comes later. */
 type OfferedProfile = Extract<
   PrintProfile,
-  'home-duplex' | 'home-manual-duplex' | 'home-a5-2up' | 'home-a5-native'
+  'home-duplex' | 'home-manual-duplex' | 'home-a5-2up' | 'home-a5-native' | 'home-booklet'
 >;
 const PROFILES: Record<'A4' | 'A5', OfferedProfile[]> = {
   A4: ['home-duplex', 'home-manual-duplex'],
-  A5: ['home-a5-2up', 'home-a5-native', 'home-manual-duplex'],
+  A5: ['home-a5-2up', 'home-booklet', 'home-a5-native', 'home-manual-duplex'],
 };
+/** Profiles that print two A5 pages on each side of an A4 sheet. */
+const ON_A4: readonly PrintProfile[] = ['home-a5-2up', 'home-booklet'];
 
 type Job =
   | { state: 'idle' }
@@ -82,6 +84,7 @@ function Export({
   /** Chosen top-level sections; `null` means all of them (the whole planner). */
   const [chosen, setChosen] = useState<ReadonlySet<string> | null>(null);
   const [reverseBacks, setReverseBacks] = useState(true);
+  const [signatureSheets, setSignatureSheets] = useState<number>(4);
   const [samples, setSamples] = useState(false);
   const [service, setService] = useState<'checking' | 'ready' | 'offline'>('checking');
   const [job, setJob] = useState<Job>({ state: 'idle' });
@@ -126,14 +129,14 @@ function Export({
   const ranges = plan.parts.map((p) => `${p.from + 1}-${p.to + 1}`).join(',');
   const fileLabel =
     sections && (sections.length === 1 ? sections[0] : `${sections[0]} ${sections.at(-1)}`);
-  const sheets = profile === 'home-a5-2up' ? plan.pageCount / 4 : Math.ceil(plan.pageCount / 2);
+  const sheets = ON_A4.includes(profile) ? plan.pageCount / 4 : Math.ceil(plan.pageCount / 2);
 
   const run = async () => {
     setJob({ state: 'running', done: 0, total: plan.parts.length });
     try {
       const files = await exportPdf(
         project,
-        { profile, sections, reverseBacks, samples },
+        { profile, sections, reverseBacks, signatureSheets, samples },
         (done, total) => setJob({ state: 'running', done, total }),
       );
       const stem = `${fileStem(project.meta.name, fileLabel)}${samples ? `-${t('exampleSuffix')}` : ''}`;
@@ -155,8 +158,8 @@ function Export({
   };
 
   const calibration = async () => {
-    // The paper that goes through the printer: A4 for 2-up, else the planner format.
-    const paper = profile === 'home-a5-2up' ? PAGE_FORMATS.A4 : PAGE_FORMATS[project.format];
+    // The paper that goes through the printer: A4 for 2-up and booklets, else the planner format.
+    const paper = ON_A4.includes(profile) ? PAGE_FORMATS.A4 : PAGE_FORMATS[project.format];
     const bytes = await calibrationPdf({
       width: paper.width,
       height: paper.height,
@@ -265,6 +268,22 @@ function Export({
               </label>
             ))}
           </fieldset>
+          {profile === 'home-booklet' && (
+            <label className="mt-3 flex items-center gap-2">
+              {t('signatureSheets')}
+              <select
+                className="rounded border border-line bg-surface px-2 py-1"
+                value={signatureSheets}
+                onChange={(e) => setSignatureSheets(Number(e.target.value))}
+              >
+                {SIGNATURE_SHEETS.map((n) => (
+                  <option key={n} value={n}>
+                    {t('signatureOption', { sheets: n, pages: n * 4 })}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           {profile === 'home-manual-duplex' && (
             <label className="mt-3 flex items-center gap-2">
               <input

@@ -33,3 +33,12 @@ Users bind **both A4 and A5 with rings**. Defaults become `home-duplex` (A4) and
 cut-and-stack ordering (A5 on A4 paper). A `ring` binding setting reserves a hole-punch zone (inner
 margin ≥ 18 mm for ISO 838 2-hole) and can print punch guides. Months are **sheet-aligned** (start on
 a recto, end on a verso) so they can be printed and filed one at a time. `home-booklet` is moved to later.
+
+## Amendment (2026-09-26): booklets
+`home-booklet` is built for A5 planners on A4 paper: the pages are split into **signatures** of
+1, 2, 4 (default) or 8 sheets, laid out in saddle-stitch order (in a bundle of P pages, sheet i
+carries P − 2i | 1 + 2i on the front and 2 + 2i | P − 1 − 2i on the back), with fold marks at the
+top and bottom of the centre line, short-edge duplex. Folded and stacked, the bundles read in
+order and can be sewn or stapled. The sheets per signature are an export option, like the order
+of the backs for manual duplex. Creep (inner sheets sticking out after folding) is not
+compensated; at 4–8 sheets it is well under a millimetre on normal paper.

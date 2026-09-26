@@ -53,8 +53,8 @@ Loose ends:
 
 ### v0.9.0 / 1.0 — Print and publish
 
-1. **M9:** booklet printing (A5 folded from A4) and PWA / offline. The handwriting preview is
-   dropped unless needed; the example filling covers most of it.
+1. **M9:** PWA / offline. The handwriting preview is dropped unless needed; the example filling
+   covers most of it. (Booklet printing is done, below.)
 2. **Production deployment on Cloudflare:** needs `CLOUDFLARE_API_TOKEN`,
    `CLOUDFLARE_ACCOUNT_ID` and `PRODUCTION_URL` (see
    [operations/cloudflare.md](operations/cloudflare.md)); then the first deploy and smoke test.
@@ -76,6 +76,14 @@ Loose ends:
 3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### Booklet printing (M9)
+
+Done (not tagged yet):
+
+- A5 planners print as folded booklets on A4 paper: "A5 booklet on A4 paper" in the export, with
+  1, 2, 4 or 8 sheets per bundle (signature). Pages are laid out in saddle-stitch order with fold
+  marks; folded and stacked, the bundles read in order (ADR-0006 amendment, runbook).
 
 ### v0.8.0 — Balance as a first-class edition, and quality
 

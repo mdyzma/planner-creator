@@ -49,3 +49,39 @@ export function manualDuplex(
   const backs = Array.from({ length: sheets }, (_, s) => orBlank(2 * s + 2, pageCount));
   return { fronts, backs: reverseBacks ? backs.reverse() : backs };
 }
+
+/** Sheets per signature offered for booklets: 4 pages per sheet, so 4 to 32 pages. */
+export const SIGNATURE_SHEETS = [1, 2, 4, 8] as const;
+
+/** One folded sheet of a booklet: two pages per side, like `TwoUpSheet`, plus its signature. */
+export interface BookletSheet extends TwoUpSheet {
+  /** 1-based signature (folded bundle) the sheet belongs to. */
+  signature: number;
+}
+
+/**
+ * Folded signatures (saddle-stitch order) for an A5 booklet from A4 sheets: the planner is split
+ * into bundles of `sheetsPerSignature` sheets; the sheets of a bundle are nested and folded in
+ * half, so a bundle reads in order and the bundles are stacked (and sewn or stapled) in order.
+ * The last bundle can have fewer sheets. The sheet is turned over along its short edge for duplex.
+ *
+ * In a bundle of P pages (1-based from its first page), sheet i (0 = outermost) carries
+ * P − 2i | 1 + 2i on the front and 2 + 2i | P − 1 − 2i on the back.
+ */
+export function booklet(pageCount: number, sheetsPerSignature = 4): BookletSheet[] {
+  const padded = Math.ceil(pageCount / 4) * 4;
+  const perSignature = sheetsPerSignature * 4;
+  const out: BookletSheet[] = [];
+  for (let start = 0, signature = 1; start < padded; start += perSignature, signature++) {
+    const pages = Math.min(perSignature, padded - start);
+    const at = (n: number) => orBlank(start + n, pageCount);
+    for (let i = 0; i < pages / 4; i++) {
+      out.push({
+        signature,
+        front: { left: at(pages - 2 * i), right: at(1 + 2 * i) },
+        back: { left: at(2 + 2 * i), right: at(pages - 1 - 2 * i) },
+      });
+    }
+  }
+  return out;
+}

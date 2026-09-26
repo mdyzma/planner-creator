@@ -65,6 +65,14 @@ Changes save by themselves (the designer shows "All changes saved").
 6. Punch with a standard **2-hole punch** (80 mm spacing). The binding margin keeps all content
    clear of the holes.
 
+### A5 as a folded booklet
+
+For a sewn or stapled A5 booklet instead of the ring binder: **Export** → *How you print* → **A5
+booklet on A4 paper**, and choose the *Sheets per bundle* (4 sheets = 16 pages by default).
+Print on both sides, flipping on the **short edge**. The file lists the sheets of each bundle in
+order: take each bundle's sheets together, fold them in half along the marks at the top and
+bottom, and stack the bundles in order. Then sew or staple each bundle through the fold.
+
 **First time with a printer**, print the **calibration sheet** (Export → *Download calibration
 sheet*) on both sides: both rulers must measure exactly 100 mm, and the crosses on the two sides
 should line up against the light. For by-hand two-sided printing, it also shows whether the backs

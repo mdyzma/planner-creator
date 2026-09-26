@@ -76,6 +76,22 @@ describe('PDF export in Chrome', () => {
     expect(sheets.getPageCount() % 2).toBe(0);
   });
 
+  it('prints an A5 booklet as folded A4 landscape sheets, two pages per side', async () => {
+    const project = planner('A5');
+    const month = { sections: ['month:2026-10'] };
+    const [pages] = await exportPlanner(renderer, project, { profile: 'home-a5-native', ...month });
+    const [folded] = await exportPlanner(renderer, project, {
+      profile: 'home-booklet',
+      signatureSheets: 4,
+      ...month,
+    });
+    const sheets = await PDFDocument.load(folded!.bytes);
+    expect(sizes(sheets)).toEqual(new Set(['841.89x595.28']));
+    // Two A5 pages on each side of a sheet: half as many sides as pages, rounded up to sheets.
+    const count = (await PDFDocument.load(pages!.bytes)).getPageCount();
+    expect(sheets.getPageCount()).toBe(Math.ceil(count / 4) * 2);
+  });
+
   it('prints the example planner with the handwriting font embedded', async () => {
     const project = planner('A4');
     const decode = (b: Uint8Array) => new TextDecoder('latin1').decode(b);

@@ -79,6 +79,8 @@ export interface ExportRequest {
   /** Top-level sections to print (e.g. single months for the ring binder); all when absent. */
   sections?: string[];
   reverseBacks?: boolean;
+  /** Booklet: sheets per folded signature. */
+  signatureSheets?: number;
   /** An example planner: grey handwritten examples and explanatory notes on every page. */
   samples?: boolean;
 }
@@ -118,6 +120,7 @@ export async function exportPdf(
     title: project.meta.name,
     bleedMm: bleed,
     reverseBacks: request.reverseBacks,
+    signatureSheets: request.signatureSheets,
     pageLabels: plan.labels,
   });
 }
