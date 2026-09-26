@@ -1,12 +1,12 @@
 # Roadmap
 
-Where "Dzień po Dniu" stands after v0.7.0, measured against the two content reviews,
+Where "Dzień po Dniu" stands after v0.8.0, measured against the two content reviews,
 [improvement-session-1.md](improvement-session-1.md) (S1) and
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.7.0 (content, quality, booklets and offline).
+Last updated: 2026-09-26, after v0.8.0 (online at https://planner.example.com).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -51,16 +51,15 @@ Loose ends:
 
 ## Next
 
-### v0.9.0 / 1.0 — Print and publish
+### 1.0
 
-1. **M9:** done (booklet printing and offline use, below). The handwriting preview is dropped
-   unless needed; the example filling covers most of it.
-2. **Production deployment on Cloudflare:** needs `CLOUDFLARE_API_TOKEN`,
-   `CLOUDFLARE_ACCOUNT_ID` and `PRODUCTION_URL` (see
-   [operations/cloudflare.md](operations/cloudflare.md)); then the first deploy and smoke test.
-3. **Before 1.0:** ideally a review of the recovery content by a therapist (requested, awaiting
-   a response). Done (2026-09-26): a real print test of one month (it works well) and a
-   proofreading pass of the English texts (planner, quotes and interface).
+- **Before 1.0:** ideally a review of the recovery content by a therapist (requested, awaiting
+  a response). Done (2026-09-26): a real print test of one month (it works well), a
+  proofreading pass of the English texts (planner, quotes and interface), and the production
+  deployment (v0.8.0, below).
+- The handwriting preview is dropped unless needed; the example filling covers most of it.
+- Hosting on Cloudflare Workers stays possible (route A in
+  [operations/deploy-subdomain.md](operations/deploy-subdomain.md)); the site runs self-hosted.
 
 ### Optional, any time
 
@@ -76,6 +75,22 @@ Loose ends:
 3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### v0.8.0 — Online
+
+Released 2026-09-26:
+
+- Online at https://planner.example.com: self-hosted in a Proxmox container (Caddy, the PDF
+  service with Chromium) behind a Cloudflare Tunnel. GitHub is mirrored to Gitea; Jenkins runs
+  the same checks as GitHub CI and deploys the tested commit over SSH with
+  `deploy/proxmox/install.sh` ([operations/deploy-subdomain.md](operations/deploy-subdomain.md),
+  route B).
+- A more app-like designer: one top bar on every planner screen (the YAPCO apple, the screens as
+  tabs, Export as the main button), a page bar with a "View" menu, no toolbar jumping.
+- The YAPCO apple beside the printed page numbers; the title-page line apple as the favicon and
+  app icon.
+- English proofreading; planners can be created on plain-HTTP addresses; the footer shows the
+  deployed version; no build telemetry.
 
 ### Offline use (M9)
 
