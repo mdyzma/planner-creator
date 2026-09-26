@@ -46,6 +46,7 @@ addiction, and **Balance**, in neutral everyday wording.
 | 🖨️ **Print at home** | PDF export for two-sided printers or by-hand duplex, 2-up A5 on A4, a calibration sheet, and one month at a time for a ring binder. |
 | 📖 **Show how to use it** | Example filling in grey handwriting, and a printable guide that explains every page. |
 | 🔒 **Keep it private** | Planners are stored only in the browser (IndexedDB); export them as JSON for backups. No accounts, no server database. |
+| 📴 **Works offline** | Installable as an app (PWA); after the first visit it opens and works without a connection. Only PDF creation needs the export service; printing from the browser works offline. |
 
 ## Screenshots
 

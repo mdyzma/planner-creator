@@ -53,8 +53,8 @@ Loose ends:
 
 ### v0.9.0 / 1.0 — Print and publish
 
-1. **M9:** PWA / offline. The handwriting preview is dropped unless needed; the example filling
-   covers most of it. (Booklet printing is done, below.)
+1. **M9:** done (booklet printing and offline use, below). The handwriting preview is dropped
+   unless needed; the example filling covers most of it.
 2. **Production deployment on Cloudflare:** needs `CLOUDFLARE_API_TOKEN`,
    `CLOUDFLARE_ACCOUNT_ID` and `PRODUCTION_URL` (see
    [operations/cloudflare.md](operations/cloudflare.md)); then the first deploy and smoke test.
@@ -76,6 +76,19 @@ Loose ends:
 3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### Offline use (M9)
+
+Done (not tagged yet):
+
+- The app is installable (web app manifest, icons) and works offline: a service worker, generated
+  after each build (`apps/web/scripts/build-sw.mjs`), keeps every file of the build in the
+  browser's cache and serves the app from there; each build replaces the cache as a whole.
+  Planners were already stored in the browser, so they can be created, edited and printed from
+  the browser offline. Only PDF creation needs the export service.
+- Not in development (`pnpm dev`) and not on the print route the PDF service renders.
+- An end-to-end test goes offline after one visit and opens the dashboard, the designer and the
+  guide, and creates a planner.
 
 ### Booklet printing (M9)
 

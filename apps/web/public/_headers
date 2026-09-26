@@ -10,3 +10,7 @@
 
 /_next/static/*
   Cache-Control: public, max-age=31536000, immutable
+
+# The service worker is checked on every visit, so a new build reaches the browser.
+/sw.js
+  Cache-Control: no-cache

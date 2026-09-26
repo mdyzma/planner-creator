@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Caveat, Source_Sans_3 } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import type { ReactNode } from 'react';
+import { ServiceWorker } from '@/components/ServiceWorker';
 import { routing } from '@/i18n/routing';
 import '../globals.css';
 
@@ -39,8 +40,16 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: 'Common' });
-  return { title: t('appName'), description: t('appDescription') };
+  return {
+    title: t('appName'),
+    description: t('appDescription'),
+    // Installable, and usable offline (scripts/build-sw.mjs).
+    manifest: '/manifest.webmanifest',
+    icons: { apple: '/icons/icon-192.png' },
+  };
 }
+
+export const viewport: Viewport = { themeColor: '#0f6f66' };
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
@@ -51,6 +60,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale} className={`${plannerFont.variable} ${handFont.variable}`}>
       <body className="min-h-screen antialiased">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <ServiceWorker />
       </body>
     </html>
   );

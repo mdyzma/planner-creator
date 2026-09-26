@@ -504,11 +504,11 @@
   },
   "Privacy": {
     "title": "Prywatność",
-    "updated": "Ostatnia aktualizacja: 25 września 2026",
+    "updated": "Ostatnia aktualizacja: 26 września 2026",
     "summary": "YAPCO nie ma kont, plików cookie ani analityki. Twoje planery zostają w przeglądarce; opuszczają ją tylko na chwilę, gdy tworzysz PDF.",
     "stored": {
       "title": "Co jest zapisywane i gdzie",
-      "body": "Planery, ich teksty i sentencje oraz wszystko, co w nie wpiszesz (np. imię lub daty), są zapisywane wyłącznie w tej przeglądarce, w jej lokalnej bazie danych (IndexedDB). Nie trafiają do nas i nie ma ich kopii na serwerze. Wybrany język interfejsu jest zapamiętywany w pamięci lokalnej przeglądarki."
+      "body": "Planery, ich teksty i sentencje oraz wszystko, co w nie wpiszesz (np. imię lub daty), są zapisywane wyłącznie w tej przeglądarce, w jej lokalnej bazie danych (IndexedDB). Nie trafiają do nas i nie ma ich kopii na serwerze. Wybrany język interfejsu jest zapamiętywany w pamięci lokalnej przeglądarki. Żeby strona działała także bez internetu, przeglądarka przechowuje kopię plików samej strony (jej stron i kodu, żadnych Twoich planerów) w pamięci podręcznej."
     },
     "tracking": {
       "title": "Bez śledzenia",

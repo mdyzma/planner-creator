@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "next build && node scripts/flatten-segments.mjs",
+    "build": "next build && node scripts/flatten-segments.mjs && node scripts/build-sw.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
