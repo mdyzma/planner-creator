@@ -14,7 +14,7 @@ import {
   spacerBlock,
 } from './blocks/therapeutic';
 import { ratingMatrixBlock, timeGridBlock } from './blocks/tracking';
-import { numberedListBlock, writingAreaBlock } from './blocks/writing';
+import { numberedListBlock, tableBlock, writingAreaBlock } from './blocks/writing';
 import { createBlockRegistry } from './registry';
 
 export * from './registry';
@@ -28,6 +28,7 @@ export const BUILT_IN_BLOCKS = [
   quoteBlock,
   writingAreaBlock,
   numberedListBlock,
+  tableBlock,
   ratingMatrixBlock,
   timeGridBlock,
   calendarGridBlock,

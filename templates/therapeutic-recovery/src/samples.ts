@@ -152,15 +152,16 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         ],
         done: [2],
       },
-      note: L('3–4 goals are enough; tick them off', '3–4 cele wystarczą; odhaczaj je'),
+      note: L('tick them off as you go', 'odhaczaj je na bieżąco'),
     },
+    'how-live': {
+      fill: L('Calmly, one day at a time.', 'Spokojnie, dzień po dniu.'),
+      note: L('a few words are enough', 'wystarczy kilka słów'),
+    },
+    'not-perfect': { fill: L('tidying the flat', 'sprzątanie mieszkania') },
   },
   'month-open-right': {
     calendar: { fill: CALENDAR },
-    focus: {
-      fill: L('Evenings without a screen, early nights', 'Wieczory bez ekranu, wcześnie spać'),
-      note: L('the area of recovery to work on', 'obszar zdrowienia do pracy'),
-    },
     remember: {
       fill: L(
         'It is fine to ask for help.\nTired + alone = call someone.',
@@ -174,11 +175,19 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       ),
       note: L('recurring and one-off', 'stałe i jednorazowe'),
     },
-    habits: {
-      fill: L(
-        'walk 20 min every day\n30 days sober on the 5th',
-        'spacer 20 min codziennie\n5-go: 30 dni trzeźwości',
-      ),
+    value: {
+      fill: L('honesty', 'uczciwość'),
+    },
+    practice: {
+      fill: [
+        [L('walk every day', 'codzienny spacer')],
+        [L('Sunday dinner with my sister', 'niedzielny obiad z siostrą')],
+        [L('one free evening a week', 'jeden wolny wieczór w tygodniu')],
+        [L('finish the online course', 'skończyć kurs online')],
+        [L('a concert with Ola', 'koncert z Olą')],
+        [L('12 meetings, step 3', '12 mityngów, 3. krok')],
+      ],
+      note: L('one small thing per area', 'jedna mała rzecz na obszar'),
     },
   },
   'week-left': {
@@ -188,7 +197,9 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         'W piątek wypłata: zaplanuj wieczór.\nW niedzielę zadzwoń do Tomka.',
       ),
       note: L('what could catch you off guard this week?', 'co może Cię zaskoczyć w tym tygodniu?'),
+      noteAt: 'bottom-right',
     },
+    intention: { fill: L('Calmer evenings.', 'Spokojniejsze wieczory.') },
     mon: {
       fill: { markers: ['therapy'], text: L('therapy 17:00', 'terapia 17:00') },
       note: L('circle what happened that day', 'zakreśl, co się wydarzyło'),
@@ -237,6 +248,11 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
       ),
     },
     watch: { fill: L('Fri: payday\nSat: a birthday', 'pt.: wypłata\nsob.: urodziny') },
+    experiment: {
+      fill: L('a walk after work lowers my tension', 'spacer po pracy zmniejsza napięcie'),
+      note: L('a small test, not a resolution', 'mały test, nie postanowienie'),
+      noteAt: 'bottom-right',
+    },
   },
   // Lines in the two columns are short: examples stay brief so nothing is cut off.
   'week-review': {
@@ -281,6 +297,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         'Trudny tydzień, który przeszedłem, prosząc o pomoc.',
       ),
     },
+    experiment: { fill: L('yes: calmer on 4 of 5 days', 'tak: spokojniej 4 z 5 dni') },
     // A5, the quick version
     'numbers-a5': { fill: ['6', '4', '7', '2'] },
     'halt-quick': { fill: L('A and T', 'A i T') },
@@ -439,7 +456,7 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
   },
   'wheel-of-life': {
     wheel: {
-      fill: [6, 5, 8, 4, 5, 7, 6, 3],
+      fill: [6, 5, 4, 7, 5, 6, 3, 8],
       note: L('shade each area up to its score', 'zamaluj każdy obszar do swojej oceny'),
     },
     notice: {
@@ -448,23 +465,70 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
         'Trzeźwość mocna; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu.',
       ),
     },
+    improvement: {
+      fill: L('Sleep: most nights before 23:00.', 'Sen: większość nocy przed 23:00.'),
+    },
   },
   'monthly-review': {
-    'prompt-1': {
-      fill: L('Meetings and walks with Tomek.', 'Mityngi i spacery z Tomkiem.'),
-      note: L('a few words per question are enough', 'kilka słów na pytanie wystarczy'),
+    // Mood, tension, strongest craving, days with support, per week.
+    weeks: {
+      fill: [
+        ['6', '5', '7', '5'],
+        ['5', '6', '8', '4'],
+        ['6', '4', '6', '6'],
+        ['7', '4', '5', '6'],
+      ],
+      note: L('copied from "My week"', 'przepisane z „Mojego tygodnia”'),
+      noteAt: 'bottom-right',
     },
-    'prompt-2': {
-      fill: L('Paydays and tiredness after work.', 'Dni wypłaty i zmęczenie po pracy.'),
+    helped: { fill: L('Meetings and walks with Tomek.', 'Mityngi i spacery z Tomkiem.') },
+    hardest: { fill: L('Paydays and tiredness after work.', 'Dni wypłaty i zmęczenie po pracy.') },
+    trigger: { fill: L('conflict at work', 'konflikt w pracy') },
+    strategy: {
+      fill: L('calling Tomek before reacting', 'telefon do Tomka, zanim zareaguję'),
     },
-    'prompt-3': { fill: L('Skipping dinner, irritability.', 'Pomijanie kolacji, drażliwość.') },
-    'prompt-4': {
+    learned: {
       fill: L('I need a plan for Friday evenings.', 'Potrzebuję planu na piątkowe wieczory.'),
     },
-    'prompt-5': {
-      fill: L('Evening walks, the Thursday group.', 'Wieczorne spacery, czwartkowa grupa.'),
+  },
+  'month-patterns': {
+    // Evening, weekend.
+    'when-hard': {
+      fill: { done: [3, 5] },
+      note: L('tick all that apply', 'zaznacz wszystkie'),
+      noteAt: 'bottom-right',
     },
-    'prompt-6': { fill: L('Sleep and my relationship with Ola.', 'Sen i relacja z Olą.') },
+    // Anger, tiredness, stress.
+    states: { fill: { done: [1, 3, 5] } },
+    warning: { fill: L('Skipping dinner, irritability.', 'Pomijanie kolacji, drażliwość.') },
+    'helped-most': {
+      fill: {
+        items: [
+          L('calling Tomek', 'telefon do Tomka'),
+          L('evening walks', 'wieczorne spacery'),
+          L('the Thursday group', 'czwartkowa grupa'),
+        ],
+      },
+    },
+    insight: {
+      fill: L(
+        'Evenings after work are my hard time: I plan them ahead.',
+        'Wieczory po pracy to mój trudny czas: planuję je z wyprzedzeniem.',
+      ),
+    },
+  },
+  'month-next': {
+    continue: {
+      fill: L('Evening walks and the Thursday group.', 'Wieczorne spacery i czwartkowa grupa.'),
+      note: L('a few words are enough', 'wystarczy kilka słów'),
+    },
+    limit: { fill: L('The phone after 22:00.', 'Telefon po 22:00.') },
+    try: { fill: L('Swimming once a week.', 'Basen raz w tygodniu.') },
+    attention: { fill: L('Sleep and my relationship with Ola.', 'Sen i relacja z Olą.') },
+    'next-word': {
+      fill: L('Calm', 'Spokój'),
+      note: L('it opens next month', 'otworzy kolejny miesiąc'),
+    },
   },
   notes: {
     notes: {
@@ -667,15 +731,11 @@ export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
         ],
         done: [2],
       },
-      note: L('3–4 goals are enough; tick them off', '3–4 cele wystarczą; odhaczaj je'),
+      note: L('tick them off as you go', 'odhaczaj je na bieżąco'),
     },
   },
   'month-open-right': {
     calendar: { fill: CALENDAR_NEUTRAL },
-    focus: {
-      fill: L('Evenings without a screen, early nights', 'Wieczory bez ekranu, wcześnie spać'),
-      note: L('one area to work on this month', 'jeden obszar do pracy w tym miesiącu'),
-    },
     appointments: {
       fill: L(
         'Tue 17:00 pool\nThu 18:30 book club\n12th doctor 9:30',
@@ -683,11 +743,15 @@ export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
       ),
       note: L('recurring and one-off', 'stałe i jednorazowe'),
     },
-    habits: {
-      fill: L(
-        'walk 20 min every day\nphone away after 22:00',
-        'spacer 20 min codziennie\ntelefon odłożony po 22:00',
-      ),
+    practice: {
+      fill: [
+        [L('walk every day', 'codzienny spacer')],
+        [L('Sunday dinner with my sister', 'niedzielny obiad z siostrą')],
+        [L('one free evening a week', 'jeden wolny wieczór w tygodniu')],
+        [L('finish the online course', 'skończyć kurs online')],
+        [L('a concert with Ola', 'koncert z Olą')],
+      ],
+      note: L('one small thing per area', 'jedna mała rzecz na obszar'),
     },
   },
   'week-left': {
@@ -855,15 +919,35 @@ export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
     },
   },
   'monthly-review': {
-    'prompt-1': {
-      fill: L('Swimming and walks with Tomek.', 'Basen i spacery z Tomkiem.'),
-      note: L('a few words per question are enough', 'kilka słów na pytanie wystarczy'),
+    // Mood, tension, days with exercise, days with rest, per week.
+    weeks: {
+      fill: [
+        ['6', '5', '3', '2'],
+        ['5', '6', '2', '3'],
+        ['6', '4', '3', '3'],
+        ['7', '4', '4', '4'],
+      ],
+      note: L('copied from "My week"', 'przepisane z „Mojego tygodnia”'),
+      noteAt: 'bottom-right',
     },
-    'prompt-5': {
-      fill: L(
-        'Evening walks, the Thursday book club.',
-        'Wieczorne spacery, czwartkowy klub książki.',
-      ),
+    helped: { fill: L('Swimming and walks with Tomek.', 'Basen i spacery z Tomkiem.') },
+    trigger: { fill: L('work before deadlines', 'praca przed terminami') },
+  },
+  'month-patterns': {
+    'helped-most': {
+      fill: {
+        items: [
+          L('calling Tomek', 'telefon do Tomka'),
+          L('evening walks', 'wieczorne spacery'),
+          L('the Thursday book club', 'czwartkowy klub książki'),
+        ],
+      },
+    },
+  },
+  'month-next': {
+    continue: {
+      fill: L('Evening walks and the book club.', 'Wieczorne spacery i klub książki.'),
+      note: L('a few words are enough', 'wystarczy kilka słów'),
     },
   },
   notes: {
@@ -923,20 +1007,20 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Każdy miesiąc zaczyna się stroną przekładki. Wpisz jedno słowo, które chcesz nieść przez cały miesiąc.',
   ),
   'month-open-left': L(
-    'The monthly spread. Put fixed appointments into the calendar first (therapy, meetings, the doctor). Then write the main intention and three or four goals; tick them off as you go.',
-    'Rozkładówka miesiąca. Najpierw wpisz do kalendarza stałe terminy (terapia, mityngi, lekarz). Potem główną intencję i trzy–cztery cele; odhaczaj je na bieżąco.',
+    'The monthly spread. Put fixed appointments into the calendar first. Then decide how you want to live this month, your main intention and the three things that really matter; tick them off as you go. The last line gives you permission: what you do not have to do perfectly.',
+    'Rozkładówka miesiąca. Najpierw wpisz do kalendarza stałe terminy. Potem zdecyduj, jak chcesz przeżyć ten miesiąc, jaka jest Twoja główna intencja i trzy rzeczy naprawdę ważne; odhaczaj je na bieżąco. Ostatnia linia daje przyzwolenie: czego nie musisz robić idealnie.',
   ),
   'month-open-right': L(
-    'The right-hand page continues the calendar (Friday to Sunday) and holds your recovery focus, what you want to remember, regular meetings and visits, and habits or milestones such as 30 days sober.',
-    'Prawa strona kontynuuje kalendarz (piątek–niedziela) i mieści fokus zdrowienia, to, o czym chcesz pamiętać, stałe mityngi i wizyty oraz nawyki i kamienie milowe, np. 30 dni trzeźwości.',
+    'At the top, one value from "What really matters to me" to practise this month. The calendar continues (Friday to Sunday). "My month in practice" asks for one small thing for each area of life, and in the Recovery Edition for your recovery. Below: what you want to remember, and regular meetings and appointments.',
+    'Na górze jedna wartość z „Co jest dla mnie naprawdę ważne?”, którą chcesz praktykować w tym miesiącu. Kalendarz ciągnie się dalej (piątek–niedziela). „Mój miesiąc w praktyce” prosi o jedną małą rzecz dla każdego obszaru życia, a w Recovery Edition także dla zdrowienia. Poniżej: o czym chcesz pamiętać oraz stałe mityngi i wizyty.',
   ),
   'week-left': L(
-    'The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.',
-    'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka.',
+    'The weekly spread, filled in on Sunday or Monday. Write one intention for the week and what could catch you off guard, put the three most important things in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.',
+    'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Wpisz jedną intencję na tydzień i to, co może Cię zaskoczyć, trzy najważniejsze rzeczy umieść w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka.',
   ),
   'week-right': L(
-    'Thursday to Sunday and the marker legend. The outer column is for the week ahead: copy your if–then plan from last week\'s "My week", and note the days or situations to watch out for.',
-    'Czwartek–niedziela i legenda znaczników. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać.',
+    'Thursday to Sunday and the marker legend. Below the days, a small experiment: one thing you will test this week, such as "15 minutes of walking after work lowers my tension"; "My week" asks what it showed. The outer column is for the week ahead: copy your if–then plan from last week\'s "My week", and note the days or situations to watch out for.',
+    'Czwartek–niedziela i legenda znaczników. Pod dniami mały eksperyment: jedna rzecz, którą sprawdzisz w tym tygodniu, np. „15 minut spaceru po pracy zmniejsza moje napięcie”; „Mój tydzień” zapyta, co pokazał. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać.',
   ),
   'week-review': L(
     'The end of the week, in two or three minutes. Look back over your evening pages and add up: average mood and tension, the strongest craving, and on how many days you had support, exercise or a meeting. Tick which HALT feelings were most often high, the triggers that came up and what protected you most. Then three wins (not only "I did not drink"), one pattern you notice, what to keep and change, and an if–then plan to copy into next week.',
@@ -955,12 +1039,20 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Strona opcjonalna na koniec każdego tygodnia (włącz ją w Strukturze). Weź jedną sytuację z tygodnia: najpierw myśl, która zwiększała ryzyko, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem.',
   ),
   'wheel-of-life': L(
-    'At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below.',
-    'Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz.',
+    'At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below, and where there was even a small improvement.',
+    'Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz i gdzie nastąpiła nawet mała poprawa.',
   ),
   'monthly-review': L(
-    'Six questions for looking back at the month, ideally before the next session with your therapist. A few honest words per question are enough.',
-    'Sześć pytań na podsumowanie miesiąca, najlepiej przed kolejną sesją z terapeutą. Wystarczy kilka szczerych słów na pytanie.',
+    'The month rolled up from the weekly reviews. Copy the numbers from each "My week" into the table, so the month can be read at a glance. Then name what helped most, what was hardest, the most common trigger, the most effective strategy and what you learned about yourself; ideally before the next session with your therapist.',
+    'Miesiąc zebrany z tygodniowych podsumowań. Przepisz do tabeli liczby z każdego „Mojego tygodnia”, żeby miesiąc był widoczny na pierwszy rzut oka. Potem nazwij, co najbardziej pomogło, co było najtrudniejsze, najczęstszy wyzwalacz, najskuteczniejszą strategię i czego {g:dowiedziałeś|dowiedziałaś} się o sobie; najlepiej przed kolejną sesją z terapeutą.',
+  ),
+  'month-patterns': L(
+    'Patterns across the month: tick when it was hard most often and which states came before the risk rose, name the warning signs you noticed and what helped most often. The last question turns it into a plan.',
+    'Wzorce z całego miesiąca: zaznacz, kiedy najczęściej było trudno i jakie stany poprzedzały wzrost ryzyka, nazwij sygnały ostrzegawcze, które {g:zauważyłeś|zauważyłaś}, i to, co najczęściej pomagało. Ostatnie pytanie zamienia to w plan.',
+  ),
+  'month-next': L(
+    "Looking ahead: what to continue, cut down on and try, and what needs more attention. Finish with one word for next month, and carry it to the next month's divider page.",
+    'Co dalej: co kontynuować, co ograniczyć, czego spróbować i co wymaga więcej uwagi. Na koniec jedno słowo na kolejny miesiąc; przenieś je na przekładkę następnego miesiąca.',
   ),
   notes: L(
     'Dot-grid pages at the end of each month for anything else: notes from meetings, books, questions for the doctor.',

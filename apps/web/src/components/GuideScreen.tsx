@@ -46,7 +46,10 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
       ['week-review', 'situation'],
     ],
   },
-  { key: 'monthEnd', pages: [['wheel-of-life'], ['monthly-review'], ['notes']] },
+  {
+    key: 'monthEnd',
+    pages: [['wheel-of-life'], ['monthly-review'], ['month-patterns'], ['month-next'], ['notes']],
+  },
   {
     key: 'crisis',
     pages: [

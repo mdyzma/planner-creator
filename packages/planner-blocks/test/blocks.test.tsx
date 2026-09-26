@@ -72,6 +72,27 @@ describe('text and quote', () => {
     expect(text(html)).toBe('Nastrój 6 /10 Napięcie 4 /10 o godz. 17:30');
   });
 
+  it('draws a table with headings, row labels and example values per cell', () => {
+    const rows = [
+      { en: '1', pl: '1' },
+      { en: '2', pl: '2' },
+    ];
+    const columns = [
+      { en: 'Mood', pl: 'Nastrój' },
+      { en: 'Tension', pl: 'Napięcie' },
+    ];
+    const html = render(
+      'table',
+      { rows, columns, rowHeader: { en: 'Week', pl: 'Tydzień' }, ruling: 'grid' },
+      ctx({ sample: () => ({ fill: [['6', '4'], ['5']] }) }),
+    );
+    expect(html).toContain('grid-template-columns:max-content repeat(2, 1fr)');
+    expect(text(html)).toBe('Tydzień Nastrój Napięcie 1 6 4 2 5');
+    // Without columns: labelled writing lines and no heading row.
+    const lines = render('table', { rows, columns: [], ruling: 'lines' });
+    expect(lines).toContain('grid-template-rows:repeat(2, 1fr)');
+  });
+
   it('fills variables, leaving a writing line when unset', () => {
     const t = { en: 'Day {{sobrietyDayNumber}}', pl: 'Dzień {{sobrietyDayNumber}}' };
     expect(text(render('text', { text: t }, ctx({ vars: { sobrietyDayNumber: '12' } })))).toBe(

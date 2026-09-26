@@ -2165,18 +2165,37 @@
           {
             "kind": "block",
             "block": {
-              "id": "intention",
+              "id": "how-live",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "Main intention",
-                  "pl": "Główna intencja"
+                  "en": "How do I want to live this month?",
+                  "pl": "Jak chcę przeżyć ten miesiąc?"
                 },
                 "pattern": "lines"
               },
               "size": {
                 "height": {
-                  "mm": 26
+                  "mm": 18
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "intention",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My main intention",
+                  "pl": "Moja główna intencja"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 18
                 }
               }
             }
@@ -2188,11 +2207,30 @@
               "type": "numbered-list",
               "props": {
                 "title": {
-                  "en": "Main goals this month (3–4)",
-                  "pl": "Główne cele miesiąca (3–4)"
+                  "en": "3 things that really matter",
+                  "pl": "3 rzeczy, które są naprawdę ważne"
                 },
-                "count": 4,
+                "count": 3,
                 "marker": "checkbox"
+              },
+              "size": {
+                "height": {
+                  "mm": 34
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "not-perfect",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What I don't have to do perfectly",
+                  "pl": "Tego nie muszę robić idealnie"
+                },
+                "pattern": "lines"
               },
               "size": {
                 "height": {
@@ -2216,14 +2254,28 @@
             "op": "add",
             "path": "/body/children/2/block/size/height",
             "value": {
-              "mm": 20
+              "mm": 14
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/3/block/size/height",
+            "value": {
+              "mm": 14
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/4/block/size/height",
+            "value": {
+              "mm": 28
             }
           }
         ]
       },
       "guide": {
-        "en": "The monthly spread. Put fixed appointments into the calendar first (therapy, meetings, the doctor). Then write the main intention and three or four goals; tick them off as you go.",
-        "pl": "Rozkładówka miesiąca. Najpierw wpisz do kalendarza stałe terminy (terapia, mityngi, lekarz). Potem główną intencję i trzy–cztery cele; odhaczaj je na bieżąco."
+        "en": "The monthly spread. Put fixed appointments into the calendar first. Then decide how you want to live this month, your main intention and the three things that really matter; tick them off as you go. The last line gives you permission: what you do not have to do perfectly.",
+        "pl": "Rozkładówka miesiąca. Najpierw wpisz do kalendarza stałe terminy. Potem zdecyduj, jak chcesz przeżyć ten miesiąc, jaka jest Twoja główna intencja i trzy rzeczy naprawdę ważne; odhaczaj je na bieżąco. Ostatnia linia daje przyzwolenie: czego nie musisz robić idealnie."
       },
       "sampleContent": {
         "calendar": {
@@ -2309,8 +2361,24 @@
             ]
           },
           "note": {
-            "en": "3–4 goals are enough; tick them off",
-            "pl": "3–4 cele wystarczą; odhaczaj je"
+            "en": "tick them off as you go",
+            "pl": "odhaczaj je na bieżąco"
+          }
+        },
+        "how-live": {
+          "fill": {
+            "en": "Calmly, one day at a time.",
+            "pl": "Spokojnie, dzień po dniu."
+          },
+          "note": {
+            "en": "a few words are enough",
+            "pl": "wystarczy kilka słów"
+          }
+        },
+        "not-perfect": {
+          "fill": {
+            "en": "tidying the flat",
+            "pl": "sprzątanie mieszkania"
           }
         }
       },
@@ -2408,8 +2476,8 @@
                 ]
               },
               "note": {
-                "en": "3–4 goals are enough; tick them off",
-                "pl": "3–4 cele wystarczą; odhaczaj je"
+                "en": "tick them off as you go",
+                "pl": "odhaczaj je na bieżąco"
               }
             }
           }
@@ -2433,12 +2501,12 @@
           {
             "kind": "block",
             "block": {
-              "id": "focus",
+              "id": "value",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "Recovery focus",
-                  "pl": "Fokus zdrowienia"
+                  "en": "The value I want to practise this month",
+                  "pl": "Wartość, którą chcę w tym miesiącu praktykować"
                 },
                 "pattern": "lines",
                 "pitch": 6
@@ -2447,25 +2515,7 @@
                 "height": {
                   "mm": 12
                 }
-              },
-              "variants": [
-                {
-                  "when": {
-                    "==": [
-                      {
-                        "var": "config.modules.recovery"
-                      },
-                      false
-                    ]
-                  },
-                  "props": {
-                    "title": {
-                      "en": "Focus of the month",
-                      "pl": "Fokus miesiąca"
-                    }
-                  }
-                }
-              ]
+              }
             }
           },
           {
@@ -2489,27 +2539,104 @@
           {
             "kind": "block",
             "block": {
-              "id": "remember",
-              "type": "writing-area",
+              "id": "practice",
+              "type": "table",
               "props": {
                 "title": {
-                  "en": "This month I want to remember…",
-                  "pl": "W tym miesiącu chcę pamiętać o…"
+                  "en": "My month in practice",
+                  "pl": "Mój miesiąc w praktyce"
                 },
-                "pattern": "lines",
-                "framed": true
+                "rows": [
+                  {
+                    "en": "For my health",
+                    "pl": "Dla mojego zdrowia"
+                  },
+                  {
+                    "en": "For relationships",
+                    "pl": "Dla relacji"
+                  },
+                  {
+                    "en": "For rest",
+                    "pl": "Dla odpoczynku"
+                  },
+                  {
+                    "en": "For growth",
+                    "pl": "Dla rozwoju"
+                  },
+                  {
+                    "en": "For pleasure",
+                    "pl": "Dla przyjemności"
+                  },
+                  {
+                    "en": "For my recovery",
+                    "pl": "Dla mojego zdrowienia"
+                  }
+                ],
+                "columns": [],
+                "ruling": "lines"
               },
               "size": {
                 "height": {
-                  "mm": 26
+                  "mm": 52
                 }
-              }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "rows": [
+                      {
+                        "en": "For my health",
+                        "pl": "Dla mojego zdrowia"
+                      },
+                      {
+                        "en": "For relationships",
+                        "pl": "Dla relacji"
+                      },
+                      {
+                        "en": "For rest",
+                        "pl": "Dla odpoczynku"
+                      },
+                      {
+                        "en": "For growth",
+                        "pl": "Dla rozwoju"
+                      },
+                      {
+                        "en": "For pleasure",
+                        "pl": "Dla przyjemności"
+                      }
+                    ]
+                  }
+                }
+              ]
             }
           },
           {
             "kind": "row",
             "gap": 5,
             "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "remember",
+                  "type": "writing-area",
+                  "props": {
+                    "title": {
+                      "en": "This month I want to remember…",
+                      "pl": "W tym miesiącu chcę pamiętać o…"
+                    },
+                    "pattern": "lines",
+                    "framed": true
+                  }
+                }
+              },
               {
                 "kind": "block",
                 "block": {
@@ -2541,20 +2668,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "kind": "block",
-                "block": {
-                  "id": "habits",
-                  "type": "writing-area",
-                  "props": {
-                    "title": {
-                      "en": "Habits and milestones",
-                      "pl": "Nawyki i kamienie milowe"
-                    },
-                    "pattern": "lines"
-                  }
-                }
               }
             ],
             "height": {
@@ -2576,14 +2689,14 @@
             "op": "add",
             "path": "/body/children/2/block/size/height",
             "value": {
-              "mm": 20
+              "mm": 42
             }
           }
         ]
       },
       "guide": {
-        "en": "The right-hand page continues the calendar (Friday to Sunday) and holds your recovery focus, what you want to remember, regular meetings and visits, and habits or milestones such as 30 days sober.",
-        "pl": "Prawa strona kontynuuje kalendarz (piątek–niedziela) i mieści fokus zdrowienia, to, o czym chcesz pamiętać, stałe mityngi i wizyty oraz nawyki i kamienie milowe, np. 30 dni trzeźwości."
+        "en": "At the top, one value from \"What really matters to me\" to practise this month. The calendar continues (Friday to Sunday). \"My month in practice\" asks for one small thing for each area of life, and in the Recovery Edition for your recovery. Below: what you want to remember, and regular meetings and appointments.",
+        "pl": "Na górze jedna wartość z „Co jest dla mnie naprawdę ważne?”, którą chcesz praktykować w tym miesiącu. Kalendarz ciągnie się dalej (piątek–niedziela). „Mój miesiąc w praktyce” prosi o jedną małą rzecz dla każdego obszaru życia, a w Recovery Edition także dla zdrowienia. Poniżej: o czym chcesz pamiętać oraz stałe mityngi i wizyty."
       },
       "sampleContent": {
         "calendar": {
@@ -2634,16 +2747,6 @@
             }
           }
         },
-        "focus": {
-          "fill": {
-            "en": "Evenings without a screen, early nights",
-            "pl": "Wieczory bez ekranu, wcześnie spać"
-          },
-          "note": {
-            "en": "the area of recovery to work on",
-            "pl": "obszar zdrowienia do pracy"
-          }
-        },
         "remember": {
           "fill": {
             "en": "It is fine to ask for help.\nTired + alone = call someone.",
@@ -2660,10 +2763,54 @@
             "pl": "stałe i jednorazowe"
           }
         },
-        "habits": {
+        "value": {
           "fill": {
-            "en": "walk 20 min every day\n30 days sober on the 5th",
-            "pl": "spacer 20 min codziennie\n5-go: 30 dni trzeźwości"
+            "en": "honesty",
+            "pl": "uczciwość"
+          }
+        },
+        "practice": {
+          "fill": [
+            [
+              {
+                "en": "walk every day",
+                "pl": "codzienny spacer"
+              }
+            ],
+            [
+              {
+                "en": "Sunday dinner with my sister",
+                "pl": "niedzielny obiad z siostrą"
+              }
+            ],
+            [
+              {
+                "en": "one free evening a week",
+                "pl": "jeden wolny wieczór w tygodniu"
+              }
+            ],
+            [
+              {
+                "en": "finish the online course",
+                "pl": "skończyć kurs online"
+              }
+            ],
+            [
+              {
+                "en": "a concert with Ola",
+                "pl": "koncert z Olą"
+              }
+            ],
+            [
+              {
+                "en": "12 meetings, step 3",
+                "pl": "12 mityngów, 3. krok"
+              }
+            ]
+          ],
+          "note": {
+            "en": "one small thing per area",
+            "pl": "jedna mała rzecz na obszar"
           }
         }
       },
@@ -2726,16 +2873,6 @@
                 }
               }
             },
-            "focus": {
-              "fill": {
-                "en": "Evenings without a screen, early nights",
-                "pl": "Wieczory bez ekranu, wcześnie spać"
-              },
-              "note": {
-                "en": "one area to work on this month",
-                "pl": "jeden obszar do pracy w tym miesiącu"
-              }
-            },
             "appointments": {
               "fill": {
                 "en": "Tue 17:00 pool\nThu 18:30 book club\n12th doctor 9:30",
@@ -2746,10 +2883,42 @@
                 "pl": "stałe i jednorazowe"
               }
             },
-            "habits": {
-              "fill": {
-                "en": "walk 20 min every day\nphone away after 22:00",
-                "pl": "spacer 20 min codziennie\ntelefon odłożony po 22:00"
+            "practice": {
+              "fill": [
+                [
+                  {
+                    "en": "walk every day",
+                    "pl": "codzienny spacer"
+                  }
+                ],
+                [
+                  {
+                    "en": "Sunday dinner with my sister",
+                    "pl": "niedzielny obiad z siostrą"
+                  }
+                ],
+                [
+                  {
+                    "en": "one free evening a week",
+                    "pl": "jeden wolny wieczór w tygodniu"
+                  }
+                ],
+                [
+                  {
+                    "en": "finish the online course",
+                    "pl": "skończyć kurs online"
+                  }
+                ],
+                [
+                  {
+                    "en": "a concert with Ola",
+                    "pl": "koncert z Olą"
+                  }
+                ]
+              ],
+              "note": {
+                "en": "one small thing per area",
+                "pl": "jedna mała rzecz na obszar"
               }
             }
           }
@@ -2777,10 +2946,10 @@
           "type": "numbered-list",
           "props": {
             "title": {
-              "en": "Goals this week (3–4)",
-              "pl": "Cele tygodnia (3–4)"
+              "en": "Three most important things",
+              "pl": "Trzy najważniejsze rzeczy"
             },
-            "count": 4,
+            "count": 3,
             "marker": "checkbox"
           },
           "size": {
@@ -2815,6 +2984,25 @@
               "size": {
                 "height": {
                   "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "intention",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My intention for this week",
+                  "pl": "Moja intencja na ten tydzień"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 14
                 }
               }
             }
@@ -2929,8 +3117,8 @@
         ]
       },
       "guide": {
-        "en": "The weekly spread, filled in on Sunday or Monday. Note what could catch you off guard this week, set three or four goals in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.",
-        "pl": "Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Zapisz, co może Cię zaskoczyć w tym tygodniu, ustal trzy–cztery cele w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka."
+        "en": "The weekly spread, filled in on Sunday or Monday. Write one intention for the week and what could catch you off guard, put the three most important things in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.",
+        "pl": "Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Wpisz jedną intencję na tydzień i to, co może Cię zaskoczyć, trzy najważniejsze rzeczy umieść w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: mityng AA, grupa, terapia, lekarz, ruch, działanie na rzecz zdrowienia albo ! dla dnia ryzyka."
       },
       "sampleContent": {
         "remember": {
@@ -2941,6 +3129,13 @@
           "note": {
             "en": "what could catch you off guard this week?",
             "pl": "co może Cię zaskoczyć w tym tygodniu?"
+          },
+          "noteAt": "bottom-right"
+        },
+        "intention": {
+          "fill": {
+            "en": "Calmer evenings.",
+            "pl": "Spokojniejsze wieczory."
           }
         },
         "mon": {
@@ -3235,6 +3430,25 @@
           {
             "kind": "block",
             "block": {
+              "id": "experiment",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My small experiment: this week I will check whether…",
+                  "pl": "Mój mały eksperyment: w tym tygodniu sprawdzę, czy…"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 22
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
               "id": "legend",
               "type": "marker-legend",
               "props": {},
@@ -3265,8 +3479,8 @@
         ]
       },
       "guide": {
-        "en": "Thursday to Sunday and the marker legend. The outer column is for the week ahead: copy your if–then plan from last week's \"My week\", and note the days or situations to watch out for.",
-        "pl": "Czwartek–niedziela i legenda znaczników. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać."
+        "en": "Thursday to Sunday and the marker legend. Below the days, a small experiment: one thing you will test this week, such as \"15 minutes of walking after work lowers my tension\"; \"My week\" asks what it showed. The outer column is for the week ahead: copy your if–then plan from last week's \"My week\", and note the days or situations to watch out for.",
+        "pl": "Czwartek–niedziela i legenda znaczników. Pod dniami mały eksperyment: jedna rzecz, którą sprawdzisz w tym tygodniu, np. „15 minut spaceru po pracy zmniejsza moje napięcie”; „Mój tydzień” zapyta, co pokazał. Zewnętrzna kolumna jest na nadchodzący tydzień: przepisz plan jeśli–to z „Mojego tygodnia” poprzedniego tygodnia i zapisz dni lub sytuacje, na które chcesz uważać."
       },
       "sampleContent": {
         "thu": {
@@ -3329,6 +3543,17 @@
             "en": "Fri: payday\nSat: a birthday",
             "pl": "pt.: wypłata\nsob.: urodziny"
           }
+        },
+        "experiment": {
+          "fill": {
+            "en": "a walk after work lowers my tension",
+            "pl": "spacer po pracy zmniejsza napięcie"
+          },
+          "note": {
+            "en": "a small test, not a resolution",
+            "pl": "mały test, nie postanowienie"
+          },
+          "noteAt": "bottom-right"
         }
       },
       "sampleVariants": [
@@ -5533,6 +5758,25 @@
                   {
                     "kind": "block",
                     "block": {
+                      "id": "experiment",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "What did my experiment show?",
+                          "pl": "Co pokazał mój eksperyment?"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "height": {
+                          "mm": 13
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
                       "id": "continue",
                       "type": "writing-area",
                       "props": {
@@ -5823,6 +6067,25 @@
                 {
                   "kind": "block",
                   "block": {
+                    "id": "experiment",
+                    "type": "writing-area",
+                    "props": {
+                      "title": {
+                        "en": "What did my experiment show?",
+                        "pl": "Co pokazał mój eksperyment?"
+                      },
+                      "pattern": "lines"
+                    },
+                    "size": {
+                      "height": {
+                        "fr": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "kind": "block",
+                  "block": {
                     "id": "continue",
                     "type": "writing-area",
                     "props": {
@@ -6005,6 +6268,12 @@
           "fill": {
             "en": "A hard week, and I got through it by asking for help.",
             "pl": "Trudny tydzień, który przeszedłem, prosząc o pomoc."
+          }
+        },
+        "experiment": {
+          "fill": {
+            "en": "yes: calmer on 4 of 5 days",
+            "pl": "tak: spokojniej 4 z 5 dni"
           }
         },
         "numbers-a5": {
@@ -6500,7 +6769,42 @@
             "block": {
               "id": "wheel",
               "type": "radial-scale",
-              "props": {},
+              "props": {
+                "segments": [
+                  {
+                    "en": "Health",
+                    "pl": "Zdrowie"
+                  },
+                  {
+                    "en": "Emotions",
+                    "pl": "Emocje"
+                  },
+                  {
+                    "en": "Relationships",
+                    "pl": "Relacje"
+                  },
+                  {
+                    "en": "Work / study",
+                    "pl": "Praca / nauka"
+                  },
+                  {
+                    "en": "Finances",
+                    "pl": "Finanse"
+                  },
+                  {
+                    "en": "Growth",
+                    "pl": "Rozwój"
+                  },
+                  {
+                    "en": "Rest",
+                    "pl": "Odpoczynek"
+                  },
+                  {
+                    "en": "Recovery",
+                    "pl": "Zdrowienie"
+                  }
+                ]
+              },
               "size": {
                 "height": {
                   "fr": 1
@@ -6519,36 +6823,36 @@
                   "props": {
                     "segments": [
                       {
-                        "en": "Physical health and sleep",
-                        "pl": "Zdrowie fizyczne i sen"
+                        "en": "Health",
+                        "pl": "Zdrowie"
                       },
                       {
-                        "en": "Emotions and inner calm",
-                        "pl": "Emocje i spokój"
+                        "en": "Emotions",
+                        "pl": "Emocje"
                       },
                       {
-                        "en": "Meaning and spirituality",
-                        "pl": "Sens i duchowość"
+                        "en": "Relationships",
+                        "pl": "Relacje"
                       },
                       {
-                        "en": "Relationships and intimacy",
-                        "pl": "Relacje i bliskość"
+                        "en": "Work / study",
+                        "pl": "Praca / nauka"
                       },
                       {
                         "en": "Finances",
                         "pl": "Finanse"
                       },
                       {
-                        "en": "Work",
-                        "pl": "Praca"
-                      },
-                      {
-                        "en": "Personal growth",
+                        "en": "Growth",
                         "pl": "Rozwój"
                       },
                       {
-                        "en": "Rest and recreation",
+                        "en": "Rest",
                         "pl": "Odpoczynek"
+                      },
+                      {
+                        "en": "Meaning and spirituality",
+                        "pl": "Sens i duchowość"
                       }
                     ]
                   }
@@ -6570,7 +6874,26 @@
               },
               "size": {
                 "height": {
-                  "mm": 40
+                  "mm": 28
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "improvement",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Where was there even a small improvement?",
+                  "pl": "Gdzie nastąpiła nawet mała poprawa?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 28
                 }
               }
             }
@@ -6583,24 +6906,38 @@
             "op": "add",
             "path": "/body/children/2/block/props/labelSize",
             "value": 8
+          },
+          {
+            "op": "add",
+            "path": "/body/children/3/block/size/height",
+            "value": {
+              "mm": 22
+            }
+          },
+          {
+            "op": "add",
+            "path": "/body/children/4/block/size/height",
+            "value": {
+              "mm": 22
+            }
           }
         ]
       },
       "guide": {
-        "en": "At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below.",
-        "pl": "Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz."
+        "en": "At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below, and where there was even a small improvement.",
+        "pl": "Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz i gdzie nastąpiła nawet mała poprawa."
       },
       "sampleContent": {
         "wheel": {
           "fill": [
             6,
             5,
-            8,
             4,
-            5,
             7,
+            5,
             6,
-            3
+            3,
+            8
           ],
           "note": {
             "en": "shade each area up to its score",
@@ -6611,6 +6948,12 @@
           "fill": {
             "en": "Sobriety is strong; rest and relationships need time.\nNext month: one free evening a week.",
             "pl": "Trzeźwość mocna; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu."
+          }
+        },
+        "improvement": {
+          "fill": {
+            "en": "Sleep: most nights before 23:00.",
+            "pl": "Sen: większość nocy przed 23:00."
           }
         }
       },
@@ -6638,12 +6981,16 @@
     "monthly-review": {
       "id": "monthly-review",
       "name": {
-        "en": "Monthly review",
-        "pl": "Podsumowanie miesiąca"
+        "en": "What did this month show me?",
+        "pl": "Co pokazał mi miesiąc?"
       },
       "spread": {
         "group": "month-end",
         "position": "right"
+      },
+      "rationale": {
+        "en": "The month rolls up the weekly reviews: their numbers go into one table, so the month can be read at a glance before naming what helped and what was hard.",
+        "pl": "Miesiąc zbiera tygodniowe podsumowania: ich liczby trafiają do jednej tabeli, więc miesiąc widać na pierwszy rzut oka, zanim nazwiesz, co pomogło i co było trudne."
       },
       "body": {
         "kind": "stack",
@@ -6656,8 +7003,8 @@
               "type": "text",
               "props": {
                 "text": {
-                  "en": "Monthly review",
-                  "pl": "Podsumowanie miesiąca"
+                  "en": "What did this month show me?",
+                  "pl": "Co pokazał mi miesiąc?"
                 },
                 "variant": "heading"
               },
@@ -6671,12 +7018,164 @@
           {
             "kind": "block",
             "block": {
-              "id": "prompt-1",
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Copy the numbers from each \"My week\", then look at the month as a whole.",
+                  "pl": "Przepisz liczby z każdego „Mojego tygodnia”, potem spójrz na cały miesiąc."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "weeks",
+              "type": "table",
+              "props": {
+                "title": {
+                  "en": "My weeks",
+                  "pl": "Moje tygodnie"
+                },
+                "rowHeader": {
+                  "en": "Week",
+                  "pl": "Tydzień"
+                },
+                "rows": [
+                  {
+                    "en": "1",
+                    "pl": "1"
+                  },
+                  {
+                    "en": "2",
+                    "pl": "2"
+                  },
+                  {
+                    "en": "3",
+                    "pl": "3"
+                  },
+                  {
+                    "en": "4",
+                    "pl": "4"
+                  },
+                  {
+                    "en": "5",
+                    "pl": "5"
+                  }
+                ],
+                "columns": [
+                  {
+                    "en": "Mood, avg.",
+                    "pl": "Nastrój, śr."
+                  },
+                  {
+                    "en": "Tension, avg.",
+                    "pl": "Napięcie, śr."
+                  },
+                  {
+                    "en": "Strongest craving",
+                    "pl": "Najsilniejszy głód"
+                  },
+                  {
+                    "en": "Days with support",
+                    "pl": "Dni ze wsparciem"
+                  }
+                ],
+                "ruling": "grid"
+              },
+              "size": {
+                "height": {
+                  "mm": 52
+                }
+              },
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "columns": [
+                      {
+                        "en": "Mood, avg.",
+                        "pl": "Nastrój, śr."
+                      },
+                      {
+                        "en": "Tension, avg.",
+                        "pl": "Napięcie, śr."
+                      },
+                      {
+                        "en": "Days with exercise",
+                        "pl": "Dni z ruchem"
+                      },
+                      {
+                        "en": "Days with rest",
+                        "pl": "Dni z odpoczynkiem"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "helped",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "What helped me most this month?",
-                  "pl": "Co najbardziej mi pomogło w tym miesiącu?"
+                  "en": "What helped me most:",
+                  "pl": "Najbardziej pomogło mi:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "hardest",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What was hardest:",
+                  "pl": "Najtrudniejsze było:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "trigger",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "The most common trigger:",
+                  "pl": "Najczęściej pojawiający się wyzwalacz:"
                 },
                 "pattern": "lines"
               },
@@ -6685,18 +7184,35 @@
                   "fr": 1
                 }
               },
-              "variants": []
+              "variants": [
+                {
+                  "when": {
+                    "==": [
+                      {
+                        "var": "config.modules.recovery"
+                      },
+                      false
+                    ]
+                  },
+                  "props": {
+                    "title": {
+                      "en": "What weighed on me most:",
+                      "pl": "Co mnie najbardziej obciążało:"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
             "kind": "block",
             "block": {
-              "id": "prompt-2",
+              "id": "strategy",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "What was difficult?",
-                  "pl": "Co było trudne?"
+                  "en": "The most effective strategy:",
+                  "pl": "Najskuteczniejsza strategia:"
                 },
                 "pattern": "lines"
               },
@@ -6704,14 +7220,363 @@
                 "height": {
                   "fr": 1
                 }
-              },
-              "variants": []
+              }
             }
           },
           {
             "kind": "block",
             "block": {
-              "id": "prompt-3",
+              "id": "learned",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "The most important thing I learned about myself:",
+                  "pl": "Najważniejsza rzecz, której {g:dowiedziałem|dowiedziałam} się o sobie:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/2/block/size/height",
+            "value": {
+              "mm": 44
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "The month rolled up from the weekly reviews. Copy the numbers from each \"My week\" into the table, so the month can be read at a glance. Then name what helped most, what was hardest, the most common trigger, the most effective strategy and what you learned about yourself; ideally before the next session with your therapist.",
+        "pl": "Miesiąc zebrany z tygodniowych podsumowań. Przepisz do tabeli liczby z każdego „Mojego tygodnia”, żeby miesiąc był widoczny na pierwszy rzut oka. Potem nazwij, co najbardziej pomogło, co było najtrudniejsze, najczęstszy wyzwalacz, najskuteczniejszą strategię i czego {g:dowiedziałeś|dowiedziałaś} się o sobie; najlepiej przed kolejną sesją z terapeutą."
+      },
+      "sampleContent": {
+        "weeks": {
+          "fill": [
+            [
+              "6",
+              "5",
+              "7",
+              "5"
+            ],
+            [
+              "5",
+              "6",
+              "8",
+              "4"
+            ],
+            [
+              "6",
+              "4",
+              "6",
+              "6"
+            ],
+            [
+              "7",
+              "4",
+              "5",
+              "6"
+            ]
+          ],
+          "note": {
+            "en": "copied from \"My week\"",
+            "pl": "przepisane z „Mojego tygodnia”"
+          },
+          "noteAt": "bottom-right"
+        },
+        "helped": {
+          "fill": {
+            "en": "Meetings and walks with Tomek.",
+            "pl": "Mityngi i spacery z Tomkiem."
+          }
+        },
+        "hardest": {
+          "fill": {
+            "en": "Paydays and tiredness after work.",
+            "pl": "Dni wypłaty i zmęczenie po pracy."
+          }
+        },
+        "trigger": {
+          "fill": {
+            "en": "conflict at work",
+            "pl": "konflikt w pracy"
+          }
+        },
+        "strategy": {
+          "fill": {
+            "en": "calling Tomek before reacting",
+            "pl": "telefon do Tomka, zanim zareaguję"
+          }
+        },
+        "learned": {
+          "fill": {
+            "en": "I need a plan for Friday evenings.",
+            "pl": "Potrzebuję planu na piątkowe wieczory."
+          }
+        }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "weeks": {
+              "fill": [
+                [
+                  "6",
+                  "5",
+                  "3",
+                  "2"
+                ],
+                [
+                  "5",
+                  "6",
+                  "2",
+                  "3"
+                ],
+                [
+                  "6",
+                  "4",
+                  "3",
+                  "3"
+                ],
+                [
+                  "7",
+                  "4",
+                  "4",
+                  "4"
+                ]
+              ],
+              "note": {
+                "en": "copied from \"My week\"",
+                "pl": "przepisane z „Mojego tygodnia”"
+              },
+              "noteAt": "bottom-right"
+            },
+            "helped": {
+              "fill": {
+                "en": "Swimming and walks with Tomek.",
+                "pl": "Basen i spacery z Tomkiem."
+              }
+            },
+            "trigger": {
+              "fill": {
+                "en": "work before deadlines",
+                "pl": "praca przed terminami"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "month-patterns": {
+      "id": "month-patterns",
+      "name": {
+        "en": "My patterns",
+        "pl": "Moje wzorce"
+      },
+      "spread": {
+        "group": "month-next",
+        "position": "left"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My patterns",
+                  "pl": "Moje wzorce"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Tick what came up most often this month; the evening pages and \"My week\" will remind you.",
+                  "pl": "Zaznacz, co pojawiało się najczęściej w tym miesiącu; przypomną Ci to strony wieczorne i „Mój tydzień”."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "row",
+            "gap": 6,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "when-hard",
+                  "type": "numbered-list",
+                  "props": {
+                    "title": {
+                      "en": "When was it hard most often?",
+                      "pl": "Kiedy najczęściej było trudno?"
+                    },
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "morning",
+                        "pl": "rano"
+                      },
+                      {
+                        "en": "midday",
+                        "pl": "południe"
+                      },
+                      {
+                        "en": "afternoon",
+                        "pl": "popołudnie"
+                      },
+                      {
+                        "en": "evening",
+                        "pl": "wieczór"
+                      },
+                      {
+                        "en": "night",
+                        "pl": "noc"
+                      },
+                      {
+                        "en": "weekend",
+                        "pl": "weekend"
+                      },
+                      {
+                        "en": "workdays",
+                        "pl": "dni pracy"
+                      },
+                      {
+                        "en": "days off",
+                        "pl": "dni wolne"
+                      }
+                    ],
+                    "count": 8,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "states",
+                  "type": "numbered-list",
+                  "props": {
+                    "title": {
+                      "en": "Most common states before the risk rose",
+                      "pl": "Najczęstsze stany przed wzrostem ryzyka"
+                    },
+                    "marker": "checkbox",
+                    "items": [
+                      {
+                        "en": "hunger",
+                        "pl": "głód fizyczny"
+                      },
+                      {
+                        "en": "anger",
+                        "pl": "złość"
+                      },
+                      {
+                        "en": "loneliness",
+                        "pl": "samotność"
+                      },
+                      {
+                        "en": "tiredness",
+                        "pl": "zmęczenie"
+                      },
+                      {
+                        "en": "boredom",
+                        "pl": "nuda"
+                      },
+                      {
+                        "en": "stress",
+                        "pl": "stres"
+                      },
+                      {
+                        "en": "a conflict",
+                        "pl": "konflikt"
+                      },
+                      {
+                        "en": "overload",
+                        "pl": "przeciążenie"
+                      }
+                    ],
+                    "count": 8,
+                    "lineHeight": 5
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  },
+                  "variants": [
+                    {
+                      "when": {
+                        "==": [
+                          {
+                            "var": "config.modules.recovery"
+                          },
+                          false
+                        ]
+                      },
+                      "props": {
+                        "title": {
+                          "en": "Most common states before a worse day",
+                          "pl": "Najczęstsze stany przed gorszym dniem"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ],
+            "height": {
+              "mm": 58
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "warning",
               "type": "writing-area",
               "props": {
                 "title": {
@@ -6722,7 +7587,7 @@
               },
               "size": {
                 "height": {
-                  "fr": 1
+                  "mm": 28
                 }
               },
               "variants": [
@@ -6748,32 +7613,31 @@
           {
             "kind": "block",
             "block": {
-              "id": "prompt-4",
-              "type": "writing-area",
+              "id": "helped-most",
+              "type": "numbered-list",
               "props": {
                 "title": {
-                  "en": "What did I learn about myself?",
-                  "pl": "Czego {g:dowiedziałem|dowiedziałam} się o sobie?"
+                  "en": "What helped most often?",
+                  "pl": "Co najczęściej pomagało?"
                 },
-                "pattern": "lines"
+                "count": 3
               },
               "size": {
                 "height": {
-                  "fr": 1
+                  "mm": 30
                 }
-              },
-              "variants": []
+              }
             }
           },
           {
             "kind": "block",
             "block": {
-              "id": "prompt-5",
+              "id": "insight",
               "type": "writing-area",
               "props": {
                 "title": {
-                  "en": "What do I want to continue next month?",
-                  "pl": "Co chcę kontynuować w przyszłym miesiącu?"
+                  "en": "What follows from this for me?",
+                  "pl": "Co z tego dla mnie wynika?"
                 },
                 "pattern": "lines"
               },
@@ -6781,75 +7645,84 @@
                 "height": {
                   "fr": 1
                 }
-              },
-              "variants": []
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/3/block/size/height",
+            "value": {
+              "mm": 22
             }
           },
           {
-            "kind": "block",
-            "block": {
-              "id": "prompt-6",
-              "type": "writing-area",
-              "props": {
-                "title": {
-                  "en": "What needs more attention?",
-                  "pl": "Co wymaga więcej uwagi?"
-                },
-                "pattern": "lines"
-              },
-              "size": {
-                "height": {
-                  "fr": 1
-                }
-              },
-              "variants": []
+            "op": "add",
+            "path": "/body/children/4/block/size/height",
+            "value": {
+              "mm": 26
             }
           }
         ]
       },
       "guide": {
-        "en": "Six questions for looking back at the month, ideally before the next session with your therapist. A few honest words per question are enough.",
-        "pl": "Sześć pytań na podsumowanie miesiąca, najlepiej przed kolejną sesją z terapeutą. Wystarczy kilka szczerych słów na pytanie."
+        "en": "Patterns across the month: tick when it was hard most often and which states came before the risk rose, name the warning signs you noticed and what helped most often. The last question turns it into a plan.",
+        "pl": "Wzorce z całego miesiąca: zaznacz, kiedy najczęściej było trudno i jakie stany poprzedzały wzrost ryzyka, nazwij sygnały ostrzegawcze, które {g:zauważyłeś|zauważyłaś}, i to, co najczęściej pomagało. Ostatnie pytanie zamienia to w plan."
       },
       "sampleContent": {
-        "prompt-1": {
+        "when-hard": {
           "fill": {
-            "en": "Meetings and walks with Tomek.",
-            "pl": "Mityngi i spacery z Tomkiem."
+            "done": [
+              3,
+              5
+            ]
           },
           "note": {
-            "en": "a few words per question are enough",
-            "pl": "kilka słów na pytanie wystarczy"
-          }
+            "en": "tick all that apply",
+            "pl": "zaznacz wszystkie"
+          },
+          "noteAt": "bottom-right"
         },
-        "prompt-2": {
+        "states": {
           "fill": {
-            "en": "Paydays and tiredness after work.",
-            "pl": "Dni wypłaty i zmęczenie po pracy."
+            "done": [
+              1,
+              3,
+              5
+            ]
           }
         },
-        "prompt-3": {
+        "warning": {
           "fill": {
             "en": "Skipping dinner, irritability.",
             "pl": "Pomijanie kolacji, drażliwość."
           }
         },
-        "prompt-4": {
+        "helped-most": {
           "fill": {
-            "en": "I need a plan for Friday evenings.",
-            "pl": "Potrzebuję planu na piątkowe wieczory."
+            "items": [
+              {
+                "en": "calling Tomek",
+                "pl": "telefon do Tomka"
+              },
+              {
+                "en": "evening walks",
+                "pl": "wieczorne spacery"
+              },
+              {
+                "en": "the Thursday group",
+                "pl": "czwartkowa grupa"
+              }
+            ]
           }
         },
-        "prompt-5": {
+        "insight": {
           "fill": {
-            "en": "Evening walks, the Thursday group.",
-            "pl": "Wieczorne spacery, czwartkowa grupa."
-          }
-        },
-        "prompt-6": {
-          "fill": {
-            "en": "Sleep and my relationship with Ola.",
-            "pl": "Sen i relacja z Olą."
+            "en": "Evenings after work are my hard time: I plan them ahead.",
+            "pl": "Wieczory po pracy to mój trudny czas: planuję je z wyprzedzeniem."
           }
         }
       },
@@ -6864,20 +7737,223 @@
             ]
           },
           "content": {
-            "prompt-1": {
+            "helped-most": {
               "fill": {
-                "en": "Swimming and walks with Tomek.",
-                "pl": "Basen i spacery z Tomkiem."
+                "items": [
+                  {
+                    "en": "calling Tomek",
+                    "pl": "telefon do Tomka"
+                  },
+                  {
+                    "en": "evening walks",
+                    "pl": "wieczorne spacery"
+                  },
+                  {
+                    "en": "the Thursday book club",
+                    "pl": "czwartkowy klub książki"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "month-next": {
+      "id": "month-next",
+      "name": {
+        "en": "Looking ahead",
+        "pl": "Dalej"
+      },
+      "spread": {
+        "group": "month-next",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Looking ahead",
+                  "pl": "Dalej"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "continue",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to continue:",
+                  "pl": "Chcę kontynuować:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "limit",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to cut down on:",
+                  "pl": "Chcę ograniczyć:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "try",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "I want to try:",
+                  "pl": "Chcę spróbować:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "attention",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Needs more attention:",
+                  "pl": "Więcej uwagi wymaga:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "next-word",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "My word for next month",
+                  "pl": "Moje słowo na kolejny miesiąc"
+                },
+                "pattern": "lines",
+                "pitch": 9,
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 24
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Looking ahead: what to continue, cut down on and try, and what needs more attention. Finish with one word for next month, and carry it to the next month's divider page.",
+        "pl": "Co dalej: co kontynuować, co ograniczyć, czego spróbować i co wymaga więcej uwagi. Na koniec jedno słowo na kolejny miesiąc; przenieś je na przekładkę następnego miesiąca."
+      },
+      "sampleContent": {
+        "continue": {
+          "fill": {
+            "en": "Evening walks and the Thursday group.",
+            "pl": "Wieczorne spacery i czwartkowa grupa."
+          },
+          "note": {
+            "en": "a few words are enough",
+            "pl": "wystarczy kilka słów"
+          }
+        },
+        "limit": {
+          "fill": {
+            "en": "The phone after 22:00.",
+            "pl": "Telefon po 22:00."
+          }
+        },
+        "try": {
+          "fill": {
+            "en": "Swimming once a week.",
+            "pl": "Basen raz w tygodniu."
+          }
+        },
+        "attention": {
+          "fill": {
+            "en": "Sleep and my relationship with Ola.",
+            "pl": "Sen i relacja z Olą."
+          }
+        },
+        "next-word": {
+          "fill": {
+            "en": "Calm",
+            "pl": "Spokój"
+          },
+          "note": {
+            "en": "it opens next month",
+            "pl": "otworzy kolejny miesiąc"
+          }
+        }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "continue": {
+              "fill": {
+                "en": "Evening walks and the book club.",
+                "pl": "Wieczorne spacery i klub książki."
               },
               "note": {
-                "en": "a few words per question are enough",
-                "pl": "kilka słów na pytanie wystarczy"
-              }
-            },
-            "prompt-5": {
-              "fill": {
-                "en": "Evening walks, the Thursday book club.",
-                "pl": "Wieczorne spacery, czwartkowy klub książki."
+                "en": "a few words are enough",
+                "pl": "wystarczy kilka słów"
               }
             }
           }
@@ -9457,6 +10533,12 @@
         },
         {
           "page": "monthly-review"
+        },
+        {
+          "page": "month-patterns"
+        },
+        {
+          "page": "month-next"
         },
         {
           "page": "notes"

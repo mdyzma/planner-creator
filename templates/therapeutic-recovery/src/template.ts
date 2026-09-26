@@ -145,17 +145,18 @@ const STRAIN_BALANCE = [
 /** Weekly day markers without AA, groups, therapy, recovery actions and high-risk days. */
 const MARKERS_BALANCE = ['doctor', 'exercise', 'custom'];
 
-/** Wheel of Life areas without the recovery module. */
-const WHEEL_BALANCE = [
-  L('Physical health and sleep', 'Zdrowie fizyczne i sen'),
-  L('Emotions and inner calm', 'Emocje i spokój'),
-  L('Meaning and spirituality', 'Sens i duchowość'),
-  L('Relationships and intimacy', 'Relacje i bliskość'),
+/** Wheel of Life areas (S2); the last is recovery, or meaning without the recovery module. */
+const WHEEL = [
+  L('Health', 'Zdrowie'),
+  L('Emotions', 'Emocje'),
+  L('Relationships', 'Relacje'),
+  L('Work / study', 'Praca / nauka'),
   L('Finances', 'Finanse'),
-  L('Work', 'Praca'),
-  L('Personal growth', 'Rozwój'),
-  L('Rest and recreation', 'Odpoczynek'),
+  L('Growth', 'Rozwój'),
+  L('Rest', 'Odpoczynek'),
+  L('Recovery', 'Zdrowienie'),
 ];
+const WHEEL_BALANCE = [...WHEEL.slice(0, 7), L('Meaning and spirituality', 'Sens i duchowość')];
 
 /**
  * "Day by Day" ("Dzień po Dniu"), the 6-month therapeutic recovery planner (brief §5–§21),
@@ -798,18 +799,36 @@ const monthOpenLeft = a5(
       heading('month', L('{{monthName}}', '{{monthName}}')),
       block('calendar', 'calendar-grid', { columns: [0, 4] }, { height: mmH(110) }),
       block(
+        'how-live',
+        'writing-area',
+        {
+          title: L('How do I want to live this month?', 'Jak chcę przeżyć ten miesiąc?'),
+          pattern: 'lines',
+        },
+        { height: mmH(18) },
+      ),
+      block(
         'intention',
         'writing-area',
-        { title: L('Main intention', 'Główna intencja'), pattern: 'lines' },
-        { height: mmH(26) },
+        { title: L('My main intention', 'Moja główna intencja'), pattern: 'lines' },
+        { height: mmH(18) },
       ),
       block(
         'goals',
         'numbered-list',
         {
-          title: L('Main goals this month (3–4)', 'Główne cele miesiąca (3–4)'),
-          count: 4,
+          title: L('3 things that really matter', '3 rzeczy, które są naprawdę ważne'),
+          count: 3,
           marker: 'checkbox',
+        },
+        { height: mmH(34) },
+      ),
+      block(
+        'not-perfect',
+        'writing-area',
+        {
+          title: L("What I don't have to do perfectly", 'Tego nie muszę robić idealnie'),
+          pattern: 'lines',
         },
         { height: fr(1) },
       ),
@@ -817,9 +836,21 @@ const monthOpenLeft = a5(
   },
   [
     ['calendar', 'size/height', { mm: 76 }],
-    ['intention', 'size/height', { mm: 20 }],
+    ['how-live', 'size/height', { mm: 14 }],
+    ['intention', 'size/height', { mm: 14 }],
+    ['goals', 'size/height', { mm: 28 }],
   ],
 );
+
+/** "My month in practice" (S2): one line per area of life; recovery in the recovery module. */
+const PRACTICE = [
+  L('For my health', 'Dla mojego zdrowia'),
+  L('For relationships', 'Dla relacji'),
+  L('For rest', 'Dla odpoczynku'),
+  L('For growth', 'Dla rozwoju'),
+  L('For pleasure', 'Dla przyjemności'),
+  L('For my recovery', 'Dla mojego zdrowienia'),
+];
 
 const monthOpenRight = a5(
   {
@@ -827,28 +858,42 @@ const monthOpenRight = a5(
     name: L('Month opening (right)', 'Otwarcie miesiąca (prawa)'),
     spread: { group: 'month-open', position: 'right' },
     body: stack([
-      varies(
-        block(
-          'focus',
-          'writing-area',
-          { title: L('Recovery focus', 'Fokus zdrowienia'), pattern: 'lines', pitch: 6 },
-          { height: mmH(12) },
-        ),
-        { when: BALANCE, props: { title: L('Focus of the month', 'Fokus miesiąca') } },
-      ),
-      block('calendar', 'calendar-grid', { columns: [4, 7] }, { height: mmH(110) }),
+      // A value from "What really matters to me" at the front, to practise this month.
       block(
-        'remember',
+        'value',
         'writing-area',
         {
-          title: L('This month I want to remember…', 'W tym miesiącu chcę pamiętać o…'),
+          title: L(
+            'The value I want to practise this month',
+            'Wartość, którą chcę w tym miesiącu praktykować',
+          ),
           pattern: 'lines',
-          framed: true,
+          pitch: 6,
         },
-        { height: mmH(26) },
+        { height: mmH(12) },
+      ),
+      block('calendar', 'calendar-grid', { columns: [4, 7] }, { height: mmH(110) }),
+      varies(
+        block(
+          'practice',
+          'table',
+          {
+            title: L('My month in practice', 'Mój miesiąc w praktyce'),
+            rows: PRACTICE,
+            columns: [],
+            ruling: 'lines',
+          },
+          { height: mmH(52) },
+        ),
+        { when: BALANCE, props: { rows: PRACTICE.slice(0, 5) } },
       ),
       row(
         [
+          block('remember', 'writing-area', {
+            title: L('This month I want to remember…', 'W tym miesiącu chcę pamiętać o…'),
+            pattern: 'lines',
+            framed: true,
+          }),
           varies(
             block('appointments', 'writing-area', {
               title: L('Meetings, therapy and appointments', 'Mityngi, terapia i wizyty'),
@@ -859,10 +904,6 @@ const monthOpenRight = a5(
               props: { title: L('Important dates and appointments', 'Ważne terminy i wizyty') },
             },
           ),
-          block('habits', 'writing-area', {
-            title: L('Habits and milestones', 'Nawyki i kamienie milowe'),
-            pattern: 'lines',
-          }),
         ],
         { height: fr(1) },
       ),
@@ -870,7 +911,7 @@ const monthOpenRight = a5(
   },
   [
     ['calendar', 'size/height', { mm: 76 }],
-    ['remember', 'size/height', { mm: 20 }],
+    ['practice', 'size/height', { mm: 42 }],
   ],
 );
 
@@ -888,7 +929,11 @@ const weekLeft: PageTemplate = {
       ...railBlock(
         'goals',
         'numbered-list',
-        { title: L('Goals this week (3–4)', 'Cele tygodnia (3–4)'), count: 4, marker: 'checkbox' },
+        {
+          title: L('Three most important things', 'Trzy najważniejsze rzeczy'),
+          count: 3,
+          marker: 'checkbox',
+        },
         fr(1),
       ),
       // A light frame sets the goals apart from the days, like the "This week remember" box.
@@ -901,6 +946,12 @@ const weekLeft: PageTemplate = {
       'text',
       { text: L('Week {{weekRange}}', 'Tydzień {{weekRange}}'), variant: 'subheading' },
       { height: mmH(8) },
+    ),
+    block(
+      'intention',
+      'writing-area',
+      { title: L('My intention for this week', 'Moja intencja na ten tydzień'), pattern: 'lines' },
+      { height: mmH(14) },
     ),
     block(
       'remember',
@@ -949,6 +1000,19 @@ const weekRight: PageTemplate = {
     dayStrip('fri', 4),
     dayStrip('sat', 5),
     dayStrip('sun', 6),
+    // A small experiment for the week (S2); "My week" asks what it showed.
+    block(
+      'experiment',
+      'writing-area',
+      {
+        title: L(
+          'My small experiment: this week I will check whether…',
+          'Mój mały eksperyment: w tym tygodniu sprawdzę, czy…',
+        ),
+        pattern: 'lines',
+      },
+      { height: mmH(22) },
+    ),
     varies(block('legend', 'marker-legend', {}, { height: 'auto' }), {
       when: BALANCE,
       props: { markers: MARKERS_BALANCE },
@@ -1413,6 +1477,11 @@ const weekReviewA5: LayoutNode = stack(
     writeLines('helped-quick', L('What helped most:', 'Co pomogło najbardziej:'), fr(1)),
     writeLines('win-quick', L('My biggest win:', 'Moje największe zwycięstwo:'), fr(1)),
     writeLines('pattern', L('A pattern I notice:', 'Wzorzec, który zauważam:'), fr(1)),
+    writeLines(
+      'experiment',
+      L('What did my experiment show?', 'Co pokazał mój eksperyment?'),
+      fr(1),
+    ),
     writeLines('continue', L('Next week I want to:', 'W przyszłym tygodniu chcę:'), fr(1)),
     ifThen(fr(1)),
     oneSentence,
@@ -1555,6 +1624,11 @@ const weekReview = a5(
                   'pattern',
                   L('I noticed that…', '{g:Zauważyłem|Zauważyłam}, że…'),
                   mmH(20),
+                ),
+                writeLines(
+                  'experiment',
+                  L('What did my experiment show?', 'Co pokazał mój eksperyment?'),
+                  mmH(13),
                 ),
                 writeLines(
                   'continue',
@@ -1700,8 +1774,8 @@ const wheel = a5(
           'Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10).',
         ),
       ),
-      // Without the recovery module, "Sobriety and 12 Steps" becomes "Meaning and spirituality".
-      varies(block('wheel', 'radial-scale', {}, { height: fr(1) }), {
+      // Without the recovery module, "Recovery" becomes "Meaning and spirituality".
+      varies(block('wheel', 'radial-scale', { segments: WHEEL }, { height: fr(1) }), {
         when: BALANCE,
         props: { segments: WHEEL_BALANCE },
       }),
@@ -1709,40 +1783,213 @@ const wheel = a5(
         'notice',
         'writing-area',
         { title: L('What do I notice?', 'Co zauważam?'), pattern: 'lines' },
-        { height: mmH(40) },
+        { height: mmH(28) },
+      ),
+      block(
+        'improvement',
+        'writing-area',
+        {
+          title: L(
+            'Where was there even a small improvement?',
+            'Gdzie nastąpiła nawet mała poprawa?',
+          ),
+          pattern: 'lines',
+        },
+        { height: mmH(28) },
       ),
     ]),
   },
-  [['wheel', 'props/labelSize', 8]],
+  [
+    ['wheel', 'props/labelSize', 8],
+    ['notice', 'size/height', { mm: 22 }],
+    ['improvement', 'size/height', { mm: 22 }],
+  ],
 );
 
-const REVIEW_PROMPTS = [
-  L('What helped me most this month?', 'Co najbardziej mi pomogło w tym miesiącu?'),
-  L('What was difficult?', 'Co było trudne?'),
-  L('What warning signs did I notice?', 'Jakie sygnały ostrzegawcze {g:zauważyłem|zauważyłam}?'),
-  L('What did I learn about myself?', 'Czego {g:dowiedziałem|dowiedziałam} się o sobie?'),
-  L('What do I want to continue next month?', 'Co chcę kontynuować w przyszłym miesiącu?'),
-  L('What needs more attention?', 'Co wymaga więcej uwagi?'),
+/** Weekly numbers copied from each "My week" into one table. */
+const WEEK_ROWS = ['1', '2', '3', '4', '5'].map((n) => L(n, n));
+const WEEKS_COLUMNS = [
+  L('Mood, avg.', 'Nastrój, śr.'),
+  L('Tension, avg.', 'Napięcie, śr.'),
+  L('Strongest craving', 'Najsilniejszy głód'),
+  L('Days with support', 'Dni ze wsparciem'),
+];
+const WEEKS_COLUMNS_BALANCE = [
+  ...WEEKS_COLUMNS.slice(0, 2),
+  L('Days with exercise', 'Dni z ruchem'),
+  L('Days with rest', 'Dni z odpoczynkiem'),
 ];
 
-/** Review prompts reworded without the recovery module, by position. */
-const REVIEW_BALANCE: Array<ReturnType<typeof L> | undefined> = [
-  undefined,
-  undefined,
-  L('What did not serve me?', 'Co mi nie służyło?'),
-];
-
-const review: PageTemplate = {
-  id: 'monthly-review',
-  name: L('Monthly review', 'Podsumowanie miesiąca'),
-  spread: { group: 'month-end', position: 'right' },
-  body: stack([
-    heading('heading', L('Monthly review', 'Podsumowanie miesiąca')),
-    ...REVIEW_PROMPTS.map((title, i) =>
-      varies(
-        block(`prompt-${i + 1}`, 'writing-area', { title, pattern: 'lines' }, { height: fr(1) }),
-        ...(REVIEW_BALANCE[i] ? [{ when: BALANCE, props: { title: REVIEW_BALANCE[i] } }] : []),
+// The month end (S2): the wheel, then what the month showed, my patterns, and what next.
+const review = a5(
+  {
+    id: 'monthly-review',
+    name: L('What did this month show me?', 'Co pokazał mi miesiąc?'),
+    spread: { group: 'month-end', position: 'right' },
+    rationale: L(
+      'The month rolls up the weekly reviews: their numbers go into one table, so the month can be read at a glance before naming what helped and what was hard.',
+      'Miesiąc zbiera tygodniowe podsumowania: ich liczby trafiają do jednej tabeli, więc miesiąc widać na pierwszy rzut oka, zanim nazwiesz, co pomogło i co było trudne.',
+    ),
+    body: stack([
+      heading('heading', L('What did this month show me?', 'Co pokazał mi miesiąc?')),
+      caption(
+        'how',
+        L(
+          'Copy the numbers from each "My week", then look at the month as a whole.',
+          'Przepisz liczby z każdego „Mojego tygodnia”, potem spójrz na cały miesiąc.',
+        ),
       ),
+      varies(
+        block(
+          'weeks',
+          'table',
+          {
+            title: L('My weeks', 'Moje tygodnie'),
+            rowHeader: L('Week', 'Tydzień'),
+            rows: WEEK_ROWS,
+            columns: WEEKS_COLUMNS,
+            ruling: 'grid',
+          },
+          { height: mmH(52) },
+        ),
+        { when: BALANCE, props: { columns: WEEKS_COLUMNS_BALANCE } },
+      ),
+      prompt('helped', L('What helped me most:', 'Najbardziej pomogło mi:')),
+      prompt('hardest', L('What was hardest:', 'Najtrudniejsze było:')),
+      varies(
+        prompt('trigger', L('The most common trigger:', 'Najczęściej pojawiający się wyzwalacz:')),
+        {
+          when: BALANCE,
+          props: { title: L('What weighed on me most:', 'Co mnie najbardziej obciążało:') },
+        },
+      ),
+      prompt('strategy', L('The most effective strategy:', 'Najskuteczniejsza strategia:')),
+      prompt(
+        'learned',
+        L(
+          'The most important thing I learned about myself:',
+          'Najważniejsza rzecz, której {g:dowiedziałem|dowiedziałam} się o sobie:',
+        ),
+      ),
+    ]),
+  },
+  [['weeks', 'size/height', { mm: 44 }]],
+);
+
+const WHEN_HARD = [
+  L('morning', 'rano'),
+  L('midday', 'południe'),
+  L('afternoon', 'popołudnie'),
+  L('evening', 'wieczór'),
+  L('night', 'noc'),
+  L('weekend', 'weekend'),
+  L('workdays', 'dni pracy'),
+  L('days off', 'dni wolne'),
+];
+
+/** States before a hard moment: HALT-B, then stress, conflict and overload. */
+const STATES = [
+  L('hunger', 'głód fizyczny'),
+  L('anger', 'złość'),
+  L('loneliness', 'samotność'),
+  L('tiredness', 'zmęczenie'),
+  L('boredom', 'nuda'),
+  L('stress', 'stres'),
+  L('a conflict', 'konflikt'),
+  L('overload', 'przeciążenie'),
+];
+
+const monthPatterns = a5(
+  {
+    id: 'month-patterns',
+    name: L('My patterns', 'Moje wzorce'),
+    spread: { group: 'month-next', position: 'left' },
+    body: stack([
+      heading('heading', L('My patterns', 'Moje wzorce')),
+      caption(
+        'how',
+        L(
+          'Tick what came up most often this month; the evening pages and "My week" will remind you.',
+          'Zaznacz, co pojawiało się najczęściej w tym miesiącu; przypomną Ci to strony wieczorne i „Mój tydzień”.',
+        ),
+      ),
+      row(
+        [
+          ticks(
+            'when-hard',
+            L('When was it hard most often?', 'Kiedy najczęściej było trudno?'),
+            WHEN_HARD,
+            fr(1),
+          ),
+          varies(
+            ticks(
+              'states',
+              L(
+                'Most common states before the risk rose',
+                'Najczęstsze stany przed wzrostem ryzyka',
+              ),
+              STATES,
+              fr(1),
+            ),
+            {
+              when: BALANCE,
+              props: {
+                title: L(
+                  'Most common states before a worse day',
+                  'Najczęstsze stany przed gorszym dniem',
+                ),
+              },
+            },
+          ),
+        ],
+        { height: mmH(58), gap: 6 },
+      ),
+      varies(
+        writeLines(
+          'warning',
+          L(
+            'What warning signs did I notice?',
+            'Jakie sygnały ostrzegawcze {g:zauważyłem|zauważyłam}?',
+          ),
+          mmH(28),
+        ),
+        { when: BALANCE, props: { title: L('What did not serve me?', 'Co mi nie służyło?') } },
+      ),
+      block(
+        'helped-most',
+        'numbered-list',
+        { title: L('What helped most often?', 'Co najczęściej pomagało?'), count: 3 },
+        { height: mmH(30) },
+      ),
+      prompt('insight', L('What follows from this for me?', 'Co z tego dla mnie wynika?')),
+    ]),
+  },
+  [
+    ['warning', 'size/height', { mm: 22 }],
+    ['helped-most', 'size/height', { mm: 26 }],
+  ],
+);
+
+const monthNext: PageTemplate = {
+  id: 'month-next',
+  name: L('Looking ahead', 'Dalej'),
+  spread: { group: 'month-next', position: 'right' },
+  body: stack([
+    heading('heading', L('Looking ahead', 'Dalej')),
+    prompt('continue', L('I want to continue:', 'Chcę kontynuować:')),
+    prompt('limit', L('I want to cut down on:', 'Chcę ograniczyć:')),
+    prompt('try', L('I want to try:', 'Chcę spróbować:')),
+    prompt('attention', L('Needs more attention:', 'Więcej uwagi wymaga:')),
+    block(
+      'next-word',
+      'writing-area',
+      {
+        title: L('My word for next month', 'Moje słowo na kolejny miesiąc'),
+        pattern: 'lines',
+        pitch: 9,
+        framed: true,
+      },
+      { height: mmH(24) },
     ),
   ]),
 };
@@ -2434,6 +2681,8 @@ const sections: SectionTemplate[] = [
       },
       page('wheel-of-life'),
       page('monthly-review'),
+      page('month-patterns'),
+      page('month-next'),
       page('notes'),
       page('notes'),
     ],
@@ -2485,6 +2734,8 @@ const pageTemplates = [
   situation,
   wheel,
   review,
+  monthPatterns,
+  monthNext,
   notes,
   warningLeft,
   warningRight,

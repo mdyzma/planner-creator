@@ -57,6 +57,9 @@ export const CategorySample = z.array(SampleText);
 /** contact-table: values per person, in field order. */
 export const ContactSample = z.array(z.array(SampleText));
 
+/** table: values per row, in column order. */
+export const TableSample = z.array(z.array(SampleText));
+
 /** text, day-header: values written into the printed blanks ("__________"), in order. */
 export const BlanksSample = z.array(SampleText);
 

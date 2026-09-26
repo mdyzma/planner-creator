@@ -5,7 +5,7 @@ Where "Dzień po Dniu" stands after v0.2.0, measured against the two content rev
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
 content specification), and what comes next.
 
-Last updated: 2026-09-25, after v0.2.0.
+Last updated: 2026-09-26, after v0.7.0.
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -150,9 +150,28 @@ Done:
 
 ### v0.7.0 — Month 2.0
 
-- Month opening as in S2, with the word of the month and values.
-- Monthly review on 3–4 pages, rolling up the weekly reviews.
-- New default Wheel of Life areas; week: intention and experiment of the week.
+Done:
+
+- Month opening as in S2: "Jak chcę przeżyć ten miesiąc?", "Moja główna intencja", "3 rzeczy,
+  które są naprawdę ważne" and "Tego nie muszę robić idealnie" on the left; on the right a value
+  to practise this month (from the values page) and "Mój miesiąc w praktyce" (health,
+  relationships, rest, growth, pleasure, and recovery in the recovery module). "Recovery focus"
+  and "Habits and milestones" are gone. The word of the month stays on the divider page.
+- Week: "Moja intencja na ten tydzień", "Trzy najważniejsze rzeczy" (3, was 3–4), and "Mój mały
+  eksperyment" on the right-hand page; "Mój tydzień" asks what the experiment showed.
+- The month end is four pages: the Wheel of Life (with "Gdzie nastąpiła nawet mała poprawa?"),
+  "Co pokazał mi miesiąc?" (a table rolling up the numbers of each "Mój tydzień", then what
+  helped, what was hardest, the most common trigger, the most effective strategy, what I
+  learned), "Moje wzorce" (when it was hard, states before the risk rose, warning signs, what
+  helped most) and "Dalej" (continue, cut down, try, needs attention, word for next month).
+  Six months are about 554 pages.
+- Wheel of Life areas as in S2: health, emotions, relationships, work / study, finances, growth,
+  rest, and recovery (Balance: meaning and spirituality). The wheel is bigger (about 135 mm on
+  A4).
+- A new "table" block, used for the weekly roll-up and, as labelled lines, for "Mój miesiąc w
+  praktyce".
+- Deliberate difference: "Ważne terminy" stays a writing area rather than tick boxes, since dates
+  have to be written anyway.
 
 ### Later
 

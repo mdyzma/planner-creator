@@ -14,7 +14,7 @@ import {
   handText,
   sampleFill,
 } from '../primitives';
-import { ListSample, WritingSample } from '../samples';
+import { ListSample, TableSample, WritingSample } from '../samples';
 import { defineBlock } from '../registry';
 
 const L = (en: string, pl: string) => ({ en, pl });
@@ -226,6 +226,119 @@ export const numberedListBlock = defineBlock({
             );
           })}
         </ol>
+      </div>
+    );
+  },
+});
+
+const TableProps = z.object({
+  title: LocalizedText.optional(),
+  /** Heading over the row labels, e.g. "Week". */
+  rowHeader: LocalizedText.optional(),
+  /** Printed row labels. */
+  rows: z.array(LocalizedText).min(1).max(12),
+  /** Column headings; with none, each row has one cell to write in and there is no heading row. */
+  columns: z.array(LocalizedText).max(8),
+  /** `grid` draws every cell; `lines` only a writing line under each cell. */
+  ruling: z.enum(['grid', 'lines']),
+});
+
+/**
+ * A table to fill in by hand: printed row labels and column headings, empty cells. With `lines`
+ * and no columns it is a list of labelled lines ("For my health: ____").
+ */
+export const tableBlock = defineBlock({
+  type: 'table',
+  version: 1,
+  label: L('Table', 'Tabela'),
+  category: 'writing',
+  propsSchema: TableProps,
+  defaults: {
+    rows: [L('1', '1'), L('2', '2'), L('3', '3')],
+    columns: [],
+    ruling: 'grid',
+  },
+  inspector: [
+    { key: 'title', kind: 'localized-text', label: L('Title', 'Tytuł') },
+    { key: 'rowHeader', kind: 'localized-text', label: L('Row heading', 'Nagłówek wierszy') },
+    { key: 'rows', kind: 'localized-list', label: L('Rows', 'Wiersze') },
+    { key: 'columns', kind: 'localized-list', label: L('Columns', 'Kolumny') },
+    {
+      key: 'ruling',
+      kind: 'select',
+      label: L('Lines', 'Linie'),
+      options: [
+        { value: 'grid', label: L('Grid', 'Siatka') },
+        { value: 'lines', label: L('Writing lines', 'Linie do pisania') },
+      ],
+    },
+  ],
+  Render: ({ props, block, ctx }) => {
+    const sample = sampleFill(ctx, block.id, TableSample);
+    const cols = Math.max(1, props.columns.length);
+    const heads = props.columns.length > 0;
+    const grid = props.ruling === 'grid';
+    const cell = {
+      display: 'flex',
+      alignItems: 'flex-end',
+      justifyContent: grid ? 'center' : 'flex-start',
+      padding: `0 ${mm(1)} ${mm(0.6)}`,
+      minWidth: 0,
+      ...(grid
+        ? { borderRight: RULE, borderBottom: RULE }
+        : { borderBottom: RULE, marginLeft: mm(1) }),
+    } as const;
+    const label = {
+      display: 'flex',
+      alignItems: 'flex-end',
+      padding: `0 ${mm(1.5)} ${mm(0.6)} ${grid ? mm(1) : 0}`,
+      ...TYPE.body,
+      ...(grid ? { borderRight: RULE, borderBottom: RULE } : {}),
+    } as const;
+    const head = {
+      ...TYPE.caption,
+      display: 'flex',
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      textAlign: 'center',
+      padding: `${mm(0.8)} ${mm(1)}`,
+      ...(grid ? { borderRight: RULE, borderBottom: RULE } : {}),
+    } as const;
+    return (
+      <div style={column}>
+        <BlockTitle>{resolveText(ctx, props.title)}</BlockTitle>
+        <div
+          style={{
+            ...fill,
+            display: 'grid',
+            gridTemplateColumns: `max-content repeat(${cols}, 1fr)`,
+            gridTemplateRows: `${heads ? 'auto ' : ''}repeat(${props.rows.length}, 1fr)`,
+            ...(grid ? { borderTop: RULE, borderLeft: RULE } : {}),
+          }}
+        >
+          {heads && (
+            <>
+              <span style={{ ...head, justifyContent: 'flex-start' }}>
+                {resolveText(ctx, props.rowHeader)}
+              </span>
+              {props.columns.map((c, j) => (
+                <span key={j} style={head}>
+                  {resolveText(ctx, c)}
+                </span>
+              ))}
+            </>
+          )}
+          {props.rows.flatMap((row, i) => [
+            <span key={`l${i}`} style={label}>
+              {resolveText(ctx, row)}
+            </span>,
+            ...Array.from({ length: cols }, (_, j) => (
+              <span key={`c${i}-${j}`} style={cell}>
+                <Hand size={4.6}>{handText(ctx, sample?.[i]?.[j])}</Hand>
+              </span>
+            )),
+          ])}
+        </div>
       </div>
     );
   },
