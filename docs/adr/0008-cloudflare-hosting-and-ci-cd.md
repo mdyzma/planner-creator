@@ -38,7 +38,7 @@ needs headless Chromium (ADR-0004). The code is on GitHub.
 − Vendor coupling is limited to `apps/export-cf` and `wrangler.jsonc`; the web build is a portable static site.
 
 ## Amendment (2026-09-25, M8 as built)
-- **One Worker, one origin.** `apps/worker` (worker name `planner-creator`) serves the static build
+- **One Worker, one origin.** `apps/worker` (worker name `yapco`) serves the static build
   through Workers Static Assets and runs code only for `/api/*` (`run_worker_first`). The export
   endpoint is `POST /api/export/pdf` with the same contract as `apps/export-node`; the request
   validation is shared (`@planner/pdf/request`). Same origin means no CORS: the Worker refuses

@@ -1,7 +1,7 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
   // The whole site: static files from the web build, plus the PDF export API (docs/adr/0008).
-  "name": "planner-creator",
+  "name": "yapco",
   "main": "src/index.ts",
   "compatibility_date": "2026-09-01",
   "compatibility_flags": ["nodejs_compat"],

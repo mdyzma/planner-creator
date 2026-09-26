@@ -14,7 +14,7 @@ const SECTIONS = [
   'contact',
 ] as const;
 
-const REPOSITORY_URL = 'https://github.com/mdyzma/planner-creator';
+const REPOSITORY_URL = 'https://github.com/mdyzma/yapco';
 
 export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

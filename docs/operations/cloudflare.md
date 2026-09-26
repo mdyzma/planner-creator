@@ -5,7 +5,7 @@ How the app gets from `main` to Cloudflare (design: [§10.4–10.6](../architect
 
 ## What runs where
 
-One Worker, `planner-creator` (`apps/worker`), serves everything from one origin:
+One Worker, `yapco` (`apps/worker`), serves everything from one origin:
 
 | Path | Handled by | Notes |
 |---|---|---|
@@ -13,7 +13,7 @@ One Worker, `planner-creator` (`apps/worker`), serves everything from one origin
 | `/api/export/health` | Worker | `{ ok: true }` when Browser Run is available |
 | `/api/export/pdf` | Worker + **Browser Run** | Renders one part of a planner to PDF. Same-origin requests only, 20 per minute per IP, 10 MB limit, nothing stored or logged. |
 
-Until a domain is chosen, the app is served at `https://planner-creator.<your-subdomain>.workers.dev`.
+Until a domain is chosen, the app is served at `https://yapco.<your-subdomain>.workers.dev`.
 
 ## One-time setup (owner)
 
@@ -30,7 +30,7 @@ Until a domain is chosen, the app is served at `https://planner-creator.<your-su
    - `CLOUDFLARE_API_TOKEN`
    - `CLOUDFLARE_ACCOUNT_ID`
 6. **GitHub variable** (same page, *Variables* tab): `PRODUCTION_URL` = the deployed address, e.g.
-   `https://planner-creator.<your-subdomain>.workers.dev`. It turns on the weekly drift check.
+   `https://yapco.<your-subdomain>.workers.dev`. It turns on the weekly drift check.
 7. *(Optional)* Settings → Environments → `production` → add yourself as a required reviewer if you
    want a manual approval before each deploy.
 

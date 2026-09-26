@@ -982,7 +982,7 @@ nightly ─▶ drift.yml: render sample sections on Browser Run and locally; ima
 ## 11. Repository layout (refinement of the brief)
 
 ```text
-planner-creator/
+yapco/
 ├── apps/
 │   ├── web/                     Next.js app, static export (features/ as in the brief + messages/{en,pl}.json)
 │   ├── export-node/             Node + Playwright export server (local dev, CI, Docker escape hatch)

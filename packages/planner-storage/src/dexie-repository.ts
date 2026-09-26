@@ -42,7 +42,7 @@ export class PlannerDatabase extends Dexie {
   templates!: EntityTable<PlannerTemplate, 'id'>;
   contentLibraries!: EntityTable<ContentLibrary, 'library'>;
 
-  constructor(name = 'planner-creator') {
+  constructor(name = 'yapco') {
     super(name);
     this.version(1).stores({
       projects: 'id, updatedAt',

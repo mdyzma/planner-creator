@@ -2,7 +2,7 @@ name: Drift
 
 # Weekly check that PDFs from the hosted Worker (Cloudflare Browser Run) still match a local
 # Chrome rendering of the same deployed pages (M8 exit criterion, docs/operations/cloudflare.md).
-# Set the repository variable PRODUCTION_URL (e.g. https://planner-creator.<you>.workers.dev).
+# Set the repository variable PRODUCTION_URL (e.g. https://yapco.<you>.workers.dev).
 
 on:
   schedule:

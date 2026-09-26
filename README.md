@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/mdyzma/planner-creator/actions/workflows/ci.yml"><img src="https://github.com/mdyzma/planner-creator/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/mdyzma/yapco/actions/workflows/ci.yml"><img src="https://github.com/mdyzma/yapco/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white" alt="Node 24">
   <img src="https://img.shields.io/badge/pnpm-workspace-F69220?logo=pnpm&logoColor=white" alt="pnpm workspace">
   <img src="https://img.shields.io/badge/Next.js-16-000000?logo=next.js" alt="Next.js 16">
@@ -115,8 +115,8 @@ panel on the right.
 Chrome for PDF export.
 
 ```bash
-git clone https://github.com/mdyzma/planner-creator.git
-cd planner-creator
+git clone https://github.com/mdyzma/yapco.git
+cd yapco
 corepack enable
 pnpm install
 pnpm dev
@@ -139,7 +139,7 @@ For everyday use (printing a month, backups, updating, troubleshooting) see the
 ## Repository layout
 
 ```text
-planner-creator/
+yapco/
 ├── apps/
 │   ├── web/                    Next.js app: dashboard, designer, preview, export, guide
 │   │                           (static export, next-intl, data in IndexedDB)

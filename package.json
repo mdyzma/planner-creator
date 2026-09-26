@@ -1,5 +1,5 @@
 {
-  "name": "planner-creator",
+  "name": "yapco",
   "private": true,
   "packageManager": "pnpm@12.6.0",
   "engines": {
