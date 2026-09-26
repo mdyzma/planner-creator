@@ -6,7 +6,7 @@ Where "Dzień po Dniu" stands after v0.6.0, measured against the two content rev
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.8.0 (not tagged yet).
+Last updated: 2026-09-26, after v0.7.0 (content, quality, booklets and offline).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -79,7 +79,7 @@ Loose ends:
 
 ### Offline use (M9)
 
-Done (not tagged yet):
+Done (released in v0.7.0):
 
 - The app is installable (web app manifest, icons) and works offline: a service worker, generated
   after each build (`apps/web/scripts/build-sw.mjs`), keeps every file of the build in the
@@ -92,15 +92,15 @@ Done (not tagged yet):
 
 ### Booklet printing (M9)
 
-Done (not tagged yet):
+Done (released in v0.7.0):
 
 - A5 planners print as folded booklets on A4 paper: "A5 booklet on A4 paper" in the export, with
   1, 2, 4 or 8 sheets per bundle (signature). Pages are laid out in saddle-stitch order with fold
   marks; folded and stacked, the bundles read in order (ADR-0006 amendment, runbook).
 
-### v0.8.0 — Balance as a first-class edition, and quality
+### Balance as a first-class edition, and quality (planned as v0.8.0)
 
-Done (not tagged yet):
+Done (released in v0.7.0):
 
 - Quotes per edition: library items can list the modules they need, and the generator deals only
   those that fit. The library grew from 12 to 38 original quotes (32 for every planner, 6 for the
@@ -118,7 +118,7 @@ Done (not tagged yet):
 
 ### v0.7.0 — Finishing the content
 
-Done (not tagged yet):
+Done (released in v0.7.0):
 
 - Day page for everyone: "Z kim dziś porozmawiam?" beside the morning commitment, and "Czego
   teraz potrzebuję?" as a line under the HALT-B rows (the per-row "Powód:" stays).
