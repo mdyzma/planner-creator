@@ -297,8 +297,16 @@ chmod 600 /root/.ssh/authorized_keys
 
 **3. Jenkins.**
 
-- Plugins (Manage Jenkins → Plugins): **Pipeline**, **Git**, **SSH Agent**, and **Docker
-  Pipeline** if your agents have Docker.
+- The Jenkins machine builds YAPCO itself, so it needs Node.js 24, Chromium and git once (as
+  root, Debian 12):
+
+  ```bash
+  curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
+  apt-get install -y git chromium fonts-dejavu-core fonts-liberation openssh-client
+  corepack enable
+  ```
+
+- Plugins (Manage Jenkins → Plugins): **Pipeline**, **Git** and **SSH Agent**.
 - Credentials (Manage Jenkins → Credentials → *Add*): kind **SSH Username with private key**,
   ID `yapco-deploy`, username `root`, private key = the contents of the `yapco-deploy` file.
 - Environment variables (Manage Jenkins → System → *Global properties* → *Environment
@@ -309,13 +317,7 @@ chmod 600 /root/.ssh/authorized_keys
 - **New Item** → name `yapco` → **Pipeline** → *Pipeline script from SCM* → **Git** → the Gitea
   URL, branch `*/main`, script path `Jenkinsfile` → *Save* → **Build Now**.
 
-The first build takes longest (it installs Chromium and the dependencies in the build
-container). A green build ends with the install script's `Done. Serving …`.
-
-**Docker or not.** The Jenkinsfile runs its stages in a `node:24-bookworm` container, so the
-agent needs Docker and nothing else. For an agent without Docker, change `agent { docker … }` to
-`agent any`, install Node.js 24 and Chromium on the agent, and set `CHROME_PATH` in the
-`environment` block to Chromium's path there.
+The first build takes longest (it downloads the dependencies). A green build ends with the install script's `Done. Serving …`.
 
 Without `YAPCO_DEPLOY_HOST`, Jenkins runs the checks and skips the deploy.
 

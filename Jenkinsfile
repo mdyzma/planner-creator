@@ -5,15 +5,13 @@
 //   YAPCO_DEPLOY_HOST  the container's address, e.g. yapco.lan or 192.168.1.50 (empty: no deploy)
 //   YAPCO_REPO         what the container fetches, e.g. http://gitea.lan:3000/mdyzma/yapco.git
 // Credentials: an "SSH Username with private key" with the id yapco-deploy (user root).
+//
+// Runs on the Jenkins machine itself, which needs once (as root, Debian 12):
+//   curl -fsSL https://deb.nodesource.com/setup_24.x | bash - && apt-get install -y nodejs
+//   apt-get install -y git chromium fonts-dejavu-core fonts-liberation openssh-client
+//   corepack enable
 pipeline {
-  // A plain agent instead: `agent any`, with Node 24 and Chromium installed on it, and
-  // CHROME_PATH pointing to Chromium.
-  agent {
-    docker {
-      image 'node:24-bookworm'
-      args '-u root'
-    }
-  }
+  agent any
 
   options {
     timeout(time: 45, unit: 'MINUTES')
@@ -36,9 +34,9 @@ pipeline {
     stage('Set up') {
       steps {
         sh '''
-          apt-get update -qq
-          DEBIAN_FRONTEND=noninteractive apt-get install -y -qq chromium fonts-dejavu-core fonts-liberation openssh-client >/dev/null
-          corepack enable
+          node --version
+          "$CHROME_PATH" --version
+          pnpm --version
           pnpm install --frozen-lockfile
         '''
       }
@@ -87,8 +85,6 @@ pipeline {
 
   post {
     always {
-      // The workspace is written as root inside the container; hand it back before cleaning.
-      sh 'chown -R "$(stat -c %u:%g .)" . || true'
       deleteDir()
     }
   }
