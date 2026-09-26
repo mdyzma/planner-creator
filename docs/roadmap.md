@@ -1,9 +1,10 @@
 # Roadmap
 
-Where "Dzień po Dniu" stands after v0.2.0, measured against the two content reviews,
+Where "Dzień po Dniu" stands after v0.6.0, measured against the two content reviews,
 [improvement-session-1.md](improvement-session-1.md) (S1) and
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
-content specification), and what comes next.
+content specification), and what comes next. Releases bundle several steps; a tag and release
+only when a set of steps is complete.
 
 Last updated: 2026-09-26, after v0.6.0 (front matter and Month 2.0).
 
@@ -33,43 +34,75 @@ Compatible with the intent of the reviews; keep unless there is a reason to chan
 - **Mini-ABC weekly, not daily.** S1 itself advises against the full ABC every day.
 - **HALT note column "Powód:"** instead of S2's "Czego teraz potrzebuję?"; both can coexist
   (phase 1).
+- **Word of the month on the divider page**, not on the month opening; "Dalej" asks for next
+  month's word.
+- **"Ważne terminy" as a writing area**, not tick boxes: dates have to be written anyway.
+- **Sleep quality 1–5**, the one exception to 0–10, kept by choice.
 
-## Open conflicts
+## Still open
 
-1. **The 24-hour commitment was shortened** (A4 two lines, A5 one) while S2 expands it into
-   "Moje 24 godziny" with four prompts, and adds a morning check-in and "important / pleasant" to
-   the same left page, which is full (priorities, 06–22 schedule, HALT-B). The main layout
-   question; see v0.3.0.
-2. **"Mityng AA" is a fixed marker** on the weekly pages; S2 wants generic markers (therapy,
-   meeting / group, exercise, recovery action, !) with AA as an option.
-3. **Front matter is still therapeutic**: the therapeutic contract, the safety rules, and the Wheel
-   of Life area "Trzeźwość i 12 Kroków".
-4. **Size.** Six months are about 530 pages. S1 asks not to add daily pages (none were added), but
-   new modules add pages; acceptable because months print and file one at a time.
+From the content reviews:
 
-## Still missing
+- **Day (S2):** the full "Moje 24 godziny" (four prompts; one line kept), "coś ważnego / coś
+  przyjemnego", "Czego teraz potrzebuję?" and "Z kim dziś porozmawiam?". The left page is full
+  (priorities, 06–22 plan, HALT-B), and S1 limits the day to two pages and 5–7 minutes in the
+  morning.
+- **Warning signs as tick boxes** (S2): they are still printed prompts to cross out.
+- **More modules (S2 XII):** Mindfulness and Productivity; and a "Basic" preset (all modules
+  off), which the README already shows.
 
-- **Day:** morning check-in (mood, energy, tension, craving, sleep hours and quality); "Moje 24
-  godziny" (take care of myself by / watch out for / if it gets hard, first / who I want to be in
-  touch with); "something important / something pleasant"; "Czego teraz potrzebuję?"; "Jutro warto
-  pamiętać"; daily contact ("Z kim dziś porozmawiam?").
-- **Week:** intention, three most important things, "Mój mały eksperyment", and "Co zauważyłem?"
-  in the review.
-- **Month:** word of the month, "Tego nie muszę robić idealnie", "for my health / relationships /
-  rest / growth / pleasure / recovery", important dates as ticks, a 3–4 page monthly review
-  (patterns, what next, word for next month), values ("Jakim człowiekiem chcę być?"), new default
-  Wheel of Life areas.
-- **Front matter "Na dobry początek":** new "How to use", "Moja umowa ze sobą", "Moja wizja
-  dobrego życia", "Więcej / mniej", values, strengths, "Co mnie regeneruje"; a line on the cover
-  ("Nie muszę zmieniać całego życia dzisiaj…").
-- **Safety:** SOS on three pages (plan with contacts, alarm thresholds 0–3 / 4–6 / 7–8 / 9–10,
-  emergency list), SOBER and "craving is a wave" (urge surfing), "Mój łańcuch nawrotu", "Plan po
-  potknięciu", "Karta głodu", warning signs as tick boxes with a threshold, a flexible support
-  network table ("when I can call", "when I want to isolate, first I contact").
-- **Architecture:** modules (Core, Recovery, Wellbeing, CBT, Mindfulness, Productivity) and presets
-  ("Recovery Edition", "Balance") chosen before the PDF (S2 XII–XIII).
+Loose ends:
 
-## Plan
+- A Balance quote library and a Balance guide booklet (both are shared with the Recovery Edition).
+- Editing module variants directly in the designer (it edits the variant that prints).
+- "Moja umowa ze sobą" and the therapeutic contract overlap in the Recovery Edition.
+- Size: six months are about 554 pages; acceptable, since months print and file one at a time.
+
+## Next
+
+### v0.7.0 — Finishing the content
+
+1. **Day page.** Proposed: "Czego teraz potrzebuję?" as the title of the HALT-B note column; "Z
+   kim dziś porozmawiam?" as one short line under the commitment; the full "Moje 24 godziny" and
+   "important / pleasant" in an optional "Dzień+" module that takes the place of "Plan dnia".
+2. **Warning signs as tick boxes**, keeping the threshold ("Gdy zauważę \_\_ z tych
+   sygnałów").
+3. **A "Basic" preset** (all modules off), and a decision on the contract in the Recovery Edition
+   (off by default, or both).
+4. **Roadmap:** keep "Still open" current.
+
+### v0.8.0 — Balance as a first-class edition, and quality
+
+1. **Quotes and guide per edition:** quotes tagged by edition (a neutral library for Balance);
+   the printable guide follows the planner's edition and modules.
+2. **Automatic overflow check:** render every page (A4 and A5, both editions, examples on) and
+   fail when text overflows its block, instead of spotting clipped text in screenshots.
+3. **Designer:** edit module variants directly.
+
+### v0.9.0 / 1.0 — Print and publish
+
+1. **M9:** booklet printing (A5 folded from A4) and PWA / offline. The handwriting preview is
+   dropped unless needed; the example filling covers most of it.
+2. **Production deployment on Cloudflare:** needs `CLOUDFLARE_API_TOKEN`,
+   `CLOUDFLARE_ACCOUNT_ID` and `PRODUCTION_URL` (see
+   [operations/cloudflare.md](operations/cloudflare.md)); then the first deploy and smoke test.
+3. **Before 1.0:** a real print test of one month (calibration sheet, duplex, ring binder), a
+   proofreading pass of the English texts, and ideally a review of the recovery content by a
+   therapist.
+
+### Optional, any time
+
+- A second, non-therapeutic template (e.g. a simple weekly planner), to prove the engine is
+  generic, as the original brief intended.
+- Mindfulness and Productivity modules.
+
+### Decisions needed
+
+1. Day page: the "Dzień+" module, or "Moje 24 godziny" in every planner?
+2. The contract in the Recovery Edition: off by default, or keep both?
+3. Order: v0.7.0 first, or pull something forward (deployment, overflow check)?
+
+## Released
 
 ### v0.3.0 — Daily page 2.0: the morning
 
@@ -132,7 +165,7 @@ Not yet: a Balance quote library, a Balance guide booklet, editing variants dire
 
 ### v0.6.0 — "Na dobry początek" (front matter)
 
-Released together with Month 2.0 (below, planned as v0.7.0) as **v0.6.0**.
+Released together with Month 2.0 (below) as **v0.6.0**.
 
 Done:
 
@@ -150,7 +183,7 @@ Done:
 - The introduction is now i–x (Recovery Edition) or i–viii (Balance); six months are about 542
   pages.
 
-### Month 2.0 (planned as v0.7.0)
+### Month 2.0 (released in v0.6.0)
 
 Done:
 
@@ -174,12 +207,6 @@ Done:
   praktyce".
 - Deliberate difference: "Ważne terminy" stays a writing area rather than tick boxes, since dates
   have to be written anyway.
-
-### Later
-
-- M9: booklet printing, handwriting preview, PWA / offline.
-- Production deployment on Cloudflare (needs `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID` and
-  `PRODUCTION_URL`; see [operations/cloudflare.md](operations/cloudflare.md)).
 
 ## Decisions for v0.3.0
 
