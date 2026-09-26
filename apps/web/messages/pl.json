@@ -526,11 +526,11 @@
     },
     "export": {
       "title": "Tworzenie PDF",
-      "body": "Gdy naciśniesz „Utwórz PDF”, planer (układ, teksty oraz wpisane imiona i daty) jest wysyłany szyfrowanym połączeniem do usługi PDF tej strony. Usługa otwiera go w tymczasowej przeglądarce w Cloudflare (Browser Run), drukuje strony i odsyła plik PDF. Planer nie jest zapisywany ani logowany. Na Twoim komputerze lokalna usługa eksportu robi to samo, a nic nie opuszcza komputera."
+      "body": "Gdy naciśniesz „Utwórz PDF”, planer (układ, teksty oraz wpisane imiona i daty) jest wysyłany szyfrowanym połączeniem, przez Cloudflare, do własnego serwera tej strony. Tam tymczasowa przeglądarka otwiera go, drukuje strony i od razu odsyła plik PDF. Ani planer, ani PDF nie są zapisywane, a serwer nie prowadzi dziennika żądań. Na Twoim komputerze lokalna usługa eksportu robi to samo, a nic nie opuszcza komputera."
     },
     "hosting": {
       "title": "Hosting",
-      "body": "Strona działa w Cloudflare. Jak każda witryna, Cloudflare przetwarza dane techniczne, np. adresy IP, aby dostarczać i chronić stronę, zgodnie z własną polityką prywatności. Limit tworzenia PDF używa Twojego adresu IP przez minutę i niczego potem nie przechowuje."
+      "body": "Strona działa na własnym serwerze jej właściciela i jest udostępniana przez Cloudflare. Jak w przypadku każdej witryny za Cloudflare, Cloudflare przetwarza dane techniczne, np. adresy IP, i przekazuje dalej szyfrowane połączenie, aby dostarczać i chronić stronę, zgodnie z własną polityką prywatności. Aby chronić serwer, Cloudflare może ograniczać liczbę żądań PDF z jednego adresu IP."
     },
     "paper": {
       "title": "Notatki należą do papieru",

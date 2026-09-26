@@ -526,11 +526,11 @@
     },
     "export": {
       "title": "Creating a PDF",
-      "body": "When you press “Create PDF”, the planner (its layout, texts and any names or dates you filled in) is sent over an encrypted connection to the site's PDF service. The service opens it in a temporary browser on Cloudflare (Browser Run), prints the pages and sends the PDF back. The planner is not stored or logged. On your own computer, the local export service does the same without anything leaving the computer."
+      "body": "When you press “Create PDF”, the planner (its layout, texts and any names or dates you filled in) is sent over an encrypted connection, through Cloudflare, to the site’s own server. There a temporary browser opens it, prints the pages and sends the PDF straight back. Neither the planner nor the PDF is stored, and the server keeps no log of requests. On your own computer, the local export service does the same without anything leaving the computer."
     },
     "hosting": {
       "title": "Hosting",
-      "body": "The site runs on Cloudflare. Like any website, Cloudflare processes technical data such as IP addresses to deliver and protect the site, under its own privacy policy. A rate limit on PDF creation uses your IP address for one minute and keeps nothing afterwards."
+      "body": "The site runs on its owner’s own server and is delivered through Cloudflare. Like any website behind Cloudflare, Cloudflare processes technical data such as IP addresses, and carries the encrypted connection on its way, to deliver and protect the site, under its own privacy policy. To protect the server, Cloudflare may limit how many PDF requests come from one IP address."
     },
     "paper": {
       "title": "Your notes belong on paper",

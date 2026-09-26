@@ -102,5 +102,6 @@ binding is emulated with a local Chrome that wrangler **downloads on the first P
 
 - Web Analytics / Zaraz: **off** (the product has no analytics, §10.2).
 - Workers Logs: on (errors only are written). The Worker never logs request bodies; keep it that way.
-- The privacy notice at `/en/privacy` and `/pl/privacy` describes exactly this setup; update it when
-  anything here changes.
+- The privacy notice at `/en/privacy` and `/pl/privacy` describes the self-hosted setup (route B in
+  [deploy-subdomain.md](deploy-subdomain.md): PDFs made on the site's own server). Before hosting
+  on Workers, change its "Creating a PDF" and "Hosting" sections to Browser Run and Cloudflare.
