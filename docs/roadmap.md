@@ -1,12 +1,12 @@
 # Roadmap
 
-Where "Dzień po Dniu" stands after v0.8.0, measured against the two content reviews,
+Where "Dzień po Dniu" stands after v0.9.0, measured against the two content reviews,
 [improvement-session-1.md](improvement-session-1.md) (S1) and
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.8.0 (online on Proxmox).
+Last updated: 2026-09-26, after v0.9.0 (a second template and two new modules).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -78,6 +78,17 @@ Loose ends:
 3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### v0.9.0 — A second template, two new modules
+
+Released 2026-09-26:
+
+- A second template, "Week by Week" (`templates/weekly-planner`): a simple weekly planner for up
+  to a year, made from the existing blocks with no engine changes.
+- "Day by Day" gets the Mindfulness and Productivity modules (S2 XII), both off by default; the
+  content reviews have no open items left.
+- Polish edition names (Terapeutyczny, Balans, Podstawowy); the line apple in the dashboard
+  header; the privacy page describes PDFs made on the site's own server.
 
 ### v0.8.0 — Online
 
