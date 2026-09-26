@@ -1,7 +1,7 @@
+import { BrandMark } from '@planner/renderer';
 import type { Locale } from 'next-intl';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { Logo } from '@/components/Logo';
 import { Link } from '@/i18n/navigation';
 import { ProjectDashboard } from '@/components/ProjectDashboard';
 
@@ -16,7 +16,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="flex items-center gap-3 text-2xl font-semibold tracking-wide">
-            <Logo size={44} />
+            {/* The line apple from the title page, as in the app bar and the tab icon. */}
+            <BrandMark heightMm={11.5} color="currentColor" />
             {t('appName')}
           </h1>
           <p className="mt-1 text-ink-muted">{d('intro')}</p>
