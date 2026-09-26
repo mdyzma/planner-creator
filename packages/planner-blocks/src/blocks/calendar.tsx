@@ -356,7 +356,7 @@ export const dayStripBlock = defineBlock({
           <span style={{ ...TYPE.subheading }}>{name}</span>
           {date && <span style={TYPE.caption}>{formatDate(date, ctx.locale, 'day-month')}</span>}
           {outside && <span style={TYPE.caption}>—</span>}
-          <span style={{ marginLeft: 'auto', display: 'flex', gap: mm(1.2) }}>
+          <span style={{ marginLeft: 'auto', display: 'flex', gap: mm(1.2), paddingRight: mm(1) }}>
             {props.markers.map((m) => (
               <span key={m} style={{ position: 'relative', display: 'inline-flex' }}>
                 <MarkerIcon marker={m} locale={ctx.locale} />

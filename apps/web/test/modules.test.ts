@@ -23,10 +23,7 @@ const planner = (locale: Locale, format: FormatId, modules?: Record<string, bool
     modules,
   }).project;
 
-/**
- * Every printed page as plain text, optionally with the example filling. Quotes are left out: the
- * quote library is not per module yet.
- */
+/** Every printed page as plain text, with its quotes, and optionally with the example filling. */
 function printedText(project: PlannerProject, samples = false): string[] {
   const layout = layoutProject(project);
   return layout.pages.map((p) =>
@@ -39,7 +36,7 @@ function printedText(project: PlannerProject, samples = false): string[] {
         pageContext: p.page.instance?.context,
         vars: p.vars,
         range: layout.range,
-        contentFor: () => undefined,
+        contentFor: p.contentFor,
         locale: project.locale,
         grammaticalGender: project.i18nOptions.grammaticalGender,
         mode: 'print',

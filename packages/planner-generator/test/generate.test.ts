@@ -107,9 +107,9 @@ describe('generate: 6-month therapeutic planner from 2026-10-01', () => {
 
   it('deals a different quote each day, cycling the library before repeating', () => {
     expect(result.content.slots).toBe(182);
-    expect(result.content.available).toBe(12);
-    expect(result.content.maxUses).toBe(Math.ceil(182 / 12));
-    expect(result.content.minGap).toBe(12);
+    expect(result.content.available).toBe(38);
+    expect(result.content.maxUses).toBe(Math.ceil(182 / 38));
+    expect(result.content.minGap).toBe(38);
     const firstWeek = pages
       .filter((p) => p.templateId === 'day-left')
       .slice(0, 7)

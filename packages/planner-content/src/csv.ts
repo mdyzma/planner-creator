@@ -6,7 +6,7 @@ import { nextItemId } from './validate';
  * Spreadsheet import/export for content libraries, so quotes can be written in Excel or Google
  * Sheets (§4.5.1). One row per item, both languages side by side:
  *
- *   id, kind, en, pl, author, source, license, categories, tags, months
+ *   id, kind, en, pl, author, source, license, categories, tags, months, modules
  *
  * Only `en` or `pl` is required; lists use `|` (e.g. `recovery|patience`).
  */
@@ -21,6 +21,7 @@ export const CSV_COLUMNS = [
   'categories',
   'tags',
   'months',
+  'modules',
 ] as const;
 
 /** Splits CSV text into rows (RFC 4180 quoting, CRLF or LF, comma or semicolon). */
@@ -119,6 +120,7 @@ export function importItemsCsv(
     if (get('en')) text.en = get('en');
     if (get('pl')) text.pl = get('pl');
     const months = list(get('months')).map(Number);
+    const modules = list(get('modules'));
 
     const candidate = {
       id: get('id') ?? nextItemId([...(options.existing ?? []), ...items], options.idPrefix),
@@ -130,6 +132,7 @@ export function importItemsCsv(
       categories: list(get('categories')),
       tags: list(get('tags')),
       ...(months.length > 0 ? { scope: { months } } : {}),
+      ...(modules.length > 0 ? { modules } : {}),
     };
     const parsed = ContentItemSchema.safeParse(candidate);
     if (parsed.success) {
@@ -162,6 +165,7 @@ export function exportItemsCsv(items: readonly ContentItem[]): string {
         item.categories.join('|'),
         item.tags.join('|'),
         (item.scope?.months ?? []).join('|'),
+        (item.modules ?? []).join('|'),
       ]
         .map(cell)
         .join(','),

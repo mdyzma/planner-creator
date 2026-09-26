@@ -5,6 +5,7 @@ import { PageView } from '@planner/renderer';
 import type { FormatId, Locale, PlannerProject, PlannerTemplate } from '@planner/schema';
 import { FORMAT_IDS } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -71,16 +72,29 @@ const CONTENT_WIDTH = 180;
 
 /** Modules that replace a part of the standard page; the guide shows the standard page. */
 const REPLACING_MODULES = new Set(['dayplus']);
+/** Optional pages the guide always explains, whatever the edition. */
+const EXPLAINED_MODULES = new Set(['cbt']);
 
-/** Every other module switched on, so the guide explains the optional pages too. */
-const allModules = (template: PlannerTemplate) =>
-  Object.fromEntries((template.modules ?? []).map((m) => [m.id, !REPLACING_MODULES.has(m.id)]));
+/**
+ * The guide's modules for an edition (a preset): its modules, plus the optional pages, without
+ * the modules that replace part of a page. Without a known edition, every such module is on.
+ */
+function guideModules(template: PlannerTemplate, edition: string | null) {
+  const preset = template.presets?.find((p) => p.id === edition);
+  return Object.fromEntries(
+    (template.modules ?? []).map((m) => [
+      m.id,
+      !REPLACING_MODULES.has(m.id) &&
+        (EXPLAINED_MODULES.has(m.id) || (preset ? (preset.modules[m.id] ?? m.default) : true)),
+    ]),
+  );
+}
 
-function exampleProject(locale: Locale, format: FormatId): PlannerProject {
+function exampleProject(locale: Locale, format: FormatId, edition: string | null): PlannerProject {
   const bundle = BUNDLED_TEMPLATES[0]!;
   const { project } = createGeneratedProject({
     bundle,
-    modules: allModules(bundle.template),
+    modules: guideModules(bundle.template, edition),
     id: 'guide-example',
     name: 'Guide',
     format,
@@ -98,8 +112,14 @@ export function GuideScreen() {
   const common = useTranslations('Common');
   const locale = useLocale() as Locale;
   const [format, setFormat] = useState<FormatId>('A4');
+  const presets = BUNDLED_TEMPLATES[0]!.template.presets ?? [];
+  // The edition of the planner the guide was opened from (?edition=…), else the first one.
+  const requested = useSearchParams().get('edition');
+  const [edition, setEdition] = useState<string | null>(
+    () => presets.find((p) => p.id === requested)?.id ?? presets[0]?.id ?? null,
+  );
 
-  const project = useMemo(() => exampleProject(locale, format), [locale, format]);
+  const project = useMemo(() => exampleProject(locale, format, edition), [locale, format, edition]);
   const layout = useMemo(() => layoutProject(project), [project]);
   // The first page of each kind whose dates all fall inside the planner (so a week that starts
   // before the planner, with faded days, is not the one shown).
@@ -115,6 +135,13 @@ export function GuideScreen() {
     const pages = layout.pages.filter((p) => p.page.instance?.templateId === templateId);
     return pages.find(inRange) ?? pages[0];
   };
+  // The chapters and pages this edition prints (e.g. no crisis section without recovery).
+  const chapters = CHAPTERS.map((c) => ({
+    key: c.key,
+    groups: c.pages
+      .map((group) => group.map(firstOf).filter((p): p is RenderedPage => Boolean(p)))
+      .filter((pages) => pages.length > 0),
+  })).filter((c) => c.groups.length > 0);
   const gender = project.i18nOptions.grammaticalGender;
   const guideText = (p: RenderedPage | undefined) =>
     p?.template?.guide ? applyGender(localize(p.template.guide, locale), gender) : '';
@@ -180,6 +207,22 @@ export function GuideScreen() {
             ))}
           </select>
         </label>
+        {presets.length > 0 && (
+          <label className="flex items-center gap-2">
+            {t('edition')}
+            <select
+              className="rounded border border-line bg-surface px-2 py-1"
+              value={edition ?? ''}
+              onChange={(e) => setEdition(e.target.value)}
+            >
+              {presets.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {localize(p.name, locale)}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <span className="text-ink-muted">{t('printHint')}</span>
         <button
           type="button"
@@ -229,17 +272,15 @@ export function GuideScreen() {
               })}
             </p>
             <ol className="list-decimal pl-6 leading-relaxed">
-              {CHAPTERS.map((c) => (
+              {chapters.map((c) => (
                 <li key={c.key}>{t(`chapter.${c.key as 'intro'}`)}</li>
               ))}
             </ol>
           </div>
         </GuidePage>
 
-        {CHAPTERS.flatMap((chapter) =>
-          chapter.pages.map((group, i) => {
-            const pages = group.map(firstOf).filter((p): p is RenderedPage => Boolean(p));
-            if (pages.length === 0) return null;
+        {chapters.flatMap((chapter) =>
+          chapter.groups.map((pages, i) => {
             const spread = pages.length > 1;
             const pageWidth = pages[0]!.frame.trim.w;
             // A spread fills the width; a single page is shown large with the text below.

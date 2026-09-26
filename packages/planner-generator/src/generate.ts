@@ -1,4 +1,10 @@
-import { conditionConfig, evaluateCondition, padToForProfile, paginate } from '@planner/core';
+import {
+  conditionConfig,
+  effectiveModules,
+  evaluateCondition,
+  padToForProfile,
+  paginate,
+} from '@planner/core';
 import { formatDate, localize } from '@planner/i18n';
 import type {
   ContentLibrary,
@@ -203,6 +209,7 @@ export function generate(input: GenerateInput): GenerateResult {
     cadence: config.quoteCadence,
     seed: input.seed,
     bindings: input.bindings ?? DEFAULT_BINDINGS,
+    modules: effectiveModules(template, config),
   });
 
   const document: PlannerDocument = { root: withContent };

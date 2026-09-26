@@ -1,3 +1,4 @@
+import { effectiveModules } from '@planner/core';
 import { DEFAULT_BINDINGS, redealContent } from '@planner/generator';
 import type { ContentItem, ContentKind, ContentLibrary, PlannerProject } from '@planner/schema';
 
@@ -95,6 +96,7 @@ export function redeal(project: PlannerProject) {
     cadence: project.generation.quoteCadence,
     seed: project.id,
     bindings: DEFAULT_BINDINGS,
+    modules: effectiveModules(project.template, project.generation),
   });
   return { project: { ...project, document: { root } }, report };
 }

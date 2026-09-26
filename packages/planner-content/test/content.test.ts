@@ -30,7 +30,7 @@ describe('validateItems', () => {
     const items = [
       item('q-1', 'One day at a time.', 'Dzień po dniu.'),
       item('q-2', 'One day at a time!', ''),
-      item('q-3', 'x'.repeat(130), 'y'.repeat(170)),
+      item('q-3', 'x'.repeat(110), 'y'.repeat(140)),
       item('q-4', 'Borrowed.', 'Pożyczone.', { license: 'user' }),
       item('q-5', 'Shared.', 'Udostępnione.', { license: 'cc-by' }),
       item('q-1', 'Other.', 'Inne.'),
@@ -41,7 +41,7 @@ describe('validateItems', () => {
     expect(codes).toEqual(
       expect.arrayContaining([
         'q-2:missing-translation:pl:error',
-        'q-3:too-long-for-a5:en:warning',
+        'q-3:too-long-for-a4:en:warning',
         'q-3:too-long:pl:error',
         'q-4:not-shippable:warning',
         'q-5:needs-attribution:error',

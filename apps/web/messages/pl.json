@@ -184,7 +184,7 @@
     "issues": {
       "missing-translation": "Brak: {language}",
       "too-long": "Za długa do pola sentencji",
-      "too-long-for-a5": "Może się nie zmieścić w A5",
+      "too-long-for-a4": "Może się nie zmieścić w A4",
       "not-shippable": "Nie do udostępnianego szablonu",
       "needs-attribution": "Wymaga autora lub źródła",
       "duplicate": "Taka sama jak {other}",
@@ -342,8 +342,15 @@
       "content": "Treść",
       "typography": "Typografia",
       "layout": "Układ",
-      "print": "Druk"
+      "print": "Druk",
+      "variants": "Wersje dla modułów"
     },
+    "variantsHint": "Co blok mówi, gdy moduły są włączone lub wyłączone. Każdą wersję możesz edytować tutaj, bez przełączania modułów.",
+    "variantOn": "{name}: wł.",
+    "variantOff": "{name}: wył.",
+    "variantOther": "Inny warunek",
+    "variantPrints": "drukuje się w tym planerze",
+    "variantNoFields": "Zmienia ustawienia, których nie ma w tym panelu.",
     "sizeTemplateOnly": "Rozmiar jest wspólny dla wszystkich stron z tym układem.",
     "keepTogether": "Nie dziel (zawsze w całości)",
     "selectBlock": "Zaznacz blok na stronie, aby go zmienić.",
@@ -524,6 +531,7 @@
   "Guide": {
     "title": "Jak wypełniać planer",
     "format": "Format planera",
+    "edition": "Wydanie",
     "printHint": "Drukuj lub zapisz jako PDF: A4, rzeczywisty rozmiar, bez nagłówków.",
     "print": "Drukuj / Zapisz jako PDF",
     "intro": "Ten przewodnik omawia każdy rodzaj strony w planerze: co wpisać w poszczególnych częściach i dlaczego to pomaga. Na ilustracjach są strony wypełnione przez przykładową osobę, Marka; wszystkie imiona, numery i wydarzenia są zmyślone.",

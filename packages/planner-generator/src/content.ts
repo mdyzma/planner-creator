@@ -98,6 +98,8 @@ export function assignContent(
     cadence: GenerationConfig['quoteCadence'];
     seed: string;
     bindings: readonly ContentBinding[];
+    /** The planner's modules, on or off; items that need a module that is off are left out. */
+    modules?: Readonly<Record<string, boolean>>;
   },
 ): { root: SectionNode; report: ContentReport } {
   const report: ContentReport = { slots: 0, available: 0, maxUses: 0 };
@@ -107,7 +109,11 @@ export function assignContent(
   for (const binding of options.bindings) {
     const items = options.libraries
       .flatMap((lib) => lib.items)
-      .filter((i) => i.kind === binding.contentKind);
+      .filter(
+        (i) =>
+          i.kind === binding.contentKind &&
+          (i.modules ?? []).every((m) => options.modules?.[m] !== false),
+      );
     decks.set(binding.contentKind, seededShuffle(items, `${options.seed}:${binding.contentKind}`));
   }
   report.available = [...decks.values()].reduce((n, d) => n + d.length, 0);

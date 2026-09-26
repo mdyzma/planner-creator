@@ -32,8 +32,10 @@ pnpm check        # lint, typecheck, tests and build: the same as CI
 - Keep `pnpm check` green. CI runs the same command on every push.
 - Add or update tests with the change. Tests use Vitest and live next to each package in
   `test/`.
-- Export changes: the end-to-end PDF tests need the built web app
-  (`pnpm --filter @planner/web build`, then `pnpm --filter @planner/export-node test:e2e`).
+- Layout and content changes: the end-to-end tests need the built web app
+  (`pnpm --filter @planner/web build`, then `pnpm --filter @planner/export-node test:e2e`). They
+  include PDF export and an overflow check that renders every page of one month in each edition
+  and format, with the example filling, and fails when printed text is cut off. CI runs them too.
 - Format with Prettier (`pnpm format`). ESLint and TypeScript run in strict mode.
 
 ## Conventions
@@ -98,7 +100,9 @@ pnpm --filter @planner/template-therapeutic-recovery quotes:import   # back to J
 ```
 
 Only add quotes you are allowed to share: your own words, public domain, or with the licence and
-source filled in. The content checks flag missing translations, length and duplicates.
+source filled in. The content checks flag missing translations, length and duplicates. Keep a quote
+to 100 characters, so it fits the small box beside the date in A4. A quote that only suits the
+recovery module lists it: `"modules": ["recovery"]`.
 
 ## Licence
 

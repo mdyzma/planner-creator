@@ -1,5 +1,6 @@
 'use client';
 
+import { effectiveModules, matchingPreset } from '@planner/core';
 import { scanTranslations, localize } from '@planner/i18n';
 import type { OutputFile } from '@planner/pdf';
 import { calibrationPdf, planExport } from '@planner/pdf';
@@ -69,6 +70,10 @@ function Export({
   const ids = useId();
 
   const profiles = PROFILES[project.format];
+  const edition = matchingPreset(
+    project.template,
+    effectiveModules(project.template, project.generation),
+  );
   const [profile, setProfile] = useState<OfferedProfile>(
     (profiles as PrintProfile[]).includes(project.print.profile)
       ? (project.print.profile as OfferedProfile)
@@ -291,7 +296,13 @@ function Export({
               <span className="block text-xs text-ink-muted">{t('samplesHint')}</span>
             </span>
           </label>
-          <Link href="/guide" className="mt-3 inline-block underline">
+          <Link
+            href={{
+              pathname: '/guide',
+              query: edition ? { edition } : {},
+            }}
+            className="mt-3 inline-block underline"
+          >
             {t('guideLink')}
           </Link>
         </section>

@@ -63,6 +63,9 @@ export function withExampleContent(project: PlannerProject): PlannerProject {
           ...(!page.sampleVariants && source?.sampleVariants
             ? { sampleVariants: source.sampleVariants }
             : {}),
+          ...(!page.guideVariants && source?.guideVariants
+            ? { guideVariants: source.guideVariants }
+            : {}),
           ...(!page.guide && source?.guide ? { guide: source.guide } : {}),
         },
       ];

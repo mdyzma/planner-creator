@@ -23,6 +23,7 @@ import {
   setRecipeChildEnabled,
   setSectionEnabled,
   setVariable,
+  setVariantValue,
   templateUsage,
   undo,
   valueOrigin,
@@ -259,5 +260,17 @@ describe('module variants', () => {
     const title = { en: 'Today:', pl: 'Dziś:' };
     const block = commitment(setBlockValue(p, COMMITMENT, 'props', 'title', title, TEMPLATE));
     expect((block.props as Record<string, unknown>).title).toEqual(title);
+  });
+
+  it('edits a variant directly, even one that does not print in this planner', () => {
+    const p = planner();
+    const title = { en: 'I look after myself by:', pl: 'Dbam o siebie przez:' };
+    const edited = setVariantValue(p, COMMITMENT, 0, 'title', title);
+    const block = commitment(edited);
+    expect((block.variants![0]!.props as Record<string, unknown>).title).toEqual(title);
+    expect(block.props).toEqual(commitment(p).props);
+    // Removing the value lets the variant use the block's own.
+    const removed = commitment(setVariantValue(edited, COMMITMENT, 0, 'title', undefined));
+    expect((removed.variants![0]!.props as Record<string, unknown>).title).toBeUndefined();
   });
 });

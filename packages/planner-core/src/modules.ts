@@ -63,3 +63,25 @@ export const activeVariant = (
   const index = block.variants?.findIndex((v) => evaluateCondition(v.when, scope)) ?? -1;
   return index >= 0 ? { variant: block.variants![index]!, index } : undefined;
 };
+
+/** One part of a module or format condition: a module switched on or off, or a format. */
+export type ConditionPart = { module: string; on: boolean } | { format: string };
+
+/**
+ * A variant's condition as its parts, e.g. "recovery off and A5", for showing it in the designer;
+ * `undefined` for any other kind of condition.
+ */
+export function conditionParts(condition: Condition): ConditionPart[] | undefined {
+  if ('and' in condition) {
+    const parts = condition.and.map(conditionParts);
+    return parts.every((p): p is ConditionPart[] => p !== undefined) ? parts.flat() : undefined;
+  }
+  const op = '==' in condition ? '==' : '!=' in condition ? '!=' : undefined;
+  if (!op) return undefined;
+  const [left, right] = (condition as Record<string, [unknown, unknown]>)[op]!;
+  const name = typeof left === 'object' && left !== null && 'var' in left ? String(left.var) : '';
+  const module = /^config\.modules\.(.+)$/.exec(name)?.[1];
+  if (module && right === false) return [{ module, on: op === '!=' }];
+  if (name === 'format' && op === '==' && typeof right === 'string') return [{ format: right }];
+  return undefined;
+}

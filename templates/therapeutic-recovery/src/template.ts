@@ -16,7 +16,7 @@ import type {
 } from '@planner/schema';
 import { TEMPLATE_MIGRATIONS, defaultPrintSettings } from '@planner/schema';
 import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl';
-import { GUIDES, SAMPLES, SAMPLES_NEUTRAL } from './samples';
+import { GUIDES, GUIDES_NEUTRAL, SAMPLES, SAMPLES_NEUTRAL } from './samples';
 
 // ---------------------------------------------------------------------------------------------
 // Modules and presets (ADR-0010)
@@ -1134,13 +1134,10 @@ const dayLeft = a5(
                       'if-hard',
                       L('If it gets hard, first:', 'Jeśli będzie trudno, najpierw:'),
                     ),
-                    prompt(
-                      'important',
-                      L('One thing that matters to me', 'Jedna rzecz ważna dla mnie'),
-                    ),
+                    prompt('important', L('Something that matters to me', 'Coś ważnego dla mnie')),
                     prompt(
                       'pleasant',
-                      L('One thing just for pleasure', 'Jedna rzecz tylko dla przyjemności'),
+                      L('Something just for pleasure', 'Coś tylko dla przyjemności'),
                     ),
                   ],
                   { width: fr(2), gap: 2 },
@@ -1194,7 +1191,7 @@ const dayLeft = a5(
       }) as JsonPatchOp['value'],
     },
     // The morning section (the body's second child) grows by the check-in's second line.
-    { op: 'add', path: '/body/children/1/height', value: { mm: 33 } },
+    { op: 'add', path: '/body/children/1/height', value: { mm: 34 } },
   ],
 );
 
@@ -1395,7 +1392,7 @@ const dayRight = a5(
     ['threat', 'size/height', { mm: 19 }],
     ['victory', 'size/height', { mm: 15 }],
     ['good-life', 'size/height', { mm: 15 }],
-    ['gratitude', 'size/height', { mm: 24 }],
+    ['gratitude', 'size/height', { mm: 28 }],
     ['tomorrow', 'size/height', { mm: 13 }],
     // A5 is too narrow for the outer column: the check-out moves into the page as one line, with
     // a line for the trigger; the tick lists are left out.
@@ -2027,7 +2024,7 @@ const monthPatterns = a5(
   },
   [
     ['warning', 'size/height', { mm: 22 }],
-    ['helped-most', 'size/height', { mm: 26 }],
+    ['helped-most', 'size/height', { mm: 28 }],
   ],
 );
 
@@ -2365,7 +2362,7 @@ const sos: PageTemplate = {
  */
 const sosPage = a5(sos, [
   ['contacts', 'props/fields', [L('Name and phone', 'Imię i telefon')]],
-  { op: 'add', path: '/body/children/2/height', value: { mm: 61 } },
+  { op: 'add', path: '/body/children/2/height', value: { mm: 66 } },
   { op: 'add', path: '/body/children/3/height', value: { mm: 38 } },
   { op: 'remove', path: '/body/children/4/children/1' },
 ]);
@@ -2676,7 +2673,7 @@ const cravingCard: PageTemplate = {
             { height: fr(1) },
           ),
         ],
-        { height: mmH(62) },
+        { height: mmH(64) },
       ),
       writeLines(
         'instead',
@@ -2852,6 +2849,10 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
         ...(GUIDES[p.id] ? { guide: GUIDES[p.id] } : {}),
         ...(SAMPLES[p.id]
           ? { sampleContent: SAMPLES[p.id] as NonNullable<PageTemplate['sampleContent']> }
+          : {}),
+        // Basic and Balance: a neutral guide text where the wording differs.
+        ...(GUIDES_NEUTRAL[p.id]
+          ? { guideVariants: [{ when: BALANCE, text: GUIDES_NEUTRAL[p.id]! }] }
           : {}),
         // Basic and Balance: neutral examples for the blocks whose wording changes.
         ...(SAMPLES_NEUTRAL[p.id]

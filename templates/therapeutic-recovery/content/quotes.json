@@ -150,13 +150,16 @@
       ],
       "tags": [
         "priorities"
+      ],
+      "modules": [
+        "recovery"
       ]
     },
     {
       "id": "q-0010",
       "kind": "quote",
       "text": {
-        "en": "Accepting the facts doesn't mean agreeing with them. It means no longer spending my strength on what I cannot change.",
+        "en": "Accepting the facts is not agreeing with them. It is no longer fighting what I cannot change.",
         "pl": "Przyjąć fakty nie znaczy się na nie zgadzać. Znaczy przestać tracić siły na to, czego nie zmienię."
       },
       "license": "original",
@@ -181,6 +184,9 @@
       ],
       "tags": [
         "pace"
+      ],
+      "modules": [
+        "recovery"
       ]
     },
     {
@@ -197,6 +203,416 @@
       ],
       "tags": [
         "boundaries"
+      ]
+    },
+    {
+      "id": "q-0013",
+      "kind": "quote",
+      "text": {
+        "en": "Noticing one good thing today does not deny what is hard. It gives me somewhere to stand.",
+        "pl": "Zauważenie jednej dobrej rzeczy nie przekreśla tego, co trudne. Daje mi miejsce, by stanąć."
+      },
+      "license": "original",
+      "categories": [
+        "gratitude"
+      ],
+      "tags": [
+        "noticing"
+      ]
+    },
+    {
+      "id": "q-0014",
+      "kind": "quote",
+      "text": {
+        "en": "I can speak to myself the way I would speak to a friend on a hard day.",
+        "pl": "Mogę mówić do siebie tak łagodnie, jak mówię do bliskiej osoby w trudny dzień."
+      },
+      "license": "original",
+      "categories": [
+        "self-compassion"
+      ],
+      "tags": [
+        "kindness"
+      ]
+    },
+    {
+      "id": "q-0015",
+      "kind": "quote",
+      "text": {
+        "en": "Slow is still moving. A small step counts even when nobody sees it.",
+        "pl": "Powoli to też naprzód. Mały krok się liczy, nawet gdy nikt go nie widzi."
+      },
+      "license": "original",
+      "categories": [
+        "patience"
+      ],
+      "tags": [
+        "small-steps"
+      ]
+    },
+    {
+      "id": "q-0016",
+      "kind": "quote",
+      "text": {
+        "en": "\"No\" can be a kind word. It keeps room for what matters to me.",
+        "pl": "„Nie” może być życzliwym słowem. Zostawia miejsce na to, co dla mnie ważne."
+      },
+      "license": "original",
+      "categories": [
+        "boundaries"
+      ],
+      "tags": [
+        "no"
+      ]
+    },
+    {
+      "id": "q-0017",
+      "kind": "quote",
+      "text": {
+        "en": "Rest is not a reward for finishing everything. It is part of doing things well.",
+        "pl": "Odpoczynek nie jest nagrodą za zrobienie wszystkiego. Jest częścią dobrego działania."
+      },
+      "license": "original",
+      "categories": [
+        "self-compassion"
+      ],
+      "tags": [
+        "rest"
+      ]
+    },
+    {
+      "id": "q-0018",
+      "kind": "quote",
+      "text": {
+        "en": "I do not need a new life by Friday. I need one honest step today.",
+        "pl": "Nie potrzebuję nowego życia do piątku. Potrzebuję dziś jednego uczciwego kroku."
+      },
+      "license": "original",
+      "categories": [
+        "change"
+      ],
+      "tags": [
+        "today",
+        "small-steps"
+      ]
+    },
+    {
+      "id": "q-0019",
+      "kind": "quote",
+      "text": {
+        "en": "Some days are simply heavy. I can carry them without deciding what they say about me.",
+        "pl": "Niektóre dni są po prostu ciężkie. Mogę je przejść, nie oceniając przez nie siebie."
+      },
+      "license": "original",
+      "categories": [
+        "acceptance"
+      ],
+      "tags": [
+        "hard-days"
+      ]
+    },
+    {
+      "id": "q-0020",
+      "kind": "quote",
+      "text": {
+        "en": "A short call can change a long evening.",
+        "pl": "Krótka rozmowa potrafi zmienić długi wieczór."
+      },
+      "license": "original",
+      "categories": [
+        "relationships"
+      ],
+      "tags": [
+        "contact"
+      ]
+    },
+    {
+      "id": "q-0021",
+      "kind": "quote",
+      "text": {
+        "en": "Courage is often quiet: showing up, telling the truth, trying again.",
+        "pl": "Odwaga bywa cicha: przyjść, powiedzieć prawdę, spróbować jeszcze raz."
+      },
+      "license": "original",
+      "categories": [
+        "courage"
+      ],
+      "tags": [
+        "honesty"
+      ]
+    },
+    {
+      "id": "q-0022",
+      "kind": "quote",
+      "text": {
+        "en": "I cannot control every feeling, but I can choose my next step.",
+        "pl": "Nie panuję nad każdym uczuciem, ale mogę wybrać swój następny krok."
+      },
+      "license": "original",
+      "categories": [
+        "responsibility"
+      ],
+      "tags": [
+        "choice"
+      ]
+    },
+    {
+      "id": "q-0023",
+      "kind": "quote",
+      "text": {
+        "en": "Today I look for what is already enough.",
+        "pl": "Dziś szukam tego, czego już jest wystarczająco."
+      },
+      "license": "original",
+      "categories": [
+        "gratitude"
+      ],
+      "tags": [
+        "enough"
+      ]
+    },
+    {
+      "id": "q-0024",
+      "kind": "quote",
+      "text": {
+        "en": "A plan for one day is easier to keep than a promise for a lifetime.",
+        "pl": "Plan na jeden dzień łatwiej dotrzymać niż obietnicę na całe życie."
+      },
+      "license": "original",
+      "categories": [
+        "patience"
+      ],
+      "tags": [
+        "today"
+      ]
+    },
+    {
+      "id": "q-0025",
+      "kind": "quote",
+      "text": {
+        "en": "A mistake tells me what to fix, not who I am.",
+        "pl": "Błąd mówi mi, co poprawić, a nie to, kim jestem."
+      },
+      "license": "original",
+      "categories": [
+        "self-compassion",
+        "change"
+      ],
+      "tags": [
+        "mistakes"
+      ]
+    },
+    {
+      "id": "q-0026",
+      "kind": "quote",
+      "text": {
+        "en": "Habits change the way paths do: by walking the new one again and again.",
+        "pl": "Nawyki zmieniają się jak ścieżki: przez chodzenie nową drogą raz po raz."
+      },
+      "license": "original",
+      "categories": [
+        "change"
+      ],
+      "tags": [
+        "habits"
+      ]
+    },
+    {
+      "id": "q-0027",
+      "kind": "quote",
+      "text": {
+        "en": "Asking how someone is, and listening to the answer, is a gift for both of us.",
+        "pl": "Zapytać kogoś, jak się ma, i wysłuchać odpowiedzi to prezent dla nas obojga."
+      },
+      "license": "original",
+      "categories": [
+        "relationships"
+      ],
+      "tags": [
+        "listening"
+      ]
+    },
+    {
+      "id": "q-0028",
+      "kind": "quote",
+      "text": {
+        "en": "Feelings are like weather: real, strong at times, and passing.",
+        "pl": "Uczucia są jak pogoda: prawdziwe, czasem silne i przemijające."
+      },
+      "license": "original",
+      "categories": [
+        "acceptance"
+      ],
+      "tags": [
+        "emotions"
+      ]
+    },
+    {
+      "id": "q-0029",
+      "kind": "quote",
+      "text": {
+        "en": "My time and energy are limited. Choosing where they go is care, not selfishness.",
+        "pl": "Mój czas i energia mają granice. Wybieranie, na co je daję, to troska, nie egoizm."
+      },
+      "license": "original",
+      "categories": [
+        "boundaries"
+      ],
+      "tags": [
+        "energy"
+      ]
+    },
+    {
+      "id": "q-0030",
+      "kind": "quote",
+      "text": {
+        "en": "Progress rarely feels like progress while it is happening.",
+        "pl": "Postęp rzadko wygląda na postęp, gdy właśnie się dzieje."
+      },
+      "license": "original",
+      "categories": [
+        "patience"
+      ],
+      "tags": [
+        "progress"
+      ]
+    },
+    {
+      "id": "q-0031",
+      "kind": "quote",
+      "text": {
+        "en": "I can be afraid and still do the next right thing.",
+        "pl": "Mogę się bać i mimo to zrobić następną dobrą rzecz."
+      },
+      "license": "original",
+      "categories": [
+        "courage"
+      ],
+      "tags": [
+        "fear"
+      ]
+    },
+    {
+      "id": "q-0032",
+      "kind": "quote",
+      "text": {
+        "en": "The people who stay with me on grey days are my real wealth.",
+        "pl": "Ludzie, którzy są ze mną w szare dni, to moje prawdziwe bogactwo."
+      },
+      "license": "original",
+      "categories": [
+        "gratitude",
+        "relationships"
+      ],
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "q-0033",
+      "kind": "quote",
+      "text": {
+        "en": "Keeping a small promise to myself builds trust in myself.",
+        "pl": "Dotrzymanie małej obietnicy wobec siebie buduje zaufanie do siebie."
+      },
+      "license": "original",
+      "categories": [
+        "responsibility"
+      ],
+      "tags": [
+        "trust"
+      ]
+    },
+    {
+      "id": "q-0034",
+      "kind": "quote",
+      "text": {
+        "en": "Today I do not have to win against anyone. A little kindness to myself is enough.",
+        "pl": "Dziś nie muszę z nikim wygrywać. Wystarczy odrobina życzliwości dla siebie."
+      },
+      "license": "original",
+      "categories": [
+        "self-compassion"
+      ],
+      "tags": [
+        "kindness"
+      ]
+    },
+    {
+      "id": "q-0035",
+      "kind": "quote",
+      "text": {
+        "en": "A craving is a wave. It rises, peaks and passes, and I do not have to act on it.",
+        "pl": "Głód jest jak fala. Narasta, osiąga szczyt i opada, a ja nie muszę za nim iść."
+      },
+      "license": "original",
+      "categories": [
+        "recovery",
+        "patience"
+      ],
+      "tags": [
+        "craving"
+      ],
+      "modules": [
+        "recovery"
+      ]
+    },
+    {
+      "id": "q-0036",
+      "kind": "quote",
+      "text": {
+        "en": "Every sober evening is a small piece of evidence that I can do this.",
+        "pl": "Każdy trzeźwy wieczór to mały dowód, że potrafię."
+      },
+      "license": "original",
+      "categories": [
+        "recovery",
+        "courage"
+      ],
+      "tags": [
+        "evening"
+      ],
+      "modules": [
+        "recovery"
+      ]
+    },
+    {
+      "id": "q-0037",
+      "kind": "quote",
+      "text": {
+        "en": "A meeting, a call, a walk: any of them beats being alone with a craving.",
+        "pl": "Mityng, telefon, spacer: każde z nich jest lepsze niż samotność z głodem."
+      },
+      "license": "original",
+      "categories": [
+        "recovery",
+        "relationships"
+      ],
+      "tags": [
+        "support",
+        "craving"
+      ],
+      "modules": [
+        "recovery"
+      ]
+    },
+    {
+      "id": "q-0038",
+      "kind": "quote",
+      "text": {
+        "en": "My recovery belongs to me, and I share it with the people who help me keep it.",
+        "pl": "Moje zdrowienie należy do mnie i dzielę je z ludźmi, którzy pomagają mi je chronić."
+      },
+      "license": "original",
+      "categories": [
+        "recovery",
+        "responsibility"
+      ],
+      "tags": [
+        "support"
+      ],
+      "modules": [
+        "recovery"
       ]
     }
   ]

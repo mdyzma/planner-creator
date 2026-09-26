@@ -540,12 +540,13 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
   notes: {
     notes: {
       fill: L(
-        'Book to read: "Twelve Steps and Twelve Traditions"\nAsk the doctor about sleep.',
-        'Do przeczytania: „Dwanaście Kroków i Dwanaście Tradycji”\nZapytać lekarza o sen.',
+        'To read: "12 Steps and 12 Traditions"\nAsk the doctor about sleep.',
+        'Przeczytać: „12 Kroków i 12 Tradycji”\nZapytać lekarza o sen.',
       ),
       note: L('anything that does not fit elsewhere', 'wszystko, co nie pasuje gdzie indziej'),
     },
   },
+
   'warning-signs-left': {
     grid: {
       fill: [
@@ -716,6 +717,16 @@ const CALENDAR_NEUTRAL = {
  * Balance lists (e.g. "What weighed on me today?").
  */
 export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
+  // No crisis section without the recovery module.
+  'how-to': {
+    notes: {
+      fill: L(
+        'Morning: left page. Evening: right page.\nThe month review is at the end of each month.',
+        'Rano: lewa strona. Wieczorem: prawa.\nPodsumowanie miesiąca jest na jego końcu.',
+      ),
+      note: L('your own reminders', 'Twoje własne przypomnienia'),
+    },
+  },
   strengths: {
     proud: { fill: L('my son, and running 5 km', 'mój syn i przebiegnięte 5 km') },
   },
@@ -1041,8 +1052,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i najsilniejszy głód w skali 0–10, zaznacz wyzwalacz i to, co Cię chroniło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, potem trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}, i jedną rzecz, o której warto jutro pamiętać.',
   ),
   situation: L(
-    'An optional page at the end of each week (switch it on in Structure). Take one situation from the week: first the thought that raised the risk and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.',
-    'Strona opcjonalna na koniec każdego tygodnia (włącz ją w Strukturze). Weź jedną sytuację z tygodnia: najpierw myśl, która zwiększała ryzyko, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem.',
+    'An optional page at the end of each week (the Situation analysis module). Take one situation from the week: first the thought that raised the risk and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.',
+    'Strona opcjonalna na koniec każdego tygodnia (moduł Analiza sytuacji). Weź jedną sytuację z tygodnia: najpierw myśl, która zwiększała ryzyko, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem.',
   ),
   'wheel-of-life': L(
     'At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below, and where there was even a small improvement.',
@@ -1103,5 +1114,45 @@ export const GUIDES: Record<string, LocalizedText> = {
   'craving-card': L(
     'Two cards for a strong craving (for example 4 or more). Note when and where it came and what had just happened, tick what you feel, and write the craving at the start and after 10 and 20 minutes. Then what you did instead, what worked and what you learned.',
     'Dwie karty na silny głód (na przykład 4 i więcej). Zapisz, kiedy i gdzie się pojawił i co się właśnie wydarzyło, zaznacz, co czujesz, i wpisz siłę głodu na początku oraz po 10 i 20 minutach. Potem co {g:zrobiłeś|zrobiłaś} zamiast tego, co zadziałało i czego się {g:dowiedziałeś|dowiedziałaś}.',
+  ),
+};
+
+/** Guide texts for planners without the recovery module (Basic, Balance), where the wording differs. */
+export const GUIDES_NEUTRAL: Record<string, LocalizedText> = {
+  'month-open-right': L(
+    'At the top, one value from "What really matters to me" to practise this month. The calendar continues (Friday to Sunday). "My month in practice" asks for one small thing for each area of life. Below: what you want to remember, and important dates and appointments.',
+    'Na górze jedna wartość z „Co jest dla mnie naprawdę ważne?”, którą chcesz praktykować w tym miesiącu. Kalendarz ciągnie się dalej (piątek–niedziela). „Mój miesiąc w praktyce” prosi o jedną małą rzecz dla każdego obszaru życia. Poniżej: o czym chcesz pamiętać oraz ważne terminy i wizyty.',
+  ),
+  'week-left': L(
+    'The weekly spread, filled in on Sunday or Monday. Write one intention for the week and what could catch you off guard, put the three most important things in the outer column, and circle the markers of what happened each day: doctor, exercise, or your own.',
+    'Rozkładówka tygodnia, wypełniana w niedzielę lub poniedziałek. Wpisz jedną intencję na tydzień i to, co może Cię zaskoczyć, trzy najważniejsze rzeczy umieść w zewnętrznej kolumnie i zakreślaj znaczniki tego, co działo się każdego dnia: lekarz, ruch albo własny znacznik.',
+  ),
+  'week-review': L(
+    'The end of the week, in two or three minutes. Look back over your evening pages and add up: average mood and tension, and on how many days you had support, exercise or rest. Tick which HALT feelings were most often high, what weighed on you and what helped most. Then three wins, one pattern you notice, what your experiment showed, what to keep and change, and an if–then plan to copy into next week.',
+    'Koniec tygodnia w dwie–trzy minuty. Przejrzyj strony wieczorne i podsumuj: średni nastrój i napięcie oraz ile dni miało wsparcie, ruch lub odpoczynek. Zaznacz, które odczucia HALT były najczęściej wysoko, co Cię obciążało i co najbardziej pomagało. Potem trzy zwycięstwa, jeden wzorzec, który zauważasz, co pokazał eksperyment, co zachować, co zmienić, i plan jeśli–to do przepisania na kolejny tydzień.',
+  ),
+  'day-left': L(
+    'The morning page. Read the quote and do a quick check-in: mood, energy and tension from 0 to 10, and how you slept. Then write one concrete thing you will do for yourself today, and who you will talk to. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now, so write what you need. With the Day+ module the schedule gives way to the rest of "My 24 hours" and one important and one pleasant thing.',
+    'Strona poranna. Przeczytaj sentencję i zrób szybki check-in: nastrój, energia i napięcie od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedną konkretną rzecz, którą dziś zrobisz dla siebie, i z kim porozmawiasz. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu, więc zapisz, czego potrzebujesz. Z modułem Dzień+ plan dnia ustępuje miejsca reszcie „Moich 24 godzin” oraz jednej rzeczy ważnej i jednej przyjemnej.',
+  ),
+  'day-right': L(
+    'The evening page. In the outer column, check out: write your mood, tension and energy from 0 to 10, and tick what weighed on you and what helped. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, then three things you are grateful for, and one thing worth remembering tomorrow.',
+    'Strona wieczorna. W zewnętrznej kolumnie zrób check-out: wpisz nastrój, napięcie i energię w skali 0–10, zaznacz, co Cię obciążało i co pomogło. Potem napisz szczerze, co było dziś trudne; po kilku tygodniach zobaczysz swoje wzorce. Kropki są na uczucia, myśli i plany na jutro. Zapisz jedno małe zwycięstwo i jedną rzecz, którą {g:zrobiłeś|zrobiłaś} dla życia, jakie chcesz prowadzić, potem trzy rzeczy, za które jesteś {g:wdzięczny|wdzięczna}, i jedną rzecz, o której warto jutro pamiętać.',
+  ),
+  'monthly-review': L(
+    'The month rolled up from the weekly reviews. Copy the numbers from each "My week" into the table, so the month can be read at a glance. Then name what helped most, what was hardest, what weighed on you most, the most effective strategy and what you learned about yourself.',
+    'Miesiąc zebrany z tygodniowych podsumowań. Przepisz do tabeli liczby z każdego „Mojego tygodnia”, żeby miesiąc był widoczny na pierwszy rzut oka. Potem nazwij, co najbardziej pomogło, co było najtrudniejsze, co Cię najbardziej obciążało, najskuteczniejszą strategię i czego {g:dowiedziałeś|dowiedziałaś} się o sobie.',
+  ),
+  'month-patterns': L(
+    'Patterns across the month: tick when it was hard most often and which states came before a worse day, name what did not serve you and what helped most often. The last question turns it into a plan.',
+    'Wzorce z całego miesiąca: zaznacz, kiedy najczęściej było trudno i jakie stany poprzedzały gorszy dzień, nazwij to, co Ci nie służyło, i to, co najczęściej pomagało. Ostatnie pytanie zamienia to w plan.',
+  ),
+  situation: L(
+    'An optional page at the end of each week (the Situation analysis module). Take one situation from the week: first a thought that did not help you and what you can answer it, then what happened, what you thought, felt and did, and what could help next time.',
+    'Strona opcjonalna na koniec każdego tygodnia (moduł Analiza sytuacji). Weź jedną sytuację z tygodnia: najpierw myśl, która Ci nie pomagała, i to, co możesz jej odpowiedzieć, potem co się wydarzyło, co {g:pomyślałeś|pomyślałaś}, {g:poczułeś|poczułaś} i {g:zrobiłeś|zrobiłaś} oraz co mogłoby pomóc następnym razem.',
+  ),
+  notes: L(
+    'Dot-grid pages at the end of each month for anything else: notes, books, questions for the doctor.',
+    'Strony w kropki na końcu każdego miesiąca na wszystko inne: notatki, książki, pytania do lekarza.',
   ),
 };

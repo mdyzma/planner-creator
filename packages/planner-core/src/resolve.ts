@@ -68,15 +68,23 @@ export function resolvePageTemplate(
   return { template: withSampleVariant(template, scope ?? {}), hidden, warnings };
 }
 
-/** The page's examples with its first matching example variant applied, block by block. */
+/**
+ * The page's examples with its first matching example variant applied, block by block, and its
+ * guide text with the first matching guide variant.
+ */
 function withSampleVariant(
   page: PageTemplate,
   scope: Readonly<Record<string, unknown>>,
 ): PageTemplate {
-  if (!page.sampleVariants) return page;
-  const { sampleVariants, ...rest } = page;
-  const found = sampleVariants.find((v) => evaluateCondition(v.when, scope));
-  return found ? { ...rest, sampleContent: { ...page.sampleContent, ...found.content } } : rest;
+  if (!page.sampleVariants && !page.guideVariants) return page;
+  const { sampleVariants, guideVariants, ...rest } = page;
+  const samples = sampleVariants?.find((v) => evaluateCondition(v.when, scope));
+  const guide = guideVariants?.find((v) => evaluateCondition(v.when, scope));
+  return {
+    ...rest,
+    ...(samples ? { sampleContent: { ...page.sampleContent, ...samples.content } } : {}),
+    ...(guide ? { guide: guide.text } : {}),
+  };
 }
 
 /** The block with its first matching variant applied (props merged, style merged). */

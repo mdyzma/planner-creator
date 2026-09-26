@@ -31,7 +31,7 @@ const { document } = generate({
 describe('measureContent', () => {
   it('reports what is actually on the pages', () => {
     const coverage = measureContent(document.root, [quotes.value]);
-    expect(coverage).toEqual({ slots: 182, available: 12, maxUses: 16, minGap: 12, missing: 0 });
+    expect(coverage).toEqual({ slots: 182, available: 38, maxUses: 5, minGap: 38, missing: 0 });
   });
 
   it('counts pages that point at deleted items', () => {
@@ -61,9 +61,29 @@ describe('redealContent', () => {
       seed: 'p',
       bindings: DEFAULT_BINDINGS,
     });
-    expect(report).toMatchObject({ slots: 182, available: 60, maxUses: 4, minGap: 60 });
+    expect(report).toMatchObject({ slots: 182, available: 86, maxUses: 3, minGap: 86 });
     expect(pagesOf(root).map((p) => p.key)).toEqual(pagesOf(document.root).map((p) => p.key));
     expect(measureContent(root, [grown]).missing).toBe(0);
+  });
+
+  it('leaves out items that need a module the planner does not have', () => {
+    const recoveryOnly = new Set(
+      quotes.value.items.filter((i) => i.modules?.includes('recovery')).map((i) => i.id),
+    );
+    expect(recoveryOnly.size).toBeGreaterThan(0);
+    const { root, report } = redealContent(document.root, {
+      template: template.value,
+      libraries: [quotes.value],
+      cadence: 'daily',
+      seed: 'p',
+      bindings: DEFAULT_BINDINGS,
+      modules: { recovery: false },
+    });
+    expect(report.available).toBe(quotes.value.items.length - recoveryOnly.size);
+    const dealt = pagesOf(root).flatMap((p) => Object.values(p.contentAssignments ?? {}));
+    expect(dealt.some((id) => recoveryOnly.has(id))).toBe(false);
+    // Enough quotes for a month without repeats in every edition.
+    expect(report.minGap).toBeGreaterThanOrEqual(30);
   });
 
   it('clears quotes when the cadence becomes "none"', () => {

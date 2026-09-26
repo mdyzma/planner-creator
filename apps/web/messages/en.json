@@ -184,7 +184,7 @@
     "issues": {
       "missing-translation": "Missing: {language}",
       "too-long": "Too long for the quote box",
-      "too-long-for-a5": "May not fit on A5",
+      "too-long-for-a4": "May not fit on A4",
       "not-shippable": "Not for a shared template",
       "needs-attribution": "Needs an author or source",
       "duplicate": "Same as {other}",
@@ -342,8 +342,15 @@
       "content": "Content",
       "typography": "Typography",
       "layout": "Layout",
-      "print": "Print"
+      "print": "Print",
+      "variants": "Module wording"
     },
+    "variantsHint": "What the block says when modules are on or off. Edit any of them here, without switching modules.",
+    "variantOn": "{name}: on",
+    "variantOff": "{name}: off",
+    "variantOther": "Another condition",
+    "variantPrints": "prints in this planner",
+    "variantNoFields": "Changes settings that are not in this panel.",
     "sizeTemplateOnly": "Size is shared by every page using this layout.",
     "keepTogether": "Keep together (never split)",
     "selectBlock": "Select a block on the page to change it.",
@@ -524,6 +531,7 @@
   "Guide": {
     "title": "How to fill in the planner",
     "format": "Planner format",
+    "edition": "Edition",
     "printHint": "Print or save as PDF: A4, actual size, no headers.",
     "print": "Print / Save as PDF",
     "intro": "This guide walks through every kind of page in the planner: what to write in each part, and why it helps. The pictures show pages filled in by an example person, Marek; all names, numbers and events are made up.",

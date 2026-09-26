@@ -6,7 +6,7 @@ Where "Dzień po Dniu" stands after v0.6.0, measured against the two content rev
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.7.0 (not tagged yet).
+Last updated: 2026-09-26, after v0.8.0 (not tagged yet).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -47,19 +47,9 @@ From the content reviews:
 
 Loose ends:
 
-- A Balance quote library and a Balance guide booklet (both are shared with the Recovery Edition).
-- Editing module variants directly in the designer (it edits the variant that prints).
 - Size: six months are about 554 pages; acceptable, since months print and file one at a time.
 
 ## Next
-
-### v0.8.0 — Balance as a first-class edition, and quality
-
-1. **Quotes and guide per edition:** quotes tagged by edition (a neutral library for Balance);
-   the printable guide follows the planner's edition and modules.
-2. **Automatic overflow check:** render every page (A4 and A5, both editions, examples on) and
-   fail when text overflows its block, instead of spotting clipped text in screenshots.
-3. **Designer:** edit module variants directly.
 
 ### v0.9.0 / 1.0 — Print and publish
 
@@ -86,6 +76,24 @@ Loose ends:
 3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### v0.8.0 — Balance as a first-class edition, and quality
+
+Done (not tagged yet):
+
+- Quotes per edition: library items can list the modules they need, and the generator deals only
+  those that fit. The library grew from 12 to 38 original quotes (32 for every planner, 6 for the
+  recovery module), so no quote repeats within a month in any edition.
+- The guide follows the edition: an edition picker (opened from the export page, it takes the
+  planner's own), neutral guide texts where the wording differs, and no crisis chapter without
+  the recovery module.
+- Automatic overflow check (end-to-end, in CI): every page of one month, in each edition and
+  format and in both languages, with the example filling, fails when printed text is cut off. It
+  found and fixed eight real problems (craving card, SOS and gratitude in A5, circled markers,
+  and more), and one quote too long for the A4 box beside the date.
+- Quote length limits match the layout: up to 100 characters fits A4, 130 fits nowhere.
+- Designer: "Module wording" lists every variant of a block with its condition and edits any of
+  them directly.
 
 ### v0.7.0 — Finishing the content
 

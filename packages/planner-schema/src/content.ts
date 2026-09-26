@@ -29,6 +29,11 @@ export const ContentItem = z.object({
       weeks: z.array(z.number().int().min(1).max(60)).optional(),
     })
     .optional(),
+  /**
+   * Modules the item needs (ADR-0010): it is dealt only to planners with all of them on, e.g. a
+   * quote about sobriety needs `recovery`. Without it the item suits every planner.
+   */
+  modules: z.array(z.string().max(100)).optional(),
   /** Per-locale translation review status; machine drafts must be reviewed before export. */
   review: z.partialRecord(Locale, z.enum(['draft', 'reviewed'])).optional(),
 });

@@ -5,7 +5,11 @@ import { LOCALES } from '@planner/schema';
  * Longest quote (characters) that fits the daily page's quote box: about three lines of 9 pt
  * italic in the box's width on each format (§4.5.1).
  */
-export const QUOTE_LENGTH_LIMITS = { A4: 160, A5: 110 } as const;
+/**
+ * Characters a quote may have: A4 prints it in a small box beside the date (two lines), A5 across
+ * the page under the date line, so A4 is the tighter one.
+ */
+export const QUOTE_LENGTH_LIMITS = { A4: 100, A5: 130 } as const;
 
 /** Licences that may ship in a public template (§4.5.1). */
 export const SHIPPABLE_LICENSES: readonly ContentItem['license'][] = ['original', 'public-domain'];
@@ -13,7 +17,7 @@ export const SHIPPABLE_LICENSES: readonly ContentItem['license'][] = ['original'
 export type ContentIssueCode =
   | 'missing-translation'
   | 'too-long'
-  | 'too-long-for-a5'
+  | 'too-long-for-a4'
   | 'not-shippable'
   | 'needs-attribution'
   | 'duplicate'
@@ -68,10 +72,10 @@ export function validateItems(
         continue;
       }
       if (LENGTH_LIMITED.includes(item.kind)) {
-        if (text.length > QUOTE_LENGTH_LIMITS.A4) {
+        if (text.length > QUOTE_LENGTH_LIMITS.A5) {
           issues.push({ itemId: item.id, code: 'too-long', severity: 'error', locale });
-        } else if (text.length > QUOTE_LENGTH_LIMITS.A5) {
-          issues.push({ itemId: item.id, code: 'too-long-for-a5', severity: 'warning', locale });
+        } else if (text.length > QUOTE_LENGTH_LIMITS.A4) {
+          issues.push({ itemId: item.id, code: 'too-long-for-a4', severity: 'warning', locale });
         }
       }
     }

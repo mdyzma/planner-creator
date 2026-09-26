@@ -225,6 +225,38 @@ export function setBlockValue(
   });
 }
 
+/**
+ * Sets a property of one of the block's module variants directly (ADR-0010), whichever variant
+ * prints in this planner; `undefined` removes it, so the variant uses the block's own value.
+ */
+export function setVariantValue(
+  project: PlannerProject,
+  ref: BlockRef,
+  variant: number,
+  key: string,
+  value: unknown,
+): PlannerProject {
+  if (isLocked(project, ref)) return project;
+  return withTemplate(project, ref.templateId, (template) =>
+    updateBlock(template, ref.blockId, (block) =>
+      block.variants?.[variant]
+        ? {
+            ...block,
+            variants: block.variants.map((v, i) =>
+              i === variant
+                ? {
+                    ...v,
+                    props: (setKey(v.props as Record<string, unknown> | undefined, key, value) ??
+                      {}) as typeof v.props,
+                  }
+                : v,
+            ),
+          }
+        : block,
+    ),
+  );
+}
+
 /** Height (in a stack) or width (in a row) of a block; `undefined` shares the free space. */
 export function setBlockSize(
   project: PlannerProject,

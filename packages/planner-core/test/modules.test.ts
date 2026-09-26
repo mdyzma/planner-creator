@@ -2,6 +2,7 @@ import type { PageTemplate, PlannerTemplate } from '@planner/schema';
 import { describe, expect, it } from 'vitest';
 import {
   conditionConfig,
+  conditionParts,
   effectiveModules,
   evaluateCondition,
   matchingPreset,
@@ -144,5 +145,13 @@ describe('modules', () => {
     const row = (b: PageTemplate['body']) => (b.kind === 'row' ? b.children.length : -1);
     expect(row(body({ x: true }))).toBe(2);
     expect(row(body({ x: false }))).toBe(1);
+  });
+
+  it('reads a module or format condition as parts, for the designer', () => {
+    expect(conditionParts(moduleOff('recovery'))).toEqual([{ module: 'recovery', on: false }]);
+    expect(
+      conditionParts({ and: [moduleOn('halt'), { '==': [{ var: 'format' }, 'A5'] }] }),
+    ).toEqual([{ module: 'halt', on: true }, { format: 'A5' }]);
+    expect(conditionParts({ '==': [{ var: 'page.side' }, 'left'] })).toBeUndefined();
   });
 });

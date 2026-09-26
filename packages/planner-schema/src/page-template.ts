@@ -54,5 +54,7 @@ export const PageTemplate = z.object({
   sampleVariants: z
     .array(z.object({ when: Condition, content: z.record(z.string(), z.json()) }))
     .optional(),
+  /** The guide text for particular modules: the first variant whose `when` matches replaces it. */
+  guideVariants: z.array(z.object({ when: Condition, text: LocalizedText })).optional(),
 });
 export type PageTemplate = z.infer<typeof PageTemplate>;

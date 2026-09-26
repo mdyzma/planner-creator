@@ -1,7 +1,13 @@
 'use client';
 
 import type { InspectorField } from '@planner/blocks';
-import { findBlock, resolveTemplateForFormat } from '@planner/core';
+import {
+  activeVariant,
+  conditionConfig,
+  conditionParts,
+  findBlock,
+  resolveTemplateForFormat,
+} from '@planner/core';
 import type { BlockRef, EditScope, ValueOrigin } from '@planner/editor';
 import {
   resetBlockOnPage,
@@ -9,6 +15,7 @@ import {
   setBlockSize,
   setBlockValue,
   setBlockVisibility,
+  setVariantValue,
   templateUsage,
   valueOrigin,
 } from '@planner/editor';
@@ -192,6 +199,16 @@ export function Inspector() {
         </Group>
       )}
 
+      {def && scopeKind === 'template' && (sourceBlock.variants?.length ?? 0) > 0 && (
+        <VariantFields
+          block={sourceBlock}
+          fields={def.inspector}
+          defaults={def.defaults as Record<string, unknown> | undefined}
+          locked={locked}
+          blockRef={ref}
+        />
+      )}
+
       <Group title={t('group.typography')}>
         <StyleFields
           style={block.style}
@@ -251,6 +268,81 @@ export function Inspector() {
 }
 
 // ---------------------------------------------------------------------------------------------
+
+/**
+ * The block's module variants (ADR-0010), each with its condition in words and the values it
+ * sets, editable directly, whichever variant prints in this planner.
+ */
+function VariantFields({
+  block,
+  fields,
+  defaults,
+  locked,
+  blockRef,
+}: {
+  block: BlockInstance;
+  fields: InspectorField[];
+  defaults: Record<string, unknown> | undefined;
+  locked: boolean;
+  blockRef: BlockRef;
+}) {
+  const t = useTranslations('Editor');
+  const uiLocale = useLocale() as Locale;
+  const project = useEditor((s) => s.project)!;
+  const apply = useEditor((s) => s.apply);
+  const printing = activeVariant(block, {
+    config: conditionConfig(project.template, project.generation),
+    format: project.format,
+  })?.index;
+  const moduleName = (id: string) =>
+    localize(project.template.modules?.find((m) => m.id === id)?.name, uiLocale) || id;
+  const describe = (when: Condition) =>
+    conditionParts(when)
+      ?.map((part) =>
+        'format' in part
+          ? part.format
+          : t(part.on ? 'variantOn' : 'variantOff', { name: moduleName(part.module) }),
+      )
+      .join(' · ') ?? t('variantOther');
+
+  return (
+    <Group title={t('group.variants')}>
+      <p className="text-xs text-ink-muted">{t('variantsHint')}</p>
+      {block.variants!.map((variant, i) => {
+        const values = (variant.props ?? {}) as Record<string, unknown>;
+        const shown = fields.filter((f) => f.key in values);
+        const set: Setter = (_group, key, value, mergeKey) =>
+          apply(
+            t('undo.edit', { field: key }),
+            (p) => setVariantValue(p, blockRef, i, key, value),
+            mergeKey && `variant:${i}:${mergeKey}`,
+          );
+        return (
+          <div key={i} className="flex flex-col gap-2 border-t border-line pt-2 first:border-t-0">
+            <p className="text-xs font-medium">
+              {describe(variant.when)}
+              {printing === i && (
+                <span className="ml-2 font-normal text-ink-muted">■ {t('variantPrints')}</span>
+              )}
+            </p>
+            {shown.map((field) => (
+              <FieldRow
+                key={field.key}
+                field={field}
+                value={values[field.key] ?? defaults?.[field.key]}
+                locked={locked}
+                blockId={`${blockRef.blockId}-v${i}`}
+                origin="variant"
+                set={set}
+              />
+            ))}
+            {shown.length === 0 && <p className="text-xs text-ink-muted">{t('variantNoFields')}</p>}
+          </div>
+        );
+      })}
+    </Group>
+  );
+}
 
 function PageSummary() {
   const t = useTranslations('Editor');

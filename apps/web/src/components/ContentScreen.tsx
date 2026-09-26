@@ -329,7 +329,7 @@ function ItemRow({
       </div>
       {LOCALES.map((l) => {
         const text = draft.text[l] ?? '';
-        const over = limited && text.length > QUOTE_LENGTH_LIMITS.A5;
+        const over = limited && text.length > QUOTE_LENGTH_LIMITS.A4;
         return (
           <div key={l} className="flex flex-col gap-1">
             <textarea
@@ -348,7 +348,7 @@ function ItemRow({
             />
             {limited && (
               <span className={`self-end text-xs ${over ? 'text-danger' : 'text-ink-muted'}`}>
-                {t('chars', { count: text.length, max: QUOTE_LENGTH_LIMITS.A5 })}
+                {t('chars', { count: text.length, max: QUOTE_LENGTH_LIMITS.A4 })}
               </span>
             )}
           </div>

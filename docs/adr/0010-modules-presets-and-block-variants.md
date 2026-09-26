@@ -32,9 +32,17 @@ text by condition.
   can have `sampleVariants: { when, content }[]`; the first match replaces the examples of the
   blocks it lists, when the page is resolved. The bundled template uses one for planners without
   the recovery module (Basic, Balance): swimming and a book club instead of meetings and therapy.
+  The guide text works the same way (`guideVariants: { when, text }[]`), so the printed guide
+  follows the edition it is made for.
+- **Content follows the modules.** A library item can list the modules it needs (`modules`, e.g.
+  `["recovery"]`); the generator deals it only to planners with all of them on. Quotes about
+  sobriety never appear in a Balance planner.
 - **The designer edits what it shows.** A template-scope edit of a value the active variant sets
   changes that variant, and the inspector marks its origin "module"; otherwise the block changes as
   before. Editing Balance wording never touches the hidden recovery wording, and the reverse.
+  The inspector also lists every variant of the block with its condition in words ("Recovery
+  and sobriety: off · A5") and edits any of them directly, including one that does not print in
+  the planner being designed.
 - **Choosing**: the new-planner form has an edition (preset) and a module list; the preview's
   planner settings offer the same and regenerate. A choice that matches no preset shows as
   "Custom". The structure recipe stays for finer control within a module.
