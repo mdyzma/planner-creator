@@ -13,7 +13,15 @@
       "pl": "Polski"
     },
     "privacy": "Privacy",
-    "guide": "Guide: how to fill in the planner"
+    "guide": "Guide: how to fill in the planner",
+    "screens": {
+      "label": "Planner screens",
+      "editor": "Design",
+      "preview": "Preview",
+      "content": "Content",
+      "translations": "Translations",
+      "export": "Export"
+    }
   },
   "Dashboard": {
     "intro": "Your planners are stored only in this browser. Export them as JSON to keep a backup.",
@@ -413,7 +421,8 @@
       "custom": "Custom rule"
     },
     "export": "Export",
-    "plannerName": "Planner name (also used for file names)"
+    "plannerName": "Planner name (also used for file names)",
+    "viewOptions": "View"
   },
   "Export": {
     "title": "Export",

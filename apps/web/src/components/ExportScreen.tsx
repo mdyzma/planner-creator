@@ -9,7 +9,7 @@ import { PAGE_FORMATS } from '@planner/schema';
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useId, useMemo, useState } from 'react';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { AppBar } from '@/components/AppBar';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { Link } from '@/i18n/navigation';
 import { downloadText } from '@/lib/content';
@@ -191,23 +191,15 @@ function Export({
 
   return (
     <div className="min-h-screen">
-      <header className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line bg-surface px-4 py-3 text-sm">
-        <Link href="/" className="underline">
-          {common('planners')}
-        </Link>
-        <h1 className="font-medium">
-          {t('title')}: {project.meta.name}
-        </h1>
-        <nav className="ml-auto flex items-center gap-4">
-          <Link href={`/editor?id=${project.id}`} className="underline">
-            {t('designer')}
-          </Link>
-          <Link href={`/preview?id=${project.id}`} className="underline">
-            {t('preview')}
-          </Link>
-          <LanguageSwitcher />
-        </nav>
-      </header>
+      <AppBar
+        projectId={project.id}
+        screen="export"
+        title={
+          <h1>
+            {t('title')}: {project.meta.name}
+          </h1>
+        }
+      />
 
       <main className="mx-auto grid max-w-5xl gap-6 p-6 text-sm lg:grid-cols-2">
         <section className={box} aria-labelledby={`${ids}-what`}>

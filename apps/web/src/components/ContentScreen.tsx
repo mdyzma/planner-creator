@@ -15,9 +15,8 @@ import { ContentKind as ContentKindSchema, LOCALES } from '@planner/schema';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useId, useMemo, useState, type ChangeEvent } from 'react';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { AppBar } from '@/components/AppBar';
 import { ProjectStatus } from '@/components/ProjectStatus';
-import { Link } from '@/i18n/navigation';
 import type { LocatedItem } from '@/lib/content';
 import {
   ID_PREFIX,
@@ -123,153 +122,150 @@ function ContentEditor({
   const dealt = DEALT_KINDS.includes(kind);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      <header className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <Link href={`/preview?id=${project.id}`} className="text-sm underline">
-          {t('back')}
-        </Link>
-        <h1 className="text-xl font-semibold">
-          {t('title')} · {project.meta.name}
-        </h1>
-        <div className="ml-auto">
-          <LanguageSwitcher />
-        </div>
-      </header>
+    <>
+      <AppBar projectId={project.id} screen="content" title={project.meta.name} />
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <h1 className="mb-6 text-xl font-semibold">{t('title')}</h1>
 
-      <nav aria-label={t('title')} className="mb-4 flex flex-wrap gap-2">
-        {KINDS.map((k) => (
-          <button
-            key={k}
-            type="button"
-            aria-pressed={k === kind}
-            onClick={() => setKind(k)}
-            className={`rounded border border-line px-3 py-1 text-sm ${k === kind ? 'bg-accent text-accent-ink' : 'bg-surface'}`}
+        <nav aria-label={t('title')} className="mb-4 flex flex-wrap gap-2">
+          {KINDS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              aria-pressed={k === kind}
+              onClick={() => setKind(k)}
+              className={`rounded border border-line px-3 py-1 text-sm ${k === kind ? 'bg-accent text-accent-ink' : 'bg-surface'}`}
+            >
+              {t(`kind.${k}`)} ({itemsOf(project, k).length})
+            </button>
+          ))}
+        </nav>
+
+        {dealt ? (
+          <div
+            className="mb-4 rounded border border-line bg-surface px-4 py-3 text-sm"
+            aria-live="polite"
           >
-            {t(`kind.${k}`)} ({itemsOf(project, k).length})
-          </button>
-        ))}
-      </nav>
+            <p>
+              {t('coverage', {
+                slots: coverage.slots,
+                available: coverage.available,
+                maxUses: coverage.maxUses,
+              })}{' '}
+              ·{' '}
+              {coverage.minGap === undefined
+                ? t('noRepeats')
+                : t('minGap', { minGap: coverage.minGap })}
+            </p>
+            {coverage.minGap !== undefined && coverage.minGap < NO_REPEAT_WITHIN && (
+              <p className="mt-1 text-danger">{t('repeatWarning')}</p>
+            )}
+            {coverage.missing > 0 && (
+              <p className="mt-1 text-danger">{t('missingWarning', { count: coverage.missing })}</p>
+            )}
+          </div>
+        ) : (
+          <p className="mb-4 text-sm text-ink-muted">{t('unusedKind')}</p>
+        )}
 
-      {dealt ? (
-        <div
-          className="mb-4 rounded border border-line bg-surface px-4 py-3 text-sm"
-          aria-live="polite"
-        >
-          <p>
-            {t('coverage', {
-              slots: coverage.slots,
-              available: coverage.available,
-              maxUses: coverage.maxUses,
-            })}{' '}
-            ·{' '}
-            {coverage.minGap === undefined
-              ? t('noRepeats')
-              : t('minGap', { minGap: coverage.minGap })}
-          </p>
-          {coverage.minGap !== undefined && coverage.minGap < NO_REPEAT_WITHIN && (
-            <p className="mt-1 text-danger">{t('repeatWarning')}</p>
-          )}
-          {coverage.missing > 0 && (
-            <p className="mt-1 text-danger">{t('missingWarning', { count: coverage.missing })}</p>
-          )}
-        </div>
-      ) : (
-        <p className="mb-4 text-sm text-ink-muted">{t('unusedKind')}</p>
-      )}
-
-      <div className="mb-4 flex flex-wrap items-center gap-3 text-sm">
-        <label className="flex items-center gap-2">
-          {t('search')}
-          <input
-            className={field}
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </label>
-        <label className="flex items-center gap-2">
-          {t('category')}
-          <select className={field} value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="">{t('allCategories')}</option>
-            {categories.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={onlyIssues}
-            onChange={(e) => setOnlyIssues(e.target.checked)}
-          />
-          {t('onlyIssues')}
-        </label>
-        <div className="ml-auto flex flex-wrap gap-2">
-          <button type="button" className={`${field} hover:bg-bg`} onClick={add}>
-            {t('add')}
-          </button>
-          <label className={`${field} cursor-pointer hover:bg-bg`} htmlFor={`${ids}-import`}>
-            {t('import')}
+        <div className="mb-4 flex flex-wrap items-center gap-3 text-sm">
+          <label className="flex items-center gap-2">
+            {t('search')}
+            <input
+              className={field}
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
           </label>
-          <input
-            id={`${ids}-import`}
-            type="file"
-            accept=".csv,text/csv"
-            className="sr-only"
-            onChange={(e) => void importCsv(e)}
-          />
-          <button
-            type="button"
-            className={`${field} hover:bg-bg`}
-            onClick={() => downloadText(`${kind}s.csv`, exportItemsCsv(items))}
-          >
-            {t('export')}
-          </button>
-          {dealt && (
+          <label className="flex items-center gap-2">
+            {t('category')}
+            <select
+              className={field}
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">{t('allCategories')}</option>
+              {categories.map((c) => (
+                <option key={c}>{c}</option>
+              ))}
+            </select>
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={onlyIssues}
+              onChange={(e) => setOnlyIssues(e.target.checked)}
+            />
+            {t('onlyIssues')}
+          </label>
+          <div className="ml-auto flex flex-wrap gap-2">
+            <button type="button" className={`${field} hover:bg-bg`} onClick={add}>
+              {t('add')}
+            </button>
+            <label className={`${field} cursor-pointer hover:bg-bg`} htmlFor={`${ids}-import`}>
+              {t('import')}
+            </label>
+            <input
+              id={`${ids}-import`}
+              type="file"
+              accept=".csv,text/csv"
+              className="sr-only"
+              onChange={(e) => void importCsv(e)}
+            />
             <button
               type="button"
-              className="rounded bg-accent px-3 py-1 font-medium text-accent-ink"
-              onClick={() => void doRedeal()}
+              className={`${field} hover:bg-bg`}
+              onClick={() => downloadText(`${kind}s.csv`, exportItemsCsv(items))}
             >
-              {t('redeal')}
+              {t('export')}
             </button>
-          )}
+            {dealt && (
+              <button
+                type="button"
+                className="rounded bg-accent px-3 py-1 font-medium text-accent-ink"
+                onClick={() => void doRedeal()}
+              >
+                {t('redeal')}
+              </button>
+            )}
+          </div>
         </div>
+
+        {notice && (
+          <div role="status" className="mb-4 text-sm">
+            <p>{notice.text}</p>
+            {notice.errors && notice.errors.length > 0 && (
+              <>
+                <p className="mt-1 text-danger">{t('importErrors')}</p>
+                <ul className="list-disc pl-5 text-danger">
+                  {notice.errors.map((e) => (
+                    <li key={e}>{e}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        )}
+
+        {visible.length === 0 ? (
+          <p className="text-ink-muted">{t('empty')}</p>
+        ) : (
+          <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
+            {visible.map((at) => (
+              <ItemRow
+                key={`${at.library}/${at.item.id}/${at.index}`}
+                at={at}
+                issues={issues.filter((i) => i.itemId === at.item.id)}
+                limited={kind === 'quote' || kind === 'affirmation'}
+                onSave={(item) => onChange(updateItem(project, at, item))}
+                onDelete={() => onChange(deleteItem(project, at))}
+              />
+            ))}
+          </ul>
+        )}
       </div>
-
-      {notice && (
-        <div role="status" className="mb-4 text-sm">
-          <p>{notice.text}</p>
-          {notice.errors && notice.errors.length > 0 && (
-            <>
-              <p className="mt-1 text-danger">{t('importErrors')}</p>
-              <ul className="list-disc pl-5 text-danger">
-                {notice.errors.map((e) => (
-                  <li key={e}>{e}</li>
-                ))}
-              </ul>
-            </>
-          )}
-        </div>
-      )}
-
-      {visible.length === 0 ? (
-        <p className="text-ink-muted">{t('empty')}</p>
-      ) : (
-        <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
-          {visible.map((at) => (
-            <ItemRow
-              key={`${at.library}/${at.item.id}/${at.index}`}
-              at={at}
-              issues={issues.filter((i) => i.itemId === at.item.id)}
-              limited={kind === 'quote' || kind === 'affirmation'}
-              onSave={(item) => onChange(updateItem(project, at, item))}
-              onDelete={() => onChange(deleteItem(project, at))}
-            />
-          ))}
-        </ul>
-      )}
-    </div>
+    </>
   );
 }
 

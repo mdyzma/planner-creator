@@ -12,11 +12,14 @@ export const smallButton =
 
 export function Segmented<T extends string>({
   label,
+  hideLabel = false,
   value,
   options,
   onChange,
 }: {
   label: string;
+  /** Only for screen readers, when the options speak for themselves (icons with text). */
+  hideLabel?: boolean;
   value: T;
   options: ReadonlyArray<readonly [T, ReactNode]>;
   onChange: (value: T) => void;
@@ -24,7 +27,7 @@ export function Segmented<T extends string>({
   return (
     <fieldset className="flex items-center gap-2 text-sm">
       <legend className="sr-only">{label}</legend>
-      <span aria-hidden="true">{label}</span>
+      {!hideLabel && <span aria-hidden="true">{label}</span>}
       <div className="flex overflow-hidden rounded border border-line">
         {options.map(([v, text]) => (
           <button

@@ -9,11 +9,10 @@ import { FORMAT_IDS, LOCALES } from '@planner/schema';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useId, useMemo, useState, type ReactNode } from 'react';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { AppBar } from '@/components/AppBar';
 import { LazyVisible } from '@/components/LazyVisible';
 import { ProjectStatus } from '@/components/ProjectStatus';
 import { ModulePicker } from '@/components/ModulePicker';
-import { Link } from '@/i18n/navigation';
 import {
   FILLER_PATTERN,
   blockRegistry,
@@ -49,7 +48,6 @@ function Preview({
   onChange: (p: PlannerProject) => void;
 }) {
   const t = useTranslations('Preview');
-  const common = useTranslations('Common');
   const [view, setView] = useState<ViewMode>('spread');
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>(0.5);
   const [guides, setGuides] = useState(true);
@@ -109,11 +107,8 @@ function Preview({
 
   return (
     <div className="flex h-screen flex-col">
-      <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-line bg-surface px-4 py-3">
-        <Link href="/" className="text-sm underline">
-          {common('planners')}
-        </Link>
-        <h1 className="font-medium">{project.meta.name}</h1>
+      <AppBar projectId={project.id} screen="preview" title={<h1>{project.meta.name}</h1>} />
+      <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2 border-b border-line bg-bg px-4 py-1.5 text-sm">
         <Segmented
           label={t('view')}
           value={view}
@@ -157,22 +152,7 @@ function Preview({
           <input type="checkbox" checked={samples} onChange={(e) => setSamples(e.target.checked)} />
           {t('samples')}
         </label>
-        <nav className="ml-auto flex items-center gap-4 text-sm">
-          <Link href={`/editor?id=${project.id}`} className="underline">
-            {t('designer')}
-          </Link>
-          <Link href={`/translations?id=${project.id}`} className="underline">
-            {t('translations')}
-          </Link>
-          <Link href={`/content?id=${project.id}`} className="underline">
-            {t('content')}
-          </Link>
-          <Link href={`/export?id=${project.id}`} className="underline">
-            {t('export')}
-          </Link>
-          <LanguageSwitcher />
-        </nav>
-      </header>
+      </div>
 
       {project.template.sections.length > 0 && <DatesBar project={project} onChange={onChange} />}
 

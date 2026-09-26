@@ -13,7 +13,15 @@
       "pl": "Polski"
     },
     "privacy": "Prywatność",
-    "guide": "Przewodnik: jak wypełniać planer"
+    "guide": "Przewodnik: jak wypełniać planer",
+    "screens": {
+      "label": "Ekrany planera",
+      "editor": "Projekt",
+      "preview": "Podgląd",
+      "content": "Treści",
+      "translations": "Tłumaczenia",
+      "export": "Eksport"
+    }
   },
   "Dashboard": {
     "intro": "Twoje planery są zapisane tylko w tej przeglądarce. Wyeksportuj je do pliku JSON, aby mieć kopię zapasową.",
@@ -413,7 +421,8 @@
       "custom": "Własna reguła"
     },
     "export": "Eksport",
-    "plannerName": "Nazwa planera (także nazwa plików)"
+    "plannerName": "Nazwa planera (także nazwa plików)",
+    "viewOptions": "Widok"
   },
   "Export": {
     "title": "Eksport",

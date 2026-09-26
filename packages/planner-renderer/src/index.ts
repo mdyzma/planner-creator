@@ -5,3 +5,4 @@ export * from './Guides';
 export * from './PageView';
 export * from './PrintDocument';
 export * from './style';
+export * from './BrandMark';

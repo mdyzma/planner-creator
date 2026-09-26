@@ -7,9 +7,8 @@ import { LOCALES } from '@planner/schema';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { AppBar } from '@/components/AppBar';
 import { ProjectStatus } from '@/components/ProjectStatus';
-import { Link } from '@/i18n/navigation';
 import { useProject } from '@/lib/useProject';
 
 const KIND_ORDER: TextKind[] = [
@@ -67,54 +66,47 @@ function TranslationsEditor({
   const allDone = report.missingByLocale.en === 0 && report.missingByLocale.pl === 0;
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-8">
-      <header className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-        <Link href={`/preview?id=${project.id}`} className="text-sm underline">
-          {t('back')}
-        </Link>
-        <h1 className="text-xl font-semibold">
-          {t('title')} · {project.meta.name}
-        </h1>
-        <div className="ml-auto">
-          <LanguageSwitcher />
+    <>
+      <AppBar projectId={project.id} screen="translations" title={project.meta.name} />
+      <div className="mx-auto max-w-6xl px-6 py-8">
+        <h1 className="mb-6 text-xl font-semibold">{t('title')}</h1>
+
+        <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <p aria-live="polite">
+            {t('summary', {
+              total: report.total,
+              missingEn: report.missingByLocale.en,
+              missingPl: report.missingByLocale.pl,
+            })}
+            {savedAt && <span className="ml-3 text-ink-muted">· {t('saved')}</span>}
+          </p>
+          <label className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={onlyMissing}
+              onChange={(e) => setOnlyMissing(e.target.checked)}
+            />
+            {t('onlyMissing')}
+          </label>
         </div>
-      </header>
 
-      <div className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
-        <p aria-live="polite">
-          {t('summary', {
-            total: report.total,
-            missingEn: report.missingByLocale.en,
-            missingPl: report.missingByLocale.pl,
-          })}
-          {savedAt && <span className="ml-3 text-ink-muted">· {t('saved')}</span>}
-        </p>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={onlyMissing}
-            onChange={(e) => setOnlyMissing(e.target.checked)}
-          />
-          {t('onlyMissing')}
-        </label>
+        {allDone && <p className="mb-6 text-ink-muted">{t('allDone')}</p>}
+        {groups.length === 0 && !allDone && <p className="text-ink-muted">{t('noneShown')}</p>}
+
+        {groups.map((group) => (
+          <section key={group.kind} className="mb-8" aria-labelledby={`kind-${group.kind}`}>
+            <h2 id={`kind-${group.kind}`} className="mb-2 text-lg font-medium">
+              {t(`kind.${group.kind}`)}
+            </h2>
+            <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
+              {group.entries.map((entry) => (
+                <TranslationRow key={entry.path.join('/')} entry={entry} onSave={write} />
+              ))}
+            </ul>
+          </section>
+        ))}
       </div>
-
-      {allDone && <p className="mb-6 text-ink-muted">{t('allDone')}</p>}
-      {groups.length === 0 && !allDone && <p className="text-ink-muted">{t('noneShown')}</p>}
-
-      {groups.map((group) => (
-        <section key={group.kind} className="mb-8" aria-labelledby={`kind-${group.kind}`}>
-          <h2 id={`kind-${group.kind}`} className="mb-2 text-lg font-medium">
-            {t(`kind.${group.kind}`)}
-          </h2>
-          <ul className="divide-y divide-line rounded-lg border border-line bg-surface">
-            {group.entries.map((entry) => (
-              <TranslationRow key={entry.path.join('/')} entry={entry} onSave={write} />
-            ))}
-          </ul>
-        </section>
-      ))}
-    </div>
+    </>
   );
 }
 
