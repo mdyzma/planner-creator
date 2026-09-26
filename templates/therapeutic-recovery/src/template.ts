@@ -1681,36 +1681,40 @@ const situation: PageTemplate = {
   ),
 };
 
-const wheel: PageTemplate = {
-  id: 'wheel-of-life',
-  name: L('Wheel of Life', 'Koło Życia'),
-  spread: { group: 'month-end', position: 'left' },
-  rationale: L(
-    'Coloured by hand each month; seen month after month, a wheel that becomes rounder is tangible evidence of change.',
-    'Kolorowane ręcznie co miesiąc; koło, które z miesiąca na miesiąc staje się równiejsze, jest namacalnym dowodem zmiany.',
-  ),
-  body: stack([
-    heading('heading', L('Wheel of Life · {{monthName}}', 'Koło Życia · {{monthName}}')),
-    caption(
-      'how',
-      L(
-        'Colour each area from the centre (1) out to how satisfied you feel (10).',
-        'Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10).',
+// A5: larger labels, so they stay readable; the wheel is a little smaller for it.
+const wheel = a5(
+  {
+    id: 'wheel-of-life',
+    name: L('Wheel of Life', 'Koło Życia'),
+    spread: { group: 'month-end', position: 'left' },
+    rationale: L(
+      'Coloured by hand each month; seen month after month, a wheel that becomes rounder is tangible evidence of change.',
+      'Kolorowane ręcznie co miesiąc; koło, które z miesiąca na miesiąc staje się równiejsze, jest namacalnym dowodem zmiany.',
+    ),
+    body: stack([
+      heading('heading', L('Wheel of Life · {{monthName}}', 'Koło Życia · {{monthName}}')),
+      caption(
+        'how',
+        L(
+          'Colour each area from the centre (1) out to how satisfied you feel (10).',
+          'Pokoloruj każdy obszar od środka (1) do poziomu, na jakim oceniasz swoje zadowolenie (10).',
+        ),
       ),
-    ),
-    // Without the recovery module, "Sobriety and 12 Steps" becomes "Meaning and spirituality".
-    varies(block('wheel', 'radial-scale', {}, { height: fr(1) }), {
-      when: BALANCE,
-      props: { segments: WHEEL_BALANCE },
-    }),
-    block(
-      'notice',
-      'writing-area',
-      { title: L('What do I notice?', 'Co zauważam?'), pattern: 'lines' },
-      { height: mmH(40) },
-    ),
-  ]),
-};
+      // Without the recovery module, "Sobriety and 12 Steps" becomes "Meaning and spirituality".
+      varies(block('wheel', 'radial-scale', {}, { height: fr(1) }), {
+        when: BALANCE,
+        props: { segments: WHEEL_BALANCE },
+      }),
+      block(
+        'notice',
+        'writing-area',
+        { title: L('What do I notice?', 'Co zauważam?'), pattern: 'lines' },
+        { height: mmH(40) },
+      ),
+    ]),
+  },
+  [['wheel', 'props/labelSize', 8]],
+);
 
 const REVIEW_PROMPTS = [
   L('What helped me most this month?', 'Co najbardziej mi pomogło w tym miesiącu?'),

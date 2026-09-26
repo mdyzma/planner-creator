@@ -23,9 +23,18 @@ const L = (en: string, pl: string) => ({ en, pl });
 const WheelProps = z.object({
   segments: z.array(LocalizedText).min(3).max(12),
   max: z.number().int().min(3).max(10),
+  /**
+   * Label size in the drawing's units (the radius is 100): larger labels leave a smaller wheel,
+   * since the wheel and its labels share the block's width.
+   */
+  labelSize: z.number().min(4).max(12),
 });
 
+/** Space between the wheel's rim and its labels, in the drawing's units (the radius is 100). */
+const LABEL_GAP = 5;
+
 /** Splits a label into at most two lines near its middle, so it fits beside the wheel. */
+
 function twoLines(text: string): string[] {
   if (text.length <= 12) return [text];
   const middle = text.length / 2;
@@ -58,26 +67,67 @@ export const radialScaleBlock = defineBlock({
       L('Rest and recreation', 'Odpoczynek'),
     ],
     max: 10,
+    labelSize: 6,
   },
   inspector: [
     { key: 'segments', kind: 'localized-list', label: L('Areas', 'Obszary') },
     { key: 'max', kind: 'number', label: L('Scale maximum', 'Maksimum skali'), min: 3, max: 10 },
+    {
+      key: 'labelSize',
+      kind: 'number',
+      label: L('Label size', 'Rozmiar etykiet'),
+      min: 4,
+      max: 12,
+      step: 0.5,
+    },
   ],
   Render: ({ props, block, ctx }) => {
     const scores = sampleFill(ctx, block.id, WheelSample);
-    // Wider than tall: labels beside the wheel need more room than those above and below.
-    const width = 320;
-    const height = 240;
-    const cx = width / 2;
-    const cy = height / 2;
-    const radius = 78;
+    // Drawing units: the wheel's radius is 100; labels of size 6 are about body text on A4.
+    // The drawing is cropped to the wheel and its labels, so the wheel fills the block's width.
+    const radius = 100;
+    const LABEL_SIZE = props.labelSize;
+    const LABEL_LINE = LABEL_SIZE * 1.15;
+    const cx = 0;
+    const cy = 0;
     const n = props.segments.length;
     const angle = (i: number) => -Math.PI / 2 + (2 * Math.PI * i) / n;
     const at = (a: number, r: number) => [cx + r * Math.cos(a), cy + r * Math.sin(a)] as const;
+    const labels = props.segments.map((segment, i) => {
+      const mid = angle(i + 0.5);
+      const [x, y] = at(mid, radius + LABEL_GAP);
+      const cos = Math.cos(mid);
+      const sin = Math.sin(mid);
+      const anchor: 'middle' | 'start' | 'end' =
+        Math.abs(cos) < 0.25 ? 'middle' : cos > 0 ? 'start' : 'end';
+      const lines = twoLines(resolveText(ctx, segment));
+      const extra = (lines.length - 1) * LABEL_LINE;
+      // Baseline of the first line: below the rim, above it, or centred beside it.
+      const first =
+        sin > 0.25
+          ? y + LABEL_SIZE * 0.9
+          : sin < -0.25
+            ? y - 1 - extra
+            : y - extra / 2 + LABEL_SIZE * 0.35;
+      const w = Math.max(...lines.map((l) => l.length)) * LABEL_SIZE * 0.55;
+      const left = anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2;
+      return {
+        x,
+        anchor,
+        lines,
+        first,
+        box: [left, first - LABEL_SIZE * 0.8, left + w, first + extra + LABEL_SIZE * 0.25] as const,
+      };
+    });
+    const pad = 2;
+    const minX = Math.min(-radius, ...labels.map((l) => l.box[0])) - pad;
+    const minY = Math.min(-radius, ...labels.map((l) => l.box[1])) - pad;
+    const maxX = Math.max(radius, ...labels.map((l) => l.box[2])) + pad;
+    const maxY = Math.max(radius, ...labels.map((l) => l.box[3])) + pad;
 
     return (
       <svg
-        viewBox={`0 0 ${width} ${height}`}
+        viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`}
         width="100%"
         height="100%"
         role="img"
@@ -135,33 +185,27 @@ export const radialScaleBlock = defineBlock({
           // Ring numbers along the first spoke, nudged sideways to stay off the line.
           const r = (radius * (i + 1)) / props.max;
           return (
-            <text key={i} x={cx + 2} y={cy - r + 3} fontSize="5" fill={PAPER.inkMuted}>
+            <text key={i} x={cx + 1.5} y={cy - r + 3} fontSize="4" fill={PAPER.inkMuted}>
               {i + 1}
             </text>
           );
         })}
-        {props.segments.map((segment, i) => {
-          const mid = angle(i + 0.5);
-          const [x, y] = at(mid, radius + 8);
-          const cos = Math.cos(mid);
-          const anchor = Math.abs(cos) < 0.25 ? 'middle' : cos > 0 ? 'start' : 'end';
-          const lines = twoLines(resolveText(ctx, segment));
-          const dy =
-            Math.sin(mid) > 0.25
-              ? 4
-              : Math.sin(mid) < -0.25
-                ? -(lines.length - 1) * 8
-                : -(lines.length - 1) * 4 + 2;
-          return (
-            <text key={i} x={x} y={y + dy} fontSize="7.5" fill={PAPER.ink} textAnchor={anchor}>
-              {lines.map((line, j) => (
-                <tspan key={j} x={x} dy={j === 0 ? 0 : 8.5}>
-                  {line}
-                </tspan>
-              ))}
-            </text>
-          );
-        })}
+        {labels.map((label, i) => (
+          <text
+            key={i}
+            x={label.x}
+            y={label.first}
+            fontSize={LABEL_SIZE}
+            fill={PAPER.ink}
+            textAnchor={label.anchor}
+          >
+            {label.lines.map((line, j) => (
+              <tspan key={j} x={label.x} dy={j === 0 ? 0 : LABEL_LINE}>
+                {line}
+              </tspan>
+            ))}
+          </text>
+        ))}
       </svg>
     );
   },

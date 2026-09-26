@@ -6577,6 +6577,15 @@
           }
         ]
       },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/2/block/props/labelSize",
+            "value": 8
+          }
+        ]
+      },
       "guide": {
         "en": "At the end of the month, score each area of life from 1 to 10 and shade it from the centre out to that ring. The lopsided parts show where to put attention next month; write what you notice below.",
         "pl": "Na koniec miesiąca oceń każdy obszar życia w skali 1–10 i zamaluj go od środka do tego pierścienia. Nierówne miejsca pokazują, czemu poświęcić uwagę w przyszłym miesiącu; poniżej zapisz, co zauważasz."
