@@ -129,7 +129,9 @@ export function LayoutView({ node, ctx, renderBlock }: LayoutViewProps) {
               : child.block.size?.width
             : vertical
               ? child.height
-              : undefined;
+              : child.kind === 'stack'
+                ? child.width
+                : undefined;
         return (
           <div
             key={child.kind === 'block' ? child.block.id : i}

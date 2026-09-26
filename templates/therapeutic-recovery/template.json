@@ -645,39 +645,12 @@
                 }
               }
             }
-          },
-          {
-            "kind": "block",
-            "block": {
-              "id": "therapist",
-              "type": "text",
-              "props": {
-                "text": {
-                  "en": "Agreed with my therapist: ____________________",
-                  "pl": "Uzgodnione z terapeutą / terapeutką: ____________________"
-                },
-                "variant": "caption"
-              },
-              "size": {
-                "height": {
-                  "mm": 7
-                }
-              },
-              "visibility": {
-                "!=": [
-                  {
-                    "var": "config.modules.recovery"
-                  },
-                  false
-                ]
-              }
-            }
           }
         ]
       },
       "guide": {
-        "en": "The first page of \"A good start\": a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.",
-        "pl": "Pierwsza strona „Na dobry początek”: zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis."
+        "en": "The first page of \"A good start\" in planners without the recovery module (the Recovery Edition has the therapeutic contract instead): a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.",
+        "pl": "Pierwsza strona „Na dobry początek” w planerach bez modułu zdrowienia (Recovery Edition ma zamiast niej kontrakt terapeutyczny): zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis."
       },
       "sampleContent": {
         "care": {
@@ -3743,40 +3716,68 @@
                 }
               },
               {
-                "kind": "block",
-                "block": {
-                  "id": "commitment",
-                  "type": "writing-area",
-                  "props": {
-                    "title": {
-                      "en": "Today I protect my sobriety by:",
-                      "pl": "Dziś chronię swoją trzeźwość przez:"
-                    },
-                    "pattern": "lines"
-                  },
-                  "size": {
-                    "height": {
-                      "fr": 1
-                    }
-                  },
-                  "variants": [
-                    {
-                      "when": {
-                        "==": [
-                          {
-                            "var": "config.modules.recovery"
-                          },
-                          false
-                        ]
-                      },
+                "kind": "row",
+                "gap": 5,
+                "children": [
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "commitment",
+                      "type": "writing-area",
                       "props": {
                         "title": {
-                          "en": "Today I take care of myself by:",
-                          "pl": "Dziś dbam o siebie przez:"
+                          "en": "Today I protect my sobriety by:",
+                          "pl": "Dziś chronię swoją trzeźwość przez:"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "width": {
+                          "fr": 3
+                        }
+                      },
+                      "variants": [
+                        {
+                          "when": {
+                            "==": [
+                              {
+                                "var": "config.modules.recovery"
+                              },
+                              false
+                            ]
+                          },
+                          "props": {
+                            "title": {
+                              "en": "Today I take care of myself by:",
+                              "pl": "Dziś dbam o siebie przez:"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "kind": "block",
+                    "block": {
+                      "id": "contact",
+                      "type": "writing-area",
+                      "props": {
+                        "title": {
+                          "en": "Who will I talk to today?",
+                          "pl": "Z kim dziś porozmawiam?"
+                        },
+                        "pattern": "lines"
+                      },
+                      "size": {
+                        "width": {
+                          "fr": 2
                         }
                       }
                     }
-                  ]
+                  }
+                ],
+                "height": {
+                  "fr": 1
                 }
               }
             ],
@@ -3843,7 +3844,159 @@
                         "width": {
                           "fr": 2
                         }
+                      },
+                      "visibility": {
+                        "==": [
+                          {
+                            "var": "config.modules.dayplus"
+                          },
+                          false
+                        ]
                       }
+                    }
+                  },
+                  {
+                    "kind": "stack",
+                    "gap": 2,
+                    "children": [
+                      {
+                        "kind": "block",
+                        "block": {
+                          "id": "my-24h",
+                          "type": "text",
+                          "props": {
+                            "text": {
+                              "en": "My 24 hours",
+                              "pl": "Moje 24 godziny"
+                            },
+                            "variant": "label"
+                          },
+                          "size": {
+                            "height": {
+                              "mm": 5
+                            }
+                          },
+                          "visibility": {
+                            "!=": [
+                              {
+                                "var": "config.modules.dayplus"
+                              },
+                              false
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "kind": "block",
+                        "block": {
+                          "id": "watch-today",
+                          "type": "writing-area",
+                          "props": {
+                            "title": {
+                              "en": "Today I am especially careful about:",
+                              "pl": "Dzisiaj szczególnie uważam na:"
+                            },
+                            "pattern": "lines"
+                          },
+                          "size": {
+                            "height": {
+                              "fr": 1
+                            }
+                          },
+                          "visibility": {
+                            "!=": [
+                              {
+                                "var": "config.modules.dayplus"
+                              },
+                              false
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "kind": "block",
+                        "block": {
+                          "id": "if-hard",
+                          "type": "writing-area",
+                          "props": {
+                            "title": {
+                              "en": "If it gets hard, first:",
+                              "pl": "Jeśli będzie trudno, najpierw:"
+                            },
+                            "pattern": "lines"
+                          },
+                          "size": {
+                            "height": {
+                              "fr": 1
+                            }
+                          },
+                          "visibility": {
+                            "!=": [
+                              {
+                                "var": "config.modules.dayplus"
+                              },
+                              false
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "kind": "block",
+                        "block": {
+                          "id": "important",
+                          "type": "writing-area",
+                          "props": {
+                            "title": {
+                              "en": "One thing that matters to me",
+                              "pl": "Jedna rzecz ważna dla mnie"
+                            },
+                            "pattern": "lines"
+                          },
+                          "size": {
+                            "height": {
+                              "fr": 1
+                            }
+                          },
+                          "visibility": {
+                            "!=": [
+                              {
+                                "var": "config.modules.dayplus"
+                              },
+                              false
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "kind": "block",
+                        "block": {
+                          "id": "pleasant",
+                          "type": "writing-area",
+                          "props": {
+                            "title": {
+                              "en": "One thing just for pleasure",
+                              "pl": "Jedna rzecz tylko dla przyjemności"
+                            },
+                            "pattern": "lines"
+                          },
+                          "size": {
+                            "height": {
+                              "fr": 1
+                            }
+                          },
+                          "visibility": {
+                            "!=": [
+                              {
+                                "var": "config.modules.dayplus"
+                              },
+                              false
+                            ]
+                          }
+                        }
+                      }
+                    ],
+                    "width": {
+                      "fr": 2
                     }
                   }
                 ]
@@ -3910,11 +4063,15 @@
                 "noteLabel": {
                   "en": "Reason:",
                   "pl": "Powód:"
+                },
+                "footer": {
+                  "en": "What do I need now?",
+                  "pl": "Czego teraz potrzebuję?"
                 }
               },
               "size": {
                 "height": {
-                  "mm": 53
+                  "mm": 60
                 }
               },
               "visibility": {
@@ -3945,7 +4102,7 @@
             "op": "add",
             "path": "/body/children/3/block/size/height",
             "value": {
-              "mm": 43
+              "mm": 50
             }
           },
           {
@@ -4030,8 +4187,8 @@
         ]
       },
       "guide": {
-        "en": "The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.",
-        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu."
+        "en": "The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today, and who you will talk to. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now, so write what you need. With the Day+ module the schedule gives way to the rest of \"My 24 hours\" and one important and one pleasant thing.",
+        "pl": "Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość, i z kim porozmawiasz. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu, więc zapisz, czego potrzebujesz. Z modułem Dzień+ plan dnia ustępuje miejsca reszcie „Moich 24 godzin” oraz jednej rzeczy ważnej i jednej przyjemnej."
       },
       "sampleContent": {
         "date": {
@@ -4056,14 +4213,20 @@
         },
         "commitment": {
           "fill": {
-            "en": "the 18:00 meeting and a call to my sponsor",
-            "pl": "mityng o 18:00 i telefon do sponsora"
+            "en": "the 18:00 meeting",
+            "pl": "mityng o 18:00"
           },
           "note": {
             "en": "one concrete action for today",
             "pl": "jedno konkretne działanie na dziś"
           },
           "noteAt": "bottom-right"
+        },
+        "contact": {
+          "fill": {
+            "en": "Tomek and my sister",
+            "pl": "Tomek i siostra"
+          }
         },
         "priorities": {
           "fill": {
@@ -4187,11 +4350,39 @@
                 "en": "nothing planned",
                 "pl": "nic zaplanowanego"
               }
-            ]
+            ],
+            "footer": {
+              "en": "a proper lunch and a short walk",
+              "pl": "porządny obiad i krótki spacer"
+            }
           },
           "note": {
             "en": "check in at midday; 4–5 = act now",
             "pl": "sprawdź w południe; 4–5 = działaj"
+          }
+        },
+        "watch-today": {
+          "fill": {
+            "en": "the evening after the argument",
+            "pl": "wieczór po kłótni"
+          }
+        },
+        "if-hard": {
+          "fill": {
+            "en": "call Tomek",
+            "pl": "dzwonię do Tomka"
+          }
+        },
+        "important": {
+          "fill": {
+            "en": "the school play",
+            "pl": "przedstawienie Kuby"
+          }
+        },
+        "pleasant": {
+          "fill": {
+            "en": "a chapter of my book",
+            "pl": "rozdział książki"
           }
         }
       },
@@ -4218,8 +4409,8 @@
             },
             "commitment": {
               "fill": {
-                "en": "a walk at lunch and an early night",
-                "pl": "spacer w przerwie i wcześnie spać"
+                "en": "a walk at lunch",
+                "pl": "spacer w przerwie"
               },
               "note": {
                 "en": "one concrete action for today",
@@ -8073,8 +8264,8 @@
               "type": "text",
               "props": {
                 "text": {
-                  "en": "Write the signs you know from your own experience. The examples are only a prompt; cross out what does not fit.",
-                  "pl": "Zapisz sygnały, które znasz z własnego doświadczenia. Przykłady są tylko podpowiedzią; skreśl to, co nie pasuje."
+                  "en": "Tick the signs you know from your own experience, and add your own in your words.",
+                  "pl": "Zaznacz sygnały, które znasz z własnego doświadczenia, i dopisz własne, swoimi słowami."
                 },
                 "variant": "caption"
               },
@@ -8092,6 +8283,7 @@
               "type": "category-grid",
               "props": {
                 "columns": 1,
+                "examplesAs": "ticks",
                 "cells": [
                   {
                     "title": {
@@ -8114,6 +8306,14 @@
                       {
                         "en": "exhaustion",
                         "pl": "wyczerpanie"
+                      },
+                      {
+                        "en": "headaches",
+                        "pl": "bóle głowy"
+                      },
+                      {
+                        "en": "skipping meals",
+                        "pl": "pomijanie posiłków"
                       }
                     ]
                   },
@@ -8134,6 +8334,10 @@
                       {
                         "en": "“I do not need meetings anymore.”",
                         "pl": "„Nie potrzebuję już mityngów.”"
+                      },
+                      {
+                        "en": "“I deserve it.”",
+                        "pl": "„Należy mi się.”"
                       }
                     ]
                   }
@@ -8149,25 +8353,33 @@
         ]
       },
       "guide": {
-        "en": "Your personal early warning signs of relapse, in four areas: body, thoughts, emotions and behaviour. The printed examples are prompts; write your own signs in your own words.",
-        "pl": "Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Wydrukowane przykłady są podpowiedzią; wpisz własne sygnały, własnymi słowami."
+        "en": "Your personal early warning signs of relapse, in four areas: body, thoughts, emotions and behaviour. Tick the signs you know from your own experience, then add your own in your own words.",
+        "pl": "Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Zaznacz sygnały, które znasz z własnego doświadczenia, potem dopisz własne, swoimi słowami."
       },
       "sampleContent": {
         "grid": {
           "fill": [
             {
-              "en": "tight jaw\nbad sleep",
-              "pl": "zaciśnięta szczęka\nzły sen"
+              "done": [
+                0,
+                2
+              ],
+              "text": {
+                "en": "tight jaw in the evenings",
+                "pl": "zaciśnięta szczęka wieczorem"
+              }
             },
             {
-              "en": "\"just one\"\n\"I have it under control\"",
-              "pl": "„tylko jeden”\n„mam to pod kontrolą”"
+              "done": [
+                0,
+                4
+              ],
+              "text": {
+                "en": "\"just this once\"",
+                "pl": "„tylko ten jeden raz”"
+              }
             }
-          ],
-          "note": {
-            "en": "your own early signs, in your words",
-            "pl": "Twoje wczesne sygnały, Twoimi słowami"
-          }
+          ]
         }
       }
     },
@@ -8192,6 +8404,7 @@
               "type": "category-grid",
               "props": {
                 "columns": 1,
+                "examplesAs": "ticks",
                 "cells": [
                   {
                     "title": {
@@ -8214,6 +8427,14 @@
                       {
                         "en": "hopelessness",
                         "pl": "beznadzieja"
+                      },
+                      {
+                        "en": "anxiety",
+                        "pl": "lęk"
+                      },
+                      {
+                        "en": "boredom",
+                        "pl": "nuda"
                       }
                     ]
                   },
@@ -8238,6 +8459,14 @@
                       {
                         "en": "abandoning routines",
                         "pl": "porzucanie codziennych rutyn"
+                      },
+                      {
+                        "en": "irritability",
+                        "pl": "drażliwość"
+                      },
+                      {
+                        "en": "romanticising using",
+                        "pl": "idealizowanie picia / używania"
                       }
                     ]
                   }
@@ -8287,19 +8516,32 @@
         ]
       },
       "guide": {
-        "en": "Emotions and behaviours, and the most important part: your own threshold (how many signs) and three things you will do as soon as you reach it. Agree it with your therapist.",
-        "pl": "Emocje i zachowania oraz najważniejsza część: Twój próg (ile sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą."
+        "en": "Emotions and behaviours, and the most important part: your own threshold (how many of the ticked signs) and three things you will do as soon as you reach it. Agree it with your therapist.",
+        "pl": "Emocje i zachowania oraz najważniejsza część: Twój próg (ile z zaznaczonych sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą."
       },
       "sampleContent": {
         "grid": {
           "fill": [
             {
-              "en": "irritation\nself-pity",
-              "pl": "rozdrażnienie\nużalanie się"
+              "done": [
+                0,
+                1,
+                4
+              ],
+              "text": {
+                "en": "irritation after work",
+                "pl": "rozdrażnienie po pracy"
+              }
             },
             {
-              "en": "skipping meetings\nlate nights",
-              "pl": "opuszczanie mityngów\npóźne noce"
+              "done": [
+                1,
+                4
+              ],
+              "text": {
+                "en": "late nights",
+                "pl": "późne noce"
+              }
             }
           ]
         },
@@ -10370,11 +10612,23 @@
         {
           "page": "agreement",
           "when": {
-            "!=": [
+            "and": [
               {
-                "var": "config.modules.start"
+                "!=": [
+                  {
+                    "var": "config.modules.start"
+                  },
+                  false
+                ]
               },
-              false
+              {
+                "==": [
+                  {
+                    "var": "config.modules.recovery"
+                  },
+                  false
+                ]
+              }
             ]
           }
         },
@@ -10613,8 +10867,8 @@
         "pl": "Na dobry początek"
       },
       "description": {
-        "en": "Six pages at the front: an agreement with yourself, your vision of a good life, more and less, values, strengths, and what restores you.",
-        "pl": "Sześć stron na początku: umowa ze sobą, wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje."
+        "en": "Pages at the front: an agreement with yourself (with the recovery module, the therapeutic contract instead), your vision of a good life, more and less, values, strengths, and what restores you.",
+        "pl": "Strony na początku: umowa ze sobą (z modułem zdrowienia zamiast niej kontrakt terapeutyczny), wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje."
       },
       "default": true
     },
@@ -10653,6 +10907,18 @@
         "pl": "Cotygodniowa strona na jedną sytuację: myśl, uczucie, działanie i to, co mogłoby pomóc następnym razem."
       },
       "default": false
+    },
+    {
+      "id": "dayplus",
+      "name": {
+        "en": "Day+",
+        "pl": "Dzień+"
+      },
+      "description": {
+        "en": "The full \"My 24 hours\" and \"something important, something pleasant\" on the day page, in place of the plan of the day.",
+        "pl": "Pełne „Moje 24 godziny” oraz „coś ważnego, coś przyjemnego” na stronie dnia, zamiast planu dnia."
+      },
+      "default": false
     }
   ],
   "presets": [
@@ -10670,7 +10936,8 @@
         "start": true,
         "recovery": true,
         "halt": true,
-        "cbt": false
+        "cbt": false,
+        "dayplus": false
       }
     },
     {
@@ -10687,7 +10954,26 @@
         "start": true,
         "recovery": false,
         "halt": true,
-        "cbt": false
+        "cbt": false,
+        "dayplus": false
+      }
+    },
+    {
+      "id": "basic",
+      "name": {
+        "en": "Basic",
+        "pl": "Podstawowy"
+      },
+      "description": {
+        "en": "A simple day planner: no front matter, recovery, HALT-B or situation analysis.",
+        "pl": "Prosty planer dnia: bez stron wstępnych, zdrowienia, HALT-B i analizy sytuacji."
+      },
+      "modules": {
+        "start": false,
+        "recovery": false,
+        "halt": false,
+        "cbt": false,
+        "dayplus": false
       }
     }
   ],

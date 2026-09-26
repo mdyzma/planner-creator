@@ -69,9 +69,12 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
 /** Usable width of an A4 guide page (210 mm minus 15 mm margins). */
 const CONTENT_WIDTH = 180;
 
-/** Every module of the template switched on, so the guide explains the optional pages too. */
+/** Modules that replace a part of the standard page; the guide shows the standard page. */
+const REPLACING_MODULES = new Set(['dayplus']);
+
+/** Every other module switched on, so the guide explains the optional pages too. */
 const allModules = (template: PlannerTemplate) =>
-  Object.fromEntries((template.modules ?? []).map((m) => [m.id, true]));
+  Object.fromEntries((template.modules ?? []).map((m) => [m.id, !REPLACING_MODULES.has(m.id)]));
 
 function exampleProject(locale: Locale, format: FormatId): PlannerProject {
   const bundle = BUNDLED_TEMPLATES[0]!;

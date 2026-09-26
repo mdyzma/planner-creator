@@ -29,6 +29,8 @@ const RatingProps = z.object({
   mode: z.enum(['checkbox', 'scale-1-5', 'scale-0-10']),
   noteColumn: z.boolean(),
   noteLabel: LocalizedText.optional(),
+  /** A labelled writing line under the rows, e.g. "What do I need now?" after a HALT check. */
+  footer: LocalizedText.optional(),
   /**
    * A HALT check prints that check's rows (and fills `{{haltName}}` in the title); `auto` follows
    * the planner's HALT block (e.g. a weekly review matching the day page); custom prints `rows`.
@@ -82,6 +84,11 @@ export const ratingMatrixBlock = defineBlock({
       ],
     },
     { key: 'noteColumn', kind: 'boolean', label: L('Note column', 'Kolumna na notatkę') },
+    {
+      key: 'footer',
+      kind: 'localized-text',
+      label: L('Line under the rows', 'Linia pod wierszami'),
+    },
   ],
   Render: ({ props, block, ctx }) => {
     const scale = SCALES[props.mode];
@@ -173,6 +180,22 @@ export const ratingMatrixBlock = defineBlock({
             </div>
           ))}
         </div>
+        {props.footer && (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: mm(1),
+              minHeight: mm(7),
+              marginTop: mm(1),
+              borderBottom: RULE,
+              flex: 'none',
+            }}
+          >
+            <span style={TYPE.caption}>{resolveText(ctx, props.footer)}</span>
+            <Hand size={4.2}>{handText(ctx, sample?.footer)}</Hand>
+          </div>
+        )}
       </div>
     );
   },

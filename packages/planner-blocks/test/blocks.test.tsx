@@ -139,6 +139,35 @@ describe('HALT and schedule', () => {
     ).toHaveLength(44);
   });
 
+  it('prints a labelled line under the rows, with its example', () => {
+    const footer = { en: 'What do I need now?', pl: 'Czego teraz potrzebuję?' };
+    const html = render(
+      'rating-matrix',
+      { rows: HALT_ROWS, mode: 'scale-1-5', footer },
+      ctx({ sample: () => ({ fill: { footer: 'spacer' } }) }),
+    );
+    expect(text(html)).toMatch(/Czego teraz potrzebuję\? spacer$/);
+  });
+
+  it('prints category examples as tick boxes, then lines for your own', () => {
+    const cells = [
+      {
+        title: { en: 'Body', pl: 'Ciało' },
+        examples: [
+          { en: 'insomnia', pl: 'bezsenność' },
+          { en: 'headaches', pl: 'bóle głowy' },
+        ],
+      },
+    ];
+    const html = render(
+      'category-grid',
+      { cells, examplesAs: 'ticks' },
+      ctx({ sample: () => ({ fill: [{ done: [1], text: 'zły sen' }] }) }),
+    );
+    expect(text(html)).toBe('Ciało bezsenność ✓ bóle głowy Moje własne: zły sen');
+    expect(text(render('category-grid', { cells }))).toBe('Ciało np. bezsenność · bóle głowy');
+  });
+
   it('lists every hour from 07:00 to 18:00 inclusive', () => {
     const html = render('time-grid', { from: 7, to: 18, linesPerSlot: 2 });
     const times = [...html.matchAll(/(\d{2}:\d{2})/g)].map((m) => m[1]);

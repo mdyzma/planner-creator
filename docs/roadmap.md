@@ -6,7 +6,7 @@ Where "Dzień po Dniu" stands after v0.6.0, measured against the two content rev
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.6.0 (front matter and Month 2.0).
+Last updated: 2026-09-26, after v0.7.0 (not tagged yet).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -43,33 +43,15 @@ Compatible with the intent of the reviews; keep unless there is a reason to chan
 
 From the content reviews:
 
-- **Day (S2):** the full "Moje 24 godziny" (four prompts; one line kept), "coś ważnego / coś
-  przyjemnego", "Czego teraz potrzebuję?" and "Z kim dziś porozmawiam?". The left page is full
-  (priorities, 06–22 plan, HALT-B), and S1 limits the day to two pages and 5–7 minutes in the
-  morning.
-- **Warning signs as tick boxes** (S2): they are still printed prompts to cross out.
-- **More modules (S2 XII):** Mindfulness and Productivity; and a "Basic" preset (all modules
-  off), which the README already shows.
+- **More modules (S2 XII):** Mindfulness and Productivity.
 
 Loose ends:
 
 - A Balance quote library and a Balance guide booklet (both are shared with the Recovery Edition).
 - Editing module variants directly in the designer (it edits the variant that prints).
-- "Moja umowa ze sobą" and the therapeutic contract overlap in the Recovery Edition.
 - Size: six months are about 554 pages; acceptable, since months print and file one at a time.
 
 ## Next
-
-### v0.7.0 — Finishing the content
-
-1. **Day page.** Proposed: "Czego teraz potrzebuję?" as the title of the HALT-B note column; "Z
-   kim dziś porozmawiam?" as one short line under the commitment; the full "Moje 24 godziny" and
-   "important / pleasant" in an optional "Dzień+" module that takes the place of "Plan dnia".
-2. **Warning signs as tick boxes**, keeping the threshold ("Gdy zauważę \_\_ z tych
-   sygnałów").
-3. **A "Basic" preset** (all modules off), and a decision on the contract in the Recovery Edition
-   (off by default, or both).
-4. **Roadmap:** keep "Still open" current.
 
 ### v0.8.0 — Balance as a first-class edition, and quality
 
@@ -96,13 +78,32 @@ Loose ends:
   generic, as the original brief intended.
 - Mindfulness and Productivity modules.
 
-### Decisions needed
+### Decisions for v0.7.0
 
-1. Day page: the "Dzień+" module, or "Moje 24 godziny" in every planner?
-2. The contract in the Recovery Edition: off by default, or keep both?
-3. Order: v0.7.0 first, or pull something forward (deployment, overflow check)?
+1. Day page: the optional "Dzień+" module; every planner gets "Z kim dziś porozmawiam?" and
+   "Czego teraz potrzebuję?".
+2. The therapeutic contract replaces "Moja umowa ze sobą" in the Recovery Edition.
+3. Order: the roadmap's order (content, then quality, then print and publish).
 
 ## Released
+
+### v0.7.0 — Finishing the content
+
+Done (not tagged yet):
+
+- Day page for everyone: "Z kim dziś porozmawiam?" beside the morning commitment, and "Czego
+  teraz potrzebuję?" as a line under the HALT-B rows (the per-row "Powód:" stays).
+- A new module "Dzień+" (off by default): the rest of S2's "Moje 24 godziny" ("Dzisiaj
+  szczególnie uważam na:", "Jeśli będzie trudno, najpierw:") and "Jedna rzecz ważna dla mnie" /
+  "Jedna rzecz tylko dla przyjemności", in place of "Plan dnia".
+- Warning signs as tick boxes (two columns, a few more examples), with "Moje własne:" lines
+  under them; the threshold now counts ticked signs.
+- The therapeutic contract replaces "Moja umowa ze sobą" in the Recovery Edition; the agreement
+  stays in planners without the recovery module.
+- A "Basic" preset (Podstawowy): all modules off.
+- Engine: a stack can have a width in a row, and a stack or row whose blocks are all left out
+  takes no space; the rating table has an optional line under its rows; category boxes can print
+  their examples as tick boxes.
 
 ### v0.3.0 — Daily page 2.0: the morning
 

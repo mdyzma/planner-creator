@@ -29,11 +29,13 @@ export const ListSample = z.object({
   done: z.array(z.number().int()).optional(),
 });
 
-/** rating-matrix: circled value per row (null = none), ticks, and notes per row. */
+/** rating-matrix: circled value per row (null = none), ticks, notes per row, the footer. */
 export const RatingSample = z.object({
   values: z.array(z.number().int().nullable()).optional(),
   ticks: z.array(z.boolean()).optional(),
   notes: z.array(SampleText).optional(),
+  /** The line under the rows (`footer`). */
+  footer: SampleText.optional(),
 });
 
 /** time-grid: entries by time, e.g. { "09:00": "Therapy" }. */
@@ -51,8 +53,10 @@ export const DayStripSample = z.object({
 /** radial-scale: a score per area, shaded from the centre. */
 export const WheelSample = z.array(z.number().min(0).max(10));
 
-/** category-grid: lines per box. */
-export const CategorySample = z.array(SampleText);
+/** category-grid: lines per box; with examples as tick boxes, the ticked ones and the lines. */
+export const CategorySample = z.array(
+  z.union([z.object({ done: z.array(z.number().int()), text: SampleText.optional() }), SampleText]),
+);
 
 /** contact-table: values per person, in field order. */
 export const ContactSample = z.array(z.array(SampleText));

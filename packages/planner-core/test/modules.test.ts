@@ -113,4 +113,36 @@ describe('modules', () => {
     });
     expect(samples({}).sampleVariants).toBeUndefined();
   });
+
+  it('drops a column whose blocks are all left out, so it takes no space', () => {
+    const block = (id: string) =>
+      ({ kind: 'block', block: { id, type: 'text', props: {} } }) as const;
+    const page: PageTemplate = {
+      id: 'day',
+      name: L('Day', 'Dzień'),
+      body: {
+        kind: 'row',
+        gap: 5,
+        children: [
+          block('priorities'),
+          {
+            kind: 'stack',
+            gap: 2,
+            children: [
+              { kind: 'block', block: { ...block('extra').block, visibility: moduleOn('x') } },
+            ],
+          },
+        ],
+      },
+    };
+    const body = (modules: Record<string, boolean>) =>
+      resolvePageTemplate(page, {
+        format: 'A4',
+        side: 'left',
+        scope: { config: { modules } },
+      }).template.body;
+    const row = (b: PageTemplate['body']) => (b.kind === 'row' ? b.children.length : -1);
+    expect(row(body({ x: true }))).toBe(2);
+    expect(row(body({ x: false }))).toBe(1);
+  });
 });

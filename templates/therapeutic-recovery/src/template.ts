@@ -25,14 +25,15 @@ const RECOVERY = 'recovery';
 const HALT = 'halt';
 const CBT = 'cbt';
 const START = 'start';
+const DAYPLUS = 'dayplus';
 
 const MODULES: ModuleDefinition[] = [
   {
     id: START,
     name: L('A good start', 'Na dobry początek'),
     description: L(
-      'Six pages at the front: an agreement with yourself, your vision of a good life, more and less, values, strengths, and what restores you.',
-      'Sześć stron na początku: umowa ze sobą, wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje.',
+      'Pages at the front: an agreement with yourself (with the recovery module, the therapeutic contract instead), your vision of a good life, more and less, values, strengths, and what restores you.',
+      'Strony na początku: umowa ze sobą (z modułem zdrowienia zamiast niej kontrakt terapeutyczny), wizja dobrego życia, więcej i mniej, wartości, mocne strony oraz to, co Cię regeneruje.',
     ),
     default: true,
   },
@@ -63,6 +64,15 @@ const MODULES: ModuleDefinition[] = [
     ),
     default: false,
   },
+  {
+    id: DAYPLUS,
+    name: L('Day+', 'Dzień+'),
+    description: L(
+      'The full "My 24 hours" and "something important, something pleasant" on the day page, in place of the plan of the day.',
+      'Pełne „Moje 24 godziny” oraz „coś ważnego, coś przyjemnego” na stronie dnia, zamiast planu dnia.',
+    ),
+    default: false,
+  },
 ];
 
 const PRESETS: PresetDefinition[] = [
@@ -73,7 +83,7 @@ const PRESETS: PresetDefinition[] = [
       'For recovery from addiction: sobriety, craving, HALT-B and the crisis section.',
       'Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa.',
     ),
-    modules: { [START]: true, [RECOVERY]: true, [HALT]: true, [CBT]: false },
+    modules: { [START]: true, [RECOVERY]: true, [HALT]: true, [CBT]: false, [DAYPLUS]: false },
   },
   {
     id: 'balance',
@@ -82,7 +92,16 @@ const PRESETS: PresetDefinition[] = [
       'Everyday life, balance and a good life, without addiction and therapy wording.',
       'Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii.',
     ),
-    modules: { [START]: true, [RECOVERY]: false, [HALT]: true, [CBT]: false },
+    modules: { [START]: true, [RECOVERY]: false, [HALT]: true, [CBT]: false, [DAYPLUS]: false },
+  },
+  {
+    id: 'basic',
+    name: L('Basic', 'Podstawowy'),
+    description: L(
+      'A simple day planner: no front matter, recovery, HALT-B or situation analysis.',
+      'Prosty planer dnia: bez stron wstępnych, zdrowienia, HALT-B i analizy sytuacji.',
+    ),
+    modules: { [START]: false, [RECOVERY]: false, [HALT]: false, [CBT]: false, [DAYPLUS]: false },
   },
 ];
 
@@ -92,11 +111,12 @@ const BALANCE = moduleOff(RECOVERY);
 const BALANCE_A5: Condition = { and: [BALANCE, { '==': [{ var: 'format' }, 'A5'] }] };
 
 type Tagged = LayoutNode | BlockInstance;
+/** Applies `fn` to a block, or to every block inside a stack or row. */
 const retag = <T extends Tagged>(node: T, fn: (b: BlockInstance) => BlockInstance): T =>
   ('kind' in node
     ? node.kind === 'block'
       ? { ...node, block: fn(node.block) }
-      : node
+      : { ...node, children: node.children.map((c) => retag(c, fn)) }
     : fn(node)) as T;
 
 /** Prints only while all these modules are on. */
@@ -107,6 +127,10 @@ const needs = <T extends Tagged>(node: T, ...modules: string[]): T =>
   }));
 
 /** Other props while a condition holds; the first matching variant wins, so list A5 first. */
+/** Blocks printed only while a module is off: what the module replaces. */
+const without = <T extends Tagged>(node: T, module: string): T =>
+  retag(node, (b) => ({ ...b, visibility: moduleOff(module) }));
+
 const varies = <T extends Tagged>(node: T, ...variants: BlockVariant[]): T =>
   retag(node, (b) => ({ ...b, variants }));
 
@@ -480,21 +504,6 @@ const agreement: PageTemplate = {
           variant: 'body',
         },
         { height: mmH(8) },
-      ),
-      needs(
-        block(
-          'therapist',
-          'text',
-          {
-            text: L(
-              `Agreed with my therapist: ${BLANK}${BLANK}`,
-              `Uzgodnione z terapeutą / terapeutką: ${BLANK}${BLANK}`,
-            ),
-            variant: 'caption',
-          },
-          { height: mmH(7) },
-        ),
-        RECOVERY,
       ),
     ],
     { gap: 3 },
@@ -1047,23 +1056,40 @@ const dayLeft = a5(
               { when: BALANCE_A5, props: { text: checkin([3, 2], false) } },
               { when: BALANCE, props: { text: checkin([CHECKIN.length - 1], false) } },
             ),
-            varies(
-              block(
-                'commitment',
-                'writing-area',
-                {
-                  title: L(
-                    'Today I protect my sobriety by:',
-                    'Dziś chronię swoją trzeźwość przez:',
+            // The one action for today, and who I want to be in touch with (S2, "My 24 hours").
+            row(
+              [
+                varies(
+                  block(
+                    'commitment',
+                    'writing-area',
+                    {
+                      title: L(
+                        'Today I protect my sobriety by:',
+                        'Dziś chronię swoją trzeźwość przez:',
+                      ),
+                      pattern: 'lines',
+                    },
+                    { width: fr(3) },
                   ),
-                  pattern: 'lines',
-                },
-                { height: fr(1) },
-              ),
-              {
-                when: BALANCE,
-                props: { title: L('Today I take care of myself by:', 'Dziś dbam o siebie przez:') },
-              },
+                  {
+                    when: BALANCE,
+                    props: {
+                      title: L('Today I take care of myself by:', 'Dziś dbam o siebie przez:'),
+                    },
+                  },
+                ),
+                block(
+                  'contact',
+                  'writing-area',
+                  {
+                    title: L('Who will I talk to today?', 'Z kim dziś porozmawiam?'),
+                    pattern: 'lines',
+                  },
+                  { width: fr(2) },
+                ),
+              ],
+              { height: fr(1) },
             ),
           ],
           { height: mmH(28), label: L('Morning', 'Poranek') },
@@ -1081,11 +1107,45 @@ const dayLeft = a5(
                 },
                 { width: fr(3) },
               ),
-              block(
-                'schedule',
-                'time-grid',
-                { title: L('Plan of the day', 'Plan dnia'), from: 6, to: 22, linesPerSlot: 1 },
-                { width: fr(2) },
+              without(
+                block(
+                  'schedule',
+                  'time-grid',
+                  { title: L('Plan of the day', 'Plan dnia'), from: 6, to: 22, linesPerSlot: 1 },
+                  { width: fr(2) },
+                ),
+                DAYPLUS,
+              ),
+              // Day+: the rest of "My 24 hours" and something important / pleasant (S2).
+              needs(
+                stack(
+                  [
+                    block(
+                      'my-24h',
+                      'text',
+                      { text: L('My 24 hours', 'Moje 24 godziny'), variant: 'label' },
+                      { height: mmH(5) },
+                    ),
+                    prompt(
+                      'watch-today',
+                      L('Today I am especially careful about:', 'Dzisiaj szczególnie uważam na:'),
+                    ),
+                    prompt(
+                      'if-hard',
+                      L('If it gets hard, first:', 'Jeśli będzie trudno, najpierw:'),
+                    ),
+                    prompt(
+                      'important',
+                      L('One thing that matters to me', 'Jedna rzecz ważna dla mnie'),
+                    ),
+                    prompt(
+                      'pleasant',
+                      L('One thing just for pleasure', 'Jedna rzecz tylko dla przyjemności'),
+                    ),
+                  ],
+                  { width: fr(2), gap: 2 },
+                ),
+                DAYPLUS,
               ),
             ]),
           ],
@@ -1107,8 +1167,9 @@ const dayLeft = a5(
               mode: 'scale-1-5',
               noteColumn: true,
               noteLabel: L('Reason:', 'Powód:'),
+              footer: L('What do I need now?', 'Czego teraz potrzebuję?'),
             },
-            { height: mmH(53) },
+            { height: mmH(60) },
           ),
           HALT,
         ),
@@ -1118,7 +1179,7 @@ const dayLeft = a5(
   },
   [
     ['priorities', 'props/subLines', [L('If it gets hard:', 'Gdy będzie trudno:')]],
-    ['halt', 'size/height', { mm: 43 }],
+    ['halt', 'size/height', { mm: 50 }],
     ['quote', 'props/fallbackLines', 1],
     // The check-in on two lines of three.
     ['checkin', 'props/text', checkin([3, 3])],
@@ -2018,8 +2079,8 @@ const warningLeft: PageTemplate = {
     caption(
       'how',
       L(
-        'Write the signs you know from your own experience. The examples are only a prompt; cross out what does not fit.',
-        'Zapisz sygnały, które znasz z własnego doświadczenia. Przykłady są tylko podpowiedzią; skreśl to, co nie pasuje.',
+        'Tick the signs you know from your own experience, and add your own in your words.',
+        'Zaznacz sygnały, które znasz z własnego doświadczenia, i dopisz własne, swoimi słowami.',
       ),
       10,
     ),
@@ -2028,6 +2089,7 @@ const warningLeft: PageTemplate = {
       'category-grid',
       {
         columns: 1,
+        examplesAs: 'ticks',
         cells: [
           {
             title: L('Body', 'Ciało'),
@@ -2036,6 +2098,8 @@ const warningLeft: PageTemplate = {
               E('muscle tension', 'napięcie mięśni'),
               E('jaw clenching', 'zaciskanie szczęki'),
               E('exhaustion', 'wyczerpanie'),
+              E('headaches', 'bóle głowy'),
+              E('skipping meals', 'pomijanie posiłków'),
             ],
           },
           {
@@ -2044,6 +2108,7 @@ const warningLeft: PageTemplate = {
               E('“One time will not hurt.”', '„Jeden raz nie zaszkodzi.”'),
               E('“I can control it now.”', '„Teraz już nad tym panuję.”'),
               E('“I do not need meetings anymore.”', '„Nie potrzebuję już mityngów.”'),
+              E('“I deserve it.”', '„Należy mi się.”'),
             ],
           },
         ],
@@ -2063,6 +2128,7 @@ const warningRight: PageTemplate = {
       'category-grid',
       {
         columns: 1,
+        examplesAs: 'ticks',
         cells: [
           {
             title: L('Emotions', 'Emocje'),
@@ -2071,6 +2137,8 @@ const warningRight: PageTemplate = {
               E('self-pity', 'użalanie się nad sobą'),
               E('anger', 'złość'),
               E('hopelessness', 'beznadzieja'),
+              E('anxiety', 'lęk'),
+              E('boredom', 'nuda'),
             ],
           },
           {
@@ -2080,6 +2148,8 @@ const warningRight: PageTemplate = {
               E('avoiding meetings', 'unikanie mityngów'),
               E('lying', 'kłamstwa'),
               E('abandoning routines', 'porzucanie codziennych rutyn'),
+              E('irritability', 'drażliwość'),
+              E('romanticising using', 'idealizowanie picia / używania'),
             ],
           },
         ],
@@ -2641,7 +2711,8 @@ const sections: SectionTemplate[] = [
     children: [
       page('cover'),
       page('how-to'),
-      { page: 'agreement', when: moduleOn(START) },
+      // In the Recovery Edition the therapeutic contract takes the place of the agreement.
+      { page: 'agreement', when: { and: [moduleOn(START), moduleOff(RECOVERY)] } },
       { page: 'good-life', when: moduleOn(START) },
       { page: 'more-less', when: moduleOn(START) },
       { page: 'values', when: moduleOn(START) },

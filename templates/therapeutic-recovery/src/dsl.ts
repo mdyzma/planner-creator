@@ -35,12 +35,13 @@ export const railBlock = (
 
 export const stack = (
   children: LayoutNode[],
-  opts: { height?: Length; label?: LocalizedText; gap?: number } = {},
+  opts: { height?: Length; width?: Length; label?: LocalizedText; gap?: number } = {},
 ): LayoutNode => ({
   kind: 'stack',
   gap: opts.gap ?? 4,
   children,
   ...(opts.height ? { height: opts.height } : {}),
+  ...(opts.width ? { width: opts.width } : {}),
   ...(opts.label ? { label: opts.label } : {}),
 });
 

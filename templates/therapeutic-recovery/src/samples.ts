@@ -316,10 +316,11 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
     checkin: { fill: ['6', '5', '4', '3', '6', '3'] },
     commitment: {
       // One line: the A5 page has room for only one.
-      fill: L('the 18:00 meeting and a call to my sponsor', 'mityng o 18:00 i telefon do sponsora'),
+      fill: L('the 18:00 meeting', 'mityng o 18:00'),
       note: L('one concrete action for today', 'jedno konkretne działanie na dziś'),
       noteAt: 'bottom-right',
     },
+    contact: { fill: L('Tomek and my sister', 'Tomek i siostra') },
     priorities: {
       fill: {
         items: [
@@ -371,9 +372,15 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
           L('short night', 'krótka noc'),
           L('nothing planned', 'nic zaplanowanego'),
         ],
+        footer: L('a proper lunch and a short walk', 'porządny obiad i krótki spacer'),
       },
       note: L('check in at midday; 4–5 = act now', 'sprawdź w południe; 4–5 = działaj'),
     },
+    // Day+ (in place of the plan of the day).
+    'watch-today': { fill: L('the evening after the argument', 'wieczór po kłótni') },
+    'if-hard': { fill: L('call Tomek', 'dzwonię do Tomka') },
+    important: { fill: L('the school play', 'przedstawienie Kuby') },
+    pleasant: { fill: L('a chapter of my book', 'rozdział książki') },
   },
   'day-right': {
     threat: {
@@ -542,17 +549,16 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
   'warning-signs-left': {
     grid: {
       fill: [
-        L('tight jaw\nbad sleep', 'zaciśnięta szczęka\nzły sen'),
-        L('"just one"\n"I have it under control"', '„tylko jeden”\n„mam to pod kontrolą”'),
+        { done: [0, 2], text: L('tight jaw in the evenings', 'zaciśnięta szczęka wieczorem') },
+        { done: [0, 4], text: L('"just this once"', '„tylko ten jeden raz”') },
       ],
-      note: L('your own early signs, in your words', 'Twoje wczesne sygnały, Twoimi słowami'),
     },
   },
   'warning-signs-right': {
     grid: {
       fill: [
-        L('irritation\nself-pity', 'rozdrażnienie\nużalanie się'),
-        L('skipping meetings\nlate nights', 'opuszczanie mityngów\npóźne noce'),
+        { done: [0, 1, 4], text: L('irritation after work', 'rozdrażnienie po pracy') },
+        { done: [1, 4], text: L('late nights', 'późne noce') },
       ],
     },
     threshold: { fill: ['3'] },
@@ -811,7 +817,7 @@ export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
     // Mood, energy, tension, hours of sleep, sleep quality.
     checkin: { fill: ['6', '5', '4', '6', '3'] },
     commitment: {
-      fill: L('a walk at lunch and an early night', 'spacer w przerwie i wcześnie spać'),
+      fill: L('a walk at lunch', 'spacer w przerwie'),
       note: L('one concrete action for today', 'jedno konkretne działanie na dziś'),
       noteAt: 'bottom-right',
     },
@@ -971,8 +977,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Krótki opis całego planera. Przeczytaj go raz na początku; linie poniżej są na Twoje własne przypomnienia.',
   ),
   agreement: L(
-    'The first page of "A good start": a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.',
-    'Pierwsza strona „Na dobry początek”: zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis.',
+    'The first page of "A good start" in planners without the recovery module (the Recovery Edition has the therapeutic contract instead): a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.',
+    'Pierwsza strona „Na dobry początek” w planerach bez modułu zdrowienia (Recovery Edition ma zamiast niej kontrakt terapeutyczny): zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis.',
   ),
   'good-life': L(
     'A direction rather than a list of goals. Answer in a few words how you want to feel, treat yourself and others, and what you want more and less of. The last question looks a year ahead.',
@@ -1027,8 +1033,8 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Koniec tygodnia w dwie–trzy minuty. Przejrzyj strony wieczorne i podsumuj: średni nastrój i napięcie, najsilniejszy głód oraz ile dni miało wsparcie, ruch lub mityng. Zaznacz, które odczucia HALT były najczęściej wysoko, jakie wyzwalacze się pojawiły i co najbardziej Cię chroniło. Potem trzy zwycięstwa (nie tylko „nie piłem”), jeden wzorzec, który zauważasz, co zachować, co zmienić, i plan jeśli–to do przepisania na kolejny tydzień.',
   ),
   'day-left': L(
-    'The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now.',
-    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu.',
+    'The morning page. Write your sobriety day number and read the quote. Do a quick check-in: mood, energy, tension and craving from 0 to 10, and how you slept. Then write one concrete action that protects your sobriety today, and who you will talk to. Choose at most three priorities, each with how you will do it and what you will do if it gets hard. Write only fixed points into the schedule. Around midday, rate each row of the HALT scale from 1 to 5 and note the reason; a 4 or 5 is a signal to act now, so write what you need. With the Day+ module the schedule gives way to the rest of "My 24 hours" and one important and one pleasant thing.',
+    'Strona poranna. Wpisz numer dnia trzeźwości i przeczytaj sentencję. Zrób szybki check-in: nastrój, energia, napięcie i głód od 0 do 10 oraz jak {g:spałeś|spałaś}. Potem wpisz jedno konkretne działanie, którym chronisz dziś trzeźwość, i z kim porozmawiasz. Wybierz najwyżej trzy priorytety, każdy z planem i tym, co zrobisz, gdy będzie trudno. W plan dnia wpisz tylko stałe punkty. Około południa oceń każdy wiersz skali HALT od 1 do 5 i wpisz powód; 4 lub 5 to sygnał, by działać od razu, więc zapisz, czego potrzebujesz. Z modułem Dzień+ plan dnia ustępuje miejsca reszcie „Moich 24 godzin” oraz jednej rzeczy ważnej i jednej przyjemnej.',
   ),
   'day-right': L(
     'The evening page. In the outer column, check out: write your mood, tension and strongest craving from 0 to 10, and tick any trigger and what protected you. Then write honestly what was hard today; over weeks this shows your patterns. Use the dot grid for feelings, thoughts and plans for tomorrow. Note one small victory and one thing you did for the life you want to live, then three things you are grateful for, and one thing worth remembering tomorrow.',
@@ -1059,12 +1065,12 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Strony w kropki na końcu każdego miesiąca na wszystko inne: notatki z mityngów, książki, pytania do lekarza.',
   ),
   'warning-signs-left': L(
-    'Your personal early warning signs of relapse, in four areas: body, thoughts, emotions and behaviour. The printed examples are prompts; write your own signs in your own words.',
-    'Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Wydrukowane przykłady są podpowiedzią; wpisz własne sygnały, własnymi słowami.',
+    'Your personal early warning signs of relapse, in four areas: body, thoughts, emotions and behaviour. Tick the signs you know from your own experience, then add your own in your own words.',
+    'Twoje osobiste wczesne sygnały ostrzegawcze nawrotu, w czterech obszarach: ciało, myśli, emocje i zachowania. Zaznacz sygnały, które znasz z własnego doświadczenia, potem dopisz własne, swoimi słowami.',
   ),
   'warning-signs-right': L(
-    'Emotions and behaviours, and the most important part: your own threshold (how many signs) and three things you will do as soon as you reach it. Agree it with your therapist.',
-    'Emocje i zachowania oraz najważniejsza część: Twój próg (ile sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą.',
+    'Emotions and behaviours, and the most important part: your own threshold (how many of the ticked signs) and three things you will do as soon as you reach it. Agree it with your therapist.',
+    'Emocje i zachowania oraz najważniejsza część: Twój próg (ile z zaznaczonych sygnałów) i trzy rzeczy, które zrobisz, gdy go osiągniesz. Uzgodnij to z terapeutą.',
   ),
   'gains-losses': L(
     'The decisional balance: honest gains and losses of drinking or using, and of sobriety. Both sides matter; the hard parts of sobriety are worth naming too.',

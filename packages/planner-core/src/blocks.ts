@@ -84,10 +84,11 @@ export function mapBlocks(
       const block = fn(node.block, 'body');
       return block ? (block === node.block ? node : { ...node, block }) : null;
     }
-    return {
-      ...node,
-      children: node.children.map(mapNode).filter((c): c is LayoutNode => c !== null),
-    };
+    const children = node.children.map(mapNode).filter((c): c is LayoutNode => c !== null);
+    // A stack or row whose blocks are all left out takes no space either (e.g. a column that
+    // belongs to a module that is off).
+    if (children.length === 0 && node.children.length > 0) return null;
+    return { ...node, children };
   };
   const mapList = (region: 'outerRail' | 'free', blocks: BlockInstance[] | undefined) =>
     blocks?.map((b) => fn(b, region)).filter((b): b is BlockInstance => b !== null);

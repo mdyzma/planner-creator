@@ -123,4 +123,37 @@ describe('modules and presets', () => {
     expect(text).not.toMatch(/HALT/);
     expect(text).toContain('Dzień trzeźwości numer');
   });
+
+  it('prints the therapeutic contract in the Recovery Edition, the agreement without recovery', () => {
+    const recovery = templatesOf(planner('pl', 'A4'));
+    expect(recovery).toContain('contract');
+    expect(recovery).not.toContain('agreement');
+    const balance = templatesOf(planner('pl', 'A4', preset('balance')));
+    expect(balance).toContain('agreement');
+    expect(balance).not.toContain('contract');
+  });
+
+  it('offers a Basic preset: a simple day planner with no front matter or HALT', () => {
+    const project = planner('pl', 'A4', preset('basic'));
+    const pages = templatesOf(project);
+    for (const id of ['agreement', 'values', 'contract', 'sos', 'situation'])
+      expect(pages).not.toContain(id);
+    expect(printedText(project).join(' ')).not.toMatch(/HALT/);
+  });
+
+  it('swaps the plan of the day for "My 24 hours" with the Day+ module', () => {
+    const blocksOfDay = (modules?: Record<string, boolean>) => {
+      const day = layoutProject(planner('pl', 'A4', modules)).pages.find(
+        (p) => p.page.instance?.templateId === 'day-left',
+      )!;
+      return JSON.stringify(day.template?.body);
+    };
+    const standard = blocksOfDay();
+    expect(standard).toContain('"schedule"');
+    expect(standard).not.toContain('"my-24h"');
+    const plus = blocksOfDay({ dayplus: true });
+    expect(plus).not.toContain('"schedule"');
+    for (const id of ['my-24h', 'watch-today', 'if-hard', 'important', 'pleasant'])
+      expect(plus).toContain(`"${id}"`);
+  });
 });

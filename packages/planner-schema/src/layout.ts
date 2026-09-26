@@ -9,6 +9,8 @@ export type LayoutNode =
       gap: number;
       children: LayoutNode[];
       height?: Length;
+      /** Its width when it sits in a row (a column); one share of the row by default. */
+      width?: Length;
       label?: LocalizedText;
     }
   | { kind: 'row'; gap: number; children: LayoutNode[]; height?: Length }
@@ -21,6 +23,7 @@ export const LayoutNode: z.ZodType<LayoutNode> = z.lazy(() =>
       gap: Mm,
       children: z.array(LayoutNode),
       height: Length.optional(),
+      width: Length.optional(),
       label: LocalizedText.optional(),
     }),
     z.object({

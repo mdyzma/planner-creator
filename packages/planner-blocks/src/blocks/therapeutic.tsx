@@ -6,6 +6,7 @@ import {
   HAND_INK,
   Hand,
   HandLines,
+  Mark,
   RULE,
   TYPE,
   WriteLine,
@@ -225,6 +226,10 @@ const CategoryGridProps = z.object({
     .max(8),
   pattern: z.enum(['lines', 'dots', 'blank']),
   examplesLabel: LocalizedText,
+  /** `prompts` prints the examples as a line to cross out; `ticks` as tick boxes to choose. */
+  examplesAs: z.enum(['prompts', 'ticks']),
+  /** Heading over the writing lines under the tick boxes. */
+  ownLabel: LocalizedText,
 });
 
 /**
@@ -242,6 +247,8 @@ export const categoryGridBlock = defineBlock({
     cells: [{ title: L('Category', 'Kategoria'), examples: [] }],
     pattern: 'lines',
     examplesLabel: L('e.g.', 'np.'),
+    examplesAs: 'prompts',
+    ownLabel: L('My own:', 'Moje własne:'),
   },
   inspector: [
     {
@@ -253,10 +260,26 @@ export const categoryGridBlock = defineBlock({
         { value: '2', label: L('Two', 'Dwie') },
       ],
     },
+    {
+      key: 'examplesAs',
+      kind: 'select',
+      label: L('Examples', 'Przykłady'),
+      options: [
+        { value: 'prompts', label: L('A prompt to cross out', 'Podpowiedź do skreślenia') },
+        { value: 'ticks', label: L('Tick boxes', 'Pola wyboru') },
+      ],
+    },
   ],
   Render: ({ props, block, ctx }) => {
     const rows = Math.ceil(props.cells.length / props.columns);
     const sample = sampleFill(ctx, block.id, CategorySample);
+    const ticks = props.examplesAs === 'ticks';
+    const cellSample = (i: number) => {
+      const s = sample?.[i];
+      return s !== null && typeof s === 'object' && 'done' in s
+        ? { done: s.done, text: s.text }
+        : { done: [] as number[], text: s };
+    };
     return (
       <div
         style={{
@@ -281,7 +304,7 @@ export const categoryGridBlock = defineBlock({
             <div style={{ ...TYPE.subheading, marginBottom: mm(1), flex: 'none' }}>
               {resolveText(ctx, cell.title)}
             </div>
-            {cell.examples.length > 0 && (
+            {cell.examples.length > 0 && !ticks && (
               <div
                 style={{
                   ...TYPE.caption,
@@ -294,12 +317,46 @@ export const categoryGridBlock = defineBlock({
                 {cell.examples.map((e) => resolveText(ctx, e)).join(' · ')}
               </div>
             )}
+            {cell.examples.length > 0 && ticks && (
+              <>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    columnGap: mm(3),
+                    rowGap: mm(1.4),
+                    marginBottom: mm(2),
+                    flex: 'none',
+                  }}
+                >
+                  {cell.examples.map((e, j) => (
+                    <span
+                      key={j}
+                      style={{ display: 'flex', alignItems: 'center', gap: mm(1.5), ...TYPE.body }}
+                    >
+                      <span style={{ position: 'relative', display: 'inline-flex', flex: 'none' }}>
+                        <Mark shape="box" />
+                        {cellSample(i).done.includes(j) && (
+                          <Hand size={4.6} style={{ position: 'absolute', left: 0, top: mm(-1.2) }}>
+                            ✓
+                          </Hand>
+                        )}
+                      </span>
+                      {resolveText(ctx, e)}
+                    </span>
+                  ))}
+                </div>
+                <div style={{ ...TYPE.caption, flex: 'none' }}>
+                  {resolveText(ctx, props.ownLabel)}
+                </div>
+              </>
+            )}
             <WritingSurface
               pattern={{ kind: props.pattern, pitch: props.pattern === 'lines' ? 7 : 5, ink: 0.5 }}
             >
-              {sample?.[i] !== undefined && (
+              {cellSample(i).text !== undefined && (
                 <HandLines
-                  text={handText(ctx, sample[i])}
+                  text={handText(ctx, cellSample(i).text)}
                   pitch={props.pattern === 'lines' ? 7 : 10}
                 />
               )}
