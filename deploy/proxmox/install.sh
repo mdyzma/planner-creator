@@ -79,7 +79,8 @@ echo "at $(as_yapco git -C "$APP" log -1 --format='%h %s')"
 say "Install and build (a few minutes)"
 cd "$APP"
 as_yapco corepack pnpm install --frozen-lockfile
-as_yapco env BUILD_SHA="$(as_yapco git -C "$APP" rev-parse HEAD)" \n  corepack pnpm turbo run build --filter=@planner/web...
+SHA="$(as_yapco git -C "$APP" rev-parse HEAD)"
+as_yapco env BUILD_SHA="$SHA" corepack pnpm turbo run build --filter=@planner/web...
 
 say "Export service"
 cat > /etc/systemd/system/yapco-export.service <<EOF
