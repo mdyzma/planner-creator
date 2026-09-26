@@ -41,9 +41,8 @@ Compatible with the intent of the reviews; keep unless there is a reason to chan
 
 ## Still open
 
-From the content reviews:
-
-- **More modules (S2 XII):** Mindfulness and Productivity.
+From the content reviews: nothing. The last idea, the Mindfulness and Productivity modules
+(S2 XII), is done (both off by default, below).
 
 Loose ends:
 
@@ -65,7 +64,11 @@ Loose ends:
 
 - Done: a second, non-therapeutic template, "Week by Week" (`templates/weekly-planner`), made
   from the existing blocks with no engine changes. Not yet: its example filling and guide.
-- Mindfulness and Productivity modules.
+- Done: the **Mindfulness** module (a practices page at the front; at the end of each week a page
+  to tick practices and describe one impulse watched, in the place of the blank page after "My
+  week") and the **Productivity** module (a projects spread each month; a focus block and a
+  not-to-do list instead of the watch-out box on the week spread). Both off by default. Not yet:
+  example filling for them, and the productivity pages in the guide.
 
 ### Decisions for v0.7.0
 

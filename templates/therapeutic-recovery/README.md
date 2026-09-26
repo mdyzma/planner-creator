@@ -15,6 +15,9 @@ The template declares modules and presets ([ADR-0010](../../docs/adr/0010-module
 | `recovery` | on | sobriety day counter, craving in the check-ins, triggers, AA and group markers, contract and safety rules, the crisis section, recovery wording (Balance wording is in block variants) |
 | `halt` | on | HALT-B on the day page and in "My week", and its sentence on the how-to page |
 | `cbt` | off | the weekly situation analysis page |
+| `dayplus` | off | "Dzień+": the rest of "My 24 hours" and one important and one pleasant thing on the day page, in place of the plan of the day |
+| `mindful` | off | "Praktyki uważności" (four short practices) at the front, and "Moja praktyka uważności" after each "My week": practices ticked per day, one impulse watched. Without the CBT page it takes the place of the blank page, so it adds no paper |
+| `productivity` | off | a "Moje projekty" spread after each month opening (projects and next steps; focus blocks, not-to-do, notes), and on the week spread a focus block and "Nie robię w tym tygodniu" instead of the watch-out box |
 
 Presets: **Recovery Edition** = start + recovery + halt; **Balance** = start + halt. In `src/template.ts`, `needs(block, module)` hides a block without a module and `varies(block, { when, props })` rewords it; `BALANCE` is the condition "recovery module off".
 

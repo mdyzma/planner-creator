@@ -326,3 +326,28 @@ describe('stability across start dates (regression)', () => {
     }
   });
 });
+
+describe('mindfulness and productivity modules', () => {
+  const BALANCE = { start: true, recovery: false, halt: true, cbt: false, dayplus: false };
+  const total = (modules: Record<string, boolean>) =>
+    run(project('2026-10-01', { modules })).budget.total;
+  const count = (modules: Record<string, boolean>, id: string) =>
+    pagesOf(run(project('2026-10-01', { modules })).document.root).filter(
+      (p) => p.templateId === id,
+    ).length;
+
+  it('mindfulness: the weekly page takes the blank page after "My week", plus one intro page', () => {
+    const weeks = count(BALANCE, 'week-review');
+    expect(count({ ...BALANCE, mindful: true }, 'mindful-week')).toBe(weeks);
+    expect(count({ ...BALANCE, mindful: true }, 'mindfulness')).toBe(1);
+    // Every weekly page fills an existing blank; only the intro sheet can grow.
+    expect(total({ ...BALANCE, mindful: true }) - total(BALANCE)).toBeLessThanOrEqual(2);
+  });
+
+  it('productivity: a projects spread in every month', () => {
+    const months = count(BALANCE, 'month-divider');
+    expect(count({ ...BALANCE, productivity: true }, 'projects-left')).toBe(months);
+    expect(count({ ...BALANCE, productivity: true }, 'projects-right')).toBe(months);
+    expect(total({ ...BALANCE, productivity: true }) - total(BALANCE)).toBe(2 * months);
+  });
+});

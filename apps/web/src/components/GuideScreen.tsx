@@ -34,6 +34,7 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
       ['values'],
       ['strengths'],
       ['recharge'],
+      ['mindfulness'],
       ['contract'],
       ['safety-rules'],
     ],
@@ -42,10 +43,7 @@ const CHAPTERS: { key: string; pages: string[][] }[] = [
   { key: 'week', pages: [['week-left', 'week-right']] },
   {
     key: 'day',
-    pages: [
-      ['day-left', 'day-right'],
-      ['week-review', 'situation'],
-    ],
+    pages: [['day-left', 'day-right'], ['week-review', 'situation'], ['mindful-week']],
   },
   {
     key: 'monthEnd',
@@ -72,8 +70,11 @@ const CONTENT_WIDTH = 180;
 
 /** Modules that replace a part of the standard page; the guide shows the standard page. */
 const REPLACING_MODULES = new Set(['dayplus']);
-/** Optional pages the guide always explains, whatever the edition. */
-const EXPLAINED_MODULES = new Set(['cbt']);
+/**
+ * Optional pages the guide always explains, whatever the edition. Productivity is left out: it
+ * changes the week spread's outer column, which the guide shows in its standard form.
+ */
+const EXPLAINED_MODULES = new Set(['cbt', 'mindful']);
 
 /**
  * The guide's modules for an edition (a preset): its modules, plus the optional pages, without

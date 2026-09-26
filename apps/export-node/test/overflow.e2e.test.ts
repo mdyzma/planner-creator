@@ -27,6 +27,26 @@ const EDITIONS: Record<string, Record<string, boolean>> = {
   'recovery-dayplus': { start: true, recovery: true, halt: true, cbt: false, dayplus: true },
   balance: { start: true, recovery: false, halt: true, cbt: true, dayplus: false },
   basic: { start: false, recovery: false, halt: false, cbt: false, dayplus: false },
+  // Mindfulness and productivity: with everything else on, and with Balance (where the weekly
+  // mindfulness page takes the place of the blank page after "My week").
+  extras: {
+    start: true,
+    recovery: true,
+    halt: true,
+    cbt: true,
+    dayplus: false,
+    mindful: true,
+    productivity: true,
+  },
+  'balance-extras': {
+    start: true,
+    recovery: false,
+    halt: true,
+    cbt: false,
+    dayplus: false,
+    mindful: true,
+    productivity: true,
+  },
 };
 
 function planner(
@@ -122,6 +142,7 @@ describe('no printed text is cut off', () => {
     ...Object.keys(EDITIONS).map((edition) => [edition, 'pl'] as const),
     ['recovery', 'en'] as const,
     ['balance', 'en'] as const,
+    ['balance-extras', 'en'] as const,
     // The second template, "Week by Week": no modules.
     ['weekly', 'pl'] as const,
     ['weekly', 'en'] as const,

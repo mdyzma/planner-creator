@@ -3334,6 +3334,62 @@
             "height": {
               "fr": 1
             }
+          },
+          "visibility": {
+            "==": [
+              {
+                "var": "config.modules.productivity"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "id": "focus",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "Focus block: what and when",
+              "pl": "Blok skupienia: co i kiedy"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          },
+          "visibility": {
+            "!=": [
+              {
+                "var": "config.modules.productivity"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "id": "not-to-do",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "Not doing this week",
+              "pl": "Nie robię w tym tygodniu"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          },
+          "visibility": {
+            "!=": [
+              {
+                "var": "config.modules.productivity"
+              },
+              false
+            ]
           }
         }
       ],
@@ -7019,6 +7075,676 @@
           }
         }
       ]
+    },
+    "mindfulness": {
+      "id": "mindfulness",
+      "name": {
+        "en": "Mindfulness practices",
+        "pl": "Praktyki uważności"
+      },
+      "rationale": {
+        "en": "Short practices that fit into an ordinary day, printed once for reference; the weekly page records which ones were used.",
+        "pl": "Krótkie praktyki, które mieszczą się w zwykłym dniu, wydrukowane raz do wglądu; strona tygodnia zapisuje, z których korzystasz."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 3,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Mindfulness practices",
+                  "pl": "Praktyki uważności"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "A few minutes are enough. Choose one practice for the week; none of them is compulsory.",
+                  "pl": "Wystarczy kilka minut. Wybierz jedną praktykę na tydzień; żadna nie jest obowiązkowa."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "breathing",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Breathing (3 minutes)",
+                      "pl": "Oddech (3 minuty)"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 7
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "breathing-how",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Sit and feel your feet on the floor. Breathe in for a count of four and out for six, ten times. When your mind wanders, come back to the breath without judging yourself.",
+                      "pl": "Usiądź i poczuj stopy na podłodze. Wdech na cztery, wydech na sześć, dziesięć razy. Gdy myśli odpłyną, wróć do oddechu, bez oceniania siebie."
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 34
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "body",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Body check-in",
+                      "pl": "Check-in ciała"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 7
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "body-how",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Go from your head to your feet: where is tension, warmth or tiredness? Name it, without trying to fix it. Your body often notices stress before your thoughts do.",
+                      "pl": "Przejdź uwagą od głowy do stóp: gdzie jest napięcie, ciepło, zmęczenie? Nazwij to, bez naprawiania. Ciało często zauważa stres wcześniej niż myśli."
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 34
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "pause",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Mindful pause (STOP)",
+                      "pl": "Świadoma pauza (STOP)"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 7
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "pause-how",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "S: stop what you are doing. T: take a breath. O: observe your body, thoughts and feelings. P: proceed with what matters now.",
+                      "pl": "S: zatrzymaj się. T: weź oddech. O: obserwuj ciało, myśli i uczucia. P: przejdź do tego, co teraz ważne."
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 30
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "impulse",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Watching an impulse",
+                      "pl": "Obserwacja impulsu"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 7
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "impulse-how",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Notice an urge: to reach for the phone, snap, eat or buy. Where do you feel it in your body? Watch it rise, peak and fall for two or three minutes before you decide what to do.",
+                      "pl": "Zauważ impuls: żeby sięgnąć po telefon, odburknąć, zjeść, kupić. Gdzie czujesz go w ciele? Obserwuj, jak narasta, osiąga szczyt i opada, przez dwie–trzy minuty, zanim zdecydujesz, co zrobisz."
+                    },
+                    "variant": "body"
+                  },
+                  "size": {
+                    "height": {
+                      "fr": 1
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 38
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "mine",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What helps me come back to the present:",
+                  "pl": "Co pomaga mi wrócić do chwili obecnej:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Four short practices for an ordinary day: breathing, a body check-in, a mindful pause and watching an impulse. Read them once; pick one for the week, and note below what helps you come back to the present.",
+        "pl": "Cztery krótkie praktyki na zwykły dzień: oddech, check-in ciała, świadoma pauza i obserwacja impulsu. Przeczytaj je raz; wybierz jedną na tydzień, a poniżej zapisz, co pomaga Ci wrócić do chwili obecnej."
+      }
+    },
+    "mindful-week": {
+      "id": "mindful-week",
+      "name": {
+        "en": "My mindfulness practice",
+        "pl": "Moja praktyka uważności"
+      },
+      "rationale": {
+        "en": "After \"My week\", in the place a blank page would otherwise take: ticks for the practices, and one impulse observed from start to end.",
+        "pl": "Po „Moim tygodniu”, w miejscu, które inaczej zajęłaby pusta strona: zaznaczenia praktyk i jeden impuls obserwowany od początku do końca."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My mindfulness practice",
+                  "pl": "Moja praktyka uważności"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Week {{weekRange}}. Tick what you practised; a few minutes count.",
+                  "pl": "Tydzień {{weekRange}}. Zaznacz, co {g:praktykowałeś|praktykowałaś}; kilka minut też się liczy."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "grid",
+              "type": "table",
+              "props": {
+                "rowHeader": {
+                  "en": "Practice",
+                  "pl": "Praktyka"
+                },
+                "rows": [
+                  {
+                    "en": "Breathing",
+                    "pl": "Oddech"
+                  },
+                  {
+                    "en": "Body check-in",
+                    "pl": "Check-in ciała"
+                  },
+                  {
+                    "en": "Mindful pause",
+                    "pl": "Świadoma pauza"
+                  },
+                  {
+                    "en": "Watching an impulse",
+                    "pl": "Obserwacja impulsu"
+                  }
+                ],
+                "columns": [
+                  {
+                    "en": "Mon",
+                    "pl": "Pn"
+                  },
+                  {
+                    "en": "Tue",
+                    "pl": "Wt"
+                  },
+                  {
+                    "en": "Wed",
+                    "pl": "Śr"
+                  },
+                  {
+                    "en": "Thu",
+                    "pl": "Cz"
+                  },
+                  {
+                    "en": "Fri",
+                    "pl": "Pt"
+                  },
+                  {
+                    "en": "Sat",
+                    "pl": "So"
+                  },
+                  {
+                    "en": "Sun",
+                    "pl": "Nd"
+                  }
+                ],
+                "ruling": "grid"
+              },
+              "size": {
+                "height": {
+                  "mm": 46
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "impulse",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "An impulse I watched: what it was, where I felt it, how it changed, what I did",
+                  "pl": "Impuls, który {g:obserwowałem|obserwowałam}: co to było, gdzie go {g:czułem|czułam}, jak się zmieniał, co {g:zrobiłem|zrobiłam}"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 2
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "noticed",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What did I notice this week?",
+                  "pl": "Co {g:zauważyłem|zauważyłam} w tym tygodniu?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "next",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Next week I will practise:",
+                  "pl": "W przyszłym tygodniu praktykuję:"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "At the end of the week, tick on which days you did which practice; a few minutes count. Then describe one impulse you watched from start to end, what you noticed this week, and which practice you choose for next week.",
+        "pl": "Na koniec tygodnia zaznacz, w które dni {g:zrobiłeś|zrobiłaś} którą praktykę; kilka minut też się liczy. Potem opisz jeden impuls obserwowany od początku do końca, co {g:zauważyłeś|zauważyłaś} w tym tygodniu i którą praktykę wybierasz na następny."
+      }
+    },
+    "projects-left": {
+      "id": "projects-left",
+      "name": {
+        "en": "My projects (left)",
+        "pl": "Moje projekty (lewa)"
+      },
+      "spread": {
+        "group": "projects",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "After the month opening: at most five projects, each with its next concrete step, so the week spreads can pick them up.",
+        "pl": "Po otwarciu miesiąca: najwyżej pięć projektów, każdy z następnym konkretnym krokiem, żeby rozkładówki tygodni mogły je podjąć."
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My projects · {{monthName}}",
+                  "pl": "Moje projekty · {{monthName}}"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "how",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "At most five. The next step is small and concrete: something you could do in one sitting.",
+                  "pl": "Najwyżej pięć. Następny krok jest mały i konkretny: coś, co da się zrobić za jednym podejściem."
+                },
+                "variant": "caption"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "projects",
+              "type": "table",
+              "props": {
+                "rowHeader": {
+                  "en": "#",
+                  "pl": "#"
+                },
+                "rows": [
+                  {
+                    "en": "1",
+                    "pl": "1"
+                  },
+                  {
+                    "en": "2",
+                    "pl": "2"
+                  },
+                  {
+                    "en": "3",
+                    "pl": "3"
+                  },
+                  {
+                    "en": "4",
+                    "pl": "4"
+                  },
+                  {
+                    "en": "5",
+                    "pl": "5"
+                  }
+                ],
+                "columns": [
+                  {
+                    "en": "Project",
+                    "pl": "Projekt"
+                  },
+                  {
+                    "en": "Next step",
+                    "pl": "Następny krok"
+                  },
+                  {
+                    "en": "By when",
+                    "pl": "Do kiedy"
+                  },
+                  {
+                    "en": "Done",
+                    "pl": "Zrobione"
+                  }
+                ],
+                "ruling": "grid"
+              },
+              "size": {
+                "height": {
+                  "mm": 90
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "why",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Which project matters most this month, and why?",
+                  "pl": "Który projekt jest w tym miesiącu najważniejszy i dlaczego?"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "After the month opening: at most five projects, each with its next small, concrete step and a date. Tick them off as they are done, and name the one that matters most this month.",
+        "pl": "Po otwarciu miesiąca: najwyżej pięć projektów, każdy z następnym małym, konkretnym krokiem i terminem. Odhaczaj zrobione i nazwij ten, który w tym miesiącu jest najważniejszy."
+      }
+    },
+    "projects-right": {
+      "id": "projects-right",
+      "name": {
+        "en": "My projects (right)",
+        "pl": "Moje projekty (prawa)"
+      },
+      "spread": {
+        "group": "projects",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "focus",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Focus blocks this month: what and when",
+                  "pl": "Bloki skupienia w tym miesiącu: co i kiedy"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "not-to-do",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Not doing this month",
+                  "pl": "Nie robię w tym miesiącu"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Project notes",
+                  "pl": "Notatki do projektów"
+                },
+                "pattern": "dots",
+                "pitch": 5
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "guide": {
+        "en": "Plan focus blocks for the month (what, and on which days), write what you will not do this month, and keep project notes on the dot grid. The week spread repeats the focus block and the not-to-do list for each week.",
+        "pl": "Zaplanuj bloki skupienia na miesiąc (co i w które dni), wpisz, czego w tym miesiącu nie robisz, a notatki do projektów prowadź na kropkach. Rozkładówka tygodnia powtarza blok skupienia i listę „nie robię” na każdy tydzień."
+      }
     },
     "wheel-of-life": {
       "id": "wheel-of-life",
@@ -10857,6 +11583,17 @@
           }
         },
         {
+          "page": "mindfulness",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.mindful"
+              },
+              false
+            ]
+          }
+        },
+        {
           "page": "contract",
           "when": {
             "!=": [
@@ -10899,6 +11636,28 @@
         },
         {
           "page": "month-open-right"
+        },
+        {
+          "page": "projects-left",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.productivity"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "page": "projects-right",
+          "when": {
+            "!=": [
+              {
+                "var": "config.modules.productivity"
+              },
+              false
+            ]
+          }
         },
         {
           "id": "week",
@@ -10944,6 +11703,17 @@
                 "!=": [
                   {
                     "var": "config.modules.cbt"
+                  },
+                  false
+                ]
+              }
+            },
+            {
+              "page": "mindful-week",
+              "when": {
+                "!=": [
+                  {
+                    "var": "config.modules.mindful"
                   },
                   false
                 ]
@@ -11088,6 +11858,30 @@
         "pl": "Pełne „Moje 24 godziny” oraz „coś ważnego, coś przyjemnego” na stronie dnia, zamiast planu dnia."
       },
       "default": false
+    },
+    {
+      "id": "mindful",
+      "name": {
+        "en": "Mindfulness",
+        "pl": "Uważność"
+      },
+      "description": {
+        "en": "A page of short practices at the front (breathing, body check-in, a mindful pause, watching an impulse), and at the end of each week a page to tick what you practised.",
+        "pl": "Strona krótkich praktyk na początku (oddech, check-in ciała, świadoma pauza, obserwacja impulsu), a na koniec każdego tygodnia strona do zaznaczenia, co {g:praktykowałeś|praktykowałaś}."
+      },
+      "default": false
+    },
+    {
+      "id": "productivity",
+      "name": {
+        "en": "Productivity",
+        "pl": "Produktywność"
+      },
+      "description": {
+        "en": "A projects spread each month (next steps, focus blocks, what not to do), and a focus block and a not-to-do list on the week spread.",
+        "pl": "Co miesiąc rozkładówka projektów (następne kroki, bloki skupienia, czego nie robić), a na rozkładówce tygodnia blok skupienia i lista „nie robię”."
+      },
+      "default": false
     }
   ],
   "presets": [
@@ -11106,7 +11900,9 @@
         "recovery": true,
         "halt": true,
         "cbt": false,
-        "dayplus": false
+        "dayplus": false,
+        "mindful": false,
+        "productivity": false
       }
     },
     {
@@ -11124,7 +11920,9 @@
         "recovery": false,
         "halt": true,
         "cbt": false,
-        "dayplus": false
+        "dayplus": false,
+        "mindful": false,
+        "productivity": false
       }
     },
     {
@@ -11142,7 +11940,9 @@
         "recovery": false,
         "halt": false,
         "cbt": false,
-        "dayplus": false
+        "dayplus": false,
+        "mindful": false,
+        "productivity": false
       }
     }
   ],

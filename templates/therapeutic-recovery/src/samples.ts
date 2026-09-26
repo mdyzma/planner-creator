@@ -1115,6 +1115,24 @@ export const GUIDES: Record<string, LocalizedText> = {
     'Two cards for a strong craving (for example 4 or more). Note when and where it came and what had just happened, tick what you feel, and write the craving at the start and after 10 and 20 minutes. Then what you did instead, what worked and what you learned.',
     'Dwie karty na silny głód (na przykład 4 i więcej). Zapisz, kiedy i gdzie się pojawił i co się właśnie wydarzyło, zaznacz, co czujesz, i wpisz siłę głodu na początku oraz po 10 i 20 minutach. Potem co {g:zrobiłeś|zrobiłaś} zamiast tego, co zadziałało i czego się {g:dowiedziałeś|dowiedziałaś}.',
   ),
+  // The mindfulness module.
+  mindfulness: L(
+    'Four short practices for an ordinary day: breathing, a body check-in, a mindful pause and watching an impulse. Read them once; pick one for the week, and note below what helps you come back to the present.',
+    'Cztery krótkie praktyki na zwykły dzień: oddech, check-in ciała, świadoma pauza i obserwacja impulsu. Przeczytaj je raz; wybierz jedną na tydzień, a poniżej zapisz, co pomaga Ci wrócić do chwili obecnej.',
+  ),
+  'mindful-week': L(
+    'At the end of the week, tick on which days you did which practice; a few minutes count. Then describe one impulse you watched from start to end, what you noticed this week, and which practice you choose for next week.',
+    'Na koniec tygodnia zaznacz, w które dni {g:zrobiłeś|zrobiłaś} którą praktykę; kilka minut też się liczy. Potem opisz jeden impuls obserwowany od początku do końca, co {g:zauważyłeś|zauważyłaś} w tym tygodniu i którą praktykę wybierasz na następny.',
+  ),
+  // The productivity module.
+  'projects-left': L(
+    'After the month opening: at most five projects, each with its next small, concrete step and a date. Tick them off as they are done, and name the one that matters most this month.',
+    'Po otwarciu miesiąca: najwyżej pięć projektów, każdy z następnym małym, konkretnym krokiem i terminem. Odhaczaj zrobione i nazwij ten, który w tym miesiącu jest najważniejszy.',
+  ),
+  'projects-right': L(
+    'Plan focus blocks for the month (what, and on which days), write what you will not do this month, and keep project notes on the dot grid. The week spread repeats the focus block and the not-to-do list for each week.',
+    'Zaplanuj bloki skupienia na miesiąc (co i w które dni), wpisz, czego w tym miesiącu nie robisz, a notatki do projektów prowadź na kropkach. Rozkładówka tygodnia powtarza blok skupienia i listę „nie robię” na każdy tydzień.',
+  ),
 };
 
 /** Guide texts for planners without the recovery module (Basic, Balance), where the wording differs. */

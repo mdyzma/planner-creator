@@ -26,6 +26,8 @@ const HALT = 'halt';
 const CBT = 'cbt';
 const START = 'start';
 const DAYPLUS = 'dayplus';
+const MINDFUL = 'mindful';
+const PRODUCTIVE = 'productivity';
 
 const MODULES: ModuleDefinition[] = [
   {
@@ -73,6 +75,24 @@ const MODULES: ModuleDefinition[] = [
     ),
     default: false,
   },
+  {
+    id: MINDFUL,
+    name: L('Mindfulness', 'Uważność'),
+    description: L(
+      'A page of short practices at the front (breathing, body check-in, a mindful pause, watching an impulse), and at the end of each week a page to tick what you practised.',
+      'Strona krótkich praktyk na początku (oddech, check-in ciała, świadoma pauza, obserwacja impulsu), a na koniec każdego tygodnia strona do zaznaczenia, co {g:praktykowałeś|praktykowałaś}.',
+    ),
+    default: false,
+  },
+  {
+    id: PRODUCTIVE,
+    name: L('Productivity', 'Produktywność'),
+    description: L(
+      'A projects spread each month (next steps, focus blocks, what not to do), and a focus block and a not-to-do list on the week spread.',
+      'Co miesiąc rozkładówka projektów (następne kroki, bloki skupienia, czego nie robić), a na rozkładówce tygodnia blok skupienia i lista „nie robię”.',
+    ),
+    default: false,
+  },
 ];
 
 const PRESETS: PresetDefinition[] = [
@@ -83,7 +103,15 @@ const PRESETS: PresetDefinition[] = [
       'For recovery from addiction: sobriety, craving, HALT-B and the crisis section.',
       'Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa.',
     ),
-    modules: { [START]: true, [RECOVERY]: true, [HALT]: true, [CBT]: false, [DAYPLUS]: false },
+    modules: {
+      [START]: true,
+      [RECOVERY]: true,
+      [HALT]: true,
+      [CBT]: false,
+      [DAYPLUS]: false,
+      [MINDFUL]: false,
+      [PRODUCTIVE]: false,
+    },
   },
   {
     id: 'balance',
@@ -92,7 +120,15 @@ const PRESETS: PresetDefinition[] = [
       'Everyday life, balance and a good life, without addiction and therapy wording.',
       'Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii.',
     ),
-    modules: { [START]: true, [RECOVERY]: false, [HALT]: true, [CBT]: false, [DAYPLUS]: false },
+    modules: {
+      [START]: true,
+      [RECOVERY]: false,
+      [HALT]: true,
+      [CBT]: false,
+      [DAYPLUS]: false,
+      [MINDFUL]: false,
+      [PRODUCTIVE]: false,
+    },
   },
   {
     id: 'basic',
@@ -101,7 +137,15 @@ const PRESETS: PresetDefinition[] = [
       'A simple day planner: no front matter, recovery, HALT-B or situation analysis.',
       'Prosty planer dnia: bez stron wstępnych, zdrowienia, HALT-B i analizy sytuacji.',
     ),
-    modules: { [START]: false, [RECOVERY]: false, [HALT]: false, [CBT]: false, [DAYPLUS]: false },
+    modules: {
+      [START]: false,
+      [RECOVERY]: false,
+      [HALT]: false,
+      [CBT]: false,
+      [DAYPLUS]: false,
+      [MINDFUL]: false,
+      [PRODUCTIVE]: false,
+    },
   },
 ];
 
@@ -994,14 +1038,40 @@ const weekRight: PageTemplate = {
       },
       fr(1),
     ),
-    railBlock(
-      'watch',
-      'writing-area',
-      {
-        title: L('What to watch out for this week', 'Na co uważam w tym tygodniu'),
-        pattern: 'lines',
-      },
-      fr(1),
+    // With the productivity module, a focus block and a not-to-do list take the place of the
+    // watch-out box; the if-then plan stays, since "My week" hands it on to the next week.
+    without(
+      railBlock(
+        'watch',
+        'writing-area',
+        {
+          title: L('What to watch out for this week', 'Na co uważam w tym tygodniu'),
+          pattern: 'lines',
+        },
+        fr(1),
+      ),
+      PRODUCTIVE,
+    ),
+    needs(
+      railBlock(
+        'focus',
+        'writing-area',
+        {
+          title: L('Focus block: what and when', 'Blok skupienia: co i kiedy'),
+          pattern: 'lines',
+        },
+        fr(1),
+      ),
+      PRODUCTIVE,
+    ),
+    needs(
+      railBlock(
+        'not-to-do',
+        'writing-area',
+        { title: L('Not doing this week', 'Nie robię w tym tygodniu'), pattern: 'lines' },
+        fr(1),
+      ),
+      PRODUCTIVE,
     ),
   ],
   body: stack([
@@ -2694,6 +2764,256 @@ const cravingCard: PageTemplate = {
 // ---------------------------------------------------------------------------------------------
 // Structure (expanded by the generator in M4)
 
+// ---------------------------------------------------------------------------------------------
+// Mindfulness and productivity modules (S2 XII); both off by default
+
+const WEEKDAYS_SHORT = [
+  L('Mon', 'Pn'),
+  L('Tue', 'Wt'),
+  L('Wed', 'Śr'),
+  L('Thu', 'Cz'),
+  L('Fri', 'Pt'),
+  L('Sat', 'So'),
+  L('Sun', 'Nd'),
+];
+
+const PRACTICES = [
+  L('Breathing', 'Oddech'),
+  L('Body check-in', 'Check-in ciała'),
+  L('Mindful pause', 'Świadoma pauza'),
+  L('Watching an impulse', 'Obserwacja impulsu'),
+];
+
+const practice = (
+  id: string,
+  title: ReturnType<typeof L>,
+  text: ReturnType<typeof L>,
+  height: number,
+) =>
+  stack(
+    [
+      block(id, 'text', { text: title, variant: 'subheading' }, { height: mmH(7) }),
+      block(`${id}-how`, 'text', { text, variant: 'body' }, { height: fr(1) }),
+    ],
+    { height: mmH(height), gap: 1 },
+  );
+
+/** Four short practices to come back to; nothing on it is compulsory. */
+const mindfulness: PageTemplate = {
+  id: 'mindfulness',
+  name: L('Mindfulness practices', 'Praktyki uważności'),
+  rationale: L(
+    'Short practices that fit into an ordinary day, printed once for reference; the weekly page records which ones were used.',
+    'Krótkie praktyki, które mieszczą się w zwykłym dniu, wydrukowane raz do wglądu; strona tygodnia zapisuje, z których korzystasz.',
+  ),
+  body: stack(
+    [
+      heading('heading', L('Mindfulness practices', 'Praktyki uważności')),
+      caption(
+        'how',
+        L(
+          'A few minutes are enough. Choose one practice for the week; none of them is compulsory.',
+          'Wystarczy kilka minut. Wybierz jedną praktykę na tydzień; żadna nie jest obowiązkowa.',
+        ),
+      ),
+      practice(
+        'breathing',
+        L('Breathing (3 minutes)', 'Oddech (3 minuty)'),
+        L(
+          'Sit and feel your feet on the floor. Breathe in for a count of four and out for six, ten times. When your mind wanders, come back to the breath without judging yourself.',
+          'Usiądź i poczuj stopy na podłodze. Wdech na cztery, wydech na sześć, dziesięć razy. Gdy myśli odpłyną, wróć do oddechu, bez oceniania siebie.',
+        ),
+        34,
+      ),
+      practice(
+        'body',
+        L('Body check-in', 'Check-in ciała'),
+        L(
+          'Go from your head to your feet: where is tension, warmth or tiredness? Name it, without trying to fix it. Your body often notices stress before your thoughts do.',
+          'Przejdź uwagą od głowy do stóp: gdzie jest napięcie, ciepło, zmęczenie? Nazwij to, bez naprawiania. Ciało często zauważa stres wcześniej niż myśli.',
+        ),
+        34,
+      ),
+      practice(
+        'pause',
+        L('Mindful pause (STOP)', 'Świadoma pauza (STOP)'),
+        L(
+          'S: stop what you are doing. T: take a breath. O: observe your body, thoughts and feelings. P: proceed with what matters now.',
+          'S: zatrzymaj się. T: weź oddech. O: obserwuj ciało, myśli i uczucia. P: przejdź do tego, co teraz ważne.',
+        ),
+        30,
+      ),
+      practice(
+        'impulse',
+        L('Watching an impulse', 'Obserwacja impulsu'),
+        L(
+          'Notice an urge: to reach for the phone, snap, eat or buy. Where do you feel it in your body? Watch it rise, peak and fall for two or three minutes before you decide what to do.',
+          'Zauważ impuls: żeby sięgnąć po telefon, odburknąć, zjeść, kupić. Gdzie czujesz go w ciele? Obserwuj, jak narasta, osiąga szczyt i opada, przez dwie–trzy minuty, zanim zdecydujesz, co zrobisz.',
+        ),
+        38,
+      ),
+      block(
+        'mine',
+        'writing-area',
+        {
+          title: L(
+            'What helps me come back to the present:',
+            'Co pomaga mi wrócić do chwili obecnej:',
+          ),
+          pattern: 'lines',
+        },
+        { height: fr(1) },
+      ),
+    ],
+    { gap: 3 },
+  ),
+};
+
+/** The end of the week: which practices on which days, one impulse watched, what I noticed. */
+const mindfulWeek: PageTemplate = {
+  id: 'mindful-week',
+  name: L('My mindfulness practice', 'Moja praktyka uważności'),
+  rationale: L(
+    'After "My week", in the place a blank page would otherwise take: ticks for the practices, and one impulse observed from start to end.',
+    'Po „Moim tygodniu”, w miejscu, które inaczej zajęłaby pusta strona: zaznaczenia praktyk i jeden impuls obserwowany od początku do końca.',
+  ),
+  body: stack([
+    heading('heading', L('My mindfulness practice', 'Moja praktyka uważności')),
+    caption(
+      'how',
+      L(
+        'Week {{weekRange}}. Tick what you practised; a few minutes count.',
+        'Tydzień {{weekRange}}. Zaznacz, co {g:praktykowałeś|praktykowałaś}; kilka minut też się liczy.',
+      ),
+    ),
+    block(
+      'grid',
+      'table',
+      {
+        rowHeader: L('Practice', 'Praktyka'),
+        rows: PRACTICES,
+        columns: WEEKDAYS_SHORT,
+        ruling: 'grid',
+      },
+      { height: mmH(46) },
+    ),
+    block(
+      'impulse',
+      'writing-area',
+      {
+        title: L(
+          'An impulse I watched: what it was, where I felt it, how it changed, what I did',
+          'Impuls, który {g:obserwowałem|obserwowałam}: co to było, gdzie go {g:czułem|czułam}, jak się zmieniał, co {g:zrobiłem|zrobiłam}',
+        ),
+        pattern: 'lines',
+      },
+      { height: fr(2) },
+    ),
+    block(
+      'noticed',
+      'writing-area',
+      {
+        title: L('What did I notice this week?', 'Co {g:zauważyłem|zauważyłam} w tym tygodniu?'),
+        pattern: 'lines',
+      },
+      { height: fr(1) },
+    ),
+    block(
+      'next',
+      'writing-area',
+      {
+        title: L('Next week I will practise:', 'W przyszłym tygodniu praktykuję:'),
+        pattern: 'lines',
+      },
+      { height: mmH(16) },
+    ),
+  ]),
+};
+
+const PROJECT_ROWS = ['1', '2', '3', '4', '5'].map((n) => L(n, n));
+
+/** Projects and their next steps: the monthly half of the productivity module. */
+const projectsLeft: PageTemplate = {
+  id: 'projects-left',
+  name: L('My projects (left)', 'Moje projekty (lewa)'),
+  spread: { group: 'projects', position: 'left' },
+  rationale: L(
+    'After the month opening: at most five projects, each with its next concrete step, so the week spreads can pick them up.',
+    'Po otwarciu miesiąca: najwyżej pięć projektów, każdy z następnym konkretnym krokiem, żeby rozkładówki tygodni mogły je podjąć.',
+  ),
+  body: stack([
+    heading('heading', L('My projects · {{monthName}}', 'Moje projekty · {{monthName}}')),
+    caption(
+      'how',
+      L(
+        'At most five. The next step is small and concrete: something you could do in one sitting.',
+        'Najwyżej pięć. Następny krok jest mały i konkretny: coś, co da się zrobić za jednym podejściem.',
+      ),
+    ),
+    block(
+      'projects',
+      'table',
+      {
+        rowHeader: L('#', '#'),
+        rows: PROJECT_ROWS,
+        columns: [
+          L('Project', 'Projekt'),
+          L('Next step', 'Następny krok'),
+          L('By when', 'Do kiedy'),
+          L('Done', 'Zrobione'),
+        ],
+        ruling: 'grid',
+      },
+      { height: mmH(90) },
+    ),
+    block(
+      'why',
+      'writing-area',
+      {
+        title: L(
+          'Which project matters most this month, and why?',
+          'Który projekt jest w tym miesiącu najważniejszy i dlaczego?',
+        ),
+        pattern: 'lines',
+      },
+      { height: fr(1) },
+    ),
+  ]),
+};
+
+const projectsRight: PageTemplate = {
+  id: 'projects-right',
+  name: L('My projects (right)', 'Moje projekty (prawa)'),
+  spread: { group: 'projects', position: 'right' },
+  body: stack([
+    block(
+      'focus',
+      'writing-area',
+      {
+        title: L(
+          'Focus blocks this month: what and when',
+          'Bloki skupienia w tym miesiącu: co i kiedy',
+        ),
+        pattern: 'lines',
+        framed: true,
+      },
+      { height: fr(1) },
+    ),
+    block(
+      'not-to-do',
+      'writing-area',
+      { title: L('Not doing this month', 'Nie robię w tym miesiącu'), pattern: 'lines' },
+      { height: fr(1) },
+    ),
+    block(
+      'notes',
+      'writing-area',
+      { title: L('Project notes', 'Notatki do projektów'), pattern: 'dots', pitch: 5 },
+      { height: fr(1) },
+    ),
+  ]),
+};
+
 const page = (id: string) => ({ page: id });
 
 const sections: SectionTemplate[] = [
@@ -2715,6 +3035,7 @@ const sections: SectionTemplate[] = [
       { page: 'values', when: moduleOn(START) },
       { page: 'strengths', when: moduleOn(START) },
       { page: 'recharge', when: moduleOn(START) },
+      { page: 'mindfulness', when: moduleOn(MINDFUL) },
       { page: 'contract', when: moduleOn(RECOVERY) },
       { page: 'safety-rules', when: moduleOn(RECOVERY) },
     ],
@@ -2728,6 +3049,8 @@ const sections: SectionTemplate[] = [
       page('month-divider'),
       page('month-open-left'),
       page('month-open-right'),
+      { page: 'projects-left', when: moduleOn(PRODUCTIVE) },
+      { page: 'projects-right', when: moduleOn(PRODUCTIVE) },
       {
         id: 'week',
         title: L('Week', 'Tydzień'),
@@ -2745,6 +3068,8 @@ const sections: SectionTemplate[] = [
           // CBT module is on.
           page('week-review'),
           { page: 'situation', when: moduleOn(CBT) },
+          // Without the CBT page, this takes the place of the blank page after "My week".
+          { page: 'mindful-week', when: moduleOn(MINDFUL) },
         ],
       },
       page('wheel-of-life'),
@@ -2800,6 +3125,10 @@ const pageTemplates = [
   dayRight,
   weekReview,
   situation,
+  mindfulness,
+  mindfulWeek,
+  projectsLeft,
+  projectsRight,
   wheel,
   review,
   monthPatterns,
