@@ -29,7 +29,7 @@
     "name": "Nazwa",
     "format": "Format",
     "plannerLanguage": "Język planera",
-    "defaultName": "Dzień po Dniu — {count, plural, one {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}",
+    "defaultName": "{template} — {count, plural, one {# miesiąc} few {# miesiące} many {# miesięcy} other {# miesiąca}}",
     "untitled": "Planer bez nazwy",
     "yourPlanners": "Twoje planery",
     "empty": "Nie masz jeszcze planerów. Utwórz pierwszy powyżej.",

@@ -22,7 +22,8 @@ hand and put it in a ring binder.
 
 The first template is **"Dzień po Dniu" / "Day by Day"**, a six-month planner for everyday life,
 balance and a good life. It comes in two editions: **Recovery Edition**, for recovery from
-addiction, and **Balance**, in neutral everyday wording.
+addiction, and **Balance**, in neutral everyday wording. The second, **"Tydzień po Tygodniu" /
+"Week by Week"**, is a simple weekly planner for up to a year, made from the same engine.
 
 ## Contents
 
@@ -131,7 +132,7 @@ pnpm dev
 | `pnpm dev` | App and export service in watch mode |
 | `pnpm check` | Lint, typecheck, tests and build, the same as CI |
 | `pnpm test` | All unit tests (Vitest) |
-| `pnpm --filter @planner/template-therapeutic-recovery build:template` | Rebuild `template.json` after editing the template source |
+| `pnpm --filter @planner/template-therapeutic-recovery build:template` | Rebuild `template.json` after editing the template source (`@planner/template-weekly-planner` for the weekly one) |
 | `pnpm --filter @planner/export-node pdf <planner.json>` | Make a PDF from the command line |
 
 For everyday use (printing a month, backups, updating, troubleshooting) see the
@@ -159,7 +160,8 @@ yapco/
 │   ├── planner-pdf/            Export plan, merging, imposition (2-up, manual duplex), calibration
 │   └── planner-storage/        Repository interfaces, IndexedDB (Dexie) and in-memory stores
 ├── templates/
-│   └── therapeutic-recovery/   "Day by Day": TypeScript source → template.json, quotes, examples
+│   ├── therapeutic-recovery/   "Day by Day": TypeScript source → template.json, quotes, examples
+│   └── weekly-planner/         "Week by Week": a simple weekly planner, the second template
 └── docs/
     ├── architecture/           System design
     ├── adr/                    Architecture decision records
@@ -196,7 +198,8 @@ Dexie, Vitest, Turborepo and pnpm.
   editor commands, modules
 - [Roadmap](docs/roadmap.md): content reviews, what is done, what is next
 - [Runbook](docs/operations/runbook.md) and [Cloudflare deployment](docs/operations/cloudflare.md)
-- [The "Day by Day" template](templates/therapeutic-recovery/README.md)
+- [The "Day by Day" template](templates/therapeutic-recovery/README.md) and the
+  ["Week by Week" template](templates/weekly-planner/README.md)
 
 ## Contributing
 

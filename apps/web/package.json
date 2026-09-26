@@ -24,6 +24,7 @@
     "@planner/schema": "workspace:*",
     "@planner/storage": "workspace:*",
     "@planner/template-therapeutic-recovery": "workspace:*",
+    "@planner/template-weekly-planner": "workspace:*",
     "next": "^16.3.6",
     "next-intl": "^4.14.0",
     "react": "^19.3.0",

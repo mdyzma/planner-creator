@@ -223,18 +223,25 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
   const uiLocale = useLocale();
   const ids = useId();
   const [templateId, setTemplateId] = useState(BUNDLED_TEMPLATES[0]!.template.id);
+  const bundle = BUNDLED_TEMPLATES.find((b) => b.template.id === templateId)!;
   const [format, setFormat] = useState<FormatId>('A4');
   const [locale, setLocale] = useState<Locale>('pl');
   const [startDate, setStartDate] = useState(firstOfNextMonth);
   const [undated, setUndated] = useState(false);
-  const [months, setMonths] = useState(6);
-  // The suggested name follows the chosen length ("1-Month…") until the user types their own.
+  const defaultMonths = (b: typeof bundle) => b.template.defaults.generation.durationMonths ?? 6;
+  const [months, setMonths] = useState(() => defaultMonths(bundle));
+  // The suggested name follows the template and the chosen length ("Day by Day — 6 months")
+  // until the user types their own.
   const [customName, setCustomName] = useState<string | null>(null);
   // Modules switched on or off; empty means the template's defaults (its first edition).
   const [modules, setModules] = useState<Record<string, boolean>>({});
-  const name = customName ?? t('defaultName', { count: months });
+  const name =
+    customName ??
+    t('defaultName', {
+      template: localize(bundle.template.name, uiLocale as Locale),
+      count: months,
+    });
 
-  const bundle = BUNDLED_TEMPLATES.find((b) => b.template.id === templateId)!;
   const dated = !undated && /^\d{4}-\d{2}-\d{2}$/.test(startDate);
 
   // Generating is fast (a few ms), so the page count follows every change.
@@ -291,8 +298,11 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
             className={field}
             value={templateId}
             onChange={(e) => {
-              setTemplateId(e.target.value);
+              const next = BUNDLED_TEMPLATES.find((b) => b.template.id === e.target.value)!;
+              setTemplateId(next.template.id);
               setModules({});
+              // Each template suggests its own length: six months, or a year for the weekly one.
+              setMonths(defaultMonths(next));
             }}
           >
             {BUNDLED_TEMPLATES.map((b) => (

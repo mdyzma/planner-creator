@@ -1,0 +1,31 @@
+{
+  "name": "@planner/template-weekly-planner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Week by Week (Tydzie\u0144 po Tygodniu), a simple weekly planner (English/Polish). template.json is generated from src/template.ts.",
+  "exports": {
+    "./template.json": "./template.json"
+  },
+  "scripts": {
+    "build:template": "tsx src/build.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@planner/blocks": "workspace:*",
+    "@planner/core": "workspace:*",
+    "@planner/generator": "workspace:*",
+    "@planner/i18n": "workspace:*",
+    "@planner/renderer": "workspace:*",
+    "@planner/schema": "workspace:*",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsx": "^4.23.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.1"
+  }
+}

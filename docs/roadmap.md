@@ -63,8 +63,8 @@ Loose ends:
 
 ### Optional, any time
 
-- A second, non-therapeutic template (e.g. a simple weekly planner), to prove the engine is
-  generic, as the original brief intended.
+- Done: a second, non-therapeutic template, "Week by Week" (`templates/weekly-planner`), made
+  from the existing blocks with no engine changes. Not yet: its example filling and guide.
 - Mindfulness and Productivity modules.
 
 ### Decisions for v0.7.0

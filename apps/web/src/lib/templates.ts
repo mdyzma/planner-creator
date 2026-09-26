@@ -9,6 +9,7 @@ import type {
 import { blankTemplate, isPageInstance, parseContentLibrary, parseTemplate } from '@planner/schema';
 import quotesJson from '@planner/template-therapeutic-recovery/content/quotes.json';
 import therapeuticJson from '@planner/template-therapeutic-recovery/template.json';
+import weeklyJson from '@planner/template-weekly-planner/template.json';
 
 /** A template shipped with the app, with the content libraries it expects. */
 export interface BundledTemplate {
@@ -28,6 +29,7 @@ function load(templateJson: unknown, content: unknown[]): BundledTemplate {
 
 export const BUNDLED_TEMPLATES: BundledTemplate[] = [
   load(therapeuticJson, [quotesJson]),
+  load(weeklyJson, []),
   { template: blankTemplate(), content: [] },
 ];
 

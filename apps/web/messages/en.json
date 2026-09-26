@@ -29,7 +29,7 @@
     "name": "Name",
     "format": "Format",
     "plannerLanguage": "Planner language",
-    "defaultName": "Day by Day — {count, plural, one {# month} other {# months}}",
+    "defaultName": "{template} — {count, plural, one {# month} other {# months}}",
     "untitled": "Untitled planner",
     "yourPlanners": "Your planners",
     "empty": "No planners yet. Create one above.",

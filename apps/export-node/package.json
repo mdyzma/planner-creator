@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Local PDF export service: renders the web app's print route in Chrome (§8.3).",
+  "description": "Local PDF export service: renders the web app's print route in Chrome (\u00a78.3).",
   "scripts": {
     "dev": "tsx src/main.ts --web-url http://localhost:3000",
     "serve": "tsx src/main.ts",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@planner/generator": "workspace:*",
     "@planner/template-therapeutic-recovery": "workspace:*",
+    "@planner/template-weekly-planner": "workspace:*",
     "@types/node": "^24.0.0",
     "pdf-lib": "^1.17.1",
     "typescript": "~6.0.3",

@@ -1,0 +1,822 @@
+{
+  "schemaVersion": 1,
+  "id": "weekly-planner",
+  "version": "1.0.0",
+  "name": {
+    "en": "Week by Week",
+    "pl": "Tydzień po Tygodniu"
+  },
+  "description": {
+    "en": "A simple weekly planner: a month spread with the calendar, goals and important dates, then a spread for each week with the days, three priorities and a to-do list.",
+    "pl": "Prosty planer tygodniowy: rozkładówka miesiąca z kalendarzem, celami i ważnymi datami, potem rozkładówka każdego tygodnia z dniami, trzema priorytetami i listą zadań."
+  },
+  "supportedFormats": [
+    "A4",
+    "A5"
+  ],
+  "supportedLocales": [
+    "en",
+    "pl"
+  ],
+  "defaults": {
+    "print": {
+      "profile": "home-duplex",
+      "margins": {
+        "inner": 18,
+        "outer": 14,
+        "top": 14,
+        "bottom": 17
+      },
+      "printerSafeMargin": 5,
+      "outerRail": 0,
+      "bleed": 0,
+      "cropMarks": false,
+      "binding": {
+        "kind": "ring",
+        "preset": "iso838-2hole",
+        "holeCentreFromEdge": 12,
+        "holeDiameter": 6,
+        "holePositions": [
+          108.5,
+          188.5
+        ],
+        "punchGuides": false
+      },
+      "pageNumbers": true,
+      "brandMark": true,
+      "color": "color",
+      "calibrationPage": false
+    },
+    "theme": {},
+    "generation": {
+      "durationMonths": 12,
+      "monthMode": "calendar",
+      "weekOwnership": "monday",
+      "dailyLayout": "spread",
+      "weeklyLayout": "spread",
+      "quoteCadence": "none",
+      "volumes": 1
+    }
+  },
+  "pageTemplates": {
+    "cover": {
+      "id": "cover",
+      "name": {
+        "en": "Cover",
+        "pl": "Strona tytułowa"
+      },
+      "hidePageNumber": true,
+      "body": {
+        "kind": "stack",
+        "gap": 6,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "top",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "apple",
+              "type": "image",
+              "props": {
+                "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NDQgNjEwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IkFuIGFwcGxlIHdpdGggYSB0aWNrIj4KICA8ZyBmaWxsPSJub25lIiBzdHJva2U9IiMxMTEiIHN0cm9rZS13aWR0aD0iMTUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+CiAgICA8IS0tIGxlYWYgYW5kIHZlaW4gLS0+CiAgICA8cGF0aCBkPSJNMTU3IDMyQzE2NSAzNCAxOTAgMzYgMjA1IDQyQzIyMCA0OCAyMzYgNjAgMjQ1IDcwQzI1NCA4MCAyNTggOTEgMjYyIDEwNUMyNjYgMTE5IDI2NyAxNDYgMjY4IDE1NEMyNjEgMTUyIDIzOSAxNDYgMjI1IDE0MEMyMTEgMTM0IDE5NiAxMjggMTg2IDEyMEMxNzYgMTEyIDE3MSAxMDAgMTY2IDkwQzE2MSA4MCAxNTggNjggMTU3IDU4QzE1NiA0OCAxNTcgMzYgMTU3IDMyWiIvPgogICAgPHBhdGggZD0iTTIwMSA3N0MyMDUgODEgMjE2IDkyIDIyMiAxMDBDMjI4IDEwNyAyMzMgMTE1IDIzNiAxMjNDMjQwIDEzMSAyNDQgMTQ0IDI0NSAxNDgiLz4KICAgIDwhLS0gc3RlbSAtLT4KICAgIDxwYXRoIGQ9Ik0yNzEgMTYwQzI3MiAxNTYgMjc0IDE0MyAyNzcgMTM0QzI4MCAxMjUgMjg0IDExNiAyODkgMTA2QzI5NCA5NyAzMDAgODcgMzA3IDc4QzMxNCA2OCAzMjYgNTMgMzMwIDQ4Ii8+CiAgICA8IS0tIGJvZHksIG9uZSBsaW5lIHRoYXQgZW5kcyBpbiB0aGUgdGljayAtLT4KICAgIDxwYXRoIGQ9Ik00ODkgMjI0QzQ4NCAyMTggNDcyIDIwMCA0NjAgMTkxQzQ0OCAxODIgNDMzIDE3MyA0MjAgMTY4QzQwNyAxNjMgMzkzIDE2MiAzODAgMTYyQzM2NyAxNjIgMzUzIDE2NSAzNDAgMTY5QzMyNyAxNzMgMzEyIDE4MiAzMDAgMTg2QzI4OCAxOTAgMjgwIDE5MyAyNzAgMTkzQzI2MCAxOTMgMjUyIDE4OSAyNDAgMTg1QzIyOCAxODEgMjEzIDE3MiAyMDAgMTY4QzE4NyAxNjQgMTczIDE2MiAxNjAgMTYyQzE0NyAxNjIgMTMzIDE2NSAxMjAgMTcwQzEwNyAxNzUgOTIgMTgzIDgwIDE5NEM2OCAyMDUgNTggMjIwIDUwIDIzNUM0MiAyNTAgMzggMjY4IDM1IDI4NUMzMiAzMDIgMzIgMzIxIDMzIDM0MEMzNCAzNTkgMzcgMzgxIDQxIDQwMEM0NSA0MTkgNTEgNDM0IDU4IDQ1MkM2NSA0NzAgNzQgNDg5IDg1IDUwNUM5NiA1MjEgMTEyIDUzOSAxMjUgNTUwQzEzOCA1NjEgMTUyIDU2OCAxNjUgNTcyQzE3OCA1NzYgMTg4IDU3OCAyMDAgNTc3QzIxMiA1NzYgMjI0IDU3MCAyMzYgNTY2QzI0OCA1NjIgMjYwIDU1MyAyNzIgNTUzQzI4NCA1NTMgMjk4IDU2MiAzMTAgNTY2QzMyMiA1NzAgMzMzIDU3NiAzNDUgNTc3QzM1NyA1NzggMzY4IDU3NyAzODAgNTcyQzM5MiA1NjcgNDA3IDU1OCA0MjAgNTQ2QzQzMyA1MzQgNDQ4IDUxNyA0NjAgNDk5QzQ3MiA0ODEgNDgxIDQ2MCA0ODkgNDQwQzQ5NyA0MjAgNTAyIDQwMCA1MDYgMzgwQzUxMCAzNjAgNTExIDMzNyA1MTEgMzIwQzUxMSAzMDMgNTA4IDI5MCA1MDUgMjgwQzUwMiAyNzAgNDk4IDI2NCA0OTIgMjU4QzQ4NiAyNTIgNDc4IDI0OCA0NzAgMjQ2QzQ2MiAyNDQgNDUzIDI0NiA0NDUgMjQ5QzQzNyAyNTIgNDI4IDI1OCA0MjAgMjYzQzQxMiAyNjggNDEyIDI2NiA0MDAgMjc5QzM4OCAyOTIgMzY2IDMxNiAzNDggMzQwQzMzMCAzNjQgMzAzIDQwMyAyOTEgNDIwQzI3OSA0MzcgMjgwIDQzNiAyNzQgNDQxQzI2OCA0NDYgMjYyIDQ1MCAyNTYgNDUwQzI1MCA0NTAgMjQ3IDQ0OSAyMzggNDQxQzIyOSA0MzMgMjEyIDQxMCAyMDMgNDAwQzE5NCAzOTAgMTg4IDM4NiAxODQgMzc5QzE4MCAzNzIgMTc2IDM2NCAxNzYgMzU4QzE3NiAzNTIgMTgyIDM0NCAxODYgMzQwQzE5MCAzMzYgMTk3IDMzNSAyMDMgMzM2QzIwOSAzMzcgMjEwIDMzOCAyMjAgMzQ2QzIzMCAzNTQgMjU0IDM3OSAyNjEgMzg2QzI2OCAzNzcgMjg3IDM0NiAzMDAgMzMwQzMxMyAzMTQgMzI1IDMwMiAzNDAgMjkwQzM1NSAyNzggMzgwIDI2MiAzODggMjU2Ii8+CiAgPC9nPgo8L3N2Zz4K",
+                "alt": {
+                  "en": "An apple with a tick",
+                  "pl": "Jabłko z ptaszkiem"
+                }
+              },
+              "size": {
+                "height": {
+                  "fr": 2
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "title",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "Week by Week",
+                      "pl": "Tydzień po Tygodniu"
+                    },
+                    "variant": "heading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 10
+                    }
+                  }
+                }
+              },
+              {
+                "kind": "block",
+                "block": {
+                  "id": "subtitle",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "A planner for the weeks ahead",
+                      "pl": "Planer na nadchodzące tygodnie"
+                    },
+                    "variant": "subheading"
+                  },
+                  "size": {
+                    "height": {
+                      "mm": 8
+                    }
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 20
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "gap",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "owner",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "This planner belongs to",
+                  "pl": "Ten planer należy do"
+                },
+                "pattern": "lines",
+                "pitch": 8
+              },
+              "size": {
+                "height": {
+                  "mm": 16
+                }
+              }
+            }
+          },
+          {
+            "kind": "stack",
+            "gap": 1.5,
+            "children": [
+              {
+                "kind": "block",
+                "block": {
+                  "id": "start",
+                  "type": "text",
+                  "props": {
+                    "text": {
+                      "en": "{{plannerStartDate}}",
+                      "pl": "{{plannerStartDate}}"
+                    },
+                    "variant": "subheading"
+                  }
+                }
+              }
+            ],
+            "height": {
+              "mm": 16
+            },
+            "label": {
+              "en": "I start on",
+              "pl": "Zaczynam dnia"
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "bottom",
+              "type": "spacer",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "year": {
+      "id": "year",
+      "name": {
+        "en": "My year",
+        "pl": "Mój rok"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "heading",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "My year",
+                  "pl": "Mój rok"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "goals",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "Goals for this year",
+                  "pl": "Cele na ten rok"
+                },
+                "count": 5,
+                "marker": "checkbox"
+              },
+              "size": {
+                "height": {
+                  "mm": 60
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "remember",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "What I want to remember this year",
+                  "pl": "O czym chcę pamiętać w tym roku"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "mm": 40
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Notes",
+                  "pl": "Notatki"
+                },
+                "pattern": "dots",
+                "pitch": 5
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "month-left": {
+      "id": "month-left",
+      "name": {
+        "en": "Month (left)",
+        "pl": "Miesiąc (lewa)"
+      },
+      "spread": {
+        "group": "month",
+        "position": "left"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "month",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "{{monthName}}",
+                  "pl": "{{monthName}}"
+                },
+                "variant": "heading"
+              },
+              "size": {
+                "height": {
+                  "mm": 12
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "calendar",
+              "type": "calendar-grid",
+              "props": {},
+              "size": {
+                "height": {
+                  "fr": 3
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "goals",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "Goals for this month",
+                  "pl": "Cele na ten miesiąc"
+                },
+                "count": 3,
+                "marker": "checkbox"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "month-right": {
+      "id": "month-right",
+      "name": {
+        "en": "Month (right)",
+        "pl": "Miesiąc (prawa)"
+      },
+      "spread": {
+        "group": "month",
+        "position": "right"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "dates",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Important dates",
+                  "pl": "Ważne daty"
+                },
+                "pattern": "lines",
+                "framed": true
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "todo",
+              "type": "numbered-list",
+              "props": {
+                "title": {
+                  "en": "To do this month",
+                  "pl": "Do zrobienia w tym miesiącu"
+                },
+                "count": 8,
+                "marker": "checkbox"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "title": {
+                  "en": "Notes",
+                  "pl": "Notatki"
+                },
+                "pattern": "lines"
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      },
+      "formatOverrides": {
+        "A5": [
+          {
+            "op": "add",
+            "path": "/body/children/1/block/props/count",
+            "value": 6
+          }
+        ]
+      }
+    },
+    "week-left": {
+      "id": "week-left",
+      "name": {
+        "en": "Week (left)",
+        "pl": "Tydzień (lewa)"
+      },
+      "spread": {
+        "group": "week",
+        "position": "left"
+      },
+      "rationale": {
+        "en": "Monday to Wednesday, with the three priorities of the week in the outer column, where they stay in view.",
+        "pl": "Poniedziałek–środa, a trzy priorytety tygodnia w zewnętrznej kolumnie, gdzie są zawsze na widoku."
+      },
+      "outerRailWidth": 34,
+      "outerRail": [
+        {
+          "id": "priorities",
+          "type": "numbered-list",
+          "props": {
+            "title": {
+              "en": "This week",
+              "pl": "W tym tygodniu"
+            },
+            "count": 3,
+            "marker": "checkbox"
+          },
+          "size": {
+            "height": {
+              "mm": 42
+            }
+          },
+          "style": {
+            "borderWidthPt": 0.3,
+            "borderToken": "line",
+            "radius": 1.5,
+            "padding": 2.5
+          }
+        },
+        {
+          "id": "remember",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "Remember",
+              "pl": "Pamiętaj"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        }
+      ],
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "range",
+              "type": "text",
+              "props": {
+                "text": {
+                  "en": "Week {{weekRange}}",
+                  "pl": "Tydzień {{weekRange}}"
+                },
+                "variant": "subheading"
+              },
+              "size": {
+                "height": {
+                  "mm": 8
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "mon",
+              "type": "day-strip",
+              "props": {
+                "weekday": 0,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "tue",
+              "type": "day-strip",
+              "props": {
+                "weekday": 1,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "wed",
+              "type": "day-strip",
+              "props": {
+                "weekday": 2,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "week-right": {
+      "id": "week-right",
+      "name": {
+        "en": "Week (right)",
+        "pl": "Tydzień (prawa)"
+      },
+      "spread": {
+        "group": "week",
+        "position": "right"
+      },
+      "outerRailWidth": 34,
+      "outerRail": [
+        {
+          "id": "todo",
+          "type": "numbered-list",
+          "props": {
+            "title": {
+              "en": "To do",
+              "pl": "Do zrobienia"
+            },
+            "count": 8,
+            "marker": "checkbox"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        },
+        {
+          "id": "notes",
+          "type": "writing-area",
+          "props": {
+            "title": {
+              "en": "Notes",
+              "pl": "Notatki"
+            },
+            "pattern": "lines"
+          },
+          "size": {
+            "height": {
+              "fr": 1
+            }
+          }
+        }
+      ],
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "thu",
+              "type": "day-strip",
+              "props": {
+                "weekday": 3,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "fri",
+              "type": "day-strip",
+              "props": {
+                "weekday": 4,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "sat",
+              "type": "day-strip",
+              "props": {
+                "weekday": 5,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          },
+          {
+            "kind": "block",
+            "block": {
+              "id": "sun",
+              "type": "day-strip",
+              "props": {
+                "weekday": 6,
+                "markers": [],
+                "lines": 4
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "notes": {
+      "id": "notes",
+      "name": {
+        "en": "Notes (5 mm dot grid)",
+        "pl": "Notatki (kropki 5 mm)"
+      },
+      "body": {
+        "kind": "stack",
+        "gap": 4,
+        "children": [
+          {
+            "kind": "block",
+            "block": {
+              "id": "notes",
+              "type": "writing-area",
+              "props": {
+                "pattern": "dots",
+                "pitch": 5
+              },
+              "size": {
+                "height": {
+                  "fr": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "sections": [
+    {
+      "id": "intro",
+      "title": {
+        "en": "Introduction",
+        "pl": "Wprowadzenie"
+      },
+      "startOn": "right",
+      "sheetAligned": true,
+      "numbering": {
+        "style": "roman"
+      },
+      "children": [
+        {
+          "page": "cover"
+        },
+        {
+          "page": "year"
+        }
+      ]
+    },
+    {
+      "id": "month",
+      "title": {
+        "en": "Month",
+        "pl": "Miesiąc"
+      },
+      "repeat": {
+        "over": "months"
+      },
+      "sheetAligned": true,
+      "children": [
+        {
+          "page": "month-left"
+        },
+        {
+          "page": "month-right"
+        },
+        {
+          "id": "week",
+          "title": {
+            "en": "Week",
+            "pl": "Tydzień"
+          },
+          "repeat": {
+            "over": "weeksOfMonth"
+          },
+          "children": [
+            {
+              "page": "week-left"
+            },
+            {
+              "page": "week-right"
+            }
+          ]
+        },
+        {
+          "page": "notes"
+        }
+      ]
+    }
+  ],
+  "variables": [],
+  "contentLibraryRefs": []
+}

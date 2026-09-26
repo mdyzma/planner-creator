@@ -206,6 +206,9 @@ importers:
       '@planner/template-therapeutic-recovery':
         specifier: workspace:*
         version: link:../../templates/therapeutic-recovery
+      '@planner/template-weekly-planner':
+        specifier: workspace:*
+        version: link:../../templates/weekly-planner
       '@types/node':
         specifier: ^24.0.0
         version: 24.13.6
@@ -263,6 +266,9 @@ importers:
       '@planner/template-therapeutic-recovery':
         specifier: workspace:*
         version: link:../../templates/therapeutic-recovery
+      '@planner/template-weekly-planner':
+        specifier: workspace:*
+        version: link:../../templates/weekly-planner
       next:
         specifier: ^16.3.6
         version: 16.3.6(@types/node@24.13.6)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -590,6 +596,51 @@ importers:
       '@planner/core':
         specifier: workspace:*
         version: link:../../packages/planner-core
+      '@planner/i18n':
+        specifier: workspace:*
+        version: link:../../packages/planner-i18n
+      '@planner/renderer':
+        specifier: workspace:*
+        version: link:../../packages/planner-renderer
+      '@planner/schema':
+        specifier: workspace:*
+        version: link:../../packages/planner-schema
+      '@types/node':
+        specifier: ^24.0.0
+        version: 24.13.6
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.3.0(@types/react@19.3.0)
+      react:
+        specifier: ^19.3.0
+        version: 19.3.0
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.0(react@19.3.0)
+      tsx:
+        specifier: ^4.23.0
+        version: 4.23.15
+      typescript:
+        specifier: ~6.0.3
+        version: 6.0.3
+      vitest:
+        specifier: ^5.0.1
+        version: 5.0.1(@types/node@24.13.6)(vite@8.3.0(@types/node@24.13.6)(jiti@2.7.0))
+
+  templates/weekly-planner:
+    devDependencies:
+      '@planner/blocks':
+        specifier: workspace:*
+        version: link:../../packages/planner-blocks
+      '@planner/core':
+        specifier: workspace:*
+        version: link:../../packages/planner-core
+      '@planner/generator':
+        specifier: workspace:*
+        version: link:../../packages/planner-generator
       '@planner/i18n':
         specifier: workspace:*
         version: link:../../packages/planner-i18n

@@ -52,6 +52,14 @@ function Preview({
   const [zoom, setZoom] = useState<(typeof ZOOMS)[number]>(0.5);
   const [guides, setGuides] = useState(true);
   const [samples, setSamples] = useState(false);
+  // Only templates with example filling ("Day by Day") offer it.
+  const hasExamples = useMemo(
+    () =>
+      Object.values(withExampleContent(project).template.pageTemplates).some(
+        (p) => p.sampleContent,
+      ),
+    [project],
+  );
 
   const { pages, range, paginationWarnings, frameWarnings } = useMemo(
     () => layoutProject(samples ? withExampleContent(project) : project),
@@ -148,10 +156,16 @@ function Preview({
           <input type="checkbox" checked={guides} onChange={(e) => setGuides(e.target.checked)} />
           {t('guides')}
         </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={samples} onChange={(e) => setSamples(e.target.checked)} />
-          {t('samples')}
-        </label>
+        {hasExamples && (
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={samples}
+              onChange={(e) => setSamples(e.target.checked)}
+            />
+            {t('samples')}
+          </label>
+        )}
       </div>
 
       {project.template.sections.length > 0 && <DatesBar project={project} onChange={onChange} />}

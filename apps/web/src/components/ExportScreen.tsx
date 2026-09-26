@@ -23,7 +23,7 @@ import {
   usesLocalExportService,
 } from '@/lib/exportClient';
 import { getProjectRepository } from '@/lib/repository';
-import { withNumbering } from '@/lib/templates';
+import { THERAPEUTIC_TEMPLATE_ID, withExampleContent, withNumbering } from '@/lib/templates';
 import { projectToJson, templateToJson } from '@/lib/transfer';
 import { useProject } from '@/lib/useProject';
 
@@ -86,6 +86,16 @@ function Export({
   const [reverseBacks, setReverseBacks] = useState(true);
   const [signatureSheets, setSignatureSheets] = useState<number>(4);
   const [samples, setSamples] = useState(false);
+  // Example filling and the printable guide exist only for templates that have them
+  // ("Day by Day"); the weekly planner has neither yet.
+  const hasExamples = useMemo(
+    () =>
+      Object.values(withExampleContent(project).template.pageTemplates).some(
+        (p) => p.sampleContent,
+      ),
+    [project],
+  );
+  const hasGuide = project.template.id === THERAPEUTIC_TEMPLATE_ID;
   const [service, setService] = useState<'checking' | 'ready' | 'offline'>('checking');
   const [job, setJob] = useState<Job>({ state: 'idle' });
 
@@ -307,26 +317,30 @@ function Export({
             />
             {t('brandMark')}
           </label>
-          <label className="mt-3 flex gap-2">
-            <input
-              type="checkbox"
-              checked={samples}
-              onChange={(e) => setSamples(e.target.checked)}
-            />
-            <span>
-              {t('samples')}
-              <span className="block text-xs text-ink-muted">{t('samplesHint')}</span>
-            </span>
-          </label>
-          <Link
-            href={{
-              pathname: '/guide',
-              query: edition ? { edition } : {},
-            }}
-            className="mt-3 inline-block underline"
-          >
-            {t('guideLink')}
-          </Link>
+          {hasExamples && (
+            <label className="mt-3 flex gap-2">
+              <input
+                type="checkbox"
+                checked={samples}
+                onChange={(e) => setSamples(e.target.checked)}
+              />
+              <span>
+                {t('samples')}
+                <span className="block text-xs text-ink-muted">{t('samplesHint')}</span>
+              </span>
+            </label>
+          )}
+          {hasGuide && (
+            <Link
+              href={{
+                pathname: '/guide',
+                query: edition ? { edition } : {},
+              }}
+              className="mt-3 inline-block underline"
+            >
+              {t('guideLink')}
+            </Link>
+          )}
         </section>
 
         <section className={`${box} lg:col-span-2`} aria-labelledby={`${ids}-check`}>

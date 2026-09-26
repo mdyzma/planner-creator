@@ -3,6 +3,7 @@ import type { FormatId, PlannerProject } from '@planner/schema';
 import { createProject, parseContentLibrary, parseTemplate } from '@planner/schema';
 import quotesJson from '@planner/template-therapeutic-recovery/content/quotes.json';
 import templateJson from '@planner/template-therapeutic-recovery/template.json';
+import weeklyJson from '@planner/template-weekly-planner/template.json';
 import type { Browser } from 'playwright-core';
 import { chromium } from 'playwright-core';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -17,8 +18,9 @@ import { serveStatic } from '../src/static';
  */
 
 const template = parseTemplate(templateJson);
+const weekly = parseTemplate(weeklyJson);
 const quotes = parseContentLibrary(quotesJson);
-if (!template.ok || !quotes.ok) throw new Error('fixtures invalid');
+if (!template.ok || !weekly.ok || !quotes.ok) throw new Error('fixtures invalid');
 
 const EDITIONS: Record<string, Record<string, boolean>> = {
   recovery: { start: true, recovery: true, halt: true, cbt: true, dayplus: false },
@@ -31,6 +33,7 @@ function planner(
   format: FormatId,
   modules: Record<string, boolean>,
   locale: 'pl' | 'en',
+  which: 'day-by-day' | 'weekly' = 'day-by-day',
 ): PlannerProject {
   const p = createProject({
     id: 'overflow',
@@ -38,9 +41,16 @@ function planner(
     format,
     locale,
     now: '2026-09-24T00:00:00.000Z',
-    template: template.ok ? template.value : (undefined as never),
+    template:
+      which === 'weekly'
+        ? weekly.ok
+          ? weekly.value
+          : (undefined as never)
+        : template.ok
+          ? template.value
+          : (undefined as never),
   });
-  const content = [quotes.ok ? quotes.value : (undefined as never)];
+  const content = which === 'weekly' ? [] : [quotes.ok ? quotes.value : (undefined as never)];
   const generation = { ...p.generation, startDate: '2026-10-01', durationMonths: 1, modules };
   const { document } = generate({
     template: p.template,
@@ -112,11 +122,17 @@ describe('no printed text is cut off', () => {
     ...Object.keys(EDITIONS).map((edition) => [edition, 'pl'] as const),
     ['recovery', 'en'] as const,
     ['balance', 'en'] as const,
+    // The second template, "Week by Week": no modules.
+    ['weekly', 'pl'] as const,
+    ['weekly', 'en'] as const,
   ];
   for (const [edition, locale] of runs) {
     for (const format of ['A4', 'A5'] as const) {
       it(`${edition}, ${format}, ${locale}, with examples`, async () => {
-        const project = planner(format, EDITIONS[edition]!, locale);
+        const project =
+          edition === 'weekly'
+            ? planner(format, {}, locale, 'weekly')
+            : planner(format, EDITIONS[edition]!, locale);
         const page = await browser.newPage({ viewport: { width: 1000, height: 1400 } });
         await page.addInitScript(
           (json: string) => {
