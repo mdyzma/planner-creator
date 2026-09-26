@@ -5,6 +5,7 @@ import { localize } from '@planner/i18n';
 import type { FormatId, Locale, PlannerProject } from '@planner/schema';
 import { FORMAT_IDS, LOCALES } from '@planner/schema';
 import type { ProjectSummary } from '@planner/storage';
+import { newId } from '@planner/storage';
 import { useFormatter, useLocale, useTranslations } from 'next-intl';
 import { useCallback, useEffect, useId, useMemo, useState, type FormEvent } from 'react';
 import { ModulePicker } from '@/components/ModulePicker';
@@ -75,13 +76,13 @@ export function ProjectDashboard() {
       return;
     }
     if (result.kind === 'project') {
-      await create(asNewProject(result.project, crypto.randomUUID(), now));
+      await create(asNewProject(result.project, newId(), now));
       return;
     }
     const { template, content } = result;
     const { project } = createGeneratedProject({
       bundle: { template, content },
-      id: crypto.randomUUID(),
+      id: newId(),
       name: localize(template.name, uiLocale) || t('untitled'),
       format: template.supportedFormats[0]!,
       locale: localeFor(template, uiLocale),
@@ -257,7 +258,7 @@ function NewProjectForm({ onCreate }: { onCreate: (project: PlannerProject) => v
     e.preventDefault();
     const { project } = createGeneratedProject({
       bundle,
-      id: crypto.randomUUID(),
+      id: newId(),
       name: name.trim() || t('untitled'),
       format,
       locale,

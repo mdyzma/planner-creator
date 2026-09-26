@@ -1,5 +1,6 @@
 import type { FormatId, Locale, PlannerProject } from '@planner/schema';
 import { countPageInstances, parseProject } from '@planner/schema';
+import { newId } from './id';
 
 /**
  * Persistence boundary (§10.1). The editor only talks to these interfaces, so a server-backed
@@ -52,7 +53,7 @@ export interface RepositoryDeps {
 
 export const defaultDeps: RepositoryDeps = {
   now: () => new Date().toISOString(),
-  newId: () => crypto.randomUUID(),
+  newId,
 };
 
 /** Oldest versions beyond this count are pruned. */
