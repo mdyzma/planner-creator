@@ -78,7 +78,7 @@ const MODULES: ModuleDefinition[] = [
 const PRESETS: PresetDefinition[] = [
   {
     id: 'recovery-edition',
-    name: L('Recovery Edition', 'Recovery Edition'),
+    name: L('Recovery Edition', 'Terapeutyczny'),
     description: L(
       'For recovery from addiction: sobriety, craving, HALT-B and the crisis section.',
       'Dla zdrowienia z uzależnienia: trzeźwość, głód, HALT-B i sekcja kryzysowa.',
@@ -87,7 +87,7 @@ const PRESETS: PresetDefinition[] = [
   },
   {
     id: 'balance',
-    name: L('Balance', 'Balance'),
+    name: L('Balance', 'Balans'),
     description: L(
       'Everyday life, balance and a good life, without addiction and therapy wording.',
       'Codzienność, równowaga i dobre życie, bez języka uzależnienia i terapii.',

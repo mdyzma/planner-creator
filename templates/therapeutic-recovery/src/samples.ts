@@ -989,7 +989,7 @@ export const GUIDES: Record<string, LocalizedText> = {
   ),
   agreement: L(
     'The first page of "A good start" in planners without the recovery module (the Recovery Edition has the therapeutic contract instead): a commitment to yourself, without clinical language. Write what you want to take better care of, do more and less often, and what to remember when it gets hard; then one promise, and sign it.',
-    'Pierwsza strona „Na dobry początek” w planerach bez modułu zdrowienia (Recovery Edition ma zamiast niej kontrakt terapeutyczny): zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis.',
+    'Pierwsza strona „Na dobry początek” w planerach bez modułu zdrowienia (wariant Terapeutyczny ma zamiast niej kontrakt terapeutyczny): zobowiązanie wobec siebie, bez języka klinicznego. Wpisz, o co chcesz bardziej dbać, co robić częściej i rzadziej i o czym pamiętać, gdy będzie trudno; potem jedna obietnica i podpis.',
   ),
   'good-life': L(
     'A direction rather than a list of goals. Answer in a few words how you want to feel, treat yourself and others, and what you want more and less of. The last question looks a year ahead.',
@@ -1029,7 +1029,7 @@ export const GUIDES: Record<string, LocalizedText> = {
   ),
   'month-open-right': L(
     'At the top, one value from "What really matters to me" to practise this month. The calendar continues (Friday to Sunday). "My month in practice" asks for one small thing for each area of life, and in the Recovery Edition for your recovery. Below: what you want to remember, and regular meetings and appointments.',
-    'Na górze jedna wartość z „Co jest dla mnie naprawdę ważne?”, którą chcesz praktykować w tym miesiącu. Kalendarz ciągnie się dalej (piątek–niedziela). „Mój miesiąc w praktyce” prosi o jedną małą rzecz dla każdego obszaru życia, a w Recovery Edition także dla zdrowienia. Poniżej: o czym chcesz pamiętać oraz stałe mityngi i wizyty.',
+    'Na górze jedna wartość z „Co jest dla mnie naprawdę ważne?”, którą chcesz praktykować w tym miesiącu. Kalendarz ciągnie się dalej (piątek–niedziela). „Mój miesiąc w praktyce” prosi o jedną małą rzecz dla każdego obszaru życia, a w wariancie Terapeutycznym także dla zdrowienia. Poniżej: o czym chcesz pamiętać oraz stałe mityngi i wizyty.',
   ),
   'week-left': L(
     'The weekly spread, filled in on Sunday or Monday. Write one intention for the week and what could catch you off guard, put the three most important things in the outer column, and circle the markers of what happened each day: AA meeting, group, therapy, doctor, exercise, recovery activity, or ! for a risky day.',
