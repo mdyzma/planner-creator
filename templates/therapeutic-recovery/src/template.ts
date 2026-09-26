@@ -1137,10 +1137,18 @@ const dayRight = a5(
         { text: L('Check-out (0–10)', 'Check-out (0–10)'), variant: 'label' },
         mmH(5),
       ),
-      varies(railBlock('checkout', 'text', { text: CHECKOUT, variant: 'body' }, mmH(26)), {
-        when: BALANCE,
-        props: { text: CHECKOUT_BALANCE },
-      }),
+      varies(
+        railBlock(
+          'checkout',
+          'text',
+          { text: CHECKOUT, variant: 'body', align: 'columns' },
+          mmH(26),
+        ),
+        {
+          when: BALANCE,
+          props: { text: CHECKOUT_BALANCE },
+        },
+      ),
       varies(
         railBlock(
           'trigger',

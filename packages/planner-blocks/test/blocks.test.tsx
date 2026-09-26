@@ -62,6 +62,16 @@ describe('text and quote', () => {
     expect(text(html)).toBe('Nastrój 6 /10 · Sen 7 h');
   });
 
+  it('lines up labels, blanks and units in columns, filling blanks in order', () => {
+    const html = render(
+      'text',
+      { text: { pl: 'Nastrój ___ /10\nNapięcie ___ /10\no godz. ___' }, align: 'columns' },
+      ctx({ sample: () => ({ fill: ['6', '4', '17:30'] }) }),
+    );
+    expect(html).toContain('grid-template-columns:auto 1fr auto');
+    expect(text(html)).toBe('Nastrój 6 /10 Napięcie 4 /10 o godz. 17:30');
+  });
+
   it('fills variables, leaving a writing line when unset', () => {
     const t = { en: 'Day {{sobrietyDayNumber}}', pl: 'Dzień {{sobrietyDayNumber}}' };
     expect(text(render('text', { text: t }, ctx({ vars: { sobrietyDayNumber: '12' } })))).toBe(

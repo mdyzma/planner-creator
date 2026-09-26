@@ -4141,7 +4141,8 @@
               "en": "Mood __________ /10\nTension __________ /10\nCraving __________ /10\nat __________",
               "pl": "Nastrój __________ /10\nNapięcie __________ /10\nGłód __________ /10\no godz. __________"
             },
-            "variant": "body"
+            "variant": "body",
+            "align": "columns"
           },
           "size": {
             "height": {

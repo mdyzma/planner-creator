@@ -1,7 +1,16 @@
-import { resolveText, typographyCss } from '@planner/renderer';
+import { mm, resolveText, typographyCss } from '@planner/renderer';
 import { LocalizedText } from '@planner/schema';
 import { z } from 'zod';
-import { TYPE, quoteMarks, BlockTitle, WriteLine, column, sampleFill } from '../primitives';
+import {
+  TYPE,
+  quoteMarks,
+  BlockTitle,
+  Hand,
+  WriteLine,
+  column,
+  handText,
+  sampleFill,
+} from '../primitives';
 import { defineBlock } from '../registry';
 import { BlanksSample, withBlanks } from '../samples';
 
@@ -12,9 +21,11 @@ const TextProps = z.object({
   variant: z.enum(['heading', 'subheading', 'body', 'caption', 'label']),
   /**
    * `spread` lays each line out as fields separated by " · ", spaced evenly across the full
-   * width (e.g. a line of check-in numbers); each field stays together.
+   * width (e.g. a line of check-in numbers); each field stays together. `columns` splits each
+   * line at its first blank into label, blank and the rest, and lines them up as a table across
+   * the full width: labels on the left, units on the right, and the blank as a line between.
    */
-  align: z.enum(['start', 'center', 'end', 'spread']),
+  align: z.enum(['start', 'center', 'end', 'spread', 'columns']),
 });
 
 const SEPARATOR = ' · ';
@@ -46,6 +57,46 @@ export const textBlock = defineBlock({
   Render: ({ props, block, ctx }) => {
     const text = resolveText(ctx, props.text);
     const values = sampleFill(ctx, block.id, BlanksSample);
+    if (props.align === 'columns') {
+      // The blank takes whatever width is left, so the lines line up however long the labels are;
+      // example values fill the blanks in order.
+      let used = 0;
+      const blank = (key: string) => (
+        <span
+          key={key}
+          style={{ borderBottom: '0.1mm solid currentColor', textAlign: 'center', minWidth: 0 }}
+        >
+          <Hand size={4.6}>{handText(ctx, values?.[used++]) || ' '}</Hand>
+        </span>
+      );
+      return (
+        <div
+          style={{
+            ...TYPE[props.variant],
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr auto',
+            alignItems: 'baseline',
+            columnGap: mm(1),
+            ...typographyCss(block.style),
+          }}
+        >
+          {text.split('\n').flatMap((line, l) => {
+            const found = /_{3,}/.exec(line);
+            if (!found)
+              return [
+                <span key={l} style={{ gridColumn: '1 / -1' }}>
+                  {line}
+                </span>,
+              ];
+            return [
+              <span key={`${l}a`}>{line.slice(0, found.index).trim()}</span>,
+              blank(`${l}b`),
+              <span key={`${l}c`}>{line.slice(found.index + found[0].length).trim()}</span>,
+            ];
+          })}
+        </div>
+      );
+    }
     if (props.align === 'spread') {
       // Example values fill the blanks in order across all fields and lines.
       let used = 0;
