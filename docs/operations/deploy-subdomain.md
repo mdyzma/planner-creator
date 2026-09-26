@@ -167,144 +167,67 @@ workflow only runs the checks and skips deploying to Workers.
 
 ### B1. Create the container
 
-In Proxmox: **Create CT**.
-
-- Template: **Debian 12** (standard).
-- Unprivileged: yes. Nesting: not needed.
-- 2 CPU cores, 2048 MB RAM (4096 is more comfortable for large planners), 16 GB disk.
-- Network: DHCP or a fixed IP in your LAN. No port forwarding is needed.
-
-Start it and open the console (as root).
-
-### B2. Install the software
+In the Proxmox web UI, open the **Shell** of your node (not of a container) and download the
+Debian 12 template once:
 
 ```bash
-apt update && apt full-upgrade -y
-apt install -y curl git ca-certificates gnupg chromium fonts-dejavu-core debian-keyring debian-archive-keyring apt-transport-https
+pveam update
+pveam available --section system | grep debian-12
 ```
 
-Node.js 24 (the version in `.nvmrc`) and pnpm:
+Download the name it prints (the version number changes over time), for example:
 
 ```bash
-curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
-apt install -y nodejs
-corepack enable
+pveam download local debian-12-standard_12.12-1_amd64.tar.zst
 ```
 
-Caddy:
+Create and start the container. Pick a free ID instead of `120`, and the storage names you use
+(`local-lvm` for the disk is the Proxmox default):
 
 ```bash
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list
-apt update && apt install -y caddy
+pct create 120 local:vztmpl/debian-12-standard_12.12-1_amd64.tar.zst --hostname yapco --cores 2 --memory 4096 --swap 1024 --rootfs local-lvm:16 --net0 name=eth0,bridge=vmbr0,ip=dhcp --unprivileged 1 --features nesting=1 --onboot 1 --start 1
 ```
 
-cloudflared is installed in step B6, with the command the dashboard gives you.
+The same in the web UI: **Create CT** → hostname `yapco`, template Debian 12, disk 16 GB, 2
+cores, 4096 MB memory, network DHCP, *Unprivileged* and *Nesting* on. 4 GB of memory matters:
+building the web app with less can fail.
 
-### B3. Get and build the app
+No port forwarding on your router is needed.
+
+### B2. Install YAPCO (one script)
+
+Open a shell in the container, as root:
 
 ```bash
-useradd --system --create-home --home-dir /opt/yapco --shell /usr/sbin/nologin yapco
-sudo -u yapco git clone https://github.com/mdyzma/yapco.git /opt/yapco/app
-cd /opt/yapco/app
-sudo -u yapco corepack pnpm install --frozen-lockfile
-sudo -u yapco corepack pnpm --filter @planner/web build
+pct enter 120
 ```
 
-The build ends with `build-sw: … files`; the site is now in `/opt/yapco/app/apps/web/out`.
-
-(If `sudo` is missing: `apt install -y sudo`.)
-
-### B4. The export service (systemd)
-
-`/etc/systemd/system/yapco-export.service`:
-
-```ini
-[Unit]
-Description=YAPCO PDF export service
-After=network.target
-
-[Service]
-User=yapco
-WorkingDirectory=/opt/yapco/app
-Environment=EXPORT_PORT=8787
-Environment=EXPORT_ALLOWED_ORIGINS=https://planner.example.com
-Environment=CHROME_PATH=/usr/bin/chromium
-ExecStart=/usr/bin/corepack pnpm --filter @planner/export-node serve
-Restart=on-failure
-RestartSec=5
-NoNewPrivileges=true
-PrivateTmp=true
-
-[Install]
-WantedBy=multi-user.target
-```
+Then run the install script from the repository
+([deploy/proxmox/install.sh](../../deploy/proxmox/install.sh)):
 
 ```bash
-systemctl daemon-reload
-systemctl enable --now yapco-export
-journalctl -u yapco-export -n 20
-curl -s http://127.0.0.1:8787/api/export/health
+apt-get update && apt-get install -y curl
+curl -fsSL https://raw.githubusercontent.com/mdyzma/yapco/main/deploy/proxmox/install.sh | sh
 ```
 
-The log should say `Export service on http://127.0.0.1:8787 for https://planner.example.com`,
-and the health check should answer `{"ok":true}`. The service listens on localhost only, and
-answers only pages from `https://planner.example.com`.
+It takes a few minutes and:
 
-### B5. Caddy (static files + API)
+1. installs Node.js 24, Chromium and Caddy;
+2. creates the user `yapco` and clones the repository into `/opt/yapco/app`;
+3. installs the dependencies and builds the site (`apps/web/out`);
+4. starts **yapco-export** (systemd): the PDF export service on `127.0.0.1:8787`, which uses the
+   container's Chromium and accepts only pages from `https://planner.example.com`;
+5. starts **Caddy** on port 8080: the site with the same security headers as on Cloudflare, and
+   `/api/export/*` passed to the export service;
+6. checks all three and ends with `Done. Serving https://planner.example.com on port 8080`.
 
-`/etc/caddy/Caddyfile` (replace its contents). Caddy listens on plain HTTP inside the container;
-Cloudflare terminates HTTPS.
+For a different address, run it as
+`curl -fsSL … | YAPCO_ORIGIN=https://other.example.com sh`.
 
-```caddyfile
-{
-	auto_https off
-	admin off
-}
+If a check fails, the logs are in `journalctl -u yapco-export -n 50` and
+`journalctl -u caddy -n 50`.
 
-:8080 {
-	root * /opt/yapco/app/apps/web/out
-
-	# The same security headers as the Cloudflare setup (apps/web/public/_headers).
-	header {
-		Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
-		X-Content-Type-Options nosniff
-		Referrer-Policy no-referrer
-		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
-		Cross-Origin-Opener-Policy same-origin
-		Strict-Transport-Security "max-age=31536000"
-		-Server
-	}
-	header /_next/static/* Cache-Control "public, max-age=31536000, immutable"
-	header /sw.js Cache-Control "no-cache"
-
-	handle /api/export/* {
-		request_body {
-			max_size 10MB
-		}
-		reverse_proxy 127.0.0.1:8787
-	}
-
-	handle {
-		try_files {path} {path}.html {path}/index.html
-		file_server
-	}
-
-	handle_errors {
-		rewrite * /404.html
-		file_server
-	}
-}
-```
-
-```bash
-caddy validate --config /etc/caddy/Caddyfile
-systemctl reload caddy
-curl -sI http://127.0.0.1:8080/en | head -5
-curl -s http://127.0.0.1:8080/api/export/health
-```
-
-### B6. Cloudflare Tunnel
+### B3. Cloudflare Tunnel
 
 In the Cloudflare dashboard: **Zero Trust** (first time: choose a team name and the **Free**
 plan) → **Networks** → **Tunnels** → **Create a tunnel** → **Cloudflared** → name it `proxmox`.
@@ -325,31 +248,78 @@ curl -s https://planner.example.com/api/export/health
 
 Open the site, create a planner and make a PDF of one month.
 
-### B7. Updating
+### B4. Updating
 
-`/opt/yapco/update.sh`:
-
-```bash
-#!/bin/sh
-set -e
-cd /opt/yapco/app
-sudo -u yapco git pull --ff-only
-sudo -u yapco corepack pnpm install --frozen-lockfile
-sudo -u yapco corepack pnpm --filter @planner/web build
-systemctl restart yapco-export
-echo "Updated to $(sudo -u yapco git rev-parse --short HEAD)"
-```
+After you push to `main` (ideally once CI is green), run the same script again in the container:
 
 ```bash
-chmod +x /opt/yapco/update.sh
-/opt/yapco/update.sh
+curl -fsSL https://raw.githubusercontent.com/mdyzma/yapco/main/deploy/proxmox/install.sh | sh
 ```
 
-Run it after pushing to `main` (ideally once the CI run is green). Caddy needs no restart. Open
-copies of the app pick up the new version on their next visit (the service worker checks
+It pulls `main`, rebuilds and restarts the export service and Caddy; the rest is left as it is.
+Open copies of the app pick up the new version on their next visit (the service worker checks
 `/sw.js` every time).
 
-### B8. Notes
+### B5. Automatic deploys with Gitea and Jenkins
+
+Instead of running the script by hand after each push, let Jenkins test every change and deploy
+it:
+
+```text
+push to GitHub → Gitea pull-mirror (every 10 min) → Jenkins polls Gitea (every 5 min)
+  → lint, format, types, tests, build, PDF checks in Chromium (the same as GitHub CI)
+  → SSH into the container: install.sh for exactly that commit, fetched from Gitea
+```
+
+The pipeline is [Jenkinsfile](../../Jenkinsfile) in the repository root. B1 (the container) is
+still needed; the first Jenkins deploy then does everything B2 does.
+
+**1. Gitea mirror.** In Gitea: **+** → **New Migration** → **GitHub** → URL
+`https://github.com/mdyzma/yapco.git`, tick **This repository will be a mirror**, interval
+`10m0s`. Keep it **public** in Gitea: the container clones from it without credentials. (For a
+private mirror, put a read-only access token in the URL you give as `YAPCO_REPO` below.)
+
+**2. SSH from Jenkins to the container.** On any computer, make a key pair for deploys only:
+
+```bash
+ssh-keygen -t ed25519 -C yapco-deploy -N "" -f yapco-deploy
+```
+
+In the container (`pct enter 120`), allow that key for root. Debian's default allows root logins
+by key only, never by password:
+
+```bash
+apt-get update && apt-get install -y openssh-server
+mkdir -p /root/.ssh && chmod 700 /root/.ssh
+echo "PASTE THE CONTENTS OF yapco-deploy.pub HERE" >> /root/.ssh/authorized_keys
+chmod 600 /root/.ssh/authorized_keys
+```
+
+**3. Jenkins.**
+
+- Plugins (Manage Jenkins → Plugins): **Pipeline**, **Git**, **SSH Agent**, and **Docker
+  Pipeline** if your agents have Docker.
+- Credentials (Manage Jenkins → Credentials → *Add*): kind **SSH Username with private key**,
+  ID `yapco-deploy`, username `root`, private key = the contents of the `yapco-deploy` file.
+- Environment variables (Manage Jenkins → System → *Global properties* → *Environment
+  variables*):
+  - `YAPCO_DEPLOY_HOST` = the container's address, e.g. `192.168.1.50` (give it a fixed IP or
+    a DHCP reservation)
+  - `YAPCO_REPO` = the Gitea clone URL, e.g. `http://gitea.lan:3000/mdyzma/yapco.git`
+- **New Item** → name `yapco` → **Pipeline** → *Pipeline script from SCM* → **Git** → the Gitea
+  URL, branch `*/main`, script path `Jenkinsfile` → *Save* → **Build Now**.
+
+The first build takes longest (it installs Chromium and the dependencies in the build
+container). A green build ends with the install script's `Done. Serving …`.
+
+**Docker or not.** The Jenkinsfile runs its stages in a `node:24-bookworm` container, so the
+agent needs Docker and nothing else. For an agent without Docker, change `agent { docker … }` to
+`agent any`, install Node.js 24 and Chromium on the agent, and set `CHROME_PATH` in the
+`environment` block to Chromium's path there.
+
+Without `YAPCO_DEPLOY_HOST`, Jenkins runs the checks and skips the deploy.
+
+### B6. Notes
 
 - Back up the container with Proxmox's normal backups; it holds no user data (planners live
   only in each user's browser), so a rebuild from the steps above is just as good.
