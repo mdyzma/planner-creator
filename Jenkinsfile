@@ -50,7 +50,8 @@ pipeline {
         sh 'pnpm lint'
         sh 'pnpm format:check'
         sh 'pnpm typecheck'
-        sh 'pnpm test'
+        // Two packages at a time: the Jenkins machine has 2 CPUs.
+        sh 'pnpm test --concurrency=2'
       }
     }
 
