@@ -45,7 +45,15 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
     description: t('appDescription'),
     // Installable, and usable offline (scripts/build-sw.mjs).
     manifest: '/manifest.webmanifest',
-    icons: { apple: '/icons/icon-192.png' },
+    // Listing icons here replaces the one Next.js adds for app/icon.svg, so the tab icon is
+    // listed too (with a PNG for browsers without SVG favicons).
+    icons: {
+      icon: [
+        { url: '/icon.svg', type: 'image/svg+xml' },
+        { url: '/icons/icon-192.png', type: 'image/png', sizes: '192x192' },
+      ],
+      apple: '/icons/icon-192.png',
+    },
   };
 }
 
