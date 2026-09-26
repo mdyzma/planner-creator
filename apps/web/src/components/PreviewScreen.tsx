@@ -87,6 +87,7 @@ function Preview({
         samples={samples}
         printerSafeMargin={project.print.printerSafeMargin}
         pageNumber={project.print.pageNumbers && p.label.printed ? p.label.text : undefined}
+        brandMark={project.print.brandMark !== false}
         label={t('pageLabel', { number: shownLabel(p), side: t(`side.${p.page.side}`) })}
       />
       <figcaption className="text-center text-ink-muted" style={{ fontSize: `${12 / zoom}px` }}>

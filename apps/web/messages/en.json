@@ -500,7 +500,8 @@
     "exampleSuffix": "example",
     "guideLink": "Guide with explanations (A4, printable)",
     "signatureSheets": "Sheets per bundle",
-    "signatureOption": "{sheets, plural, one {# sheet} other {# sheets}} = {pages} pages"
+    "signatureOption": "{sheets, plural, one {# sheet} other {# sheets}} = {pages} pages",
+    "brandMark": "YAPCO apple beside the page number"
   },
   "Privacy": {
     "title": "Privacy",

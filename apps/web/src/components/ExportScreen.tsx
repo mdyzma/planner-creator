@@ -304,6 +304,17 @@ function Export({
             />
             {t('pageNumbers')}
           </label>
+          <label className="mt-3 flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={project.print.brandMark !== false}
+              disabled={!project.print.pageNumbers}
+              onChange={(e) =>
+                onChange({ ...project, print: { ...project.print, brandMark: e.target.checked } })
+              }
+            />
+            {t('brandMark')}
+          </label>
           <label className="mt-3 flex gap-2">
             <input
               type="checkbox"

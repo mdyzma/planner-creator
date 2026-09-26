@@ -33,6 +33,7 @@ export function defaultPrintSettings(format: FormatId): PrintSettings {
     cropMarks: false,
     binding: iso838TwoHole(format),
     pageNumbers: true,
+    brandMark: true,
     color: 'color',
     calibrationPage: false,
   };

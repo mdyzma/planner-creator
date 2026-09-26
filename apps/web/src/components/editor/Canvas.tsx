@@ -225,6 +225,7 @@ function EditPage({ page }: { page: RenderedPage }) {
           showGuides={guides}
           printerSafeMargin={project.print.printerSafeMargin}
           pageNumber={project.print.pageNumbers && page.label.printed ? page.label.text : undefined}
+          brandMark={project.print.brandMark !== false}
           label={t('pageLabel', { number: shownLabel(page), side: t(`side.${page.page.side}`) })}
         />
         {grid && <GridOverlay frame={page.frame} />}

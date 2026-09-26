@@ -47,6 +47,8 @@ export const PrintSettings = z.object({
   cropMarks: z.boolean(),
   binding: Binding,
   pageNumbers: z.boolean(),
+  /** The YAPCO apple beside the page number; on when not set. */
+  brandMark: z.boolean().optional(),
   color: z.enum(['color', 'grayscale']),
   calibrationPage: z.boolean(),
 });

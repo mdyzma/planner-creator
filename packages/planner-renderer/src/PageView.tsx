@@ -1,3 +1,4 @@
+import { BrandMark } from './BrandMark';
 import type { Box, PageFrame } from '@planner/core';
 import type { GrammaticalGender } from '@planner/i18n';
 import type { ContentItem, Locale, PageContext, PageTemplate, PatternSpec } from '@planner/schema';
@@ -22,6 +23,8 @@ export interface PageViewProps {
   printerSafeMargin?: number;
   /** Printed page label ("12", "iv", "S1"), in the outer bottom corner. */
   pageNumber?: number | string;
+  /** The YAPCO apple beside the page number, on its outer side (not on filler pages). */
+  brandMark?: boolean;
   renderBlock?: BlockRenderer;
   /** The page's date context (from its page instance). */
   pageContext?: PageContext;
@@ -59,6 +62,7 @@ export function PageView({
   showGuides = mode === 'edit',
   printerSafeMargin = 5,
   pageNumber,
+  brandMark = false,
   renderBlock = placeholderBlock,
   pageContext = {},
   vars = {},
@@ -148,9 +152,15 @@ export function PageView({
                 : { left: mm(frame.margins.left) }),
               fontSize: '8pt',
               color: PAPER.inkMuted,
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: mm(1.5),
+              // The apple sits on the outer side of the number: before it on a left page.
+              flexDirection: frame.bindingEdge === 'left' ? 'row' : 'row-reverse',
             }}
           >
-            {pageNumber}
+            <span>{pageNumber}</span>
+            {brandMark && template && <BrandMark heightMm={3.6} color={PAPER.inkMuted} />}
           </div>
         )}
         {mode !== 'print' && showGuides && (

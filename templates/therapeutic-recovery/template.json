@@ -43,6 +43,7 @@
         "punchGuides": false
       },
       "pageNumbers": true,
+      "brandMark": true,
       "color": "color",
       "calibrationPage": false
     },

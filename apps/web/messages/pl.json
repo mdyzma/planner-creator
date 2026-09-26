@@ -500,7 +500,8 @@
     "exampleSuffix": "przyklad",
     "guideLink": "Przewodnik z objaśnieniami (A4, do druku)",
     "signatureSheets": "Kartek w składce",
-    "signatureOption": "{sheets, plural, one {# kartka} few {# kartki} many {# kartek} other {# kartki}} = {pages} stron"
+    "signatureOption": "{sheets, plural, one {# kartka} few {# kartki} many {# kartek} other {# kartki}} = {pages} stron",
+    "brandMark": "Jabłko YAPCO przy numerze strony"
   },
   "Privacy": {
     "title": "Prywatność",

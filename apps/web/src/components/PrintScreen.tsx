@@ -155,6 +155,7 @@ function PrintPages({
             grammaticalGender={project.i18nOptions.grammaticalGender}
             mode="print"
             pageNumber={project.print.pageNumbers && p.label.printed ? p.label.text : undefined}
+            brandMark={project.print.brandMark !== false}
             samples={samples}
           />
         ))}
