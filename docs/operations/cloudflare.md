@@ -54,7 +54,7 @@ Mondays 05:17 UTC       → drift.yml:  the same pages rendered by Browser Run a
 
 ## Domain (when chosen)
 
-Step by step for a subdomain of a domain you already own (`planner.example.com`), including
+Step by step for a subdomain of a domain you already own (e.g. `planner.example.com`), including
 self-hosting on Proxmox behind a Cloudflare Tunnel: [deploy-subdomain.md](deploy-subdomain.md).
 
 1. **Buy** it in Cloudflare: Domain Registration → Register Domains (at-cost pricing; `.pl` is not

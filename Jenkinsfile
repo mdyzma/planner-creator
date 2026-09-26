@@ -4,6 +4,7 @@
 // Jenkins settings (Manage Jenkins → System → Global properties → Environment variables):
 //   YAPCO_DEPLOY_HOST  the container's address, e.g. yapco.lan or 192.168.1.50 (empty: no deploy)
 //   YAPCO_REPO         what the container fetches, e.g. http://gitea.lan:3000/mdyzma/yapco.git
+//   YAPCO_ORIGIN       the public address, e.g. https://planner.example.com (kept out of the repo)
 // Credentials: an "SSH Username with private key" with the id yapco-deploy (user root).
 //
 // Runs on the Jenkins machine itself, which needs once (as root, Debian 12):
@@ -79,7 +80,7 @@ pipeline {
           // Runs the install script from this checkout, for exactly the commit tested above.
           sh '''
             ssh -o StrictHostKeyChecking=accept-new "root@$YAPCO_DEPLOY_HOST" \
-              "YAPCO_REPO='${YAPCO_REPO:-https://github.com/mdyzma/yapco.git}' YAPCO_COMMIT='$GIT_COMMIT' sh -s" \
+              "YAPCO_REPO='${YAPCO_REPO:-https://github.com/mdyzma/yapco.git}' YAPCO_ORIGIN='${YAPCO_ORIGIN:-}' YAPCO_COMMIT='$GIT_COMMIT' sh -s" \
               < deploy/proxmox/install.sh
           '''
         }

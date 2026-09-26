@@ -11,14 +11,14 @@
 #
 # Jenkins runs it over SSH with the commit it has just tested (Jenkinsfile, Deploy stage).
 #
-# YAPCO_ORIGIN  the public address (default https://planner.example.com); the container's own
-#               http://<LAN address>:8080 is allowed too, for testing before the tunnel exists
+# YAPCO_ORIGIN  the public address, e.g. https://planner.example.com (Jenkins passes it from its
+#               own settings). The container's http://<LAN address>:8080 is always allowed too.
 # YAPCO_REPO    where to fetch the code (default GitHub; e.g. your Gitea mirror)
 # YAPCO_BRANCH  the branch to deploy (default main)
 # YAPCO_COMMIT  deploy exactly this commit instead of the tip of the branch
 set -eu
 
-ORIGIN="${YAPCO_ORIGIN:-https://planner.example.com}"
+ORIGIN="${YAPCO_ORIGIN:-}"
 REPO="${YAPCO_REPO:-https://github.com/mdyzma/yapco.git}"
 BRANCH="${YAPCO_BRANCH:-main}"
 COMMIT="${YAPCO_COMMIT:-}"
@@ -94,7 +94,7 @@ WorkingDirectory=$APP
 Environment=HOME=$HOME_DIR
 Environment=COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 Environment=EXPORT_PORT=8787
-Environment=EXPORT_ALLOWED_ORIGINS=$ORIGIN,$LAN
+Environment=EXPORT_ALLOWED_ORIGINS=${ORIGIN:+$ORIGIN,}$LAN
 Environment=CHROME_PATH=/usr/bin/chromium
 ExecStart=/usr/bin/corepack pnpm --filter @planner/export-node serve
 Restart=on-failure
@@ -167,7 +167,7 @@ curl -fsS http://127.0.0.1:8080/api/export/health | grep -q '"ok":true' \
   && echo "PDF service through Caddy: ok" || { echo "PDF service through Caddy: NOT ok"; ok=false; }
 
 if $ok; then
-  say "Done. Serving $ORIGIN (and $LAN on your network); point the Cloudflare Tunnel at $LAN."
+  say "Done. Serving ${ORIGIN:+$ORIGIN and }$LAN; point the Cloudflare Tunnel at $LAN."
 else
   exit 1
 fi

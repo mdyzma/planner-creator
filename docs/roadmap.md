@@ -6,7 +6,7 @@ Where "Dzień po Dniu" stands after v0.8.0, measured against the two content rev
 content specification), and what comes next. Releases bundle several steps; a tag and release
 only when a set of steps is complete.
 
-Last updated: 2026-09-26, after v0.8.0 (online at https://planner.example.com).
+Last updated: 2026-09-26, after v0.8.0 (online on Proxmox).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -80,7 +80,7 @@ Loose ends:
 
 Released 2026-09-26:
 
-- Online at https://planner.example.com: self-hosted in a Proxmox container (Caddy, the PDF
+- Online: self-hosted in a Proxmox container (Caddy, the PDF
   service with Chromium) behind a Cloudflare Tunnel. GitHub is mirrored to Gitea; Jenkins runs
   the same checks as GitHub CI and deploys the tested commit over SSH with
   `deploy/proxmox/install.sh` ([operations/deploy-subdomain.md](operations/deploy-subdomain.md),

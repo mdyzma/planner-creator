@@ -1,7 +1,8 @@
-# Deploying to planner.example.com
+# Deploying to a subdomain
 
-Step-by-step instructions for putting YAPCO online at `https://planner.example.com`, a
-subdomain of a domain you already own. Two ways, both behind Cloudflare:
+Step-by-step instructions for putting YAPCO online at a subdomain of a domain you already own.
+The examples use `planner.example.com`; put your own address in its place. Two ways, both
+behind Cloudflare:
 
 | | A. Cloudflare Worker (recommended) | B. Proxmox server + Cloudflare Tunnel |
 |---|---|---|
@@ -314,6 +315,8 @@ chmod 600 /root/.ssh/authorized_keys
   - `YAPCO_DEPLOY_HOST` = the container's address, e.g. `192.168.1.50` (give it a fixed IP or
     a DHCP reservation)
   - `YAPCO_REPO` = the Gitea clone URL, e.g. `http://gitea.lan:3000/mdyzma/yapco.git`
+  - `YAPCO_ORIGIN` = your public address, e.g. `https://planner.example.com`. It stays in
+    Jenkins, not in the repository; without it, PDFs work only from the LAN address.
 - **New Item** → name `yapco` → **Pipeline** → *Pipeline script from SCM* → **Git** → the Gitea
   URL, branch `*/main`, script path `Jenkinsfile` → *Save* → **Build Now**.
 
