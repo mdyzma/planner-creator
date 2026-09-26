@@ -3,6 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+      "env": ["BUILD_SHA", "GITHUB_SHA"],
       "outputs": ["out/**", ".next/**", "!.next/cache/**", "dist/**"]
     },
     "typecheck": {

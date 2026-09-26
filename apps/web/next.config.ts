@@ -24,7 +24,8 @@ const nextConfig: NextConfig = {
   ],
   images: { unoptimized: true },
   env: {
-    NEXT_PUBLIC_BUILD_SHA: (process.env.GITHUB_SHA ?? 'local').slice(0, 7),
+    // The commit shown in the footer: GitHub Actions sets GITHUB_SHA, the Proxmox install BUILD_SHA.
+    NEXT_PUBLIC_BUILD_SHA: (process.env.BUILD_SHA ?? process.env.GITHUB_SHA ?? 'local').slice(0, 7),
   },
 };
 

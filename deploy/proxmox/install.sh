@@ -1,5 +1,5 @@
 #!/bin/sh
-# Installs or updates YAPCO in a Debian 12 container (docs/operations/deploy-subdomain.md, B).
+# Installs or updates YAPCO in a Debian 12 or 13 container (docs/operations/deploy-subdomain.md, B).
 # Run as root inside the container, as often as you like:
 #
 #   curl -fsSL https://raw.githubusercontent.com/mdyzma/yapco/main/deploy/proxmox/install.sh | sh
@@ -11,7 +11,8 @@
 #
 # Jenkins runs it over SSH with the commit it has just tested (Jenkinsfile, Deploy stage).
 #
-# YAPCO_ORIGIN  the public address (default https://planner.example.com)
+# YAPCO_ORIGIN  the public address (default https://planner.example.com); the container's own
+#               http://<LAN address>:8080 is allowed too, for testing before the tunnel exists
 # YAPCO_REPO    where to fetch the code (default GitHub; e.g. your Gitea mirror)
 # YAPCO_BRANCH  the branch to deploy (default main)
 # YAPCO_COMMIT  deploy exactly this commit instead of the tip of the branch
@@ -23,22 +24,22 @@ BRANCH="${YAPCO_BRANCH:-main}"
 COMMIT="${YAPCO_COMMIT:-}"
 HOME_DIR=/opt/yapco
 APP="$HOME_DIR/app"
-export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0 TURBO_TELEMETRY_DISABLED=1 NEXT_TELEMETRY_DISABLED=1
 
 say() { printf '\n==> %s\n' "$*"; }
-as_yapco() { runuser -u yapco -- env HOME="$HOME_DIR" COREPACK_ENABLE_DOWNLOAD_PROMPT=0 "$@"; }
+as_yapco() { runuser -u yapco -- env HOME="$HOME_DIR" COREPACK_ENABLE_DOWNLOAD_PROMPT=0 TURBO_TELEMETRY_DISABLED=1 NEXT_TELEMETRY_DISABLED=1 "$@"; }
 
 # The whole script is read before anything runs, and nothing reads the rest of it as input:
 # it arrives through a pipe (curl | sh, or ssh … sh -s from Jenkins).
 main() {
 exec </dev/null
 [ "$(id -u)" = 0 ] || { echo "Run as root."; exit 1; }
+LAN="http://$(hostname -I | awk '{print $1}'):8080"
 
 say "System packages"
 apt-get update -qq
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
-  curl git ca-certificates gnupg chromium fonts-dejavu-core fonts-liberation \
-  debian-keyring debian-archive-keyring apt-transport-https >/dev/null
+  curl git ca-certificates gnupg chromium fonts-dejavu-core fonts-liberation >/dev/null
 
 if ! command -v node >/dev/null || [ "$(node -p 'process.versions.node.split(".")[0]')" -lt 24 ]; then
   say "Node.js 24"
@@ -61,6 +62,8 @@ if ! id yapco >/dev/null 2>&1; then
   say "User yapco"
   useradd --system --create-home --home-dir "$HOME_DIR" --shell /usr/sbin/nologin yapco
 fi
+# Debian 13 creates homes as 0700; Caddy (its own user) must be able to read the built site.
+chmod 755 "$HOME_DIR"
 
 say "Code ($REPO, $BRANCH${COMMIT:+ at $COMMIT})"
 if [ -d "$APP/.git" ]; then
@@ -76,7 +79,7 @@ echo "at $(as_yapco git -C "$APP" log -1 --format='%h %s')"
 say "Install and build (a few minutes)"
 cd "$APP"
 as_yapco corepack pnpm install --frozen-lockfile
-as_yapco corepack pnpm turbo run build --filter=@planner/web...
+as_yapco env BUILD_SHA="$(as_yapco git -C "$APP" rev-parse HEAD)" \n  corepack pnpm turbo run build --filter=@planner/web...
 
 say "Export service"
 cat > /etc/systemd/system/yapco-export.service <<EOF
@@ -90,7 +93,7 @@ WorkingDirectory=$APP
 Environment=HOME=$HOME_DIR
 Environment=COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 Environment=EXPORT_PORT=8787
-Environment=EXPORT_ALLOWED_ORIGINS=$ORIGIN
+Environment=EXPORT_ALLOWED_ORIGINS=$ORIGIN,$LAN
 Environment=CHROME_PATH=/usr/bin/chromium
 ExecStart=/usr/bin/corepack pnpm --filter @planner/export-node serve
 Restart=on-failure
@@ -163,7 +166,7 @@ curl -fsS http://127.0.0.1:8080/api/export/health | grep -q '"ok":true' \
   && echo "PDF service through Caddy: ok" || { echo "PDF service through Caddy: NOT ok"; ok=false; }
 
 if $ok; then
-  say "Done. Serving $ORIGIN on port 8080; connect the Cloudflare Tunnel to http://localhost:8080."
+  say "Done. Serving $ORIGIN (and $LAN on your network); point the Cloudflare Tunnel at $LAN."
 else
   exit 1
 fi

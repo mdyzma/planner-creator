@@ -27,6 +27,9 @@ pipeline {
   environment {
     CI = 'true'
     COREPACK_ENABLE_DOWNLOAD_PROMPT = '0'
+    // No usage telemetry from Turborepo or Next.js (YAPCO itself has no analytics either).
+    TURBO_TELEMETRY_DISABLED = '1'
+    NEXT_TELEMETRY_DISABLED = '1'
     CHROME_PATH = '/usr/bin/chromium'
   }
 
