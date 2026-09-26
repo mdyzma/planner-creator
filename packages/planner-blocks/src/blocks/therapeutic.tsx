@@ -355,6 +355,28 @@ export const dividerBlock = defineBlock({
   ),
 });
 
+/**
+ * A picture, scaled to fit the block and centred. `src` is a URL or a data URI; templates embed
+ * theirs as data URIs so that the template JSON stays self-contained.
+ */
+export const imageBlock = defineBlock({
+  type: 'image',
+  version: 1,
+  label: L('Image', 'Obraz'),
+  category: 'layout',
+  propsSchema: z.object({ src: z.string(), alt: LocalizedText.optional() }),
+  defaults: { src: '' },
+  inspector: [{ key: 'alt', kind: 'localized-text', label: L('Description', 'Opis') }],
+  Render: ({ props, ctx }) =>
+    props.src ? (
+      <img
+        src={props.src}
+        alt={props.alt ? resolveText(ctx, props.alt) : ''}
+        style={{ display: 'block', width: '100%', height: '100%', objectFit: 'contain' }}
+      />
+    ) : null,
+});
+
 /** Empty space; its size comes from the layout. */
 export const spacerBlock = defineBlock({
   type: 'spacer',

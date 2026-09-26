@@ -9,6 +9,7 @@ import {
   categoryGridBlock,
   contactTableBlock,
   dividerBlock,
+  imageBlock,
   radialScaleBlock,
   spacerBlock,
 } from './blocks/therapeutic';
@@ -37,6 +38,7 @@ export const BUILT_IN_BLOCKS = [
   categoryGridBlock,
   contactTableBlock,
   dividerBlock,
+  imageBlock,
   spacerBlock,
 ];
 

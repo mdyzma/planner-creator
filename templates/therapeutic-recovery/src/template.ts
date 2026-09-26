@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { HALT_B_ROWS } from '@planner/blocks';
 import { moduleOff, moduleOn } from '@planner/core';
 import type {
@@ -257,13 +258,24 @@ function a5(
 // ---------------------------------------------------------------------------------------------
 // Introduction
 
+/** The line apple from the YAPCO brand concepts, embedded so that template.json stays self-contained. */
+const COVER_APPLE = `data:image/png;base64,${readFileSync(
+  new URL('../assets/cover-apple.png', import.meta.url),
+).toString('base64')}`;
+
 const cover: PageTemplate = {
   id: 'cover',
   name: L('Cover', 'Strona tytułowa'),
   hidePageNumber: true,
   body: stack(
     [
-      block('top', 'spacer', {}, { height: fr(2) }),
+      block('top', 'spacer', {}, { height: fr(1) }),
+      block(
+        'apple',
+        'image',
+        { src: COVER_APPLE, alt: L('An apple with a tick', 'Jabłko z ptaszkiem') },
+        { height: fr(3) },
+      ),
       stack(
         [
           heading('title', L('Day by Day', 'Dzień po Dniu'), 10),

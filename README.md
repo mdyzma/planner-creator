@@ -1,4 +1,4 @@
-<p align="center"><img src="docs/brand/yapco-logo.svg" alt="YAPCO — Yet Another Planner Creator" width="400"></p>
+<p align="center"><img src="docs/brand/concepts/yapco-image-with-title.jpeg" alt="YAPCO — Yet Another Planner Creator" width="480"></p>
 
 # YAPCO
 
