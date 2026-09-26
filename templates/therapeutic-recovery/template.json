@@ -1520,7 +1520,27 @@
             "pl": "podnieść słuchawkę"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "proud": {
+              "fill": {
+                "en": "my son, and running 5 km",
+                "pl": "mój syn i przebiegnięte 5 km"
+              }
+            }
+          }
+        }
+      ]
     },
     "recharge": {
       "id": "recharge",
@@ -2293,7 +2313,108 @@
             "pl": "3–4 cele wystarczą; odhaczaj je"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "calendar": {
+              "fill": {
+                "3": {
+                  "en": "walk",
+                  "pl": "spacer"
+                },
+                "6": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "8": {
+                  "en": "book club 18:30",
+                  "pl": "klub książki 18:30"
+                },
+                "12": {
+                  "en": "doctor 9:30",
+                  "pl": "lekarz 9:30"
+                },
+                "13": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "15": {
+                  "en": "dinner with Ola",
+                  "pl": "kolacja z Olą"
+                },
+                "18": {
+                  "en": "family lunch",
+                  "pl": "obiad u rodziny"
+                },
+                "20": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "22": {
+                  "en": "book club 18:30",
+                  "pl": "klub książki 18:30"
+                },
+                "27": {
+                  "en": "mum's birthday",
+                  "pl": "urodziny mamy"
+                },
+                "30": {
+                  "en": "day off!",
+                  "pl": "dzień wolny!"
+                }
+              },
+              "note": {
+                "en": "fixed appointments first",
+                "pl": "najpierw stałe terminy"
+              }
+            },
+            "intention": {
+              "fill": {
+                "en": "Slow down and look after my sleep.",
+                "pl": "Zwolnić i zadbać o sen."
+              },
+              "note": {
+                "en": "what matters most this month",
+                "pl": "co jest najważniejsze w tym miesiącu"
+              }
+            },
+            "goals": {
+              "fill": {
+                "items": [
+                  {
+                    "en": "swim 8 times",
+                    "pl": "basen 8 razy"
+                  },
+                  {
+                    "en": "sleep by 23:00",
+                    "pl": "spać przed 23:00"
+                  },
+                  {
+                    "en": "finish the online course",
+                    "pl": "skończyć kurs online"
+                  }
+                ],
+                "done": [
+                  2
+                ]
+              },
+              "note": {
+                "en": "3–4 goals are enough; tick them off",
+                "pl": "3–4 cele wystarczą; odhaczaj je"
+              }
+            }
+          }
+        }
+      ]
     },
     "month-open-right": {
       "id": "month-open-right",
@@ -2545,7 +2666,95 @@
             "pl": "spacer 20 min codziennie\n5-go: 30 dni trzeźwości"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "calendar": {
+              "fill": {
+                "3": {
+                  "en": "walk",
+                  "pl": "spacer"
+                },
+                "6": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "8": {
+                  "en": "book club 18:30",
+                  "pl": "klub książki 18:30"
+                },
+                "12": {
+                  "en": "doctor 9:30",
+                  "pl": "lekarz 9:30"
+                },
+                "13": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "15": {
+                  "en": "dinner with Ola",
+                  "pl": "kolacja z Olą"
+                },
+                "18": {
+                  "en": "family lunch",
+                  "pl": "obiad u rodziny"
+                },
+                "20": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                },
+                "22": {
+                  "en": "book club 18:30",
+                  "pl": "klub książki 18:30"
+                },
+                "27": {
+                  "en": "mum's birthday",
+                  "pl": "urodziny mamy"
+                },
+                "30": {
+                  "en": "day off!",
+                  "pl": "dzień wolny!"
+                }
+              }
+            },
+            "focus": {
+              "fill": {
+                "en": "Evenings without a screen, early nights",
+                "pl": "Wieczory bez ekranu, wcześnie spać"
+              },
+              "note": {
+                "en": "one area to work on this month",
+                "pl": "jeden obszar do pracy w tym miesiącu"
+              }
+            },
+            "appointments": {
+              "fill": {
+                "en": "Tue 17:00 pool\nThu 18:30 book club\n12th doctor 9:30",
+                "pl": "wt 17:00 basen\nczw 18:30 klub książki\n12. lekarz 9:30"
+              },
+              "note": {
+                "en": "recurring and one-off",
+                "pl": "stałe i jednorazowe"
+              }
+            },
+            "habits": {
+              "fill": {
+                "en": "walk 20 min every day\nphone away after 22:00",
+                "pl": "spacer 20 min codziennie\ntelefon odłożony po 22:00"
+              }
+            }
+          }
+        }
+      ]
     },
     "week-left": {
       "id": "week-left",
@@ -2794,7 +3003,69 @@
             ]
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "mon": {
+              "fill": {
+                "markers": [
+                  "exercise"
+                ],
+                "text": {
+                  "en": "pool 17:00",
+                  "pl": "basen 17:00"
+                }
+              },
+              "note": {
+                "en": "circle what happened that day",
+                "pl": "zakreśl, co się wydarzyło"
+              },
+              "noteAt": "bottom-right"
+            },
+            "wed": {
+              "fill": {
+                "markers": [
+                  "custom"
+                ],
+                "text": {
+                  "en": "book club, chapter 3",
+                  "pl": "klub książki, rozdz. 3"
+                }
+              }
+            },
+            "goals": {
+              "fill": {
+                "items": [
+                  {
+                    "en": "pool 2×",
+                    "pl": "basen 2×"
+                  },
+                  {
+                    "en": "walk 4×",
+                    "pl": "spacer 4×"
+                  },
+                  {
+                    "en": "call Tomek",
+                    "pl": "tel. Tomek"
+                  }
+                ],
+                "done": [
+                  0
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "week-right": {
       "id": "week-right",
@@ -3059,7 +3330,51 @@
             "pl": "pt.: wypłata\nsob.: urodziny"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "thu": {
+              "fill": {
+                "markers": [
+                  "custom"
+                ],
+                "text": {
+                  "en": "dinner with Ola 19:00",
+                  "pl": "kolacja z Olą 19:00"
+                }
+              }
+            },
+            "fri": {
+              "fill": {
+                "text": {
+                  "en": "payday: cinema with my sister",
+                  "pl": "wypłata: kino z siostrą"
+                }
+              }
+            },
+            "sun": {
+              "fill": {
+                "markers": [
+                  "custom"
+                ],
+                "text": {
+                  "en": "call Tomek, plan the week",
+                  "pl": "tel. do Tomka, plan tygodnia"
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "day-left": {
       "id": "day-left",
@@ -3654,7 +3969,137 @@
             "pl": "sprawdź w południe; 4–5 = działaj"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "date": {},
+            "checkin": {
+              "fill": [
+                "6",
+                "5",
+                "4",
+                "6",
+                "3"
+              ]
+            },
+            "commitment": {
+              "fill": {
+                "en": "a walk at lunch and an early night",
+                "pl": "spacer w przerwie i wcześnie spać"
+              },
+              "note": {
+                "en": "one concrete action for today",
+                "pl": "jedno konkretne działanie na dziś"
+              },
+              "noteAt": "bottom-right"
+            },
+            "priorities": {
+              "fill": {
+                "items": [
+                  {
+                    "en": "pool at 18:00",
+                    "pl": "basen o 18:00"
+                  },
+                  {
+                    "en": "finish the report",
+                    "pl": "skończyć raport"
+                  },
+                  {
+                    "en": "20-minute walk",
+                    "pl": "spacer 20 minut"
+                  }
+                ],
+                "sub": [
+                  [
+                    {
+                      "en": "leave work at 17:15",
+                      "pl": "wyjść z pracy 17:15"
+                    },
+                    {
+                      "en": "ask Tomek to come",
+                      "pl": "poprosić Tomka"
+                    }
+                  ],
+                  [
+                    {
+                      "en": "two blocks before lunch",
+                      "pl": "dwa bloki przed obiadem"
+                    },
+                    {
+                      "en": "ask for more time",
+                      "pl": "poprosić o czas"
+                    }
+                  ],
+                  [
+                    {
+                      "en": "after dinner",
+                      "pl": "po kolacji"
+                    }
+                  ]
+                ],
+                "subFor": [
+                  "How:",
+                  "If it gets hard:"
+                ],
+                "done": [
+                  0,
+                  2
+                ]
+              },
+              "note": {
+                "en": "at most three; how, and what if it gets hard",
+                "pl": "najwyżej trzy; jak, i co gdy będzie trudno"
+              },
+              "noteAt": "bottom-right"
+            },
+            "schedule": {
+              "fill": {
+                "07:00": {
+                  "en": "get up, coffee",
+                  "pl": "pobudka, kawa"
+                },
+                "08:00": {
+                  "en": "call Tomek",
+                  "pl": "telefon do Tomka"
+                },
+                "09:00": {
+                  "en": "work: report",
+                  "pl": "praca: raport"
+                },
+                "13:00": {
+                  "en": "lunch with Ola",
+                  "pl": "obiad z Olą"
+                },
+                "17:00": {
+                  "en": "leave work",
+                  "pl": "wyjście z pracy"
+                },
+                "18:00": {
+                  "en": "pool",
+                  "pl": "basen"
+                },
+                "21:00": {
+                  "en": "evening page",
+                  "pl": "strona wieczorna"
+                }
+              },
+              "note": {
+                "en": "fixed points only",
+                "pl": "tylko stałe punkty"
+              }
+            }
+          }
+        }
+      ]
     },
     "day-right": {
       "id": "day-right",
@@ -4409,7 +4854,94 @@
             "pl": "spokojna rozmowa z szefem"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "threat": {
+              "fill": {
+                "en": "Tense after the argument at work.\nCalled Tomek from the car park.",
+                "pl": "Napięcie po kłótni w pracy.\nZadzwoniłem do Tomka z parkingu."
+              },
+              "note": {
+                "en": "be honest; it helps to see patterns",
+                "pl": "szczerze; tak widać wzorce"
+              }
+            },
+            "reflection": {
+              "fill": {
+                "en": "The swim helped. I was calmer after\nthe walk. Tomorrow: talk to the boss calmly.",
+                "pl": "Basen pomógł. Po spacerze byłem spokojniejszy.\nJutro: spokojna rozmowa z szefem."
+              },
+              "note": {
+                "en": "free space: feelings, thoughts, plans",
+                "pl": "wolne miejsce: uczucia, myśli, plany"
+              }
+            },
+            "gratitude": {
+              "fill": {
+                "items": [
+                  {
+                    "en": "Tomek picked up straight away",
+                    "pl": "Tomek od razu odebrał"
+                  },
+                  {
+                    "en": "a warm dinner",
+                    "pl": "ciepła kolacja"
+                  },
+                  {
+                    "en": "a quiet evening",
+                    "pl": "spokojny wieczór"
+                  }
+                ]
+              },
+              "note": {
+                "en": "small things are enough",
+                "pl": "drobne rzeczy wystarczą"
+              }
+            },
+            "checkout": {
+              "fill": [
+                "6",
+                "4",
+                "7"
+              ]
+            },
+            "trigger": {
+              "fill": {
+                "done": [
+                  3,
+                  6
+                ]
+              },
+              "note": {
+                "en": "tick all that apply",
+                "pl": "zaznacz wszystkie"
+              },
+              "noteAt": "bottom-right"
+            },
+            "good-life": {
+              "fill": {
+                "en": "played chess with my son",
+                "pl": "partia szachów z synem"
+              },
+              "note": {
+                "en": "not only: did I get everything done?",
+                "pl": "nie tylko: czy wszystko zrobiłem?"
+              },
+              "noteAt": "bottom-right"
+            }
+          }
+        }
+      ]
     },
     "week-review": {
       "id": "week-review",
@@ -5506,7 +6038,81 @@
             "pl": "telefon przed reakcją"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "numbers": {
+              "fill": [
+                "6",
+                "4",
+                "5",
+                "4",
+                "3"
+              ],
+              "note": {
+                "en": "count from the evening pages",
+                "pl": "policz ze stron wieczornych"
+              },
+              "noteAt": "bottom-right"
+            },
+            "triggers": {
+              "fill": {
+                "done": [
+                  0,
+                  2,
+                  5
+                ]
+              }
+            },
+            "wins": {
+              "fill": {
+                "items": [
+                  {
+                    "en": "called before reacting",
+                    "pl": "telefon przed reakcją"
+                  },
+                  {
+                    "en": "a swim though I did not want to",
+                    "pl": "basen mimo niechęci"
+                  },
+                  {
+                    "en": "rest instead of overwork",
+                    "pl": "odpoczynek zamiast pracy"
+                  }
+                ]
+              }
+            },
+            "pattern": {
+              "fill": {
+                "en": "less sleep, shorter temper",
+                "pl": "gdy śpię mniej, szybciej się złoszczę"
+              },
+              "note": {
+                "en": "this is where the notes pay off",
+                "pl": "tu notatki zaczynają pracować"
+              },
+              "noteAt": "bottom-right"
+            },
+            "numbers-a5": {
+              "fill": [
+                "6",
+                "4",
+                "4",
+                "3"
+              ]
+            }
+          }
+        }
+      ]
     },
     "situation": {
       "id": "situation",
@@ -5799,7 +6405,38 @@
             "pl": "jeden mały krok"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "risky-thought": {
+              "fill": {
+                "en": "one more episode won't hurt, I'll sleep later",
+                "pl": "jeszcze jeden odcinek nie zaszkodzi, wyśpię się później"
+              },
+              "note": {
+                "en": "write it word for word",
+                "pl": "zapisz dosłownie"
+              },
+              "noteAt": "bottom-right"
+            },
+            "thought-answer": {
+              "fill": {
+                "en": "I always regret it in the morning. I can stop now.",
+                "pl": "Rano zawsze tego żałuję. Mogę skończyć teraz."
+              }
+            }
+          }
+        }
+      ]
     },
     "wheel-of-life": {
       "id": "wheel-of-life",
@@ -5966,7 +6603,27 @@
             "pl": "Trzeźwość mocna; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu."
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "notice": {
+              "fill": {
+                "en": "Work is going well; rest and relationships need time.\nNext month: one free evening a week.",
+                "pl": "Praca idzie dobrze; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu."
+              }
+            }
+          }
+        }
+      ]
     },
     "monthly-review": {
       "id": "monthly-review",
@@ -6185,7 +6842,37 @@
             "pl": "Sen i relacja z Olą."
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "prompt-1": {
+              "fill": {
+                "en": "Swimming and walks with Tomek.",
+                "pl": "Basen i spacery z Tomkiem."
+              },
+              "note": {
+                "en": "a few words per question are enough",
+                "pl": "kilka słów na pytanie wystarczy"
+              }
+            },
+            "prompt-5": {
+              "fill": {
+                "en": "Evening walks, the Thursday book club.",
+                "pl": "Wieczorne spacery, czwartkowy klub książki."
+              }
+            }
+          }
+        }
+      ]
     },
     "notes": {
       "id": "notes",
@@ -6230,7 +6917,31 @@
             "pl": "wszystko, co nie pasuje gdzie indziej"
           }
         }
-      }
+      },
+      "sampleVariants": [
+        {
+          "when": {
+            "==": [
+              {
+                "var": "config.modules.recovery"
+              },
+              false
+            ]
+          },
+          "content": {
+            "notes": {
+              "fill": {
+                "en": "Mum's lentil soup: ask for the recipe\nAsk the doctor about sleep.",
+                "pl": "Zupa z soczewicy od mamy: poprosić o przepis\nZapytać lekarza o sen."
+              },
+              "note": {
+                "en": "anything that does not fit elsewhere",
+                "pl": "wszystko, co nie pasuje gdzie indziej"
+              }
+            }
+          }
+        }
+      ]
     },
     "warning-signs-left": {
       "id": "warning-signs-left",

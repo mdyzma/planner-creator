@@ -23,8 +23,11 @@ const planner = (locale: Locale, format: FormatId, modules?: Record<string, bool
     modules,
   }).project;
 
-/** Every printed page as plain text. Quotes are left out: the quote library is not per module yet. */
-function printedText(project: PlannerProject): string[] {
+/**
+ * Every printed page as plain text, optionally with the example filling. Quotes are left out: the
+ * quote library is not per module yet.
+ */
+function printedText(project: PlannerProject, samples = false): string[] {
   const layout = layoutProject(project);
   return layout.pages.map((p) =>
     renderToStaticMarkup(
@@ -40,6 +43,7 @@ function printedText(project: PlannerProject): string[] {
         locale: project.locale,
         grammaticalGender: project.i18nOptions.grammaticalGender,
         mode: 'print',
+        samples,
       }),
     )
       .replace(/<[^>]+>/g, ' ')
@@ -86,6 +90,24 @@ describe('modules and presets', () => {
       expect(hits).toEqual([]);
     },
   );
+
+  const BASIC = { start: false, recovery: false, halt: false, cbt: true };
+  it.each([
+    ['Balance', 'pl', 'A4'],
+    ['Balance', 'en', 'A5'],
+    ['Basic', 'en', 'A4'],
+    ['Basic', 'pl', 'A5'],
+  ] as const)('fills a %s planner (%s, %s) with neutral examples', (edition, locale, format) => {
+    const modules = edition === 'Basic' ? BASIC : preset('balance');
+    const text = printedText(planner(locale, format, modules), true);
+    // The neutral examples are in: swimming instead of meetings.
+    expect(text.join(' ')).toContain(locale === 'pl' ? 'basen' : 'pool');
+    const hits = text.flatMap((t, i) => {
+      const m = t.match(RECOVERY_WORDS[locale]);
+      return m ? [`page ${i + 1}: …${t.slice(Math.max(0, m.index! - 40), m.index! + 40)}…`] : [];
+    });
+    expect(hits).toEqual([]);
+  });
 
   it('is about 13 pages shorter as Balance, and adds the weekly situation page with CBT', () => {
     const recovery = layoutProject(planner('pl', 'A4')).pages.length;

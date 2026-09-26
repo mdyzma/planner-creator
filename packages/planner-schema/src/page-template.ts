@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { BlockInstance } from './block';
+import { Condition } from './condition';
 import { FormatId } from './formats';
 import { LayoutNode } from './layout';
 import { Id, LocalizedText, Mm, Side } from './primitives';
@@ -45,5 +46,13 @@ export const PageTemplate = z.object({
    * handwriting and `note` a short handwritten explanation. Printed only in example mode.
    */
   sampleContent: z.record(z.string(), z.json()).optional(),
+  /**
+   * Example filling for particular modules (ADR-0010): the first variant whose `when` matches
+   * replaces the examples of the blocks it lists, e.g. neutral wording without the recovery
+   * module.
+   */
+  sampleVariants: z
+    .array(z.object({ when: Condition, content: z.record(z.string(), z.json()) }))
+    .optional(),
 });
 export type PageTemplate = z.infer<typeof PageTemplate>;

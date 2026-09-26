@@ -628,6 +628,255 @@ export const SAMPLES: Record<string, Record<string, Sample>> = {
 };
 
 /** What to fill in on each page and why: the text of the printed guide. */
+/** The month calendar without the recovery module: sport and friends instead of therapy. */
+const CALENDAR_NEUTRAL = {
+  ...CALENDAR,
+  '6': L('pool 17:00', 'basen 17:00'),
+  '8': L('book club 18:30', 'klub książki 18:30'),
+  '13': L('pool 17:00', 'basen 17:00'),
+  '15': L('dinner with Ola', 'kolacja z Olą'),
+  '20': L('pool 17:00', 'basen 17:00'),
+  '22': L('book club 18:30', 'klub książki 18:30'),
+  '30': L('day off!', 'dzień wolny!'),
+};
+
+/**
+ * Examples for planners without the recovery module (Basic, Balance): they replace the examples
+ * of the blocks listed here, so the handwriting matches the neutral wording. Ticks follow the
+ * Balance lists (e.g. "What weighed on me today?").
+ */
+export const SAMPLES_NEUTRAL: Record<string, Record<string, Sample>> = {
+  strengths: {
+    proud: { fill: L('my son, and running 5 km', 'mój syn i przebiegnięte 5 km') },
+  },
+  'month-open-left': {
+    calendar: {
+      fill: CALENDAR_NEUTRAL,
+      note: L('fixed appointments first', 'najpierw stałe terminy'),
+    },
+    intention: {
+      fill: L('Slow down and look after my sleep.', 'Zwolnić i zadbać o sen.'),
+      note: L('what matters most this month', 'co jest najważniejsze w tym miesiącu'),
+    },
+    goals: {
+      fill: {
+        items: [
+          L('swim 8 times', 'basen 8 razy'),
+          L('sleep by 23:00', 'spać przed 23:00'),
+          L('finish the online course', 'skończyć kurs online'),
+        ],
+        done: [2],
+      },
+      note: L('3–4 goals are enough; tick them off', '3–4 cele wystarczą; odhaczaj je'),
+    },
+  },
+  'month-open-right': {
+    calendar: { fill: CALENDAR_NEUTRAL },
+    focus: {
+      fill: L('Evenings without a screen, early nights', 'Wieczory bez ekranu, wcześnie spać'),
+      note: L('one area to work on this month', 'jeden obszar do pracy w tym miesiącu'),
+    },
+    appointments: {
+      fill: L(
+        'Tue 17:00 pool\nThu 18:30 book club\n12th doctor 9:30',
+        'wt 17:00 basen\nczw 18:30 klub książki\n12. lekarz 9:30',
+      ),
+      note: L('recurring and one-off', 'stałe i jednorazowe'),
+    },
+    habits: {
+      fill: L(
+        'walk 20 min every day\nphone away after 22:00',
+        'spacer 20 min codziennie\ntelefon odłożony po 22:00',
+      ),
+    },
+  },
+  'week-left': {
+    mon: {
+      fill: { markers: ['exercise'], text: L('pool 17:00', 'basen 17:00') },
+      note: L('circle what happened that day', 'zakreśl, co się wydarzyło'),
+      noteAt: 'bottom-right',
+    },
+    wed: {
+      fill: { markers: ['custom'], text: L('book club, chapter 3', 'klub książki, rozdz. 3') },
+    },
+    goals: {
+      fill: {
+        items: [L('pool 2×', 'basen 2×'), L('walk 4×', 'spacer 4×'), L('call Tomek', 'tel. Tomek')],
+        done: [0],
+      },
+    },
+  },
+  'week-right': {
+    thu: { fill: { markers: ['custom'], text: L('dinner with Ola 19:00', 'kolacja z Olą 19:00') } },
+    fri: { fill: { text: L('payday: cinema with my sister', 'wypłata: kino z siostrą') } },
+    sun: {
+      fill: {
+        markers: ['custom'],
+        text: L('call Tomek, plan the week', 'tel. do Tomka, plan tygodnia'),
+      },
+    },
+  },
+  'week-review': {
+    // Mood, tension, days with support, with exercise, with rest.
+    numbers: {
+      fill: ['6', '4', '5', '4', '3'],
+      note: L('count from the evening pages', 'policz ze stron wieczornych'),
+      noteAt: 'bottom-right',
+    },
+    // "What weighed on me" without "nothing in particular": work, a conflict, tiredness.
+    triggers: { fill: { done: [0, 2, 5] } },
+    wins: {
+      fill: {
+        items: [
+          L('called before reacting', 'telefon przed reakcją'),
+          L('a swim though I did not want to', 'basen mimo niechęci'),
+          L('rest instead of overwork', 'odpoczynek zamiast pracy'),
+        ],
+      },
+    },
+    pattern: {
+      fill: L('less sleep, shorter temper', 'gdy śpię mniej, szybciej się złoszczę'),
+      note: L('this is where the notes pay off', 'tu notatki zaczynają pracować'),
+      noteAt: 'bottom-right',
+    },
+    'numbers-a5': { fill: ['6', '4', '4', '3'] },
+  },
+  'day-left': {
+    // No sobriety counter to fill in.
+    date: {},
+    // Mood, energy, tension, hours of sleep, sleep quality.
+    checkin: { fill: ['6', '5', '4', '6', '3'] },
+    commitment: {
+      fill: L('a walk at lunch and an early night', 'spacer w przerwie i wcześnie spać'),
+      note: L('one concrete action for today', 'jedno konkretne działanie na dziś'),
+      noteAt: 'bottom-right',
+    },
+    priorities: {
+      fill: {
+        items: [
+          L('pool at 18:00', 'basen o 18:00'),
+          L('finish the report', 'skończyć raport'),
+          L('20-minute walk', 'spacer 20 minut'),
+        ],
+        sub: [
+          [
+            L('leave work at 17:15', 'wyjść z pracy 17:15'),
+            L('ask Tomek to come', 'poprosić Tomka'),
+          ],
+          [
+            L('two blocks before lunch', 'dwa bloki przed obiadem'),
+            L('ask for more time', 'poprosić o czas'),
+          ],
+          [L('after dinner', 'po kolacji')],
+        ],
+        subFor: ['How:', 'If it gets hard:'],
+        done: [0, 2],
+      },
+      note: L(
+        'at most three; how, and what if it gets hard',
+        'najwyżej trzy; jak, i co gdy będzie trudno',
+      ),
+      noteAt: 'bottom-right',
+    },
+    schedule: {
+      fill: {
+        '07:00': L('get up, coffee', 'pobudka, kawa'),
+        '08:00': L('call Tomek', 'telefon do Tomka'),
+        '09:00': L('work: report', 'praca: raport'),
+        '13:00': L('lunch with Ola', 'obiad z Olą'),
+        '17:00': L('leave work', 'wyjście z pracy'),
+        '18:00': L('pool', 'basen'),
+        '21:00': L('evening page', 'strona wieczorna'),
+      },
+      note: L('fixed points only', 'tylko stałe punkty'),
+    },
+  },
+  'day-right': {
+    threat: {
+      fill: L(
+        'Tense after the argument at work.\nCalled Tomek from the car park.',
+        'Napięcie po kłótni w pracy.\nZadzwoniłem do Tomka z parkingu.',
+      ),
+      note: L('be honest; it helps to see patterns', 'szczerze; tak widać wzorce'),
+    },
+    reflection: {
+      fill: L(
+        'The swim helped. I was calmer after\nthe walk. Tomorrow: talk to the boss calmly.',
+        'Basen pomógł. Po spacerze byłem spokojniejszy.\nJutro: spokojna rozmowa z szefem.',
+      ),
+      note: L('free space: feelings, thoughts, plans', 'wolne miejsce: uczucia, myśli, plany'),
+    },
+    gratitude: {
+      fill: {
+        items: [
+          L('Tomek picked up straight away', 'Tomek od razu odebrał'),
+          L('a warm dinner', 'ciepła kolacja'),
+          L('a quiet evening', 'spokojny wieczór'),
+        ],
+      },
+      note: L('small things are enough', 'drobne rzeczy wystarczą'),
+    },
+    // Mood, tension, energy.
+    checkout: { fill: ['6', '4', '7'] },
+    // A conflict, tiredness.
+    trigger: {
+      fill: { done: [3, 6] },
+      note: L('tick all that apply', 'zaznacz wszystkie'),
+      noteAt: 'bottom-right',
+    },
+    'good-life': {
+      fill: L('played chess with my son', 'partia szachów z synem'),
+      note: L('not only: did I get everything done?', 'nie tylko: czy wszystko zrobiłem?'),
+      noteAt: 'bottom-right',
+    },
+  },
+  situation: {
+    'risky-thought': {
+      fill: L(
+        "one more episode won't hurt, I'll sleep later",
+        'jeszcze jeden odcinek nie zaszkodzi, wyśpię się później',
+      ),
+      note: L('write it word for word', 'zapisz dosłownie'),
+      noteAt: 'bottom-right',
+    },
+    'thought-answer': {
+      fill: L(
+        'I always regret it in the morning. I can stop now.',
+        'Rano zawsze tego żałuję. Mogę skończyć teraz.',
+      ),
+    },
+  },
+  'wheel-of-life': {
+    notice: {
+      fill: L(
+        'Work is going well; rest and relationships need time.\nNext month: one free evening a week.',
+        'Praca idzie dobrze; odpoczynek i relacje potrzebują czasu.\nW przyszłym miesiącu: jeden wolny wieczór w tygodniu.',
+      ),
+    },
+  },
+  'monthly-review': {
+    'prompt-1': {
+      fill: L('Swimming and walks with Tomek.', 'Basen i spacery z Tomkiem.'),
+      note: L('a few words per question are enough', 'kilka słów na pytanie wystarczy'),
+    },
+    'prompt-5': {
+      fill: L(
+        'Evening walks, the Thursday book club.',
+        'Wieczorne spacery, czwartkowy klub książki.',
+      ),
+    },
+  },
+  notes: {
+    notes: {
+      fill: L(
+        "Mum's lentil soup: ask for the recipe\nAsk the doctor about sleep.",
+        'Zupa z soczewicy od mamy: poprosić o przepis\nZapytać lekarza o sen.',
+      ),
+      note: L('anything that does not fit elsewhere', 'wszystko, co nie pasuje gdzie indziej'),
+    },
+  },
+};
+
 export const GUIDES: Record<string, LocalizedText> = {
   cover: L(
     'Write your name if you like; the planner is yours. The start date is printed from the date you chose when creating the planner.',

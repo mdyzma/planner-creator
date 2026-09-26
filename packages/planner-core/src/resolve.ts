@@ -29,7 +29,8 @@ const isRecord = (v: unknown): v is Record<string, unknown> =>
  * The page template as it prints on one page (§4.4). Precedence, low → high: block defaults
  * (merged by the block registry) → template block → format adjustment → the block's first
  * matching variant (e.g. wording for a module that is off; ADR-0010) → side variant → the
- * page's own override.
+ * page's own override. Examples follow the same idea: the first matching example variant
+ * replaces the examples of the blocks it lists.
  */
 export function resolvePageTemplate(
   source: PageTemplate,
@@ -64,7 +65,18 @@ export function resolvePageTemplate(
     };
   });
 
-  return { template, hidden, warnings };
+  return { template: withSampleVariant(template, scope ?? {}), hidden, warnings };
+}
+
+/** The page's examples with its first matching example variant applied, block by block. */
+function withSampleVariant(
+  page: PageTemplate,
+  scope: Readonly<Record<string, unknown>>,
+): PageTemplate {
+  if (!page.sampleVariants) return page;
+  const { sampleVariants, ...rest } = page;
+  const found = sampleVariants.find((v) => evaluateCondition(v.when, scope));
+  return found ? { ...rest, sampleContent: { ...page.sampleContent, ...found.content } } : rest;
 }
 
 /** The block with its first matching variant applied (props merged, style merged). */

@@ -28,6 +28,10 @@ text by condition.
   Variants live inside the block, so they survive moving it in the designer (A5 adjustments, by
   contrast, point at blocks by position). The condition scope also has `format`, so a variant can
   target one format (the Balance check-in on two lines in A5).
+- **Examples follow the modules too.** A page's example filling (`sampleContent`, keyed by block)
+  can have `sampleVariants: { when, content }[]`; the first match replaces the examples of the
+  blocks it lists, when the page is resolved. The bundled template uses one for planners without
+  the recovery module (Basic, Balance): swimming and a book club instead of meetings and therapy.
 - **The designer edits what it shows.** A template-scope edit of a value the active variant sets
   changes that variant, and the inspector marks its origin "module"; otherwise the block changes as
   before. Editing Balance wording never touches the hidden recovery wording, and the reverse.

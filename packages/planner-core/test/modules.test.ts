@@ -91,4 +91,26 @@ describe('modules', () => {
     const own = { commitment: { props: { title: L('Mine', 'Moje') } } };
     expect(props({ recovery: false }, own)).toMatchObject({ title: { pl: 'Moje' } });
   });
+
+  it('swaps in the examples of a matching example variant, block by block', () => {
+    const page: PageTemplate = {
+      id: 'day',
+      name: L('Day', 'Dzień'),
+      body: { kind: 'block', block: { id: 'plan', type: 'writing-area', props: {} } },
+      sampleContent: { plan: { fill: 'meeting' }, gratitude: { fill: '42 days' } },
+      sampleVariants: [{ when: moduleOff('recovery'), content: { plan: { fill: 'pool' } } }],
+    };
+    const samples = (modules: Record<string, boolean>) =>
+      resolvePageTemplate(page, {
+        format: 'A4',
+        side: 'left',
+        scope: { config: conditionConfig(template, { modules }) },
+      }).template;
+    expect(samples({}).sampleContent).toEqual(page.sampleContent);
+    expect(samples({ recovery: false }).sampleContent).toEqual({
+      plan: { fill: 'pool' },
+      gratitude: { fill: '42 days' },
+    });
+    expect(samples({}).sampleVariants).toBeUndefined();
+  });
 });

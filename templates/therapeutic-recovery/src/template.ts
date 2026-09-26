@@ -16,7 +16,7 @@ import type {
 } from '@planner/schema';
 import { TEMPLATE_MIGRATIONS, defaultPrintSettings } from '@planner/schema';
 import { L, block, fr, mmH, pointerToBlock, railBlock, row, stack } from './dsl';
-import { GUIDES, SAMPLES } from './samples';
+import { GUIDES, SAMPLES, SAMPLES_NEUTRAL } from './samples';
 
 // ---------------------------------------------------------------------------------------------
 // Modules and presets (ADR-0010)
@@ -2518,6 +2518,17 @@ export const therapeuticRecoveryTemplate: PlannerTemplate = {
         ...(GUIDES[p.id] ? { guide: GUIDES[p.id] } : {}),
         ...(SAMPLES[p.id]
           ? { sampleContent: SAMPLES[p.id] as NonNullable<PageTemplate['sampleContent']> }
+          : {}),
+        // Basic and Balance: neutral examples for the blocks whose wording changes.
+        ...(SAMPLES_NEUTRAL[p.id]
+          ? {
+              sampleVariants: [
+                {
+                  when: BALANCE,
+                  content: SAMPLES_NEUTRAL[p.id] as NonNullable<PageTemplate['sampleContent']>,
+                },
+              ],
+            }
           : {}),
       },
     ]),

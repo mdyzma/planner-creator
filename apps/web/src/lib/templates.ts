@@ -60,6 +60,9 @@ export function withExampleContent(project: PlannerProject): PlannerProject {
           ...(!page.sampleContent && source?.sampleContent
             ? { sampleContent: source.sampleContent }
             : {}),
+          ...(!page.sampleVariants && source?.sampleVariants
+            ? { sampleVariants: source.sampleVariants }
+            : {}),
           ...(!page.guide && source?.guide ? { guide: source.guide } : {}),
         },
       ];
