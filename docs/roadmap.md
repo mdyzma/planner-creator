@@ -5,7 +5,7 @@ Where "Dzień po Dniu" stands after v0.2.0, measured against the two content rev
 [planner-improvement-session-2.md](planner-improvement-session-2.md) (S2, the "version 2.0"
 content specification), and what comes next.
 
-Last updated: 2026-09-26, after v0.7.0.
+Last updated: 2026-09-26, after v0.6.0 (front matter and Month 2.0).
 
 ## Done (v0.1.0 – v0.2.0)
 
@@ -132,6 +132,8 @@ Not yet: a Balance quote library, a Balance guide booklet, editing variants dire
 
 ### v0.6.0 — "Na dobry początek" (front matter)
 
+Released together with Month 2.0 (below, planned as v0.7.0) as **v0.6.0**.
+
 Done:
 
 - A new module `start` ("Na dobry początek"), on in both editions, with six pages after "Jak
@@ -148,7 +150,7 @@ Done:
 - The introduction is now i–x (Recovery Edition) or i–viii (Balance); six months are about 542
   pages.
 
-### v0.7.0 — Month 2.0
+### Month 2.0 (planned as v0.7.0)
 
 Done:
 
